@@ -1,13 +1,13 @@
 import {  useEffect, useState } from 'react';
-//import { PostData } from '../Post';
-//import postService, { CanceledError } from "../services/post-service";
+import { ProductData } from './product.tsx';
+import  dataService,{ CanceledError } from "../services/data-service";
 
 
     function MainPage() {
-        const [posts, setPosts] = useState<PostData[]>([])
+        const [posts, setPosts] = useState<ProductData[]>([])
         const [error, setError] = useState()
         useEffect(() => {
-            const { req, abort } = postService.getAllPosts()
+            const { req, abort } = dataService.getRequestedProducts()
             req.then((res) => {
                 setPosts(res.data)
             }).catch((err) => {

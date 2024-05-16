@@ -35,12 +35,13 @@
 // export default App
 
 //import MainPage from "./components/main-page"
-import LogIn from "./components/login"
+//import LogIn from "./components/login"
+import Statictics from "./components/statistics"
 
 function App() {
   return (
     <div className="p-2">
-      <LogIn />
+      <Statictics />
     </div>
   )
 }

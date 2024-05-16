@@ -3,6 +3,9 @@ import { postLogIn,googleSignin } from "../services/login-service"
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 //import { useNavigate } from 'react-router-dom'
 import {  useRef, useState } from 'react'
+import emailIcon from './../assets/email.png';
+import passwordIcon from './../assets/password.png';
+
 
 
 function Login() {
@@ -52,32 +55,46 @@ return (
     <>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '5vh' }}>
             <div>
-                <h1 className="text-center fw-bold" style={{ color: 'brown' }}>התחברות</h1>
+            <h1 className="text-center fw-bold" style={{ color: 'brown', fontSize: '3rem', marginTop: '20px' }}>התחברות</h1>
             </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '95vh', width: '100vw' }}>
-            <div style={{ width: '300px', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '85vh', width: '100vw' }}>
+    <div style={{ width: '300px', textAlign: 'center' }}>
 
-            <div className="form-floating">
-                <input ref={emailInputRef} type="text" className="form-control" id="floatingInput" placeholder="הקלד/י  אימייל..." />
-                <label htmlFor="floatingInput">אימייל</label>
-            </div>
-            <div className="form-floating">
-                <input ref={passwordInputRef} type="password" className="form-control" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
-                <label htmlFor="floatingPassword">סיסמה</label>
-            </div>
-            <button type="button" className="btn btn-primary" onClick={login}>התחבר/י</button>
+    <div className="form-group" style={{ marginTop: '-50px', marginRight: '-100px', marginBottom: '20px' }}>
+    <label htmlFor="floatingInput" style={{ fontWeight: 'bold' }}>:אימייל</label>
+    <div style={{ display: 'flex', alignItems: 'center', marginLeft: '50px' }}>
+    <input ref={emailInputRef} type="text" className="form-control" id="floatingInput" placeholder="הקלד/י  אימייל..." />
+    <img src={emailIcon} style={{ marginLeft: '10px', width: '20px', height: '20px' }} />
+</div>
+</div>
 
+<div className="form-group" style={{ marginBottom: '20px', marginRight: '-100px' }}>
+    <label htmlFor="floatingPassword" style={{ fontWeight: 'bold' }}>:סיסמה</label>
+    <div style={{ display: 'flex', alignItems: 'center', marginLeft: '50px' }}>
+        <input ref={passwordInputRef} type="password" className="form-control" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
+        <img src={passwordIcon} style={{ marginLeft: '10px', width: '20px', height: '20px' }} />
+    </div>
+</div>
 
-                {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+        <button onClick={handleButtonClick} className="btn btn-primary" style={{ marginBottom: '20px', color: 'blue' }}>
+             עדיין לא יצרת משתמש? לחצ/י כאן
+        </button>
 
-                <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure} />
-                <button onClick={handleButtonClick} className="btn btn-primary">
-                עדיין לא יצרת משתמש? לחצ/י כאן
-                </button>
-            </div>
+        <div style={{ marginBottom: '20px' }}>
+            <GoogleLogin 
+                onSuccess={onGoogleLoginSuccess} 
+                onError={onGoogleLoginFailure} 
+            />
         </div>
+
+        <button type="button" className="btn btn-primary" style={{ marginBottom: '20px', color: 'white', backgroundColor: 'brown' }} onClick={login}>התחבר/י</button>
+
+        {loginError && <p style={{ color: 'red', marginBottom: '20px' }}>{loginError}</p>}
+     
+    </div>
+</div>
     </>
 )
   

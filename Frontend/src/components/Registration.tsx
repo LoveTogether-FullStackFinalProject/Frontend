@@ -1,9 +1,9 @@
 import { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { uploadPhoto } from '../services/file-service';
+import { uploadPhoto } from '../services/uploadProductService';
 import { IUser } from '../ProfileDetails';
-import { registrUser, googleSignin } from '../services/user-service';
+import { registerUser, googleSignIn } from '../services/registrationService';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -51,7 +51,7 @@ const Registration = () => {
         fileInputRef.current?.click();
     };
 
-    const registerUser = async (data: FormData) => {
+    const registerUserHandler = async (data: FormData) => {
         try {
             let url;
             if (imgSrc) {
@@ -61,10 +61,9 @@ const Registration = () => {
                 ...data,
                 image: url
             };
-            const res = await registrUser(user);
+            const res = await registerUser(user);
             userID = res._id ?? '';
 
-            // Store tokens in localStorage
             if (res.accessToken) {
                 localStorage.setItem('accessToken', res.accessToken);
             }
@@ -82,7 +81,7 @@ const Registration = () => {
 
     const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
         try {
-            const res = await googleSignin(credentialResponse);
+            const res = await googleSignIn(credentialResponse);
             userID = res._id ?? '';
             if (res.accessToken) {
                 localStorage.setItem('accessToken', res.accessToken);
@@ -136,7 +135,7 @@ const Registration = () => {
                     {errors.image && <p className="text-danger">{errors.image.message}</p>}
                     <div className="card">
                         <div className="card-body">
-                            <form onSubmit={handleSubmit(registerUser)}>
+                            <form onSubmit={handleSubmit(registerUserHandler)}>
                                 <div className="form-floating mb-3">
                                     <input {...register("firstName")} type="text" className="form-control" id="floatingFirstName" placeholder="שם פרטי" />
                                     <label htmlFor="floatingFirstName">שם פרטי</label>

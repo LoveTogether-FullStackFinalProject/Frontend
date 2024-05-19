@@ -1,8 +1,7 @@
 import { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { uploadPhoto } from '../services/uploadProductService';
-import { IUser } from '../ProfileDetails';
+import { User } from '../components/Profile';
 import { registerUser, googleSignIn } from '../services/registrationService';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { zodResolver } from "@hookform/resolvers/zod";

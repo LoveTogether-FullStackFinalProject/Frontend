@@ -1,7 +1,7 @@
 import { ChangeEvent, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { uploadPhoto } from '../services/file-service';
+import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -33,13 +33,14 @@ const UploadProduct = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            // Upload photo if image is selected
             let imageUrl = '';
             if (imgSrc) {
                 imageUrl = await uploadPhoto(imgSrc);
             }
 
-            // Additional processing or API calls can be made here
+            const productData = { ...data, imageUrl };
+            await uploadProduct(productData);
+
             console.log("Form data:", data);
             console.log("Image URL:", imageUrl);
         } catch (error) {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { User } from '../componentss/Profile';
+import { User } from '../components/Profile';
 export const registerUser = async (user: IUser) => {
     try {
         const response = await axios.post('/api/register', user);

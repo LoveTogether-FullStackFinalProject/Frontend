@@ -34,14 +34,15 @@
 
 // export default App
 
-import MainPage from "./components/main-page"
+//import MainPage from "./components/main-page"
 //import LogIn from "./components/login"
 //import Statictics from "./components/statistics"
+import AdminDashboard from "./components/AdminDashbord"
 
 function App() {
   return (
     <div className="p-2">
-      <MainPage />
+      <AdminDashboard />
     </div>
   )
 }

@@ -37,12 +37,13 @@
 //import MainPage from "./components/main-page"
 //import LogIn from "./components/login"
 //import Statictics from "./components/statistics"
-import AdminDashboard from "./components/AdminDashbord"
+// import AdminDashboard from "./components/AdminDashbord"
+import UploadProduct from "./components/UploadProduct"
 
 function App() {
   return (
     <div className="p-2">
-      <AdminDashboard />
+      <UploadProduct />
     </div>
   )
 }

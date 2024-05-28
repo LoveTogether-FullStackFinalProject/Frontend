@@ -56,16 +56,18 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Registration from './components/Registration';
 import LogIn from "./components/login"
 import MainPage from "./components/main-page"
+import Statictics from "./components/statistics"
 
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path="/" element={<Navigate to="/statictics" replace />} />
                 {/* <Route path="/registration" element={<Registration />} /> */}
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
+                <Route path="/statictics" element={<Statictics />} />
               
             </Routes>
         </Router>

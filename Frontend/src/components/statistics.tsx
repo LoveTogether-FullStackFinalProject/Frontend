@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
         const [products, setProducts] = useState<ProductData[]>([])
         const [error, setError] = useState()
         useEffect(() => {
-            const { req, abort } = dataService.getRequestedProducts()
+            const { req, abort } = dataService.getProducts()
             req.then((res) => {
                 setProducts(res.data)
             }).catch((err) => {

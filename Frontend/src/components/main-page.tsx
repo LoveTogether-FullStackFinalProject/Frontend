@@ -19,7 +19,7 @@ import donation3 from './../assets/donation3.png';
         const [products, setProducts] = useState<ProductData[]>([])
         const [error, setError] = useState()
         useEffect(() => {
-            // const { req, abort } = dataService.getRequestedProducts()
+            // const { req, abort } = dataService.getdProducts()
             // req.then((res) => {
             //     setProducts(res.data)
             // }).catch((err) => {

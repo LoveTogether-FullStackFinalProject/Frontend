@@ -16,11 +16,10 @@ const passwordInputRef = useRef<HTMLInputElement>(null)
 
 const login= () => {
   
- 
- 
   if (emailInputRef.current?.value && passwordInputRef.current?.value) {
     try {
         postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
+        navigate('/mainPage');
 
     } catch (err) {
       console.log("err: " +err);

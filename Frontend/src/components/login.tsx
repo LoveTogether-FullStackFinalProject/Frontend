@@ -1,7 +1,7 @@
 
 import { postLogIn,googleSignin } from "../services/login-service"
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
-//import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {  useRef, useState } from 'react'
 import emailIcon from './../assets/email.png';
 import passwordIcon from './../assets/password.png';
@@ -9,17 +9,17 @@ import passwordIcon from './../assets/password.png';
 
 
 function Login() {
+    const navigate = useNavigate();
 const [loginError, setLoginError] = useState<string | null>(null);
 const emailInputRef = useRef<HTMLInputElement>(null)
 const passwordInputRef = useRef<HTMLInputElement>(null)
 
 const login= () => {
   
-  //const navigate = useNavigate();
- 
   if (emailInputRef.current?.value && passwordInputRef.current?.value) {
     try {
         postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
+        navigate('/mainPage');
 
     } catch (err) {
       console.log("err: " +err);
@@ -47,7 +47,7 @@ const onGoogleLoginFailure = () => {
 }
 
 const handleButtonClick = () => {
-    //navigate('/registration');
+    navigate('/registration');
 };
 
 

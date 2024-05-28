@@ -14,7 +14,7 @@ export interface IDonor {
 
 export const postLogIn = async (email: string, password: string): Promise<IDonor> => {
   return new Promise<IDonor>((resolve, reject) => {
-      apiClient.post<IDonor>("api/auth/login", { email, password })
+      apiClient.post<IDonor>("auth/login", { email, password })
           .then((response) => {
               resolve(response.data)
           }).catch((error) => {
@@ -25,7 +25,7 @@ export const postLogIn = async (email: string, password: string): Promise<IDonor
 
 export const googleSignin = (credentialResponse: CredentialResponse) => {
     return new Promise<IDonor>((resolve, reject) => {
-        apiClient.post("api/auth/google", credentialResponse).then((response) => {
+        apiClient.post("auth/google", credentialResponse).then((response) => {
             console.log(response)
             resolve(response.data)
         }).catch((error) => {

@@ -3,6 +3,15 @@ import Product,{ ProductData } from './product.tsx';
 import  dataService,{ CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
+import person1 from './../assets/person1.png';
+import person2 from './../assets/person2.png';
+import person3 from './../assets/person3.png';
+import product1 from './../assets/product1.png';
+import product2 from './../assets/product2.png';
+import product3 from './../assets/product3.png';
+import donation1 from './../assets/donation1.png';
+import donation2 from './../assets/donation2.png';
+import donation3 from './../assets/donation3.png';
 
 
 
@@ -10,17 +19,17 @@ import { Carousel, Row, Col } from 'react-bootstrap';
         const [products, setProducts] = useState<ProductData[]>([])
         const [error, setError] = useState()
         useEffect(() => {
-            const { req, abort } = dataService.getRequestedProducts()
-            req.then((res) => {
-                setProducts(res.data)
-            }).catch((err) => {
-                console.log(err)
-                if (err instanceof CanceledError) return
-                setError(err.message)
-            })
-            return () => {
-                abort()
-            }
+            // const { req, abort } = dataService.getdProducts()
+            // req.then((res) => {
+            //     setProducts(res.data)
+            // }).catch((err) => {
+            //     console.log(err)
+            //     if (err instanceof CanceledError) return
+            //     setError(err.message)
+            // })
+            // return () => {
+            //     abort()
+            // }
         }, [])
     
         return (
@@ -37,14 +46,23 @@ import { Carousel, Row, Col } from 'react-bootstrap';
                     nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
                     prevIcon={<span aria-hidden="true" className="carousel-control-prev-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
                 >
-                    <Carousel.Item>
-                        <Row>
-                            <Col><img className="d-block w-100" src="path_to_your_image1.jpg" alt="Image 1" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} /></Col>
-                            <Col><img className="d-block w-100" src="path_to_your_image2.jpg" alt="Image 2" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} /></Col>
-                            <Col><img className="d-block w-100" src="path_to_your_image3.jpg" alt="Image 3" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} /></Col>
-                        </Row>
-                    </Carousel.Item>
-                </Carousel>
+    <Carousel.Item>
+        <Row>
+            <Col>
+                <img className="d-block w-100" src={donation1} alt="Image 1" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
+                <p style={{ textAlign: 'center', fontWeight: 'bold' }}>מטרנה - 3 חבילות</p>
+            </Col>
+            <Col>
+                <img className="d-block w-100" src={donation2} alt="Image 2" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
+                <p style={{ textAlign: 'center', fontWeight: 'bold' }}>ירקות - כמות למשפחה </p>
+            </Col>
+            <Col>
+                <img className="d-block w-100" src={donation3} alt="Image 3" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
+                <p style={{ textAlign: 'center', fontWeight: 'bold' }}>30 אחרוחות חמות לחג</p>
+            </Col>
+        </Row>
+    </Carousel.Item>
+</Carousel>
                 <button style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>תרמו כאן</button>
             </div>
 
@@ -59,18 +77,19 @@ import { Carousel, Row, Col } from 'react-bootstrap';
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
-                    <h2 style={{ fontSize: '1em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו לכ-150 משפחות רק בשנה האחרונה!
+                <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
+                    <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו לכ-150 משפחות רק בשנה האחרונה!
                         הצלחנו לגייס 1000 ארוחות חמות,
                         70 מוצרי מזון לתינוקות, ו- 400 כלי בית</h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                        <img src="image1.jpg" alt="Image 1" style={{ width: '100%', margin: '3px', border: '2px solid black' }} />
-                        <img src="image2.jpg" alt="Image 2" style={{ width: '100%', margin: '3px', border: '2px solid black' }} />
-                        <img src="image3.jpg" alt="Image 3" style={{ width: '100%', margin: '3px', border: '2px solid black' }} />
-                    </div>
+                  
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                <img src={product1} alt="Image 1" style={{ width: '15%', margin: '10px', border: '2px solid black' }} />
+                                <img src={product2} alt="Image 2" style={{ width: '25%', margin: '10px', border: '2px solid black' }} />
+                                <img src={product3} alt="Image 3" style={{ width: '25%', margin: '10px', border: '2px solid black' }} />
+                        </div>
                 </div>
 
-                <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '300px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
+                <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
                     <h1 style={{ fontSize: '2em', color: 'red', textAlign: 'center' }}>התורמים שלנו</h1>
                     <h2 style={{ fontSize: '1em', textAlign: 'center' }}>התרומים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -79,9 +98,10 @@ import { Carousel, Row, Col } from 'react-bootstrap';
                         <p>ישראל ישראלי</p>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <img src="image1.jpg" alt="Image 1" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
-                        <img src="image2.jpg" alt="Image 2" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
-                        <img src="image3.jpg" alt="Image 3" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
+                       
+                        <img src={person1} alt="Image 1" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
+                        <img src={person2} alt="Image 2" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
+                        <img src={person3} alt="Image 3" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
         const [products, setProducts] = useState<ProductData[]>([])
         const [error, setError] = useState()
         useEffect(() => {
-            const { req, abort } = dataService.getRequestedProducts()
+            const { req, abort } = dataService.getProducts()
             req.then((res) => {
                 setProducts(res.data)
             }).catch((err) => {
@@ -30,14 +30,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 {error && <p className='text-danger'>{error}</p>}
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
       
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', height: '500px' }}>
-                <div style={{ marginBottom: '10px', color: 'red' }}> נתוני התרומות בשנה האחרונה
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', height: '500px', direction: 'rtl' }}>
+                <div style={{ marginBottom: '10px', color: 'red', textAlign: 'center' }}> נתוני התרומות בשנה האחרונה
                  </div>
                 <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
                     <thead>
                         <tr>
-                            <th style={{ color: 'red', border: '1px solid black' }}>כמות</th>
-                            <th style={{ color: 'red', border: '1px solid black' }}>שם המוצר</th>
+                            <th style={{ color: 'red', border: '1px solid black', textAlign: 'center' }}>כמות</th>
+                            <th style={{ color: 'red', border: '1px solid black', textAlign: 'center' }}>שם המוצר</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,23 +50,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                     </tbody>
                 </table>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', height: '500px' }}>
-                <div style={{ marginBottom: '10px', color: 'red' }}>נתוני פריטים חסרים בעמותה
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', height: '500px', direction: 'rtl'  }}>
+                <div style={{ marginBottom: '10px', color: 'red', textAlign: 'center' }}>נתוני פריטים חסרים בעמותה
                 שנדרשים לתרומות </div>
                 <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
                     <thead>
                         <tr>
-                            <th style={{ color: 'red', border: '1px solid black' }}>כמות</th>
-                            <th style={{ color: 'red', border: '1px solid black' }}>שם המוצר</th>
+                            <th style={{ color: 'red', border: '1px solid black', textAlign: 'center' }}>כמות</th>
+                            <th style={{ color: 'red', border: '1px solid black' , textAlign: 'center'}}>שם המוצר</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {products.map((product, index) => (
-                            <tr key={index} style={{ border: '1px solid black' }}>
-                                <td style={{ border: '1px solid black', padding: '10px' }}>{product.quantity}</td>
-                                <td style={{ border: '1px solid black', padding: '10px' }}>{product.name}</td>
-                            </tr>
-                        ))} */}
+                    <tr style={{ border: '1px solid black' }}>
+                         <td style={{ border: '1px solid black', padding: '10px' }}>3</td>
+                        <td style={{ border: '1px solid black', padding: '10px' }}>מטרנה</td>
+                    </tr>
+                     <tr style={{ border: '1px solid black' }}>
+                          <td style={{ border: '1px solid black', padding: '10px' }}>כמות למשפחה</td>
+                         <td style={{ border: '1px solid black', padding: '10px' }}>ירקות</td>
+                    </tr>
+                    <tr style={{ border: '1px solid black' }}>
+                     <td style={{ border: '1px solid black', padding: '10px' }}>30</td>
+                    <td style={{ border: '1px solid black', padding: '10px' }}>ארוחות חמות לחג</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

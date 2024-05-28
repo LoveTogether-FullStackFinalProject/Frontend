@@ -34,33 +34,40 @@
 
 // export default App
 
-//import MainPage from "./components/main-page"
-//import LogIn from "./components/login"
-//import Statictics from "./components/statistics"
-// import AdminDashboard from "./components/AdminDashbord"
-// import Registration from "./components/Registration"
-// import UploadProduct from "./components/UploadProduct"
+// import MainPage from "./components/main-page"
+// import LogIn from "./components/login"
+// //import Statictics from "./components/statistics"
+// // import AdminDashboard from "./components/AdminDashbord"
+// // import Registration from "./components/Registration"
+// // import UploadProduct from "./components/UploadProduct"
 
 // function App() {
 //   return (
 //     <div className="p-2">
-//       <Registration />
+//       <LogIn />
 //     </div>
 //   )
 // }
 
 
-// export default App
+//export default App
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Registration from './components/Registration';
+import LogIn from "./components/login"
+import MainPage from "./components/main-page"
+import Statictics from "./components/statistics"
+
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/registration" replace />} />
+                <Route path="/" element={<Navigate to="/login" replace />} />
                 <Route path="/registration" element={<Registration />} />
+                <Route path="/login" element={<LogIn />} />
+                <Route path="/mainPage" element={<MainPage />} />
+                <Route path="/statictics" element={<Statictics />} />
               
             </Routes>
         </Router>

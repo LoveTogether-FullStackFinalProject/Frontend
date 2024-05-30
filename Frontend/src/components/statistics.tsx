@@ -11,6 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             const { req, abort } = dataService.getProducts()
             req.then((res) => {
                 setProducts(res.data)
+                console.log(res.data)
+                console.log("len",products.length)
+                console.log(Array.isArray(products))
             }).catch((err) => {
                 console.log(err)
                 if (err instanceof CanceledError) return
@@ -33,6 +36,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', height: '500px', direction: 'rtl' }}>
                 <div style={{ marginBottom: '10px', color: 'red', textAlign: 'center' }}> נתוני התרומות בשנה האחרונה
                  </div>
+                 {Array.isArray(products) && (
                 <table style={{ border: '1px solid black', borderCollapse: 'collapse' }}>
                     <thead>
                         <tr>
@@ -49,6 +53,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                         ))}
                     </tbody>
                 </table>
+                )}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', height: '500px', direction: 'rtl'  }}>
                 <div style={{ marginBottom: '10px', color: 'red', textAlign: 'center' }}>נתוני פריטים חסרים בעמותה

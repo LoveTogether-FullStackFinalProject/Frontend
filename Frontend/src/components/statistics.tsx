@@ -41,12 +41,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {products.map((product, index) => (
+                      {products.map((product, index) => (
                             <tr key={index} style={{ border: '1px solid black' }}>
-                                <td style={{ border: '1px solid black', padding: '10px' }}>{product.quantity}</td>
-                                <td style={{ border: '1px solid black', padding: '10px' }}>{product.name}</td>
+                                <td style={{ border: '1px solid black', padding: '10px' }}>{product.amount}</td>
+                                <td style={{ border: '1px solid black', padding: '10px' }}>{product.productType}</td>
                             </tr>
-                        ))} */}
+                        ))}
                     </tbody>
                 </table>
             </div>

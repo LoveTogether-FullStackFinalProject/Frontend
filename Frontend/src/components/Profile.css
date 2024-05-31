@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #a5673d;
+    color: #fff;
+  }
+  
+  .logo {
+    width: 100px;
+  }
+  
+  nav a {
+    margin: 0 15px;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  
+  .profile-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 1200px;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .tabs button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #dcdcdc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tabs button.active, .tabs button:hover {
+    background-color: #a5673d;
+    color: #fff;
+  }
+  
+  .donations-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .donation-card {
+    background-color: #ffe4e1;
+    padding: 20px;
+    border-radius: 10px;
+    width: 22%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .donation-image {
+    background-color: #f0f0f0;
+    height: 150px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .donation-details p, .donation-details input, .donation-details textarea {
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .edit-button, .delete-button, .save-button, .cancel-button {
+    background-color: #a5673d;   
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .edit-button:hover, .delete-button:hover, .save-button:hover, .cancel-button:hover {
+    background-color: #8a4b2e;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #a5673d;
+    color: #fff;
+  }
+  

@@ -65,8 +65,8 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/login" replace />} />
-                <Route path="/registration" element={<Registration />} />
+                <Route path="/" element={<Navigate to="/statistics" replace />} />
+                {/* <Route path="/registration" element={<Registration />} /> */}
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
                 <Route path="/statistics" element={<Statistics />} />

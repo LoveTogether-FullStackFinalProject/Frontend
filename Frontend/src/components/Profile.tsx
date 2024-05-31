@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { ProductData } from './product';
 import dataService, { CanceledError } from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -25,28 +25,27 @@ const Profile = () => {
   const [editDonationId, setEditDonationId] = useState<string | null>(null);
   const [editableDonation, setEditableDonation] = useState<Partial<ProductData>>({});
 
-  useEffect(() => {
-    console.log(`getDonorById:${userId}`); // Log userId for debugging
-    const fetchData = async () => {
-      try {
-        const { req: userReq } = dataService.getUser(userId!);
-        const userResponse = await userReq;
-        setUser(userResponse.data);
+  const fetchData = useCallback(async () => {
+    try {
+      const { req: userReq } = dataService.getUser(userId!);
+      const userResponse = await userReq;
+      setUser(userResponse.data);
 
-        const { req: productsReq } = dataService.getProducts();
-        const productsResponse = await productsReq;
-        setProducts(productsResponse.data);
-      } catch (error) {
-        if (error instanceof CanceledError) return;
-        console.error('Error fetching data:', error);
-        setError('Error fetching data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+      const { req: productsReq } = dataService.getProducts();
+      const productsResponse = await productsReq;
+      setProducts(productsResponse.data);
+    } catch (error) {
+      if (error instanceof CanceledError) return;
+      console.error('Error fetching data:', error);
+      setError('Error fetching data');
+    } finally {
+      setLoading(false);
+    }
   }, [userId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleEditClick = (donation: ProductData) => {
     setEditDonationId(donation._id);
@@ -64,13 +63,17 @@ const Profile = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setEditableDonation({ ...editableDonation, [name]: value });
+    setEditableDonation((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSaveClick = async () => {
     try {
       await dataService.updateDonation(editDonationId!, editableDonation);
-      setProducts(products.map((donation) => (donation._id === editDonationId ? { ...donation, ...editableDonation } : donation)));
+      setProducts((prev) =>
+        prev.map((donation) =>
+          donation._id === editDonationId ? { ...donation, ...editableDonation } : donation
+        )
+      );
       setEditDonationId(null);
       setEditableDonation({});
     } catch (error) {
@@ -90,23 +93,31 @@ const Profile = () => {
   return (
     <div className="profile-page">
       <header className="header">
-        <img src="logo.png" alt="Logo" className="logo" />
+        <img src="./../assets/logoVeahahavtem.jpg" alt="Logo" className="logo" />
         <nav>
-          <a href="/">עמוד הבית</a>
-          <a href="/donate">שליחת תרומה</a>
-          <a href="/login">התנתק</a>
+          <Link to="/mainPage">עמוד הבית</Link>
+          <Link to="/donate">שליחת תרומה</Link>
+          <Link to="/login">התנתק</Link>
         </nav>
         <div className="user-info">
-          <img src="user-avatar.png" alt="User Avatar" className="avatar" />
-          <span>שלום, {user ? `${user.firstName} ${user.lastName}` : 'Loading...'}</span>
+          <img src="./../assets/person1.png" alt="User Avatar" className="avatar" />
+          <span>שלום, {`${user.firstName} ${user.lastName}`}</span>
         </div>
       </header>
       <main className="profile-content">
         <div className="tabs">
-          <button className={activeTab === 'donated' ? 'active' : ''} onClick={() => setActiveTab('donated')}>תרומות שאושרו</button>
-          <button className={activeTab === 'pending' ? 'active' : ''} onClick={() => setActiveTab('pending')}>תרומות שלא אושרו</button>
-          <button className={activeTab === 'notArrived' ? 'active' : ''} onClick={() => setActiveTab('notArrived')}>תרומות שטרם הגיעו</button>
-          <button className={activeTab === 'all' ? 'active' : ''} onClick={() => setActiveTab('all')}>התרומות שלי</button>
+          {['donated', 'pending', 'notArrived', 'all'].map((tab) => (
+            <button
+              key={tab}
+              className={activeTab === tab ? 'active' : ''}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab === 'donated' && 'תרומות שאושרו'}
+              {tab === 'pending' && 'תרומות שלא אושרו'}
+              {tab === 'notArrived' && 'תרומות שטרם הגיעו'}
+              {tab === 'all' && 'התרומות שלי'}
+            </button>
+          ))}
         </div>
         <div className="donations-list">
           {products.map((donation) => (

@@ -1,11 +1,24 @@
 import apiClient, { CanceledError } from "./api-client";
 import { ProductData } from '../components/product';
+import { DonorData } from '../components/donorData';
 
 export { CanceledError };
 
 const getProducts = () => {
     const abortController = new AbortController();
     const req = apiClient.get<ProductData[]>('/donation/donations', { signal: abortController.signal });
+    return { req, abort: () => abortController.abort() };
+};
+
+const getRequestedProducts = () => {
+    const abortController = new AbortController();
+    const req = apiClient.get<ProductData[]>('/requestedDonation/rdonations', { signal: abortController.signal });
+    return { req, abort: () => abortController.abort() };
+};
+
+const getUsers = () => {
+    const abortController = new AbortController();
+    const req = apiClient.get<DonorData[]>(`/donor/`, { signal: abortController.signal });
     return { req, abort: () => abortController.abort() };
 };
 
@@ -28,4 +41,4 @@ export const deleteDonation = async (donationId: string) => {
     }
   };
 
-export default { getUser, getProducts, updateDonation, deleteDonation };
+export default { getUser, getProducts, updateDonation, deleteDonation,getRequestedProducts, getUsers };

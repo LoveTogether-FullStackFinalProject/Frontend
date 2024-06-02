@@ -12,6 +12,10 @@ body {
     padding: 10px 20px;
     background-color: #a5673d;
     color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
   }
   
   .logo {
@@ -37,11 +41,13 @@ body {
   }
   
   .profile-content {
-    padding: 20px;
+    padding: 80px 20px 20px;
     background-color: #fff;
     border-radius: 10px;
     margin: 20px auto;
+    width: 100%;
     max-width: 1200px;
+    box-sizing: border-box;
   }
   
   .tabs {
@@ -75,13 +81,15 @@ body {
     border-radius: 10px;
     width: 22%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
   
-  .donation-image {
-    background-color: #f0f0f0;
-    height: 150px;
-    border-radius: 10px;
-    margin-bottom: 10px;
+  .donation-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   }
   
   .donation-details p, .donation-details input, .donation-details textarea {
@@ -90,8 +98,14 @@ body {
     box-sizing: border-box;
   }
   
+  .donation-details input, .donation-details textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
   .edit-button, .delete-button, .save-button, .cancel-button {
-    background-color: #a5673d;   
+    background-color: #a5673d;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -109,5 +123,20 @@ body {
     padding: 10px 0;
     background-color: #a5673d;
     color: #fff;
+  }
+  
+  .social-media {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .social-media a {
+    margin: 0 10px;
+  }
+  
+  .social-media a img {
+    width: 30px;
+    height: 30px;
   }
   

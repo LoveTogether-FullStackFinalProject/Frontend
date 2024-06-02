@@ -19,8 +19,13 @@ const updateDonation = (donationId: string, data: Partial<ProductData>) => {
     return apiClient.put(`/donation/${donationId}`, data);
 };
 
-const deleteDonation = (donationId: string) => {
-    return apiClient.delete(`/donation/${donationId}`);
-};
+export const deleteDonation = async (donationId: string) => {
+    try {
+      const response = await apiClient.delete(`/donation/${donationId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
 export default { getUser, getProducts, updateDonation, deleteDonation };

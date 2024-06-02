@@ -4,6 +4,9 @@ import { ProductData } from './product';
 import dataService, { CanceledError } from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
+import logo from '../assets/logoVeahavtem.png';
+import facebookLogo from '../assets/facebookLogo.png';
+import instagramLogo from '../assets/instagramLogo.png';
 
 interface User {
   _id: string;
@@ -93,7 +96,8 @@ const Profile = () => {
   return (
     <div className="profile-page">
       <header className="header">
-        <img src="./../assets/logoVeahahavtem.jpg" alt="Logo" className="logo" />
+
+        <img src={logo} alt="Logo" className="logo" />
         <nav>
           <Link to="/mainPage">עמוד הבית</Link>
           <Link to="/donate">שליחת תרומה</Link>
@@ -169,7 +173,15 @@ const Profile = () => {
         </div>  
       </main>
       <footer className="footer">
-        &copy; 2024 Your Company. כל הזכויות שמורות.
+        <p>© 2024 עמותת ואהבתם ביחד. כל הזכויות שמורות.</p>
+        <div className="social-media">
+          <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
+            <img src={facebookLogo} alt="Facebook" />
+          </a>
+          <a href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
+            <img src={instagramLogo} alt="Instagram" />
+          </a>
+        </div>
       </footer>
     </div>
   );

@@ -92,7 +92,7 @@ const Profile = () => {
       <header className="header">
         <img src="logo.png" alt="Logo" className="logo" />
         <nav>
-          <a href="/">עמוד הבית</a>
+          <a href="/mainPage">עמוד הבית</a>
           <a href="/donate">שליחת תרומה</a>
           <a href="/login">התנתק</a>
         </nav>

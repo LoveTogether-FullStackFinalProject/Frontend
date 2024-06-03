@@ -89,6 +89,31 @@ const Profile = () => {
     setEditableDonation({});
   };
 
+  const filterDonations = () => {
+    switch (activeTab) {
+      case 'donated':
+        return products.filter(donation => donation.status === 'Approved');
+      case 'pending':
+        return products.filter(donation => donation.status === 'Pending');
+      case 'notArrived':
+        return products.filter(donation => donation.status === 'Not Arrived');
+      case 'all':
+      default:
+        return products;
+    }
+  };
+
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case 'Approved':
+        return 'status-approved';
+      case 'Pending':
+        return 'status-pending';
+      default:
+        return 'status-not-approved';
+    }
+  };
+
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="loading">{error}</div>;
   if (!user) return <div className="loading">User not found</div>;
@@ -96,7 +121,6 @@ const Profile = () => {
   return (
     <div className="profile-page">
       <header className="header">
-
         <img src={logo} alt="Logo" className="logo" />
         <nav>
           <Link to="/mainPage">עמוד הבית</Link>
@@ -124,7 +148,7 @@ const Profile = () => {
           ))}
         </div>
         <div className="donations-list">
-          {products.map((donation) => (
+          {filterDonations().map((donation) => (
             <div key={donation._id} className="donation-card">
               {editDonationId === donation._id ? (
                 <div className="donation-details">
@@ -162,7 +186,7 @@ const Profile = () => {
                 <div className="donation-details">
                   <p>שם הפריט: {donation.category}</p>
                   <p>כמות: {donation.amount}</p>
-                  <p>סטטוס: {donation.itemCondition}</p>
+                  <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
                   <p>תיאור פריט: {donation.description}</p>
                   <button className="edit-button" onClick={() => handleEditClick(donation)}>ערוך פריט</button>
                   <button className="delete-button" onClick={() => handleDeleteClick(donation._id)}>מחק פריט</button>
@@ -170,7 +194,7 @@ const Profile = () => {
               )}
             </div>
           ))}
-        </div>  
+        </div>
       </main>
       <footer className="footer">
         <p>© 2024 עמותת ואהבתם ביחד. כל הזכויות שמורות.</p>

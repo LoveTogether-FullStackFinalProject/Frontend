@@ -7,6 +7,7 @@ export interface ProductData {
     expirationDate: Date;
     description: string;
     pickUpAddress: string;
+    status: string;
   }
   
   interface ProductProps {

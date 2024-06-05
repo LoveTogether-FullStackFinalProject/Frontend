@@ -57,18 +57,23 @@ import Registration from './components/Registration';
 import LogIn from "./components/login"
 import MainPage from "./components/main-page"
 import Statictics from "./components/statistics"
+import ManageUsers from "./components/ManageUsers"
+import AdminDashboard from "./components/AdminDashboard"
+import ManageDonationPage from './components/ManageDonations';
 
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/statictics" replace />} />
+                <Route path="/" element={<Navigate to="/manageDonations" replace />} />
                 {/* <Route path="/registration" element={<Registration />} /> */}
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
                 <Route path="/statictics" element={<Statictics />} />
-              
+                <Route path="/manageUsers" element={<ManageUsers />} />
+                <Route path="/adminDashboard" element={<AdminDashboard />} />
+                <Route path="/manageDonations" element={<ManageDonationPage />} />              
             </Routes>
         </Router>
     );

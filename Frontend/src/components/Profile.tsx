@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ProductData } from './product';
+import { Donation } from './donation';
 import dataService, { CanceledError } from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
@@ -21,12 +21,12 @@ interface User {
 const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
   const [user, setUser] = useState<User | null>(null);
-  const [products, setProducts] = useState<ProductData[]>([]);
+  const [products, setProducts] = useState<Donation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | undefined>(undefined);
   const [activeTab, setActiveTab] = useState('donated');
   const [editDonationId, setEditDonationId] = useState<string | null>(null);
-  const [editableDonation, setEditableDonation] = useState<Partial<ProductData>>({});
+  const [editableDonation, setEditableDonation] = useState<Partial<Donation>>({});
 
   const fetchData = useCallback(async () => {
     try {
@@ -50,7 +50,7 @@ const Profile = () => {
     fetchData();
   }, [fetchData]);
 
-  const handleEditClick = (donation: ProductData) => {
+  const handleEditClick = (donation: Donation) => {
     setEditDonationId(donation._id);
     setEditableDonation(donation);
   };

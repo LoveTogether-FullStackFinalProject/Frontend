@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Interface for User data
+
 interface User {
     _id: string;
     firstName: string;
@@ -15,10 +15,13 @@ interface User {
 const UserPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
+
+
   useEffect(() => {
+
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('/api/users');
+        const response = await axios.get('admin/');
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);

@@ -2,7 +2,7 @@ import apiClient, { CanceledError } from "./api-client"
 import { Donation } from '../components/donation'
 import { DonorData } from '../components/donorData';
 
-export { CanceledError }
+export { CanceledError };
 
 const getDonations = () => {
     const abortController = new AbortController()
@@ -39,4 +39,23 @@ const getRequestedProducts = () => {
   
   export default { getUser, getDonations, updateDonation, deleteDonation, getRequestedProducts, getUsers };
 
+const getUser = (userId: string) => {
+  const abortController = new AbortController();
+  const req = apiClient.get(`/donor/${userId}`, { signal: abortController.signal });
+  return { req, abort: () => abortController.abort() };
+};
+  
+const updateDonation = (donationId: string, data: Partial<ProductData>) => {
+  return apiClient.put(`/donation/update/${donationId}`, data);
+};
 
+const deleteDonation = async (donationId: string) => {
+  try {
+    const response = await apiClient.delete(`/donation/${donationId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export default { getUser, getProducts, updateDonation, deleteDonation, getRequestedProducts, getUsers };

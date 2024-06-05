@@ -1,0 +1,188 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #a5673d;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  width: 100px;
+}
+
+nav a {
+  margin: 0 15px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.profile-content {
+  flex: 1;
+  padding: 80px 20px 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #dcdcdc;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabs button.active, .tabs button:hover {
+  background-color: #a5673d;
+  color: #fff;
+}
+
+.donations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  flex-grow: 1; /* Allows the content to grow and fill the available space */
+  justify-content: center; /* Centers the donation cards */
+}
+
+.donation-card {
+  background-color: #ffe4e1;
+  padding: 20px;
+  border-radius: 10px;
+  width: calc(25% - 20px); /* 4 cards per row with 20px gap */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.donation-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.donation-details p, .donation-details input, .donation-details textarea {
+  margin: 5px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.donation-details input, .donation-details textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-button, .delete-button, .save-button, .cancel-button {
+  background-color: #a5673d;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.edit-button:hover, .delete-button:hover, .save-button:hover, .cancel-button:hover {
+  background-color: #8a4b2e;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px 0;
+  background-color: #a5673d;
+  color: #fff;
+  width: 100%;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.social-media a {
+  margin: 0 10px;
+}
+
+.social-media a img {
+  width: 30px;
+  height: 30px;
+}
+
+.status-approved {
+  color: green;
+}
+
+.status-pending {
+  color: yellow;
+}
+
+.status-not-approved {
+  color: red;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .donation-card {
+    width: calc(33.33% - 20px); /* 3 cards per row */
+  }
+}
+
+@media (max-width: 900px) {
+  .donation-card {
+    width: calc(50% - 20px); /* 2 cards per row */
+  }
+}
+
+@media (max-width: 600px) {
+  .donation-card {
+    width: calc(100% - 20px); /* 1 card per row */
+  }
+}

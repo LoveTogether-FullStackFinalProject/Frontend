@@ -59,8 +59,9 @@ return (
             </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '85vh', width: '100vw' }}>
-    <div style={{ width: '300px', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '85vh', width: '50vw', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9'}}>
+   
+    <div style={{ width: '300px', textAlign: 'center'}}>
 
     <div className="form-group" style={{ marginTop: '-50px', marginRight: '-10px', marginBottom: '20px' }}>
     <label htmlFor="floatingInput" style={{ fontWeight: 'bold', marginRight: '-200px' }}>:אימייל</label>
@@ -94,6 +95,7 @@ return (
         {loginError && <p style={{ color: 'red', marginBottom: '20px' }}>{loginError}</p>}
      
     </div>
+
 </div>
     </>
 )

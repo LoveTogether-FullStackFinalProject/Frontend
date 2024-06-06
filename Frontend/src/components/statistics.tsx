@@ -1,15 +1,15 @@
 import {  useEffect, useState } from 'react';
-import { ProductData } from './product.tsx';
+import { Donation } from './donation.tsx';
 import  dataService,{ CanceledError } from "../services/data-service.ts";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
     function Statistics() {
-        const [products, setProducts] = useState<ProductData[]>([])
-        const [requests, setRequests] = useState<ProductData[]>([])
+        const [products, setProducts] = useState<Donation[]>([])
+        const [requests, setRequests] = useState<Donation[]>([])
         const [error, setError] = useState()
         useEffect(() => {
-            const { req, abort } = dataService.getProducts()
+            const { req, abort } = dataService.getDonations()
             req.then((res) => {
                 setProducts(res.data)
             }).catch((err) => {

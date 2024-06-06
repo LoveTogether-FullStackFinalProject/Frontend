@@ -1,5 +1,5 @@
 import {  useEffect, useState } from 'react';
-import { ProductData } from './product.tsx';
+import { Donation } from './donation.tsx';
 import { DonorData } from './donorData.tsx';
 import  dataService,{ CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,11 +17,11 @@ import donation3 from './../assets/donation3.png';
 
 
     function MainPage() {
-        const [products, setProducts] = useState<ProductData[]>([])
+        const [products, setProducts] = useState<Donation[]>([])
         const [users, setUsers] = useState<DonorData[]>([])
-        const [requests, setRequests] = useState<ProductData[]>([])
+        const [requests, setRequests] = useState<Donation[]>([])
         useEffect(() => {
-            const { req, abort } = dataService.getProducts()
+            const { req, abort } = dataService.getDonations()
             req.then((res) => {
                 setProducts(res.data)
             }).catch((err) => {

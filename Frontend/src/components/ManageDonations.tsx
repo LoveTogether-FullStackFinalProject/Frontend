@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { CanceledError } from 'axios';
+import dataService from '../services/data-service';
 
 interface Donation {
   _id: string;
@@ -14,30 +15,52 @@ interface Donation {
   approvedByAdmin: string;
 }
 
+
+
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [selectedDonations, setSelectedDonations] = useState<string[]>([]);
 
-  const fetchDonations = async () => {
-    try {
-      const response = await axios.get(`/api/donations/`);
-      setDonations(response.data);
-    } catch (error) {
-      console.error('Error fetching all donations:', error);
-    }
-  };
+  // const fetchDonations = async () => {
+  //   try {
+  //     const response = await axios.get(`/donation/donations`);
+  //     setDonations(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching all donations:', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchDonations();
-  }, []);
+
+   useEffect(() => {
+    const { req, abort } = dataService.getDonations()
+    req.then((res) => {
+        setDonations(res.data)
+    }).catch((err) => {
+        console.log(err)
+        if (err instanceof CanceledError) return
+        setError(err.message)
+    })
+
+    return () => {
+        abort()
+    }
+}, []);
+
+  // useEffect(() => {
+  //   fetchDonations();
+  // }, []);
+
+  
 
   const unapprovedDonations = donations.filter(
-    (donation) => donation.approvedByAdmin === ''
+    (donation) => donation.approvedByAdmin === 'approve'
   );
 
   const notArrivedDonations = donations.filter(
     (donation) => donation.status === 'not arrived'
   );
+
+  
 
   const handleCheckboxChange = (donationId: string) => {
     setSelectedDonations((prevSelectedDonations) =>
@@ -46,6 +69,9 @@ const ManageDonationPage: React.FC = () => {
         : [...prevSelectedDonations, donationId]
     );
   };
+
+
+ 
 
   return (
     <div>
@@ -82,3 +108,7 @@ const ManageDonationPage: React.FC = () => {
 };
 
 export default ManageDonationPage;
+
+function setError(message: any) {
+  throw new Error('Function not implemented.');
+}

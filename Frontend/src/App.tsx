@@ -54,23 +54,26 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Registration from './components/Registration';
-import LogIn from "./components/login";
-import MainPage from "./components/main-page";
-import Statistics from "./components/statistics";
-import Profile from "./components/Profile";
-import './index.css';
-import './styles/globals.css';
+import LogIn from "./components/login"
+import MainPage from "./components/main-page"
+import Statictics from "./components/statistics"
+import ManageUsers from "./components/ManageUsers"
+import AdminDashboard from "./components/AdminDashboard"
+import ManageDonationPage from './components/ManageDonations';
+
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/statistics" replace />} />
+                <Route path="/" element={<Navigate to="/mainPage" replace />} />
                 {/* <Route path="/registration" element={<Registration />} /> */}
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
-                <Route path="/statistics" element={<Statistics />} />
-                <Route path="/profile/:userId" element={<Profile />} />
+                <Route path="/statictics" element={<Statictics />} />
+                <Route path="/manageUsers" element={<ManageUsers />} />
+                <Route path="/adminDashboard" element={<AdminDashboard />} />
+                <Route path="/manageDonations" element={<ManageDonationPage />} />              
             </Routes>
         </Router>
     );

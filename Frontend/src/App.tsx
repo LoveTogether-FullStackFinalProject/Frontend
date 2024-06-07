@@ -67,7 +67,9 @@ const App = () => {
     return (
         <Router>
             <Routes>
+
                 <Route path="/" element={<Navigate to="/uploadproduct" replace />} />
+
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
                 <Route path="/statictics" element={<Statictics />} />

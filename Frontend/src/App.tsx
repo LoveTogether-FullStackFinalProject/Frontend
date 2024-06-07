@@ -54,7 +54,6 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Registration from './components/Registration';
-<<<<<<< HEAD
 import LogIn from "./components/login"
 import MainPage from "./components/main-page"
 import Statictics from "./components/statistics"
@@ -62,38 +61,19 @@ import ManageUsers from "./components/ManageUsers"
 import AdminDashboard from "./components/AdminDashboard"
 import ManageDonationPage from './components/ManageDonations';
 
-=======
-import LogIn from "./components/login";
-import MainPage from "./components/main-page";
-import Statistics from "./components/statistics";
-import Profile from "./components/Profile";
-import AboutPage from './components/aboutPage';
-import './index.css';
-import './styles/globals.css';
->>>>>>> 5bea4592be8b41b4480ad749d787e1843f2f523a
 
 const App = () => {
     return (
         <Router>
             <Routes>
-<<<<<<< HEAD
-                <Route path="/" element={<Navigate to="/manageDonations" replace />} />
-                {/* <Route path="/registration" element={<Registration />} /> */}
+                <Route path="/" element={<Navigate to="/registration" replace />} />
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
                 <Route path="/statictics" element={<Statictics />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
+                <Route path="/registration" element={<Registration />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />              
-=======
-                <Route path="/" element={<Navigate to="/statistics" replace />} />
-                {/* <Route path="/registration" element={<Registration />} /> */}
-                <Route path="/login" element={<LogIn />} />
-                <Route path="/mainPage" element={<MainPage />} />
-                <Route path="/statistics" element={<Statistics />} />
-                <Route path="/profile/:userId" element={<Profile />} />
-                <Route path="/about" element={<AboutPage />} />
->>>>>>> 5bea4592be8b41b4480ad749d787e1843f2f523a
             </Routes>
         </Router>
     );

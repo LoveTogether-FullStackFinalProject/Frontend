@@ -5,6 +5,7 @@ import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import './UploadProduct.css';
 
 const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
@@ -49,8 +50,9 @@ const UploadProduct = () => {
     };
 
     return (
-        <div>
-            <h1 className="text-center fw-bold">הוספת מוצר</h1>
+        <div className="upload-product-container">
+            <h1 className="text-center fw-bold">ואהבתם ביחד - עמוד תרומת מוצרים</h1>
+            <h2 className="text-center fw-bold">הוספת מוצר</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="vstack gap-3 col-md-7 mx-auto">
                 <div className="form-floating mb-3">
                     <input {...register("itemName")} type="text" className="form-control" id="itemName" placeholder="שם הפריט" />
@@ -86,10 +88,11 @@ const UploadProduct = () => {
                     <label htmlFor="pickupAddress">כתובת לאיסוף</label>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <div className="position-relative">
+                    <div className="position-relative upload-image-container">
                         <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef} />
-                        <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg}>
+                        <button type="button" className="btn btn-outline-secondary" onClick={selectImg}>
                             <FontAwesomeIcon icon={faImage} className="fa-xl" />
+                            <span>העלאת תמונה</span>
                         </button>
                     </div>
                 </div>

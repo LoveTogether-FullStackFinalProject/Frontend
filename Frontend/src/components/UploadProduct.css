@@ -1,0 +1,72 @@
+.upload-product-container {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.upload-product-container h1 {
+    margin-bottom: 1.5rem;
+    color: #4CAF50;
+}
+
+.upload-product-container h2 {
+    margin-bottom: 1rem;
+    color: #2196F3;
+}
+
+.upload-product-container .form-control {
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.upload-product-container .form-floating {
+    margin-bottom: 1rem;
+}
+
+.upload-product-container .btn {
+    border-radius: 4px;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    background-color: #2196F3;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.upload-product-container .btn:hover {
+    background-color: #1976D2;
+}
+
+.upload-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.upload-image-container .btn-outline-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-image-container .btn-outline-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.text-danger {
+    color: #ff4d4d;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}

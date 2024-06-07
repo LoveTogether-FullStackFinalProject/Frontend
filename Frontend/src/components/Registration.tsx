@@ -27,7 +27,7 @@ const Registration = () => {
     const navigate = useNavigate();
     const [registerError, setRegisterError] = useState<string | null>(null);
 
-    const [imgSrc, setImgSrc] = useState<File>();
+    const [imgSrc, setImgSrc] = useState<File | null>(null);
     const { register, handleSubmit, formState: { errors }, setValue, trigger } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -52,13 +52,13 @@ const Registration = () => {
 
     const registerUserHandler = async (data: FormData) => {
         try {
-            let url;
+            let imageUrl = '';
             if (imgSrc) {
-                url = await uploadPhoto(imgSrc!);
+                imageUrl = await uploadPhoto(imgSrc);
             }
-            const user: IUser = {
+            const user = {
                 ...data,
-                image: url
+                image: imageUrl
             };
             const res = await registerUser(user);
             userID = res._id ?? '';
@@ -72,9 +72,21 @@ const Registration = () => {
             localStorage.setItem('userID', userID);
 
             navigate('/feed');
-        } catch (err) {
-            console.log("err: " + err);
-            setRegisterError("כתובת דואר אלקטרוני או תעודת זהות כבר קיימים במערכת");
+        } catch (err: any) {
+            console.log("err: ", err);
+            const errorMessage = err.response?.data;
+
+            if (errorMessage) {
+                if (errorMessage.includes("email already exists")) {
+                    setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+                } else if (errorMessage.includes("missing email or password")) {
+                    setRegisterError("כתובת דואר אלקטרוני או סיסמה חסרים");
+                } else {
+                    setRegisterError("שגיאה בהרשמה. נסו שוב מאוחר יותר.");
+                }
+            } else {
+                setRegisterError("שגיאה בהרשמה. נסו שוב מאוחר יותר.");
+            }
         }
     };
 
@@ -114,7 +126,7 @@ const Registration = () => {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#FFF8DC", display:'flex',justifyContent:'center',alignItems:'center' }}>
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#FFF8DC" }}>
             <div className="card shadow-lg p-4" style={{ maxWidth: "600px", width: "100%" }}>
                 <div className="card-header text-center fw-bold" style={{ fontSize: "2.5rem", color: "burlywood" }}>ברוכים הבאים!</div>
                 <div className="text-center fw-bold mb-4" style={{ fontSize: "1.5rem", color: "brown" }}>♥ואהבתם ביחד♥ </div>
@@ -177,5 +189,3 @@ const Registration = () => {
 }
 
 export default Registration;
-
-

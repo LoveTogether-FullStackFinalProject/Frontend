@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const uploadProduct = async (productData: any) => {
     try {
-        const response = await axios.post('/api/products/upload', productData);
+        const response = await axios.post('/products/upload', productData);
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.message || 'Product upload failed');
@@ -14,7 +14,7 @@ export const uploadPhoto = async (file: File) => {
     formData.append('file', file);
 
     try {
-        const response = await axios.post('/api/photos/upload', formData, {
+        const response = await axios.post('/photos/upload', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },

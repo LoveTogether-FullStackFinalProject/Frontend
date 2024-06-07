@@ -1,19 +1,19 @@
 import axios from 'axios';
-import { User } from '../components/Profile';
-export const registerUser = async (user: IUser) => {
+
+export const registerUser = async (user: any) => {
     try {
-        const response = await axios.post('/register', user);
+        const response = await axios.post('http://localhost:3000/register', user);
         return response.data;
     } catch (error) {
-        throw new Error(error.response?.data?.message || 'Registration failed');
+        throw new Error('Registration failed');
     }
 };
 
 export const googleSignIn = async (credentialResponse: any) => {
     try {
-        const response = await axios.post('/google-signin', { token: credentialResponse.credential });
+        const response = await axios.post('http://localhost:3000/googleSignIn', credentialResponse);
         return response.data;
     } catch (error) {
-        throw new Error(error.response?.data?.message || 'Google sign-in failed');
+        throw new Error('Google Sign-In failed');
     }
 };

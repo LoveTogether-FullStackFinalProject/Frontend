@@ -62,7 +62,7 @@ const UploadProduct = () => {
         <div className="upload-product-container">
             <h1 className="text-center fw-bold">ואהבתם ביחד - עמוד תרומת מוצרים</h1>
             <h2 className="text-center fw-bold">הוספת מוצר</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="vstack gap-3 col-md-7 mx-auto">
+            <form onSubmit={handleSubmit(onSubmit)} className="vstack gap-3 mx-auto form-container">
                 <div className="form-floating mb-3">
                     <input {...register("itemName")} type="text" className="form-control" id="itemName" placeholder="שם הפריט" />
                     <label htmlFor="itemName">שם הפריט</label>

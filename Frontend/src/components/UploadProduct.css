@@ -5,6 +5,8 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #333;
     font-family: Arial, sans-serif;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .upload-product-container h1 {
@@ -15,6 +17,10 @@
 .upload-product-container h2 {
     margin-bottom: 1rem;
     color: #2196F3;
+}
+
+.upload-product-container .form-container {
+    max-width: 100%;
 }
 
 .upload-product-container .form-control {
@@ -83,4 +89,5 @@
     height: auto;
     border: 2px solid #ddd;
     border-radius: 8px;
+    max-height: 200px; 
 }

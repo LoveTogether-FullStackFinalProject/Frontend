@@ -9,22 +9,31 @@ import './UploadProduct.css';
 
 const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
-    quantity: z.number().gt(1, "כמות הפריט חייבת להיות יותר מ-1"),
+    quantity: z.number().gt(0, "כמות הפריט חייבת להיות יותר מ-0"),
     category: z.string().min(1, "יש לבחור קטגוריה"),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
-    expirationDate: z.string().optional()
+    expirationDate: z.string().optional(),
+    description: z.string().optional(),
+    pickupAddress: z.string().optional()
 });
 
 type FormData = z.infer<typeof schema>;
 
 const UploadProduct = () => {
     const [imgSrc, setImgSrc] = useState<File>();
+    const [imgPreview, setImgPreview] = useState<string>();
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
-            setImgSrc(e.target.files[0]);
+            const file = e.target.files[0];
+            setImgSrc(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImgPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -60,7 +69,7 @@ const UploadProduct = () => {
                     {errors.itemName && <p className="text-danger">{errors.itemName.message}</p>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input {...register("quantity")} type="number" className="form-control" id="quantity" placeholder="כמות" />
+                    <input {...register("quantity", { valueAsNumber: true })} type="number" className="form-control" id="quantity" placeholder="כמות" />
                     <label htmlFor="quantity">כמות</label>
                     {errors.quantity && <p className="text-danger">{errors.quantity.message}</p>}
                 </div>
@@ -84,7 +93,7 @@ const UploadProduct = () => {
                     <label htmlFor="description">תיאור</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="pickupAddress" placeholder="כתובת לאיסוף" />
+                    <input {...register("pickupAddress")} type="text" className="form-control" id="pickupAddress" placeholder="כתובת לאיסוף" />
                     <label htmlFor="pickupAddress">כתובת לאיסוף</label>
                 </div>
                 <div className="d-flex justify-content-center">
@@ -96,6 +105,11 @@ const UploadProduct = () => {
                         </button>
                     </div>
                 </div>
+                {imgPreview && (
+                    <div className="image-preview-container text-center">
+                        <img src={imgPreview} alt="Image Preview" className="image-preview" />
+                    </div>
+                )}
                 {errors.image && <p className="text-danger">{errors.image.message}</p>}
                 <div className="d-flex justify-content-center">
                     <button type="submit" className="btn btn-primary mt-3">הוסף/י</button>

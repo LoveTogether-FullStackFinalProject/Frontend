@@ -9,7 +9,7 @@ import './UploadProduct.css';
 
 const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
-    quantity: z.number().min(1, "כמות הפריט חייבת להיות חיובית"),
+    quantity: z.number().gt(1, "כמות הפריט חייבת להיות יותר מ-1"),
     category: z.string().min(1, "יש לבחור קטגוריה"),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
     expirationDate: z.string().optional()
@@ -75,7 +75,7 @@ const UploadProduct = () => {
                     {errors.condition && <p className="text-danger">{errors.condition.message}</p>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input {...register("expirationDate")} type="text" className="form-control" id="expirationDate" placeholder="תוקף שימוש" />
+                    <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תוקף שימוש" />
                     <label htmlFor="expirationDate">תוקף שימוש</label>
                     {errors.expirationDate && <p className="text-danger">{errors.expirationDate.message}</p>}
                 </div>
@@ -90,7 +90,7 @@ const UploadProduct = () => {
                 <div className="d-flex justify-content-center">
                     <div className="position-relative upload-image-container">
                         <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef} />
-                        <button type="button" className="btn btn-outline-secondary" onClick={selectImg}>
+                        <button type="button" className="btn btn-prominent" onClick={selectImg}>
                             <FontAwesomeIcon icon={faImage} className="fa-xl" />
                             <span>העלאת תמונה</span>
                         </button>

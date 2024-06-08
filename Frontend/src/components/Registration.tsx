@@ -1,7 +1,7 @@
-import { ChangeEvent, useRef, useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { uploadPhoto } from '../services/uploadProductService';
+import {  useState } from 'react';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faImage } from '@fortawesome/free-solid-svg-icons';
+// import { uploadPhoto } from '../services/uploadProductService';
 import { registerUser, googleSignIn } from '../services/registrationService';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,38 +27,38 @@ const Registration = () => {
     const navigate = useNavigate();
     const [registerError, setRegisterError] = useState<string | null>(null);
 
-    const [imgSrc, setImgSrc] = useState<File>();
-    const { register, handleSubmit, formState: { errors }, setValue, trigger } = useForm<FormData>({ resolver: zodResolver(schema) });
+    // const [imgSrc, setImgSrc] = useState<File | null>(null);
+    const { register, handleSubmit, formState: { errors }} = useForm<FormData>({ resolver: zodResolver(schema) });
 
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    // const fileInputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        if (imgSrc) {
-            setValue("image", URL.createObjectURL(imgSrc));
-        }
-    }, [imgSrc, setValue]);
+    // useEffect(() => {
+    //     if (imgSrc) {
+    //         setValue("image", URL.createObjectURL(imgSrc));
+    //     }
+    // }, [imgSrc, setValue]);
 
-    const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setImgSrc(e.target.files[0]);
-            setValue("image", URL.createObjectURL(e.target.files[0]));
-            trigger("image");
-        }
-    };
+    // const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files && e.target.files.length > 0) {
+    //         setImgSrc(e.target.files[0]);
+    //         setValue("image", URL.createObjectURL(e.target.files[0]));
+    //         trigger("image");
+    //     }
+    // };
 
-    const selectImg = () => {
-        fileInputRef.current?.click();
-    };
+    // const selectImg = () => {
+    //     fileInputRef.current?.click();
+    // };
 
     const registerUserHandler = async (data: FormData) => {
         try {
-            let url;
-            if (imgSrc) {
-                url = await uploadPhoto(imgSrc!);
-            }
-            const user: IUser = {
+            // let imageUrl = '';
+            // if (imgSrc) {
+            //     imageUrl = await uploadPhoto(imgSrc);
+            // }
+            const user = {
                 ...data,
-                image: url
+                // image: imageUrl
             };
             const res = await registerUser(user);
             userID = res._id ?? '';
@@ -72,9 +72,21 @@ const Registration = () => {
             localStorage.setItem('userID', userID);
 
             navigate('/feed');
-        } catch (err) {
-            console.log("err: " + err);
-            setRegisterError("כתובת דואר אלקטרוני או תעודת זהות כבר קיימים במערכת");
+        } catch (err: any) {
+            console.log("err: ", err);
+            const errorMessage = err.response?.data;
+
+            if (errorMessage) {
+                if (errorMessage.includes("email already exists")) {
+                    setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+                } else if (errorMessage.includes("missing email or password")) {
+                    setRegisterError("כתובת דואר אלקטרוני או סיסמה חסרים");
+                } else {
+                    setRegisterError("שגיאה בהרשמה. נסו שוב מאוחר יותר.");
+                }
+            } else {
+                setRegisterError("שגיאה בהרשמה. נסו שוב מאוחר יותר.");
+            }
         }
     };
 
@@ -114,19 +126,19 @@ const Registration = () => {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#FFF8DC", display:'flex',justifyContent:'center',alignItems:'center' }}>
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#FFF8DC" }}>
             <div className="card shadow-lg p-4" style={{ maxWidth: "600px", width: "100%" }}>
                 <div className="card-header text-center fw-bold" style={{ fontSize: "2.5rem", color: "burlywood" }}>ברוכים הבאים!</div>
                 <div className="text-center fw-bold mb-4" style={{ fontSize: "1.5rem", color: "brown" }}>♥ואהבתם ביחד♥ </div>
                 <h1 className="text-center fw-bold mb-4">הרשמה</h1>
                 <div className="d-flex justify-content-center position-relative mb-3">
-                    {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Profile" className="img-thumbnail mb-2" style={{ maxWidth: '150px', borderRadius: '50%' }} />}
-                    <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg}>
+                    {/* {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Profile" className="img-thumbnail mb-2" style={{ maxWidth: '150px', borderRadius: '50%' }} />} */}
+                    {/* <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg}>
                         <FontAwesomeIcon icon={faImage} className="fa-2x" style={{ color: 'burlywood' }} />
-                    </button>
+                    </button> */}
                 </div>
-                <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
-                {errors.image && <p className="text-danger">{errors.image.message}</p>}
+                {/* <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
+                {errors.image && <p className="text-danger">{errors.image.message}</p>} */}
                 <div className="card-body">
                     <form onSubmit={handleSubmit(registerUserHandler)}>
                         <div className="form-floating mb-3">
@@ -177,5 +189,3 @@ const Registration = () => {
 }
 
 export default Registration;
-
-

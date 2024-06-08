@@ -34,7 +34,7 @@ const Profile = () => {
       const userResponse = await userReq;
       setUser(userResponse.data);
 
-      const { req: productsReq } = dataService.getProducts();
+      const { req: productsReq } = dataService.getDonations();
       const productsResponse = await productsReq;
       setProducts(productsResponse.data);
     } catch (error) {

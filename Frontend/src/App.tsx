@@ -60,8 +60,9 @@ import Statictics from "./components/statistics"
 import ManageUsers from "./components/ManageUsers"
 import AdminDashboard from "./components/AdminDashboard"
 import ManageDonationPage from './components/ManageDonations';
+import Profile from './components/Profile';
+import AboutPage from './components/aboutPage';
 import UploadProduct from './components/UploadProduct';
-
 
 const App = () => {
     return (
@@ -75,6 +76,9 @@ const App = () => {
                 <Route path="/statictics" element={<Statictics />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
+                <Route path="/manageDonations" element={<ManageDonationPage />} />
+                <Route path="/profile/:userId" element={<Profile />} />
+                <Route path="/about" element={<AboutPage />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/uploadproduct" element={<UploadProduct />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />              

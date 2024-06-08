@@ -37,7 +37,6 @@ const AboutPage = () => {
             src="https://www.facebook.com/plugins/video.php?height=316&href=https%3A%2F%2Fwww.facebook.com%2Fveahavtembeyahad%2Fvideos%2F907666304163438%2F&show_text=false&width=560&t=0"
             width="560"
             height="316"
-            style={{ border: 'none', overflow: 'hidden' }}
             scrolling="no"
             frameBorder="0"
             allowFullScreen={true}

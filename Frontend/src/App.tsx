@@ -61,6 +61,7 @@ import ManageUsers from "./components/ManageUsers"
 import AdminDashboard from "./components/AdminDashboard"
 import ManageDonationPage from './components/ManageDonations';
 import Profile from './components/Profile';
+import AboutPage from './components/aboutPage';
 
 
 const App = () => {
@@ -76,7 +77,8 @@ const App = () => {
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
                 <Route path="/profile/:userId" element={<Profile />} />
-              
+                <Route path="/about" element={<AboutPage />} />
+
             </Routes>
         </Router>
     );

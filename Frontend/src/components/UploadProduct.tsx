@@ -28,6 +28,7 @@ const UploadProduct = () => {
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
+            console.log("Selected file:", file);
             setImgSrc(file);
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -50,6 +51,7 @@ const UploadProduct = () => {
 
             const productData = { ...data, imageUrl };
             await uploadProduct(productData);
+          
 
             console.log("Form data:", data);
             console.log("Image URL:", imageUrl);
@@ -84,35 +86,33 @@ const UploadProduct = () => {
                     {errors.condition && <p className="text-danger">{errors.condition.message}</p>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תוקף שימוש" />
-                    <label htmlFor="expirationDate">תוקף שימוש</label>
-                    {errors.expirationDate && <p className="text-danger">{errors.expirationDate.message}</p>}
+                    <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
+                    <label htmlFor="expirationDate">תאריך תפוגה</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <textarea {...register("description")} className="form-control" id="description" placeholder="תיאור" />
+                    <input {...register("description")} type="text" className="form-control" id="description" placeholder="תיאור" />
                     <label htmlFor="description">תיאור</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input {...register("pickupAddress")} type="text" className="form-control" id="pickupAddress" placeholder="כתובת לאיסוף" />
-                    <label htmlFor="pickupAddress">כתובת לאיסוף</label>
+                    <input {...register("pickupAddress")} type="text" className="form-control" id="pickupAddress" placeholder="כתובת איסוף" />
+                    <label htmlFor="pickupAddress">כתובת איסוף</label>
                 </div>
-                <div className="d-flex justify-content-center">
-                    <div className="position-relative upload-image-container">
-                        <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef} />
-                        <button type="button" className="btn btn-prominent" onClick={selectImg}>
-                            <FontAwesomeIcon icon={faImage} className="fa-xl" />
-                            <span>העלאת תמונה</span>
+                <div className="text-center">
+                    <div className="position-relative d-inline-block">
+                        <input ref={fileInputRef} className="file-input" type="file" accept="image/*" onChange={imgSelected} style={{ display: 'none' }} />
+                        <button type="button" className="btn btn-outline-primary" onClick={selectImg}>
+                            <FontAwesomeIcon icon={faImage} className="me-2" />
+                            העלאת תמונה
                         </button>
                     </div>
                 </div>
-                {imgPreview && (
-                    <div className="image-preview-container text-center">
-                        <img src={imgPreview} alt="Image Preview" className="image-preview" />
-                    </div>
-                )}
-                {errors.image && <p className="text-danger">{errors.image.message}</p>}
-                <div className="d-flex justify-content-center">
-                    <button type="submit" className="btn btn-primary mt-3">הוסף/י</button>
+                {imgPreview && <div className="text-center">
+                    <img src={imgPreview} alt="Selected" className="img-preview" />
+                </div>}
+                <div className="text-center">
+                    <button type="submit" className="btn btn-primary">
+                        שלח
+                    </button>
                 </div>
             </form>
         </div>

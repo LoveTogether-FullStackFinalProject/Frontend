@@ -49,7 +49,9 @@ const UploadProduct = () => {
                 imageUrl = await uploadPhoto(imgSrc);
             }
 
-            const productData = { ...data, imageUrl };
+
+            const productData = { ...data, image: imageUrl };
+    
             await uploadProduct(productData);
           
 
@@ -114,6 +116,7 @@ const UploadProduct = () => {
                         שלח
                     </button>
                 </div>
+
             </form>
         </div>
     );

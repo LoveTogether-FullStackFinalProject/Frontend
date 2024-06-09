@@ -43,6 +43,8 @@ export const uploadPhoto = async (photo: File) => {
 };
 export const uploadProduct = async (productData: any) => {
     try {
+        // return apiClient.put(`/donation/upload}`, productData);
+
         const response = await axios.post(`${BASE_URL}/donation/upload`, productData);
         return response.data;
     } catch (error) {

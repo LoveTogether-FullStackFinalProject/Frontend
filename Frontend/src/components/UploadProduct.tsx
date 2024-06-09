@@ -28,6 +28,7 @@ const UploadProduct = () => {
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
+            console.log("Selected file:", file);
             setImgSrc(file);
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -50,6 +51,7 @@ const UploadProduct = () => {
 
             const productData = { ...data, imageUrl };
             await uploadProduct(productData);
+          
 
             console.log("Form data:", data);
             console.log("Image URL:", imageUrl);

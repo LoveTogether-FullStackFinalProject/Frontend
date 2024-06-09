@@ -1,8 +1,9 @@
-import axios from 'axios';
+import { IDonor } from './login-service';
+import apiClient from './api-client'; 
 
 export const registerUser = async (user: any) => {
     try {
-        const response = await axios.post('/register', user);
+        const response = await apiClient.post<IDonor>('/auth/register', user);
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -12,7 +13,7 @@ export const registerUser = async (user: any) => {
 
 export const googleSignIn = async (credentialResponse: any) => {
     try {
-        const response = await axios.post('/googleSignIn', credentialResponse);
+        const response = await apiClient.post('/googleSignIn', credentialResponse);
         return response.data;
     } catch (error) {
         throw new Error('Google Sign-In failed');

@@ -2,6 +2,7 @@ import apiClient, { CanceledError } from "./api-client"
 import { Donation } from '../components/donation'
 import { DonorData } from '../components/donorData';
 
+
 export { CanceledError };
 
 const getDonations = () => {
@@ -36,4 +37,12 @@ const deleteDonation = (donationId: string) => {
     return apiClient.delete(`/donation/${donationId}`);
 };
 
-export default { getUser, getDonations, updateDonation, deleteDonation, getRequestedProducts, getUsers };
+const getAdmin = () =>{
+    return apiClient.get(`/admin/admin`);
+}
+
+const getAllUsers = () => {
+    return apiClient.get(`/admin`);
+}
+
+export default { getUser, getDonations, updateDonation, deleteDonation, getRequestedProducts, getUsers , getAdmin,getAllUsers};

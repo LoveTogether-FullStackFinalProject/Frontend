@@ -4,8 +4,6 @@ html, body {
   padding: 0;
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
-  direction: rtl;
-  text-align: right;
 }
 
 .header {
@@ -67,6 +65,8 @@ nav a {
   justify-content: space-around;
   margin-bottom: 20px;
   width: 100%;
+  direction: rtl;
+  text-align: right;
 }
 
 .tabs button {
@@ -75,11 +75,15 @@ nav a {
   background-color: #dcdcdc;
   cursor: pointer;
   transition: background-color 0.3s;
+  direction: rtl;
+  text-align: right;
 }
 
 .tabs button.active, .tabs button:hover {
   background-color: #a5673d;
   color: #fff;
+  direction: rtl;
+  text-align: right;
 }
 
 .donations-list {
@@ -90,6 +94,9 @@ nav a {
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   flex-grow: 1; /* Allows the content to grow and fill the available space */
   justify-content: center; /* Centers the donation cards */
+  min-height: 500px; /* Adjust this value as needed */
+  direction: rtl;
+  text-align: right;
 }
 
 .donation-card {
@@ -102,6 +109,8 @@ nav a {
   flex-direction: column;
   align-items: center;
   transition: transform 0.3s, box-shadow 0.3s;
+  direction: rtl;
+  text-align: right;
 }
 
 .donation-card:hover {

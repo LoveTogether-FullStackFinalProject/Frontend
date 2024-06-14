@@ -6,18 +6,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
 import logo from '../assets/logoVeahavtem.png';
 import facebookLogo from '../assets/facebookLogo.png';
-import instagramLogo from '../assets/instagramLogo.png';
+import instagramLogo from '../assets/facebookLogo.png';
 import Donor, { DonorData } from './donorData';
 
 const Profile = () => {
   const { userId } = useParams<{ userId: string }>();
   const [user, setUser] = useState<DonorData | null>(null);
   const [donations, setDonations] = useState<Donation[]>([]);
+  const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | undefined>(undefined);
-  const [activeTab, setActiveTab] = useState('donated');
-  const [editDonationId, setEditDonationId] = useState<string | null>(null);
-  const [editableDonation, setEditableDonation] = useState<Partial<Donation>>({});
+  const [activeTab, setActiveTab] = useState('all');
+  const [itemsToShow, setItemsToShow] = useState(8);
 
   const fetchData = useCallback(async () => {
     try {
@@ -41,57 +41,34 @@ const Profile = () => {
     fetchData();
   }, [fetchData]);
 
-  const handleEditClick = (donation: Donation) => {
-    setEditDonationId(donation._id);
-    setEditableDonation(donation);
-  };
-
-  const handleDeleteClick = async (donationId: string) => {
-    try {
-      await dataService.deleteDonation(donationId);
-      setDonations(donations.filter((donation) => donation._id !== donationId));
-    } catch (error) {
-      console.error('Error deleting donation:', error);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setEditableDonation((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSaveClick = async () => {
-    try {
-      await dataService.updateDonation(editDonationId!, editableDonation);
-      setDonations((prev) =>
-        prev.map((donation) =>
-          donation._id === editDonationId ? { ...donation, ...editableDonation } : donation
-        )
-      );
-      setEditDonationId(null);
-      setEditableDonation({});
-    } catch (error) {
-      console.error('Error updating donation:', error);
-    }
-  };
-
-  const handleCancelClick = () => {
-    setEditDonationId(null);
-    setEditableDonation({});
-  };
+  useEffect(() => {
+    filterDonations();
+  }, [donations, activeTab, itemsToShow]);
 
   const filterDonations = () => {
-    switch (activeTab) {
-      case 'אושר':
-        return donations.filter(donation => donation.status === 'אושר');
-      case 'ממתין לאישור':
-        return donations.filter(donation => donation.status === 'ממתין לאישור');
-      case 'טרם נמסר':
-        return donations.filter(donation => donation.status === 'טרם נמסר');
-      case 'all':
-      default:
-        return donations;
-    }
+    const filtered = donations.filter((donation) => {
+      switch (activeTab) {
+        case 'אושר':
+          return donation.status === 'אושר';
+        case 'ממתין לאישור':
+          return donation.status === 'ממתין לאישור';
+        case 'טרם נמסר':
+          return donation.status === 'טרם נמסר';
+        case 'all':
+        default:
+          return true;
+      }
+    });
+    setFilteredDonations(filtered.slice(0, itemsToShow));
+  };
+
+  const handleShowMoreClick = () => {
+    setItemsToShow(itemsToShow + 8);
+  };
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+    setItemsToShow(8);
   };
 
   const getStatusClass = (status: string) => {
@@ -100,8 +77,10 @@ const Profile = () => {
         return 'status-approved';
       case 'ממתין לאישור':
         return 'status-pending';
-      default:
+      case 'טרם נמסר':
         return 'status-not-approved';
+      default:
+        return '';
     }
   };
 
@@ -129,7 +108,7 @@ const Profile = () => {
             <button
               key={tab}
               className={activeTab === tab ? 'active' : ''}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabClick(tab)}
             >
               {tab === 'אושר' && 'תרומות שאושרו'}
               {tab === 'ממתין לאישור' && 'תרומות שלא אושרו'}
@@ -137,80 +116,56 @@ const Profile = () => {
               {tab === 'all' && 'התרומות שלי'}
             </button>
           ))}
-        </div>
+          </div>
         <div className="donations-list">
-          {filterDonations().map((donation) => (
+          {filteredDonations.map((donation) => (
             <div key={donation._id} className="donation-card">
-              {editDonationId === donation._id ? (
-                <div className="donation-details">
-                  <input
-                    type="text"
-                    name="category"
-                    value={editableDonation.category || ''}
-                    onChange={handleInputChange}
-                    placeholder="קטגוריה"
-                  />
-                  <input
-                    type="text"
-                    name="productType"
-                    value={editableDonation.productType || ''}
-                    onChange={handleInputChange}
-                    placeholder="סוג הפריט"
-                  />
-                  <input
-                    type="number"
-                    name="amount"
-                    value={editableDonation.amount || ''}
-                    onChange={handleInputChange}
-                    placeholder="כמות"
-                  />
-                  <input
-                    type="text"
-                    name="itemCondition"
-                    value={editableDonation.itemCondition || ''}
-                    onChange={handleInputChange}
-                    placeholder="מצב הפריט"
-                  />
-                  <textarea
-                    name="description"
-                    value={editableDonation.description || ''}
-                    onChange={handleInputChange}
-                    placeholder="תיאור"
-                  />
-                  <input
-                    type="date"
-                    name="expirationDate"
-                    value={editableDonation.expirationDate ? new Date(editableDonation.expirationDate).toISOString().substring(0, 10) : ''}
-                    onChange={handleInputChange}
-                    placeholder="תוקף"
-                  />
-                  <input
-                    type="text"
-                    name="pickUpAddress"
-                    value={editableDonation.pickUpAddress || ''}
-                    onChange={handleInputChange}
-                    placeholder="כתובת לאיסוף"
-                  />
-                  <button className="save-button" onClick={handleSaveClick}>שמור</button>
-                  <button className="cancel-button" onClick={handleCancelClick}>בטל</button>
-                </div>
-              ) : (
-                <div className="donation-details">
-                  <p>קטגוריה: {donation.category}</p>
-                  <p>סוג הפריט: {donation.productType}</p>
-                  <p>כמות: {donation.amount}</p>
-                  <p>מצב הפריט: {donation.itemCondition}</p>
-                  <p>תיאור: {donation.description}</p>
-                  <p>תוקף: {new Date(donation.expirationDate).toLocaleDateString()}</p>
-                  <p>כתובת לאיסוף: {donation.pickUpAddress}</p>
-                  <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
-                  <button className="edit-button" onClick={() => handleEditClick(donation)}>ערוך פריט</button>
-                  <button className="delete-button" onClick={() => handleDeleteClick(donation._id)}>מחק פריט</button>
-                </div>
-              )}
+              <div className="donation-details">
+                <p>קטגוריה: {donation.category}</p>
+                <p>סוג הפריט: {donation.productType}</p>
+                <p>כמות: {donation.amount}</p>
+                <p>מצב הפריט: {donation.itemCondition}</p>
+                <p>תיאור: {donation.description}</p>
+                <p>תוקף: {new Date(donation.expirationDate).toLocaleDateString()}</p>
+                <p>כתובת לאיסוף: {donation.pickUpAddress}</p>
+                <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
+              </div>
             </div>
           ))}
         </div>
+        <div className="donations-list">
+          {filteredDonations.map((donation) => (
+            <div key={donation._id} className="donation-card">
+              <div className="donation-details">
+                <p>קטגוריה: {donation.category}</p>
+                <p>סוג הפריט: {donation.productType}</p>
+                <p>כמות: {donation.amount}</p>
+                <p>מצב הפריט: {donation.itemCondition}</p>
+                <p>תיאור: {donation.description}</p>
+                <p>תוקף: {new Date(donation.expirationDate).toLocaleDateString()}</p>
+                <p>כתובת לאיסוף: {donation.pickUpAddress}</p>
+                <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {filteredDonations.length < donations.filter((donation) => {
+          switch (activeTab) {
+            case 'אושר':
+              return donation.status === 'אושר';
+            case 'ממתין לאישור':
+              return donation.status === 'ממתין לאישור';
+            case 'טרם נמסר':
+              return donation.status === 'טרם נמסר';
+            case 'all':
+            default:
+              return true;
+          }
+        }).length && (
+          <button className="load-more-button" onClick={handleShowMoreClick}>
+            הצג עוד
+          </button>
+        )}
       </main>
       <footer className="footer">
         <p>© 2024 עמותת ואהבתם ביחד. כל הזכויות שמורות.</p>
@@ -228,3 +183,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

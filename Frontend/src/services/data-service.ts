@@ -29,11 +29,11 @@ const getUser = (userId: string) => {
 };
 
 const updateDonation = (donationId: string, data: Partial<Donation>) => {
-  return apiClient.put(`/update/${donationId}`, data);
+  return apiClient.put(`/donation/update/${donationId}`, data);
 };
 
 const deleteDonation = (donationId: string) => {
-  return apiClient.delete(`/delete/${donationId}`);
+  return apiClient.delete(`/donation/delete/${donationId}`);
 };
 
 const getDonationsByUser = (userId: string) => {

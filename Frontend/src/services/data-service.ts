@@ -38,7 +38,7 @@ const deleteDonation = (donationId: string) => {
 
 const getDonationsByUser = (userId: string) => {
   const abortController = new AbortController();
-  const req = apiClient.get<Donation[]>(`/donation/user/${userId}`, { signal: abortController.signal })
+  const req = apiClient.get<Donation[]>(`/donation/user/${userId}`, { signal: abortController.signal });
   return { req, abort: () => abortController.abort() };
 };
 

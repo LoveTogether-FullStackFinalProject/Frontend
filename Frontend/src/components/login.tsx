@@ -6,20 +6,27 @@ import {  useRef, useState } from 'react'
 import emailIcon from './../assets/email.png';
 import passwordIcon from './../assets/password.png';
 
-
+export let userID: string
 
 function Login() {
-    const navigate = useNavigate();
+const navigate = useNavigate();
 const [loginError, setLoginError] = useState<string | null>(null);
 const emailInputRef = useRef<HTMLInputElement>(null)
 const passwordInputRef = useRef<HTMLInputElement>(null)
 
-const login= () => {
-  
+const login= async () => {
   if (emailInputRef.current?.value && passwordInputRef.current?.value) {
     try {
-        postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
-        navigate('/mainPage');
+     const res = await postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
+      userID = res._id as string; 
+      if (res.accessToken) {
+        localStorage.setItem('accessToken', res.accessToken);
+      }
+      if (res.refreshToken) {
+        localStorage.setItem('refreshToken', res.refreshToken);
+      }
+      localStorage.setItem('userID', userID);
+      navigate('/mainPage');
 
     } catch (err) {
       console.log("err: " +err);

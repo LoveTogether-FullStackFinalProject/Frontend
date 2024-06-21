@@ -67,15 +67,16 @@ function UploadRequestedProduct() {
 
 <div className="d-flex justify-content-center position-relative" style={{ marginTop: '50px' }}>
             {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Post" className="img-thumbnail mb-2" style={{ maxWidth: '200px' }} />}
-            <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg}>
-              <FontAwesomeIcon icon={faImage} className="fa-xl" />
-            </button>
+            <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg} style={{ backgroundColor: 'brown', color: 'white' }}>
+  <FontAwesomeIcon icon={faImage} className="me-2" />
+  העלאת תמונה
+</button>
           </div>
 
           <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
           {errors.image && <p>{errors.image.message}</p>}
 
-<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '85vh', width: '50vw', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9' }}>
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '95vh', width: '50vw', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9' }}>
   <div style={{ width: '300px', textAlign: 'center' }}>
     <form onSubmit={handleSubmit(addNewProduct)}>
       <div className="form-group" style={{ marginTop: '-50px', marginRight: '-10px', marginBottom: '20px' }}>
@@ -119,7 +120,7 @@ function UploadRequestedProduct() {
 </div>
 
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown',padding: '20px 40px',  fontSize: '20px'  }}>העלאה</button>
+        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown',padding: '10px 10px',  fontSize: '20px'  }}>העלאה</button>
       </div>
     </form>
   </div>
@@ -127,8 +128,15 @@ function UploadRequestedProduct() {
               
 </>  
 
+
+
   
   );
 }
 
 export default UploadRequestedProduct;
+
+
+
+
+

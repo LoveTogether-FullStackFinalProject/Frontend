@@ -61,6 +61,20 @@ import person from './../assets/person.png';
         const countProducts = (category: string) => {
             return products.filter(product => product.category === category).length;
         }
+
+        const chunkArray = (myArray, chunk_size) => {
+            let index = 0;
+            const arrayLength = myArray.length;
+            const tempArray = [];
+            
+            for (index = 0; index < arrayLength; index += chunk_size) {
+              const myChunk = myArray.slice(index, index+chunk_size);
+              tempArray.push(myChunk);
+            }
+          
+            return tempArray;
+          };
+          const chunkedRequests = chunkArray(requests, 3);
     
         return (
             <>
@@ -72,45 +86,42 @@ import person from './../assets/person.png';
             </div>
 
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', marginBottom: '80px', backgroundColor: '#F0FFFF' }}>
-                <Carousel
-                    nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
-                    prevIcon={<span aria-hidden="true" className="carousel-control-prev-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
-                >
-    <Carousel.Item>
+            <Carousel
+    nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
+    prevIcon={<span aria-hidden="true" className="carousel-control-prev-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
+  >
+    {chunkedRequests.map((chunk, chunkIndex) => (
+      <Carousel.Item key={chunkIndex}>
         <Row>
-        {requests.map((request, index) => (
-        // <Col key={index}>
-        //   {/* <img className="d-block w-100" src={images[index % images.length]} alt={`Image ${index + 1}`} style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} /> */}
-        //   <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
-        //   <img src={request.image} alt="Product" style={{ width: '100px', height: '100px' }} />
-        // </Col>
-    <Col key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
-     <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
-    </Col>
-      ))}
-            {/* <Col>
-                <img className="d-block w-100" src={donation1} alt="Image 1" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
-                <p style={{ textAlign: 'center', fontWeight: 'bold' }}>מטרנה - 3 חבילות</p>
+          {chunk.map((request, index) => (
+            <Col key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
+              <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
             </Col>
-            <Col>
-                <img className="d-block w-100" src={donation2} alt="Image 2" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
-                <p style={{ textAlign: 'center', fontWeight: 'bold' }}>ירקות - כמות למשפחה </p>
-            </Col>
-            <Col>
-                <img className="d-block w-100" src={donation3} alt="Image 3" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
-                <p style={{ textAlign: 'center', fontWeight: 'bold' }}>30 אחרוחות חמות לחג</p>
-            </Col> */}
+          ))}
         </Row>
-    </Carousel.Item>
-</Carousel>
-                {/* <button style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>תרמו כאן</button> */}
-                <button 
-    onClick={() => navigate('/uploadproduct')}
-    style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}
->
-    תרמו כאן
-</button>
+      </Carousel.Item>
+    ))}
+  </Carousel>
+
+  <style jsx>{`
+  .carousel-control-next-icon:after,
+  .carousel-control-prev-icon:after {
+    content: '>';
+    font-size: 30px;
+    color: black;
+  }
+
+  .carousel-control-prev-icon:after {
+    content: '<';
+  }
+`}</style>
+        <button 
+              onClick={() => navigate('/uploadproduct')}
+                style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}
+                >
+                 תרמו כאן
+        </button>
             </div>
 
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF', marginBottom: '80px' }}>
@@ -168,17 +179,17 @@ import person from './../assets/person.png';
                          <p key={index}>{user.firstName} {user.lastName}</p>
                          ))} */}
 
-<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
-    {users.filter(user => user.rating === "1").map((user, index) => (
-        <div key={index} style={{ margin: '20px' }}>
-            <img 
-             src={user.image || person} 
-             alt={`${user.firstName} ${user.lastName}`} 
-             style={{ width: '150px', height: '150px' }} 
-            />
-            <p style={{ fontSize: '25px', textAlign: 'center' }}>{user.firstName} {user.lastName}</p>
-        </div>
-    ))}
+<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '50px' }}>
+  {users.filter(user => user.rating === "1").map((user, index) => (
+    <div key={index} style={{ margin: '20px', flex: '0 0 auto' }}>
+      <img 
+        src={user.image || person} 
+        alt={`${user.firstName} ${user.lastName}`} 
+        style={{ width: '100px', height: '100px' }} 
+      />
+      <p style={{ fontSize: '20px', textAlign: 'center' }}>{user.firstName} {user.lastName}</p>
+    </div>
+  ))}
 </div>
                     </div>
                     {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -197,3 +208,5 @@ import person from './../assets/person.png';
     }
     
     export default MainPage
+
+

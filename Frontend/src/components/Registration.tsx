@@ -4,7 +4,7 @@ import {  useState } from 'react';
 // import { uploadPhoto } from '../services/uploadProductService';
 import { registerUser, googleSignIn } from '../services/registrationService';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 

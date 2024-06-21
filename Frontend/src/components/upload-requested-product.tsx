@@ -57,6 +57,16 @@ function UploadRequestedProduct() {
     navigate('/mainPage'); 
   };
 
+  const accessToken = localStorage.getItem('accessToken');
+  if (!accessToken) {
+      return (
+          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
+          <p style={{ color: 'red' }}>שגיאה: אינך מחובר בתור מנהל</p>
+          <button onClick={() => navigate('/adminDashboard')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר בתור מנהל</button>
+        </div>
+      );
+    }
+
   return (
     <>
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '5vh' }}>

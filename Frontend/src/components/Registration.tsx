@@ -71,7 +71,7 @@ const Registration = () => {
             }
             localStorage.setItem('userID', userID);
 
-            navigate('/feed');
+            navigate('/mainPage');
         } catch (err: any) {
             console.log("err: ", err);
             const errorMessage = err.response?.data;
@@ -101,7 +101,7 @@ const Registration = () => {
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
-            navigate('/feed');
+            navigate('/mainPage');
         } catch (e) {
             console.log(e);
         }

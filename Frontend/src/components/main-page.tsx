@@ -1,4 +1,5 @@
 import {  useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Donation } from './donation.tsx';
 import { DonorData } from './donorData.tsx';
 import  dataService,{ CanceledError } from "../services/data-service";
@@ -20,6 +21,8 @@ import donation3 from './../assets/donation3.png';
         const [products, setProducts] = useState<Donation[]>([])
         const [users, setUsers] = useState<DonorData[]>([])
         const [requests, setRequests] = useState<Donation[]>([])
+        const navigate = useNavigate();
+
         useEffect(() => {
             const { req, abort } = dataService.getDonations()
             req.then((res) => {
@@ -68,6 +71,15 @@ import donation3 from './../assets/donation3.png';
         const countProducts = (category: string) => {
             return products.filter(product => product.category === category).length;
         }
+
+        const handleProfileClick = () => {
+            const userId = localStorage.getItem('userID');
+            if (userId) {
+                navigate(`/profile/${userId}`);
+            } else {
+                alert('User not logged in');
+            }
+        };
     
         return (
             <>
@@ -106,6 +118,11 @@ import donation3 from './../assets/donation3.png';
         </Row>
     </Carousel.Item>
 </Carousel>
+                        <button 
+                        style={{ display: 'inline-block', marginRight: '10px', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold' }}
+                        onClick={handleProfileClick}>
+                        הפרופיל שלי
+                    </button>
                 <button style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>תרמו כאן</button>
             </div>
 

@@ -14,32 +14,43 @@ const [loginError, setLoginError] = useState<string | null>(null);
 const emailInputRef = useRef<HTMLInputElement>(null)
 const passwordInputRef = useRef<HTMLInputElement>(null)
 
-const login= () => {
-  
-  if (emailInputRef.current?.value && passwordInputRef.current?.value) {
-    try {
-        postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
-        navigate('/mainPage');
-
-    } catch (err) {
-      console.log("err: " +err);
-      setLoginError('שם משתמש או סיסמה לא נכונים');
-      }
-    }
-    else {
-        setLoginError('אנא הכנס/י שם משתמש וסיסמה');
+const login = async () => {
+    if (emailInputRef.current?.value && passwordInputRef.current?.value) {
+      try {
+        const res = await postLogIn(emailInputRef.current.value, passwordInputRef.current.value);
+        if (res._id) {
+          localStorage.setItem('accessToken', res.accessToken || '');
+          localStorage.setItem('refreshToken', res.refreshToken || '');
+          localStorage.setItem('userID', res._id);
+          navigate(`/profile/${res._id}`);
+        } else {
+          throw new Error("User ID is undefined");
         }
-}
-
- const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
-    console.log(credentialResponse)
-    try {
-        const res = await googleSignin(credentialResponse)
-        console.log(res)
-    } catch (e) {
-        console.log(e)
+      } catch (err) {
+        console.log("err: " + err);
+        setLoginError('שם משתמש או סיסמה לא נכונים');
+      }
+    } else {
+      setLoginError('אנא הכנס/י שם משתמש וסיסמה');
     }
- }
+  };
+
+const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
+    console.log(credentialResponse);
+    try {
+      const res = await googleSignin(credentialResponse);
+      if (res._id) {
+        localStorage.setItem('accessToken', res.accessToken || '');
+        localStorage.setItem('refreshToken', res.refreshToken || '');
+        localStorage.setItem('userID', res._id);
+        navigate(`/profile/${res._id}`);
+      } else {
+        throw new Error("User ID is undefined");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 
 const onGoogleLoginFailure = () => {

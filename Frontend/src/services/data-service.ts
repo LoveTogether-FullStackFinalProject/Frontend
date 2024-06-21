@@ -42,4 +42,10 @@ const getDonationsByUser = (userId: string) => {
   return { req, abort: () => abortController.abort() };
 };
 
+export const logout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('userID');
+};
+
 export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers };

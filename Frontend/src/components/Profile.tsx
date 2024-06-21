@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link , useNavigate} from 'react-router-dom';
 import { Donation } from './donation';
-import dataService, { CanceledError } from '../services/data-service';
+import dataService, { CanceledError , logout} from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
 import logo from '../assets/logoVeahavtem.png';
@@ -18,6 +18,8 @@ const Profile = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [activeTab, setActiveTab] = useState('all');
   const [itemsToShow, setItemsToShow] = useState(8);
+  const navigate = useNavigate();
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -71,6 +73,11 @@ const Profile = () => {
     setItemsToShow(8);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   const getStatusClass = (status: string) => {
     switch (status) {
       case 'אושר':
@@ -95,7 +102,7 @@ const Profile = () => {
         <nav>
           <Link to="/mainPage">עמוד הבית</Link>
           <Link to="/donate">שליחת תרומה</Link>
-          <Link to="/login">התנתק</Link>
+          <button onClick={handleLogout}>התנתק</button>
         </nav>
         <div className="user-info">
           <img src="../assets/person1.png" alt="User Avatar" className="avatar" />

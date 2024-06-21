@@ -24,6 +24,7 @@ import donation3 from './../assets/donation3.png';
             const { req, abort } = dataService.getDonations()
             req.then((res) => {
                 setProducts(res.data)
+                console.log("products" ,products);
             }).catch((err) => {
                 console.log(err)
                 if (err instanceof CanceledError) return
@@ -86,10 +87,15 @@ import donation3 from './../assets/donation3.png';
     <Carousel.Item>
         <Row>
         {requests.map((request, index) => (
-        <Col key={index}>
-          {/* <img className="d-block w-100" src={images[index % images.length]} alt={`Image ${index + 1}`} style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} /> */}
-          <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
-        </Col>
+        // <Col key={index}>
+        //   {/* <img className="d-block w-100" src={images[index % images.length]} alt={`Image ${index + 1}`} style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} /> */}
+        //   <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
+        //   <img src={request.image} alt="Product" style={{ width: '100px', height: '100px' }} />
+        // </Col>
+    <Col key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
+     <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
+    </Col>
       ))}
             {/* <Col>
                 <img className="d-block w-100" src={donation1} alt="Image 1" style={{ border: '1px solid black', borderRadius: '5px', width: '200px', height: '200px', objectFit: 'cover', backgroundColor: '#FFE4E1' }} />
@@ -127,11 +133,17 @@ import donation3 from './../assets/donation3.png';
                 {countProducts('שתייה')} משקאות, ו- {countProducts('כלי בית')} כלי בית
             </h2>
                   
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                        {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                 <img src={product1} alt="Image 1" style={{ width: '15%', margin: '10px', border: '2px solid black' }} />
                                 <img src={product2} alt="Image 2" style={{ width: '25%', margin: '10px', border: '2px solid black' }} />
                                 <img src={product3} alt="Image 3" style={{ width: '25%', margin: '10px', border: '2px solid black' }} />
-                        </div>
+                        </div> */}
+
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+    {products.slice(0, 3).map((product, index) => (
+        <img key={index} src={product.image} alt={`Product ${index + 1}`} style={{ width: '15%', margin: '20px', border: '2px solid black' }} />
+    ))}
+</div>
                 </div>
 
                 {/* <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
@@ -154,16 +166,25 @@ import donation3 from './../assets/donation3.png';
                         <p>ישראל ישראלי</p>
                         <p>ישראל ישראלי</p> */}
 
-                        {users.filter(user => user.rating === "1").map((user, index) => (
+                        {/* {users.filter(user => user.rating === "1").map((user, index) => (
                          <p key={index}>{user.firstName} {user.lastName}</p>
-                         ))}
+                         ))} */}
+
+<div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
+    {users.filter(user => user.rating === "1").map((user, index) => (
+        <div key={index} style={{ margin: '20px' }}>
+            <img src={user.image} alt={`${user.firstName} ${user.lastName}`} style={{ width: '150px', height: '150px' }} />
+            <p style={{ fontSize: '25px', textAlign: 'center' }}>{user.firstName} {user.lastName}</p>
+        </div>
+    ))}
+</div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                        
                         <img src={person1} alt="Image 1" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
                         <img src={person2} alt="Image 2" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
                         <img src={person3} alt="Image 3" style={{ width: '30%', margin: '10px', border: '2px solid black' }} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

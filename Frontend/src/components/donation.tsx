@@ -5,6 +5,7 @@ interface User {
     address: string;
     phoneNumber: string;
     rating: string;
+    image: string;
   }
 
 export interface Donation{
@@ -19,6 +20,7 @@ export interface Donation{
   donor: User;
   status: string; 
   approvedByAdmin?: string; 
+  image: string;
 }
 
 interface DonationProps {
@@ -37,6 +39,7 @@ function Donation({ donation }: DonationProps) {
         <p>Donor name: {donation.donor.firstName}</p>
         <p>Status: {donation.status}</p>
         <p>Approved by admin: {donation.approvedByAdmin}</p>
+        <p>Image: {donation.image}</p>
     </div>
     )
 }

@@ -5,17 +5,7 @@ import  dataService,{ CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
-import person1 from './../assets/person1.png';
-import person2 from './../assets/person2.png';
-import person3 from './../assets/person3.png';
-import product1 from './../assets/product1.png';
-import product2 from './../assets/product2.png';
-import product3 from './../assets/product3.png';
-import donation1 from './../assets/donation1.png';
-import donation2 from './../assets/donation2.png';
-import donation3 from './../assets/donation3.png';
-
-
+import person from './../assets/person.png';
 
     function MainPage() {
         const navigate = useNavigate();
@@ -181,7 +171,11 @@ import donation3 from './../assets/donation3.png';
 <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: '50px' }}>
     {users.filter(user => user.rating === "1").map((user, index) => (
         <div key={index} style={{ margin: '20px' }}>
-            <img src={user.image} alt={`${user.firstName} ${user.lastName}`} style={{ width: '150px', height: '150px' }} />
+            <img 
+             src={user.image || person} 
+             alt={`${user.firstName} ${user.lastName}`} 
+             style={{ width: '150px', height: '150px' }} 
+            />
             <p style={{ fontSize: '25px', textAlign: 'center' }}>{user.firstName} {user.lastName}</p>
         </div>
     ))}

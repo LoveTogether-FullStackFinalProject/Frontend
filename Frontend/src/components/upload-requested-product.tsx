@@ -119,7 +119,7 @@ function UploadRequestedProduct() {
 </div>
 
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown' }}>העלאה</button>
+        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown',padding: '20px 40px',  fontSize: '20px'  }}>העלאה</button>
       </div>
     </form>
   </div>

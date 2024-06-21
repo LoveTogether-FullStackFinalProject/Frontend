@@ -4,6 +4,7 @@ import { DonorData } from './donorData.tsx';
 import  dataService,{ CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'
 import person1 from './../assets/person1.png';
 import person2 from './../assets/person2.png';
 import person3 from './../assets/person3.png';
@@ -17,6 +18,7 @@ import donation3 from './../assets/donation3.png';
 
 
     function MainPage() {
+        const navigate = useNavigate();
         const [products, setProducts] = useState<Donation[]>([])
         const [users, setUsers] = useState<DonorData[]>([])
         const [requests, setRequests] = useState<Donation[]>([])
@@ -112,7 +114,13 @@ import donation3 from './../assets/donation3.png';
         </Row>
     </Carousel.Item>
 </Carousel>
-                <button style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>תרמו כאן</button>
+                {/* <button style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}>תרמו כאן</button> */}
+                <button 
+    onClick={() => navigate('/uploadproduct')}
+    style={{ display: 'block', width: 'auto', padding: '10px', backgroundColor: '#CD853F', color: 'white', fontWeight: 'bold', marginTop: '10px', marginLeft: 'auto', marginRight: 'auto' }}
+>
+    תרמו כאן
+</button>
             </div>
 
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF', marginBottom: '80px' }}>

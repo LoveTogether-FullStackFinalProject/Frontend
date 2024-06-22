@@ -30,7 +30,7 @@ const getUser = (userId: string) => {
   return { req, abort: () => abortController.abort() };
 };
 
-const updateDonation = (donationId: string, data: Partial<Donation>) => {
+const updateDonation = (donationId: string, data: Partial<userDonation>) => {
   return apiClient.put(`/donation/update/${donationId}`, data);
 };
 

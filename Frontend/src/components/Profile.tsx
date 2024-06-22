@@ -5,9 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
 import logo from '../assets/logoVeahavtem.png';
 import facebookLogo from '../assets/facebookLogo.png';
-import instagramLogo from '../assets/facebookLogo.png';
-import { DonorData } from './donorData';
+import instagramLogo from '../assets/instagramLogo.png';
 import { userDonation } from './userDonation';
+import { DonorData } from './donorData';
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<DonorData | null>(null);
@@ -17,6 +17,8 @@ const Profile: React.FC = () => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [activeTab, setActiveTab] = useState('all');
     const [itemsToShow, setItemsToShow] = useState(8);
+    const [editDonationId, setEditDonationId] = useState<string | null>(null);
+    const [editableDonation, setEditableDonation] = useState<Partial<userDonation>>({});
     const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
 
@@ -47,68 +49,95 @@ const Profile: React.FC = () => {
     }, [donations, activeTab, itemsToShow]);
 
     const filterDonations = () => {
-      const filtered = donations.filter((donation) => {
-          switch (activeTab) {
-              case 'אושר':
-                  return donation.status === 'אושר';
-              case 'ממתין לאישור':
-                  return donation.status === 'ממתין לאישור';
-              case 'טרם נמסר':
-                  return donation.status === 'טרם נמסר';
-              case 'all':
-              default:
-                  return true;
-          }
-      });
-      setFilteredDonations(filtered.slice(0, itemsToShow));
-  };
+        const filtered = donations.filter((donation) => {
+            switch (activeTab) {
+                case 'אושר':
+                    return donation.status === 'אושר';
+                case 'ממתין לאישור':
+                    return donation.status === 'ממתין לאישור';
+                case 'טרם נמסר':
+                    return donation.status === 'טרם נמסר';
+                case 'all':
+                default:
+                    return true;
+            }
+        });
+        setFilteredDonations(filtered.slice(0, itemsToShow));
+    };
 
-  const handleShowMoreClick = () => {
-      setItemsToShow(itemsToShow + 8);
-  };
+    const handleShowMoreClick = () => {
+        setItemsToShow(itemsToShow + 8);
+    };
 
-  const handleTabClick = (tab: string) => {
-      setActiveTab(tab);
-      setItemsToShow(8);
-  };
+    const handleTabClick = (tab: string) => {
+        setActiveTab(tab);
+        setItemsToShow(8);
+    };
 
-  const handleLogout = () => {
-      logout();
-      navigate('/login');
-  };
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
-  const handleDelete = async (donationId: string) => {
-      try {
-          await dataService.deleteDonation(donationId);
-          setDonations(donations.filter((donation) => donation._id !== donationId));
-      } catch (error) {
-          console.error('Error deleting donation:', error);
-          setError('Error deleting donation');
-      }
-  };
+    const handleDeleteClick = async (donationId: string) => {
+        try {
+            await dataService.deleteDonation(donationId);
+            setDonations(donations.filter((donation) => donation._id !== donationId));
+        } catch (error) {
+            console.error('Error deleting donation:', error);
+            setError('Error deleting donation');
+        }
+    };
 
-  const handleEdit = (donationId: string) => {
-      navigate(`/editDonation/${donationId}`);
-  };
+    const handleEditClick = (donation: userDonation) => {
+        setEditDonationId(donation._id);
+        setEditableDonation(donation);
+    };
 
-  const getStatusClass = (status: string) => {
-      switch (status) {
-          case 'אושר':
-              return 'status-approved';
-          case 'ממתין לאישור':
-              return 'status-pending';
-          case 'טרם נמסר':
-              return 'status-not-approved';
-          default:
-              return '';
-      }
-  };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setEditableDonation((prev) => ({ ...prev, [name]: value }));
+    };
 
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="loading">{error}</div>;
-  if (!user) return <div className="loading">User not found</div>;
+    const handleSaveClick = async () => {
+        try {
+            await dataService.updateDonation(editDonationId!, editableDonation);
+            setDonations((prev) =>
+                prev.map((donation) =>
+                    donation._id === editDonationId ? { ...donation, ...editableDonation } : donation
+                )
+            );
+            setEditDonationId(null);
+            setEditableDonation({});
+        } catch (error) {
+            console.error('Error updating donation:', error);
+        }
+    };
 
-  return (
+    const handleCancelClick = () => {
+        setEditDonationId(null);
+        setEditableDonation({});
+    };
+
+    const getStatusClass = (status: string) => {
+        switch (status) {
+            case 'אושר':
+                return 'status-approved';
+            case 'ממתין לאישור':
+                return 'status-pending';
+            case 'טרם נמסר':
+                return 'status-not-approved';
+            default:
+                return '';
+        }
+    };
+
+    if (loading) return <div className="loading">Loading...</div>;
+    if (error) return <div className="loading">{error}</div>;
+    if (!user) return <div className="loading">User not found</div>;
+
+   
+    return (
       <div className="profile-page">
           <header className="header">
               <img src={logo} alt="Logo" className="logo" />
@@ -140,19 +169,35 @@ const Profile: React.FC = () => {
               <div className="donations-list">
                   {filteredDonations.map((donation) => (
                       <div key={donation._id} className="donation-card">
-                          <div className="donation-details">
-                              <p>שם הפריט: {donation.itemName}</p>
-                              <p>קטגוריה: {donation.category}</p>
-                              <p>כמות: {donation.quantity}</p>
-                              <p>מצב הפריט: {donation.condition}</p>
-                              <p>תיאור: {donation.description}</p>
-                              <p>תאריך תפוגה: {new Date(donation.expirationDate).toLocaleDateString()}</p>
-                              <p>כתובת לאיסוף: {donation.pickupAddress}</p>
-                              <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
-                              {donation.image && <p>תמונה: <img src={donation.image} alt={donation.itemName} /></p>}
-                              <button onClick={() => handleEdit(donation._id)}>Edit</button>
-                              <button onClick={() => handleDelete(donation._id)}>Delete</button>
-                          </div>
+                          {editDonationId === donation._id ? (
+                              <div className="edit-form">
+                                  <input type="text" name="itemName" value={editableDonation.itemName || ''} onChange={handleInputChange} />
+                                  <input type="text" name="category" value={editableDonation.category || ''} onChange={handleInputChange} />
+                                  <input type="number" name="quantity" value={editableDonation.quantity || 0} onChange={handleInputChange} />
+                                  <input type="text" name="condition" value={editableDonation.condition || ''} onChange={handleInputChange} />
+                                  <textarea name="description" value={editableDonation.description || ''} onChange={handleInputChange}></textarea>
+                                  <input type="date" name="expirationDate" value={new Date(editableDonation.expirationDate!).toISOString().split('T')[0]} onChange={handleInputChange} />
+                                  <input type="text" name="pickupAddress" value={editableDonation.pickupAddress || ''} onChange={handleInputChange} />
+                                  <input type="text" name="status" value={editableDonation.status || ''} onChange={handleInputChange} />
+                                  {editableDonation.image && <input type="text" name="image" value={editableDonation.image} onChange={handleInputChange} />}
+                                  <button className="save-button" onClick={handleSaveClick}>Save</button>
+                                  <button className="cancel-button" onClick={handleCancelClick}>Cancel</button>
+                              </div>
+                          ) : (
+                              <div className="donation-details">
+                                  <p>שם הפריט: {donation.itemName}</p>
+                                  <p>קטגוריה: {donation.category}</p>
+                                  <p>כמות: {donation.quantity}</p>
+                                  <p>מצב הפריט: {donation.condition}</p>
+                                  <p>תיאור: {donation.description}</p>
+                                  <p>תאריך תפוגה: {new Date(donation.expirationDate).toLocaleDateString()}</p>
+                                  <p>כתובת לאיסוף: {donation.pickupAddress}</p>
+                                  <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
+                                  {donation.image && <p>תמונה: <img src={donation.image} alt={donation.itemName} /></p>}
+                                  <button className="edit-button" onClick={() => handleEditClick(donation)}>Edit</button>
+                                  <button className="delete-button" onClick={() => handleDeleteClick(donation._id)}>Delete</button>
+                              </div>
+                          )}
                       </div>
                   ))}
               </div>

@@ -1,10 +1,10 @@
-import {  useEffect, useState } from 'react';
-import { Donation } from './donation.tsx';
-import { DonorData } from './donorData.tsx';
-import  dataService,{ CanceledError } from "../services/data-service";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Donation } from './donation';
+import { DonorData } from './donorData';
+import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'
 import person from './../assets/person.png';
 
     function MainPage() {
@@ -29,34 +29,36 @@ import person from './../assets/person.png';
         }, [])
 
         useEffect(() => {
-            const { req, abort } = dataService.getUsers()
-            req.then((res) => {
-                setUsers(res.data)
-            }).catch((err) => {
-                console.log(err)
-                if (err instanceof CanceledError) return
-                setError(err.message)
-            })
-            
-            return () => {
-                abort()
-            }
-        }, [])
+          const { req, abort } = dataService.getUsers();
+          req.then((res) => {
+              setUsers(res.data);
+          }).catch((err) => {
+              console.log(err);
+              if (err instanceof CanceledError) return;
+          });
+  
+          return () => {
+              abort();
+          };
+      }, []);
 
-        useEffect(() => {
-            const { req, abort } = dataService.getRequestedProducts()
-            req.then((res) => {
-                setRequests(res.data)
-            }).catch((err) => {
-                console.log(err)
-                if (err instanceof CanceledError) return
-                setError(err.message)
-            })
-            
-            return () => {
-                abort()
-            }
-        }, [])
+    useEffect(() => {
+        const { req, abort } = dataService.getRequestedProducts();
+        req.then((res) => {
+            setRequests(res.data);
+        }).catch((err) => {
+            console.log(err);
+            if (err instanceof CanceledError) return;
+        });
+
+        return () => {
+            abort();
+        };
+    }, []);
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    };
 
         const countProducts = (category: string) => {
             return products.filter(product => product.category === category).length;
@@ -84,7 +86,14 @@ import person from './../assets/person.png';
                 <h1 style={{ color: 'brown' }}>"ואהבתם ביחד"</h1>
                 <h2>נשמח לעזרתכם עם המוצרים הדרושים לתרומות בביקוש גבוה כרגע בעמותה:</h2>
             </div>
-
+            <div >
+                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
+                <button className="btn btn-primary">תרמו כאן</button>
+            </div>
+            <div >
+                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
+            </div>
+            
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', marginBottom: '80px', backgroundColor: '#F0FFFF' }}>
             <Carousel
     nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}
@@ -155,21 +164,9 @@ import person from './../assets/person.png';
 </div>
                 </div>
 
-                {/* <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
-                    <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו לכ-150 משפחות רק בשנה האחרונה!
-                        הצלחנו לגייס 1000 ארוחות חמות,
-                        70 מוצרי מזון לתינוקות, ו- 400 כלי בית</h2>
-                  
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <img src={product1} alt="Image 1" style={{ width: '15%', margin: '10px', border: '2px solid black' }} />
-                                <img src={product2} alt="Image 2" style={{ width: '25%', margin: '10px', border: '2px solid black' }} />
-                                <img src={product3} alt="Image 3" style={{ width: '25%', margin: '10px', border: '2px solid black' }} />
-                        </div>
-                </div> */}
-
                 <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
                     <h1 style={{ fontSize: '2em', color: 'red', textAlign: 'center' }}>התורמים שלנו</h1>
-                    <h2 style={{ fontSize: '1em', textAlign: 'center' }}>התרומים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
+                    <h2 style={{ fontSize: '1em', textAlign: 'center' }}>התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {/* <p>ישראל ישראלי</p>
                         <p>ישראל ישראלי</p>

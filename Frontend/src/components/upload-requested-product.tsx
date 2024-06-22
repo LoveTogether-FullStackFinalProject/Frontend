@@ -69,84 +69,65 @@ function UploadRequestedProduct() {
 
   return (
     <>
-<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '5vh' }}>
-  <div>
-    <h1 className="text-center fw-bold" style={{ color: 'brown', fontSize: '3rem', marginTop: '20px', marginBottom: '60px' }}>העלאת מוצר המבוקש לתרומה</h1>
-  </div>
-</div>
 
-<div className="d-flex justify-content-center position-relative" style={{ marginTop: '50px' }}>
-            {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Post" className="img-thumbnail mb-2" style={{ maxWidth: '200px' }} />}
-            <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg} style={{ backgroundColor: 'brown', color: 'white' }}>
-  <FontAwesomeIcon icon={faImage} className="me-2" />
-  העלאת תמונה
-</button>
-          </div>
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '20px' }}>
+  <div style={{ width: '100%', maxWidth: '600px', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9' }}>
+    <h1 className="text-center fw-bold" style={{ color: 'brown', fontSize: '2.5rem', marginTop: '20px', marginBottom: '20px' }}>העלאת מוצר המבוקש לתרומה</h1>
 
-          <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
-          {errors.image && <p>{errors.image.message}</p>}
-
-<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '95vh', width: '50vw', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9' }}>
-  <div style={{ width: '300px', textAlign: 'center' }}>
     <form onSubmit={handleSubmit(addNewProduct)}>
-      <div className="form-group" style={{ marginTop: '-50px', marginRight: '-10px', marginBottom: '20px' }}>
-        
+      <div className="form-group" style={{ marginBottom: '20px' }}>
       </div>
 
-      <div className="form-floating mb-3 d-flex justify-content-center">
-  <input {...register("category")} type="text" className="form-control" id="floatingName" placeholder="" style={{ direction: 'rtl' }} />
-  <div style={{ direction: 'rtl', marginRight: '20px' }}>
-    <label htmlFor="floatingName" style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '10px' }}>קטגוריה</label>
-  </div>
-  {errors.category && <p>{errors.category.message}</p>}
-</div>
-<div className="form-floating mb-3 d-flex justify-content-center">
-  <input {...register("productType")} type="text" className="form-control" id="floatingName" placeholder="" style={{ direction: 'rtl' }}/>
-  <div style={{ direction: 'rtl', marginRight: '20px' }}>
-    <label htmlFor="floatingName" style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '10px' }}>סוג מוצר</label>
-  </div>
-  {errors.productType && <p>{errors.productType.message}</p>}
-</div>
-<div className="form-floating mb-3 d-flex justify-content-center">
-  <input {...register("amount")} type="text" className="form-control" id="floatingName" placeholder="" style={{ direction: 'rtl' }}/>
-  <div style={{ direction: 'rtl', marginRight: '20px' }}>
-    <label htmlFor="floatingName" style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '10px' }}>כמות</label>
-  </div>
-  {errors.amount && <p>{errors.amount.message}</p>}
-</div>
-<div className="form-floating mb-3 d-flex justify-content-center">
-  <input {...register("itemCondition")} type="text" className="form-control" id="floatingName" placeholder="" style={{ direction: 'rtl' }}/>
-  <div style={{ direction: 'rtl', marginRight: '20px' }}>
-    <label htmlFor="floatingName" style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '10px' }}>מצב</label>
-  </div>
-  {errors.itemCondition && <p>{errors.itemCondition.message}</p>}
-</div>
-<div className="form-floating mb-3 d-flex justify-content-center">
-  <input {...register("description")} type="text" className="form-control" id="floatingDescription" placeholder="" style={{ direction: 'rtl' }}/>
-  <div style={{ direction: 'rtl', marginRight: '20px' }}>
-    <label htmlFor="floatingDescription" style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '10px' }}>תיאור המוצר</label>
-  </div>
-  {errors.description && <p>{errors.description.message}</p>}
-</div>
+      <div className="mb-3" style={{ position: 'relative' }}>
+        <input {...register("category")} type="text" className="form-control" id="floatingCategory" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
+        <label htmlFor="floatingCategory" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>קטגוריה</label>
+        {errors.category && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>}
+      </div>
+
+      <div className="mb-3" style={{ position: 'relative' }}>
+        <input {...register("productType")} type="text" className="form-control" id="floatingProductType" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
+        <label htmlFor="floatingProductType" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>סוג מוצר</label>
+        {errors.productType && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.productType.message}</p>}
+      </div>
+
+      <div className="mb-3" style={{ position: 'relative' }}>
+        <input {...register("amount")} type="number" className="form-control" id="floatingAmount" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
+        <label htmlFor="floatingAmount" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>כמות</label>
+        {errors.amount && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>}
+      </div>
+
+      <div className="mb-3" style={{ position: 'relative' }}>
+        <input {...register("itemCondition")} type="text" className="form-control" id="floatingItemCondition" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
+        <label htmlFor="floatingItemCondition" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>מצב</label>
+        {errors.itemCondition && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemCondition.message}</p>}
+      </div>
+
+      <div className="mb-3" style={{ position: 'relative' }}>
+        <input {...register("description")} type="text" className="form-control" id="floatingDescription" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
+        <label htmlFor="floatingDescription" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>תיאור המוצר</label>
+        {errors.description && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.description.message}</p>}
+      </div>
+
+      <div className="d-flex flex-column justify-content-center align-items-center" style={{ width: '100%', marginTop: '20px' }}>
+        {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Product Preview" className="img-thumbnail mb-2" style={{ maxWidth: '150px', maxHeight: '150px' }} />}
+        <button type="button" className="btn mt-2" onClick={selectImg} style={{ backgroundColor: 'brown', color: 'white', width: '200px', fontSize: '1.2rem' }}>
+          <FontAwesomeIcon icon={faImage} className="me-2" />
+          העלאת תמונה
+        </button>
+        <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
+        {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.image.message}</p>}
+      </div>
 
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown',padding: '10px 10px',  fontSize: '20px'  }}>העלאה</button>
+        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown', padding: '10px 20px', fontSize: '1.2rem' }}>העלאה</button>
       </div>
     </form>
   </div>
 </div>
-              
-</>  
 
+    </>
 
-
-  
   );
 }
 
 export default UploadRequestedProduct;
-
-
-
-
-

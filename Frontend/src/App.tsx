@@ -63,21 +63,23 @@ import ManageDonationPage from './components/ManageDonations';
 import Profile from './components/Profile';
 import AboutPage from './components/aboutPage';
 import UploadProduct from './components/UploadProduct';
+import  UploadRequestedProduct  from './components/upload-requested-product';
 
 const App = () => {
     return (
         <Router>
             <Routes>
 
-                <Route path="/" element={<Navigate to="/manageUsers" replace />} />
+                <Route path="/" element={<Navigate to="/uploadRequestedProduct" replace />} />
 
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
                 <Route path="/statictics" element={<Statictics />} />
+                <Route path="/uploadRequestedProduct" element={<UploadRequestedProduct />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
-                <Route path="/profile/:userId" element={<Profile />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/uploadproduct" element={<UploadProduct />} />

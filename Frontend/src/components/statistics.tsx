@@ -2,12 +2,15 @@ import {  useEffect, useState } from 'react';
 import { Donation } from './donation.tsx';
 import  dataService,{ CanceledError } from "../services/data-service.ts";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom'
 
 
     function Statistics() {
+        const navigate = useNavigate();
         const [products, setProducts] = useState<Donation[]>([])
         const [requests, setRequests] = useState<Donation[]>([])
         const [error, setError] = useState()
+
         useEffect(() => {
             const { req, abort } = dataService.getDonations()
             req.then((res) => {
@@ -21,6 +24,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                 abort()
             }
         }, [])
+
 
         useEffect(() => {
             const { req, abort } = dataService.getRequestedProducts()
@@ -36,7 +40,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                 abort()
             }
         }, [])
-    
+
+
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+            return (
+                <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
+                <p style={{ color: 'red' }}>שגיאה: אינך מחובר בתור מנהל</p>
+                <button onClick={() => navigate('/adminDashboard')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר בתור מנהל</button>
+              </div>
+            );
+          }
+
         return (
         <>
 

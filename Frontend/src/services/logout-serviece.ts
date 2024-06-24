@@ -25,13 +25,9 @@ export const postLogout = async () => {
       },
       signal: abortController.signal
    });
-   localStorage.removeItem('accessToken');
-   localStorage.removeItem('refreshToken');
-   localStorage.removeItem('userID');
-<<<<<<< HEAD
-
-=======
->>>>>>> 8f513d46689f719c451aea580a9f57ed6e3de24d
+//    localStorage.removeItem('accessToken');
+//    localStorage.removeItem('refreshToken');
+//    localStorage.removeItem('userID');
   };
 
   

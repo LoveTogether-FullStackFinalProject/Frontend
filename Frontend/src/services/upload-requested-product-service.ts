@@ -46,7 +46,7 @@ const uploadPhoto = async (photo: File) => {
       if (!accessToken) {
         throw new Error("No access token found");
       }
-      return await apiClient.post<Donation>("/post", donation, {
+      return await apiClient.post<Donation>("/requestedDonation/rdonation", donation, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         },

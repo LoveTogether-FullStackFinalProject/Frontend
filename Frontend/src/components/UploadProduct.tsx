@@ -1,11 +1,16 @@
-import { ChangeEvent, useRef, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { ChangeEvent, useRef, useState } from 'react';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faImage } from '@fortawesome/free-solid-svg-icons';
+// import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
+import { uploadProduct } from '../services/uploadProductService';
 import './UploadProduct.css';
+
 
 const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
@@ -20,45 +25,50 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const UploadProduct = () => {
-    const [imgSrc, setImgSrc] = useState<File>();
-    const [imgPreview, setImgPreview] = useState<string>();
+    // const [imgSrc, setImgSrc] = useState<File>();
+    // const [imgPreview, setImgPreview] = useState<string>();
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    // const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0];
-            console.log("Selected file:", file);
-            setImgSrc(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImgPreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    // const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files && e.target.files.length > 0) {
+    //         const file = e.target.files[0];
+    //         console.log("Selected file:", file);
+    //         setImgSrc(file);
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setImgPreview(reader.result as string);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
 
-    const selectImg = () => {
-        fileInputRef.current?.click();
-    };
+    // const selectImg = () => {
+    //     fileInputRef.current?.click();
+    // };
 
     const onSubmit = async (data: FormData) => {
         try {
-            let imageUrl = '';
-            if (imgSrc) {
-                imageUrl = await uploadPhoto(imgSrc);
+            // let imageUrl = '';
+            // if (imgSrc) {
+            //     imageUrl = await uploadPhoto(imgSrc);
+            const userId = localStorage.getItem('userID');
+            if (!userId) {
+                alert('User not logged in');
+                return;
             }
+            // const productData = { ...data, image: imageUrl };
 
+            const productData = { ...data, donor: userId };
+            console.log('Uploading product data...', productData);
 
-            const productData = { ...data, image: imageUrl };
-    
             await uploadProduct(productData);
-          
-
-            console.log("Form data:", data);
-            console.log("Image URL:", imageUrl);
+            navigate('/profile');
+            console.log('Product uploaded successfully');
         } catch (error) {
-            console.error("Error uploading product:", error);
+            console.error('Error uploading product:', error.message);
+            alert(`Error: ${error.message}`);
         }
     };
 
@@ -99,7 +109,7 @@ const UploadProduct = () => {
                     <input {...register("pickupAddress")} type="text" className="form-control" id="pickupAddress" placeholder="כתובת איסוף" />
                     <label htmlFor="pickupAddress">כתובת איסוף</label>
                 </div>
-                <div className="text-center">
+                {/* <div className="text-center">
                     <div className="position-relative d-inline-block">
                         <input ref={fileInputRef} className="file-input" type="file" accept="image/*" onChange={imgSelected} style={{ display: 'none' }} />
                         <button type="button" className="btn btn-outline-primary" onClick={selectImg}>
@@ -110,13 +120,13 @@ const UploadProduct = () => {
                 </div>
                 {imgPreview && <div className="text-center">
                     <img src={imgPreview} alt="Selected" className="img-preview" />
-                </div>}
+                </div>} */}
+
                 <div className="text-center">
                     <button type="submit" className="btn btn-primary">
                         שלח
                     </button>
                 </div>
-
             </form>
         </div>
     );

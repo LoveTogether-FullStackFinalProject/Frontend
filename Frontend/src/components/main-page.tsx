@@ -5,6 +5,7 @@ import { DonorData } from './donorData';
 import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
+import logo from '../assets/logoVeahavtem.png';
 import person1 from './../assets/person1.png';
 import person2 from './../assets/person2.png';
 import person3 from './../assets/person3.png';
@@ -53,23 +54,27 @@ function MainPage() {
         navigate('/profile');
     };
 
+    const handleDonateClick = () => {
+        navigate('/uploadProduct');
+    };
+
     const countProducts = (category: string) => {
         return products.filter(product => product.category === category).length;
     }
 
     return (
-        <div>
-            <div style={{ textAlign: 'center', paddingTop: '10px', marginBottom: '60px' }}>
+           <div>
+              <header className="header">
+                <img src={logo} alt="Logo" className="logo" />
+                <nav>
+                    <button className="btn btn-primary me-2" onClick={handleProfileClick}>החשבון שלי</button>
+                    <button className="btn btn-primary" onClick={handleDonateClick}>תרמו כאן</button>
+                </nav>
+            </header>
+         <div className="text-center pt-4 mb-4">
                 <h2>ברוכים הבאים לאתר התרומות של</h2>
-                <h1 style={{ color: 'brown' }}>"ואהבתם ביחד"</h1>
+                <h1 className="text-brown">"ואהבתם ביחד"</h1>
                 <h2>נשמח לעזרתכם עם המוצרים הדרושים לתרומות בביקוש גבוה כרגע בעמותה:</h2>
-            </div>
-            <div >
-                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
-                <button className="btn btn-primary">תרמו כאן</button>
-            </div>
-            <div >
-                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
             </div>
             
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', marginBottom: '80px', backgroundColor: '#F0FFFF' }}>

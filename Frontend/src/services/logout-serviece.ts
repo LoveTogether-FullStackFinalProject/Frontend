@@ -2,15 +2,6 @@
 import apiClient from "./api-client"
 
 
-export interface IUser {
-  email: string,
-  password?: string,
-  image?: string,
-  _id?: string,
-  accessToken?: string,
-  refreshToken?: string
-}
-
 
 export const postLogout = async () => {
   const abortController = new AbortController()
@@ -25,11 +16,7 @@ export const postLogout = async () => {
       },
       signal: abortController.signal
    });
-   localStorage.removeItem('accessToken');
-   localStorage.removeItem('refreshToken');
-   localStorage.removeItem('userID');
-  };
 
-  
+  };
 
 export default {postLogout}

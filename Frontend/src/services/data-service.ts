@@ -2,6 +2,7 @@ import apiClient, { CanceledError } from './api-client';
 import { Donation } from '../components/donation';
 import { DonorData } from '../components/donorData'
 import { userDonation } from '../components/userDonation';
+import logoutServiece from './logout-serviece';
 
 
 
@@ -48,6 +49,7 @@ const getDonationsByUser = (userId: string) => {
 };
 
 export const logout = () => {
+  logoutServiece.postLogout();
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('userID');

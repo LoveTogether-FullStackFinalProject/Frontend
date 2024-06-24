@@ -72,6 +72,16 @@ const UploadProduct = () => {
         }
     };
 
+    const accessToken = localStorage.getItem('accessToken');
+  if (!accessToken) {
+      return (
+          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
+          <p style={{ color: 'red' }}>שגיאה: עליך לבצע התחברות על מנת לתרום</p>
+          <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר</button>
+        </div>
+      );
+    }
+
     return (
         <div className="upload-product-container">
             <h1 className="text-center fw-bold">ואהבתם ביחד - עמוד תרומת מוצרים</h1>

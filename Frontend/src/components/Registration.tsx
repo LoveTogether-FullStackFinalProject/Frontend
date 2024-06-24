@@ -7,6 +7,7 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import logoutServiece from '../services/logout-serviece';
 
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -67,9 +68,11 @@ const Registration = () => {
             userID = res._id ?? '';
 
             if (res.accessToken) {
+                console.log("res.accessToken: ", res.accessToken);
                 localStorage.setItem('accessToken', res.accessToken);
             }
             if (res.refreshToken) {
+                console.log("res.refreshToken: ", res.refreshToken);
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
@@ -93,13 +96,7 @@ const Registration = () => {
         }
     };
 
-    function handleLogout() {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        // setUser(null);
-      }
+   
 
       
 
@@ -196,9 +193,7 @@ const Registration = () => {
                 <button onClick={handleButtonClick} className="btn btn-primary w-100">
                     כבר רשום? התחבר כאן
                 </button>
-                <button onClick={handleLogout} style={{color: "white"}}>
-                התנתק
-                 </button>
+                
             </div>
         </div>
         

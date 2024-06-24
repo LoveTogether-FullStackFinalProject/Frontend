@@ -63,17 +63,27 @@ import ManageDonationPage from './components/ManageDonations';
 import Profile from './components/Profile';
 import AboutPage from './components/aboutPage';
 import UploadProduct from './components/UploadProduct';
+import  UploadRequestedProduct  from './components/upload-requested-product';
+import { Navbar } from "./components//Navbar";
+import { useState } from 'react';
+import { User } from './services/types';
+
 
 const App = () => {
-    return (
-        <Router>
-            <Routes>
+    const [user, setUser] = useState<User | null>(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null);
 
-                <Route path="/" element={<Navigate to="/uploadproduct" replace />} />
+    return (
+        
+        <Router>
+            <Navbar user={user} setUser={setUser} googleSignIn={false} />
+            
+            <Routes>
+                <Route path="/" element={<Navigate to="/registration" replace />} />
 
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
                 <Route path="/statictics" element={<Statictics />} />
+                <Route path="/uploadRequestedProduct" element={<UploadRequestedProduct />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
@@ -84,6 +94,7 @@ const App = () => {
                 <Route path="/manageDonations" element={<ManageDonationPage />} />              
             </Routes>
         </Router>
+        
     );
 }
 

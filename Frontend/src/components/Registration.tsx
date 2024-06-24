@@ -7,6 +7,7 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import logoutServiece from '../services/logout-serviece';
 
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -94,6 +95,7 @@ const Registration = () => {
     };
 
     function handleLogout() {
+        logoutServiece.postLogout();
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("token");

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 export let userID: string;
 
@@ -91,6 +92,16 @@ const Registration = () => {
             }
         }
     };
+
+    function handleLogout() {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        // setUser(null);
+      }
+
+      
 
     const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
         try {
@@ -185,9 +196,14 @@ const Registration = () => {
                 <button onClick={handleButtonClick} className="btn btn-primary w-100">
                     כבר רשום? התחבר כאן
                 </button>
+                <button onClick={handleLogout} style={{color: "white"}}>
+                התנתק
+                 </button>
             </div>
         </div>
+        
     );
+    
 }
 
 export default Registration;

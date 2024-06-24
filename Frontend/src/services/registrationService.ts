@@ -1,9 +1,8 @@
-import { IDonor } from './login-service';
-import apiClient from './api-client'; 
+import apiClient, { CanceledError } from './api-client';
 
 export const registerUser = async (user: any) => {
     try {
-        const response = await apiClient.post<IDonor>('/auth/register', user);
+        const response = await apiClient.post('/auth/register', user);
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -13,7 +12,7 @@ export const registerUser = async (user: any) => {
 
 export const googleSignIn = async (credentialResponse: any) => {
     try {
-        const response = await apiClient.post('/googleSignIn', credentialResponse);
+        const response = await apiClient.post('/auth/googleSignIn', credentialResponse);
         return response.data;
     } catch (error) {
         throw new Error('Google Sign-In failed');

@@ -41,6 +41,21 @@ nav a {
   margin-left: 10px;
 }
 
+.user-profile {
+  background-color: #e0f7fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.user-details p {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -65,6 +80,8 @@ nav a {
   justify-content: space-around;
   margin-bottom: 20px;
   width: 100%;
+  direction: rtl;
+  text-align: right;
 }
 
 .tabs button {
@@ -73,11 +90,15 @@ nav a {
   background-color: #dcdcdc;
   cursor: pointer;
   transition: background-color 0.3s;
+  direction: rtl;
+  text-align: right;
 }
 
 .tabs button.active, .tabs button:hover {
   background-color: #a5673d;
   color: #fff;
+  direction: rtl;
+  text-align: right;
 }
 
 .donations-list {
@@ -88,6 +109,9 @@ nav a {
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   flex-grow: 1; /* Allows the content to grow and fill the available space */
   justify-content: center; /* Centers the donation cards */
+  min-height: 500px; /* Adjust this value as needed */
+  direction: rtl;
+  text-align: right;
 }
 
 .donation-card {
@@ -100,6 +124,8 @@ nav a {
   flex-direction: column;
   align-items: center;
   transition: transform 0.3s, box-shadow 0.3s;
+  direction: rtl;
+  text-align: right;
 }
 
 .donation-card:hover {
@@ -161,7 +187,7 @@ nav a {
 }
 
 .status-pending {
-  color: yellow;
+  color: rgba(245, 129, 21, 0.623);
 }
 
 .status-not-approved {
@@ -185,4 +211,20 @@ nav a {
   .donation-card {
     width: calc(100% - 20px); /* 1 card per row */
   }
+}
+
+.load-more-button {
+  padding: 10px 20px;
+  background-color: #a5673d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 20px auto;
+  display: block;
+}
+
+.load-more-button:hover {
+  background-color: #8a4b2e;
 }

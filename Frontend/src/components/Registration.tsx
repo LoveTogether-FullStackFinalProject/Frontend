@@ -68,9 +68,11 @@ const Registration = () => {
             userID = res._id ?? '';
 
             if (res.accessToken) {
+                console.log("res.accessToken: ", res.accessToken);
                 localStorage.setItem('accessToken', res.accessToken);
             }
             if (res.refreshToken) {
+                console.log("res.refreshToken: ", res.refreshToken);
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
@@ -94,14 +96,7 @@ const Registration = () => {
         }
     };
 
-    function handleLogout() {
-        logoutServiece.postLogout();
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        // setUser(null);
-      }
+   
 
       
 
@@ -198,9 +193,7 @@ const Registration = () => {
                 <button onClick={handleButtonClick} className="btn btn-primary w-100">
                     כבר רשום? התחבר כאן
                 </button>
-                <button onClick={handleLogout} style={{color: "white"}}>
-                התנתק
-                 </button>
+                
             </div>
         </div>
         

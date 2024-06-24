@@ -4,19 +4,22 @@ import { DonorData } from '../components/donorData'
 import { userDonation } from '../components/userDonation';
 
 
+
 export { CanceledError };
 
 const getDonations = () => {
   const abortController = new AbortController();
-  const req = apiClient.get<Donation[]>('/donations', { signal: abortController.signal });
+  const req = apiClient.get<Donation[]>('/donation/donations', { signal: abortController.signal });
   return { req, abort: () => abortController.abort() };
 };
+
 
 const getRequestedProducts = () => {
   const abortController = new AbortController();
   const req = apiClient.get<Donation[]>('/requestedDonation/rdonations', { signal: abortController.signal });
   return { req, abort: () => abortController.abort() };
 };
+
 
 const getUsers = () => {
   const abortController = new AbortController();

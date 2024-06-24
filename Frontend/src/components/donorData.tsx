@@ -9,6 +9,7 @@ export interface DonorData {
   phoneNumber: string;
   address: string; // Address should be a string
   rating: string;
+  image: string;
 }
 
 interface DonorProps {
@@ -24,6 +25,7 @@ const Donor = ({ donor }: DonorProps) => {
       <p>מספר טלפון: {donor.phoneNumber}</p>
       <p>כתובת: {donor.address}</p>
       <p>דירוג: {donor.rating}</p>
+      <p>תמונה: {donor.image}</p>
     </div>
   );
 };

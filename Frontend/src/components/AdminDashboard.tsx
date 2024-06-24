@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom';
+import  dataService,{ CanceledError } from "../services/data-service";
+
 
 const AdminPage = () => {
   const [adminData, setAdminData] = useState({ name: '', email: '' });
-  const adminId = '665883191451b6b5dd7f4059';
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAdminData = async () => {
-      try {
-        const response = await axios.get(`/admin/${adminId}`);
-        console.log('Admin data:', response.data);
-        setAdminData(response.data);
-      } catch (error) {
-        console.error('Error fetching admin data:', error);
-      }
-    };
-    
-
-    fetchAdminData();
-  }, [adminId]);
+    dataService.getAdmin()
+      .then(( {data} ) => {
+        console.log(data)
+        setAdminData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err instanceof CanceledError) return;
+        setError(err.message);
+      });
+  }, []);
 
   const handleButtonClick = (path) => {
     navigate(path);
   };
+
 
   return (
     <div className="container">

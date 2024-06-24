@@ -7,7 +7,7 @@ import apiClient from "./api-client";
 //     formData.append('file', file);
 
 //     try {
-//         const response = await axios.post(${BASE_URL}/photos/upload, formData, {
+//         const response = await axios.post(`${BASE_URL}/photos/upload`, formData, {
 //             headers: {
 //                 'Content-Type': 'multipart/form-data',
 //             },
@@ -43,16 +43,7 @@ export const uploadPhoto = async (photo: File) => {
 
 export const uploadProduct = async (productData: any) => {
     try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            throw new Error('User not logged in');
-        }
-        
-        const response = await apiClient.post("/donation/upload", productData, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        const response = await apiClient.post(`/donation/upload`, productData);
         return response.data;
     } catch (error) {
         console.error('Product upload error:', error.response?.data?.message || error.message);

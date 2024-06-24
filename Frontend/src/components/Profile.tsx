@@ -122,11 +122,11 @@ const Profile: React.FC = () => {
     const getStatusClass = (status: string) => {
         switch (status) {
             case 'אושר':
-                return 'status-approved';
+                return 'text-success';
             case 'ממתין לאישור':
-                return 'status-pending';
+                return 'text-warning';
             case 'טרם נמסר':
-                return 'status-not-approved';
+                return 'text-danger';
             default:
                 return '';
         }
@@ -136,102 +136,102 @@ const Profile: React.FC = () => {
     if (error) return <div className="loading">{error}</div>;
     if (!user) return <div className="loading">User not found</div>;
 
-   
     return (
-      <div className="profile-page">
-          <header className="header">
-              <img src={logo} alt="Logo" className="logo" />
-              <nav>
-                  <Link to="/mainPage">עמוד הבית</Link>
-                  <Link to="/donate">שליחת תרומה</Link>
-                  <button onClick={handleLogout}>התנתק</button>
-              </nav>
-              <div className="user-info">
-                  <img src="../assets/person1.png" alt="User Avatar" className="avatar" />
-                  <span>שלום, {user.firstName} {user.lastName}</span>
-              </div>
-          </header>
-          <main className="profile-content">
-              <div className="tabs">
-                  {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (
-                      <button
-                          key={tab}
-                          className={activeTab === tab ? 'active' : ''}
-                          onClick={() => handleTabClick(tab)}
-                      >
-                          {tab === 'אושר' && 'תרומות שאושרו'}
-                          {tab === 'ממתין לאישור' && 'תרומות שלא אושרו'}
-                          {tab === 'טרם נמסר' && 'תרומות שטרם הגיעו'}
-                          {tab === 'all' && 'התרומות שלי'}
-                      </button>
-                  ))}
-              </div>
-              <div className="donations-list">
-                  {filteredDonations.map((donation) => (
-                      <div key={donation._id} className="donation-card">
-                          {editDonationId === donation._id ? (
-                              <div className="edit-form">
-                                  <input type="text" name="itemName" value={editableDonation.itemName || ''} onChange={handleInputChange} />
-                                  <input type="text" name="category" value={editableDonation.category || ''} onChange={handleInputChange} />
-                                  <input type="number" name="quantity" value={editableDonation.quantity || 0} onChange={handleInputChange} />
-                                  <input type="text" name="condition" value={editableDonation.condition || ''} onChange={handleInputChange} />
-                                  <textarea name="description" value={editableDonation.description || ''} onChange={handleInputChange}></textarea>
-                                  <input type="date" name="expirationDate" value={new Date(editableDonation.expirationDate!).toISOString().split('T')[0]} onChange={handleInputChange} />
-                                  <input type="text" name="pickupAddress" value={editableDonation.pickupAddress || ''} onChange={handleInputChange} />
-                                  <input type="text" name="status" value={editableDonation.status || ''} onChange={handleInputChange} />
-                                  {editableDonation.image && <input type="text" name="image" value={editableDonation.image} onChange={handleInputChange} />}
-                                  <button className="save-button" onClick={handleSaveClick}>Save</button>
-                                  <button className="cancel-button" onClick={handleCancelClick}>Cancel</button>
-                              </div>
-                          ) : (
-                              <div className="donation-details">
-                                  <p>שם הפריט: {donation.itemName}</p>
-                                  <p>קטגוריה: {donation.category}</p>
-                                  <p>כמות: {donation.quantity}</p>
-                                  <p>מצב הפריט: {donation.condition}</p>
-                                  <p>תיאור: {donation.description}</p>
-                                  <p>תאריך תפוגה: {new Date(donation.expirationDate).toLocaleDateString()}</p>
-                                  <p>כתובת לאיסוף: {donation.pickupAddress}</p>
-                                  <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
-                                  {donation.image && <p>תמונה: <img src={donation.image} alt={donation.itemName} /></p>}
-                                  <button className="edit-button" onClick={() => handleEditClick(donation)}>Edit</button>
-                                  <button className="delete-button" onClick={() => handleDeleteClick(donation._id)}>Delete</button>
-                              </div>
-                          )}
-                      </div>
-                  ))}
-              </div>
-              {filteredDonations.length < donations.filter((donation) => {
-                  switch (activeTab) {
-                      case 'אושר':
-                          return donation.status === 'אושר';
-                      case 'ממתין לאישור':
-                          return donation.status === 'ממתין לאישור';
-                      case 'טרם נמסר':
-                          return donation.status === 'טרם נמסר';
-                      case 'all':
-                      default:
-                          return true;
-                  }
-              }).length && (
-                  <button className="load-more-button" onClick={handleShowMoreClick}>
-                      הצג עוד
-                  </button>
-              )}
-          </main>
-          <footer className="footer">
-              <p>© 2024 עמותת ואהבתם ביחד. כל הזכויות שמורות.</p>
-              <div className="social-media">
-                  <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
-                      <img src={facebookLogo} alt="Facebook" />
-                  </a>
-                  <a href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
-                      <img src={instagramLogo} alt="Instagram" />
-                  </a>
-              </div>
-          </footer>
-      </div>
-  );
+        <div className="container-fluid profile-page vh-100 d-flex flex-column">
+            <header className="header d-flex justify-content-between align-items-center py-2 px-4 bg-brown text-white">
+                <img src={logo} alt="Logo" className="logo" />
+                <nav className="d-flex">
+                    <Link className="btn btn-light me-2" to="/mainPage">עמוד הבית</Link>
+                    <Link className="btn btn-light me-2" to="/uploadProduct">שליחת תרומה</Link>
+                    <button className="btn btn-light" onClick={handleLogout}>התנתק</button>
+                </nav>
+                <div className="user-info d-flex align-items-center">
+                    <img src="../assets/person1.png" alt="User Avatar" className="avatar rounded-circle me-2" />
+                    <span>שלום, {user.firstName} {user.lastName}</span>
+                </div>
+            </header>
+            <main className="profile-content flex-grow-1 d-flex flex-column align-items-center py-4">
+                <div className="tabs d-flex justify-content-around mb-4 w-100">
+                    {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (
+                        <button
+                            key={tab}
+                            className={`btn ${activeTab === tab ? 'btn-primary' : 'btn-secondary'}`}
+                            onClick={() => handleTabClick(tab)}
+                        >
+                            {tab === 'אושר' && 'תרומות שאושרו'}
+                            {tab === 'ממתין לאישור' && 'תרומות שלא אושרו'}
+                            {tab === 'טרם נמסר' && 'תרומות שטרם הגיעו'}
+                            {tab === 'all' && 'התרומות שלי'}
+                        </button>
+                    ))}
+                </div>
+                <div className="donations-list row w-100 justify-content-center">
+                    {filteredDonations.map((donation) => (
+                        <div key={donation._id} className="donation-card col-lg-3 col-md-4 col-sm-6 mb-4 p-2">
+                            {editDonationId === donation._id ? (
+                                <div className="edit-form p-2 border rounded bg-light">
+                                    <input type="text" name="itemName" value={editableDonation.itemName || ''} onChange={handleInputChange} className="form-control mb-2" placeholder="Item Name" />
+                                    <input type="text" name="category" value={editableDonation.category || ''} onChange={handleInputChange} className="form-control mb-2" placeholder="Category" />
+                                    <input type="number" name="quantity" value={editableDonation.quantity || 0} onChange={handleInputChange} className="form-control mb-2" placeholder="Quantity" />
+                                    <input type="text" name="condition" value={editableDonation.condition || ''} onChange={handleInputChange} className="form-control mb-2" placeholder="Condition" />
+                                    <textarea name="description" value={editableDonation.description || ''} onChange={handleInputChange} className="form-control mb-2" placeholder="Description"></textarea>
+                                    <input type="date" name="expirationDate" value={new Date(editableDonation.expirationDate!).toISOString().split('T')[0]} onChange={handleInputChange} className="form-control mb-2" />
+                                    <input type="text" name="pickupAddress" value={editableDonation.pickupAddress || ''} onChange={handleInputChange} className="form-control mb-2" placeholder="Pick Up Address" />
+                                    <input type="text" name="status" value={editableDonation.status || ''} onChange={handleInputChange} className="form-control mb-2" placeholder="Status" />
+                                    {editableDonation.image && <input type="text" name="image" value={editableDonation.image} onChange={handleInputChange} className="form-control mb-2" placeholder="Image" />}
+                                    <button className="btn btn-success me-2" onClick={handleSaveClick}>שמירה</button>
+                                    <button className="btn btn-danger" onClick={handleCancelClick}>ביטול</button>
+                                </div>
+                            ) : (
+                                <div className="donation-details p-2 border rounded bg-light">
+                                    <p>שם הפריט: {donation.itemName}</p>
+                                    <p>קטגוריה: {donation.category}</p>
+                                    <p>כמות: {donation.quantity}</p>
+                                    <p>מצב הפריט: {donation.condition}</p>
+                                    <p>תיאור: {donation.description}</p>
+                                    <p>תאריך תפוגה: {new Date(donation.expirationDate).toLocaleDateString()}</p>
+                                    <p>כתובת לאיסוף: {donation.pickupAddress}</p>
+                                    <p>סטטוס: <span className={getStatusClass(donation.status)}>{donation.status}</span></p>
+                                    {donation.image && <p>תמונה: <img src={donation.image} alt={donation.itemName} className="img-fluid" /></p>}
+                                    <button className="btn btn-primary me-2" onClick={() => handleEditClick(donation)}>ערוך פריט</button>
+                                    <button className="btn btn-danger" onClick={() => handleDeleteClick(donation._id)}>מחק פריט</button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                {filteredDonations.length < donations.filter((donation) => {
+                    switch (activeTab) {
+                        case 'אושר':
+                            return donation.status === 'אושר';
+                        case 'ממתין לאישור':
+                            return donation.status === 'ממתין לאישור';
+                        case 'טרם נמסר':
+                            return donation.status === 'טרם נמסר';
+                        case 'all':
+                        default:
+                            return true;
+                    }
+                }).length && (
+                    <button className="btn btn-primary mt-4" onClick={handleShowMoreClick}>
+                        הצג עוד
+                    </button>
+                )}
+            </main>
+            <footer className="footer bg-brown text-white text-center py-3">
+                <p>© 2024 עמותת ואהבתם ביחד. כל הזכויות שמורות.</p>
+                <div className="social-media d-flex justify-content-center">
+                    <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer" className="me-2">
+                        <img src={facebookLogo} alt="Facebook" className="img-fluid" style={{ width: '30px' }} />
+                    </a>
+                    <a href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
+                        <img src={instagramLogo} alt="Instagram" className="img-fluid" style={{ width: '30px' }} />
+                    </a>
+                </div>
+            </footer>
+        </div>
+    );
 };
 
 export default Profile;
+

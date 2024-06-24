@@ -78,7 +78,7 @@ const App = () => {
             <Navbar user={user} setUser={setUser} googleSignIn={false} />
             
             <Routes>
-                <Route path="/" element={<Navigate to="/AboutPage" replace />} />
+                <Route path="/" element={<Navigate to="/registration" replace />} />
 
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />

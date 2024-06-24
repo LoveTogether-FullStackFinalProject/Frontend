@@ -1,13 +1,13 @@
 import axios from 'axios';
+import apiClient from "./api-client";
 
-const BASE_URL = 'http://localhost:3000'; 
-
+// Comment out or keep for future use
 // export const uploadPhoto = async (file: File) => {
 //     const formData = new FormData();
 //     formData.append('file', file);
 
 //     try {
-//         const response = await axios.post(`${BASE_URL}/photos/upload`, formData, {
+//         const response = await axios.post(${BASE_URL}/photos/upload, formData, {
 //             headers: {
 //                 'Content-Type': 'multipart/form-data',
 //             },
@@ -18,11 +18,10 @@ const BASE_URL = 'http://localhost:3000';
 //     }
 // };
 
-import apiClient from "./api-client";
-
 interface IUpoloadResponse {
     url: string;
 }
+
 export const uploadPhoto = async (photo: File) => {
     return new Promise<string>((resolve, reject) => {
         console.log("Uploading photo..." + photo)
@@ -41,13 +40,22 @@ export const uploadPhoto = async (photo: File) => {
         }
     });
 };
+
 export const uploadProduct = async (productData: any) => {
     try {
-        // return apiClient.put(`/donation/upload}`, productData);
-
-        const response = await axios.post(`${BASE_URL}/donation/upload`, productData);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('User not logged in');
+        }
+        
+        const response = await apiClient.post("/donation/upload", productData, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         return response.data;
     } catch (error) {
+        console.error('Product upload error:', error.response?.data?.message || error.message);
         throw new Error(error.response?.data?.message || 'Product upload failed');
     }
 };

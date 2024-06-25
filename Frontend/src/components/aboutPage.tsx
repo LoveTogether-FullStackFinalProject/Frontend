@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './aboutPage.css';
-import logo from '../assets/logoVeahavtem.png';
-import bgImage from '../assets/logoVeahavtem.png'; 
+// import logo from '../assets/logoVeahavtem.png';
+// import bgImage from '../assets/logoVeahavtem.png'; 
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
@@ -13,7 +13,7 @@ import instagramLogo from '../assets/instagramLogo.png';
 const AboutPage = () => {
   return (
     <div className="about-page">
-      <header className="header">
+      {/* <header className="header">
         <img src={logo} alt="Logo" className="logo" />
         <nav>
           <Link to="/mainPage">עמוד הבית</Link>
@@ -21,13 +21,13 @@ const AboutPage = () => {
           <Link to="/login">התנתק</Link>
           <Link to="/about">על העמותה</Link>
         </nav>
-      </header>
+      </header> */}
 
-      <section className="hero-section" style={{ backgroundImage: `url(${bgImage})` }}>
+      {/* <section className="hero-section" style={{ backgroundImage: `url(${bgImage})` }}>
         <div className="hero-text">
           <h1>על העמותה</h1>
         </div>
-      </section>
+      </section> */}
 
       <section className="description-section">
         <h2>מי אנחנו</h2>

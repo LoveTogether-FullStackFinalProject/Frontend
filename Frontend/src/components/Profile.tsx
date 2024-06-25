@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import dataService, { CanceledError, logout } from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
-import logo from '../assets/logoVeahavtem.png';
+// import logo from '../assets/logoVeahavtem.png';
 import facebookLogo from '../assets/facebookLogo.png';
 import instagramLogo from '../assets/instagramLogo.png';
 import { userDonation } from './userDonation';
@@ -138,7 +138,7 @@ const Profile: React.FC = () => {
 
     return (
         <div className="container-fluid profile-page vh-100 d-flex flex-column">
-            <header className="header d-flex justify-content-between align-items-center py-2 px-4 bg-brown text-white">
+            {/* <header className="header d-flex justify-content-between align-items-center py-2 px-4 bg-brown text-white">
                 <img src={logo} alt="Logo" className="logo" />
                 <nav className="d-flex">
                     <Link className="btn btn-light me-2" to="/mainPage">עמוד הבית</Link>
@@ -149,7 +149,7 @@ const Profile: React.FC = () => {
                     <img src="../assets/person1.png" alt="User Avatar" className="avatar rounded-circle me-2" />
                     <span>שלום, {user.firstName} {user.lastName}</span>
                 </div>
-            </header>
+            </header> */}
             <main className="profile-content flex-grow-1 d-flex flex-column align-items-center py-4">
                 <div className="tabs d-flex justify-content-around mb-4 w-100">
                     {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (

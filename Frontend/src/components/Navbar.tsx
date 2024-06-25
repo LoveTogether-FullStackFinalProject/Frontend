@@ -4,6 +4,8 @@ import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { MdHome } from "react-icons/md";
+import logo from '../assets/logoVeahavtem.png';
+
 
 export function Navbar() {
   const [userId, setUserId] = useState<string | null>(localStorage.getItem("userID"));
@@ -34,6 +36,7 @@ export function Navbar() {
 
   return (
     <BootstrapNavbar 
+    
       style={{
         backgroundColor: "#9B4C1F", 
         marginTop: "60px",
@@ -42,6 +45,7 @@ export function Navbar() {
       dir="rtl"
     >
       <Container fluid className="justify-content-end">
+      <img src={logo} alt="Logo" className="logo" style={{direction:"rtl"}} />
         <Nav>
           {userId ? (
             <>

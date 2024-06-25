@@ -19,6 +19,7 @@ function Login() {
                     localStorage.setItem('userID', res._id);
                     localStorage.setItem('accessToken', res.accessToken!);
                     localStorage.setItem('refreshToken', res.refreshToken!);
+                    window.dispatchEvent(new Event('localStorageChanged'));
                     navigate('/mainPage');
                 }
             } catch (err) {

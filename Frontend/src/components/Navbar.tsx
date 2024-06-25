@@ -1,27 +1,37 @@
+import React, { useState, useEffect } from 'react';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import { User } from "../services/types";
 import { MdHome } from "react-icons/md";
 
-export function Navbar({
-  user,
-  setUser,
-}: {
-  user: User;
-  setUser: (user: User | null) => void;
-  googleSignIn: boolean;
-}) {
+export function Navbar() {
+  const [userId, setUserId] = useState<string | null>(localStorage.getItem("userID"));
+
+  useEffect(() => {
+    const checkUserStatus = () => {
+      const currentUserId = localStorage.getItem("userID");
+      console.log("Current userID:", currentUserId);
+      setUserId(currentUserId);
+    };
+  
+    checkUserStatus();
+    window.addEventListener('storage', checkUserStatus);
+    window.addEventListener('localStorageChanged', checkUserStatus);
+  
+    return () => {
+      window.removeEventListener('storage', checkUserStatus);
+      window.removeEventListener('localStorageChanged', checkUserStatus);
+    };
+  }, []);
+
   function handleLogout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userID");
-    setUser(null);
+    setUserId(null);
   }
 
-  const token = localStorage.getItem("accessToken");
-      
   return (
     <BootstrapNavbar 
       style={{
@@ -29,11 +39,11 @@ export function Navbar({
         marginTop: "60px",
         marginBottom: "-15px",
       }}
-      dir="rtl" // Add this attribute for RTL
+      dir="rtl"
     >
-      <Container fluid className="justify-content-end"> {/* Change this */}
+      <Container fluid className="justify-content-end">
         <Nav>
-          {user || token ? (
+          {userId ? (
             <>
               <Nav.Link as={Link} to="/profile" style={{color: "white"}}>
                 פרופיל

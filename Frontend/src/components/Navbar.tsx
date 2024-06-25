@@ -16,8 +16,7 @@ export function Navbar({
   function handleLogout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("userID");
     setUser(null);
   }
 

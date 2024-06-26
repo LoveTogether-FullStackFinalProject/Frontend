@@ -104,7 +104,7 @@ import person from './../assets/person.png';
         <Row>
           {chunk.map((request, index) => (
             <Col key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
+              <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.itemName}: ${request.amount}`}</p>
               <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
             </Col>
           ))}

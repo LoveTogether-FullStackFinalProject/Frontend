@@ -3,6 +3,7 @@ import { Donation } from '../components/donation';
 
 export interface requestedDonation{
     _id?: string;
+    itemName: string;
     category: string;
     productType: string; 
     amount: number;

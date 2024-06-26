@@ -10,11 +10,12 @@ import  requestedProduectService,{ CanceledError } from "../services/upload-requ
 
 const RequestedProductSchema = z.object({
   category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
-  productType: z.string().min(1, { message: 'חובה להכניס סוג מוצר' }),
+   itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
   itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
   image: z.string().url({ message: 'חובה לצרף תמונה' }),
+  customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
 });
 type FormData = z.infer<typeof RequestedProductSchema>;
 
@@ -23,6 +24,7 @@ function UploadRequestedProduct() {
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     if (imgSrc) {
@@ -57,6 +59,8 @@ function UploadRequestedProduct() {
     navigate('/mainPage'); 
   };
 
+
+
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
       return (
@@ -79,16 +83,29 @@ function UploadRequestedProduct() {
       </div>
 
       <div className="mb-3" style={{ position: 'relative' }}>
-        <input {...register("category")} type="text" className="form-control" id="floatingCategory" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
-        <label htmlFor="floatingCategory" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>קטגוריה</label>
-        {errors.category && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>}
+        <input {...register("itemName")} type="text" className="form-control" id="floatingCategory" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
+        <label htmlFor="floatingItemName" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>שם המוצר</label>
+        {errors.itemName && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemName.message}</p>}
       </div>
 
-      <div className="mb-3" style={{ position: 'relative' }}>
-        <input {...register("productType")} type="text" className="form-control" id="floatingProductType" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
-        <label htmlFor="floatingProductType" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>סוג מוצר</label>
-        {errors.productType && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.productType.message}</p>}
-      </div>
+<div className="mb-3" style={{ position: 'relative' }}>
+      <select {...register("category")} className="form-control" id="floatingCategory" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }}
+        onChange={(e) => setCategory(e.target.value)}>
+        <option value="">בחר קטגוריה</option>
+        <option value="מזון ושתייה">מזון ושתייה</option>
+        <option value="אביזרים">אביזרים</option>
+        <option value="אלקטרוניקה">אלקטרוניקה</option>
+        <option value="ביגוד">ביגוד</option>
+        <option value="הנעלה">הנעלה</option>
+        <option value="אחר">אחר...</option>
+      </select>
+      <label htmlFor="floatingCategory" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>קטגוריה</label>
+      {category === 'אחר' && (
+        <input type="text" {...register("category")} className="form-control" placeholder="הזן קטגוריה" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem', marginTop: '10px' }} />
+      )}
+      {errors.category && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>}
+    </div>
+
 
       <div className="mb-3" style={{ position: 'relative' }}>
         <input {...register("amount")} type="number" className="form-control" id="floatingAmount" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />

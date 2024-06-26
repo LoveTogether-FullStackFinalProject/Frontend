@@ -64,7 +64,7 @@ export function Navbar() {
             </>
           ) : (
             <>
-              <Nav.Link as={Link} to="signup" style={{color: "white"}}>
+              <Nav.Link as={Link} to="/registration" style={{color: "white"}}>
                 הירשם
               </Nav.Link>
               <Nav.Link as={Link} to="login" style={{color: "white"}}>

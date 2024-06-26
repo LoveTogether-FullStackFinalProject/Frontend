@@ -26,6 +26,7 @@ const UploadProduct = () => {
     const [imgSrc, setImgSrc] = useState<File>();
     const [imgPreview, setImgPreview] = useState<string>();
     const [imageError, setImageError] = useState<string>('');
+    const [category, setCategory] = useState<string>('');
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -46,6 +47,10 @@ const UploadProduct = () => {
 
     const selectImg = () => {
         fileInputRef.current?.click();
+    };
+
+    const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        setCategory(e.target.value);
     };
 
     const onSubmit = async (data: FormData) => {
@@ -77,13 +82,13 @@ const UploadProduct = () => {
     };
 
     const accessToken = localStorage.getItem('accessToken');
-  if (!accessToken) {
-      return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'red' }}>שגיאה: עליך לבצע התחברות על מנת לתרום</p>
-          <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר</button>
-        </div>
-      );
+    if (!accessToken) {
+        return (
+            <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
+                <p style={{ color: 'red' }}>שגיאה: עליך לבצע התחברות על מנת לתרום</p>
+                <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר</button>
+            </div>
+        );
     }
 
     return (
@@ -102,7 +107,14 @@ const UploadProduct = () => {
                     {errors.quantity && <p className="text-danger">{errors.quantity.message}</p>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input {...register("category")} type="text" className="form-control" id="category" placeholder="קטגוריה" />
+                    <select {...register("category")} className="form-control" id="category" placeholder="קטגוריה" onChange={handleCategoryChange}>
+                        <option value="">בחר קטגוריה</option>
+                        <option value="מזון ושתייה">מזון ושתייה</option>
+                        <option value="אביזרים">אביזרים</option>
+                        <option value="אלקטרוניקה">אלקטרוניקה</option>
+                        <option value="ביגוד">ביגוד</option>
+                        <option value="הנעלה">הנעלה</option>
+                    </select>
                     <label htmlFor="category">קטגוריה</label>
                     {errors.category && <p className="text-danger">{errors.category.message}</p>}
                 </div>
@@ -111,10 +123,12 @@ const UploadProduct = () => {
                     <label htmlFor="condition">מצב הפריט</label>
                     {errors.condition && <p className="text-danger">{errors.condition.message}</p>}
                 </div>
-                <div className="form-floating mb-3">
-                    <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
-                    <label htmlFor="expirationDate">תאריך תפוגה</label>
-                </div>
+                {category === "מזון ושתייה" && (
+                    <div className="form-floating mb-3">
+                        <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
+                        <label htmlFor="expirationDate">תאריך תפוגה</label>
+                    </div>
+                )}
                 <div className="form-floating mb-3">
                     <input {...register("description")} type="text" className="form-control" id="description" placeholder="תיאור" />
                     <label htmlFor="description">תיאור</label>

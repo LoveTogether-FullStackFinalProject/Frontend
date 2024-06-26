@@ -10,16 +10,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import './UploadProduct.css';
 
-
-
+// Define the schema with additional custom validation for expirationDate
 const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
     quantity: z.number().gt(0, "כמות הפריט חייבת להיות יותר מ-0"),
     category: z.string().min(1, "יש לבחור קטגוריה"),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
-    expirationDate: z.string().optional(),
-    description: z.string().optional(),
-    pickupAddress: z.string().optional()
+    expirationDate: z.string().optional().refine((date) => {
+        if (!date) return true;
+        const selectedDate = new Date(date);
+        const today = new Date();
+        const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+        return selectedDate > nextWeek;
+    }, {
+        message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
+    }),
+    description: z.string().min(1, "תיאור חייב להיות מוגדר"),
+    pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת")
 });
 
 type FormData = z.infer<typeof schema>;
@@ -27,8 +34,10 @@ type FormData = z.infer<typeof schema>;
 const UploadProduct = () => {
     const [imgSrc, setImgSrc] = useState<File>();
     const [imgPreview, setImgPreview] = useState<string>();
+    const [imageError, setImageError] = useState<string>('');
+    const [category, setCategory] = useState<string>('');
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
+    const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>({ resolver: zodResolver(schema) });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +50,7 @@ const UploadProduct = () => {
                 setImgPreview(reader.result as string);
             };
             reader.readAsDataURL(file);
+            setImageError(''); // Clear any previous image error
         }
     };
 
@@ -48,7 +58,26 @@ const UploadProduct = () => {
         fileInputRef.current?.click();
     };
 
+    const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        setCategory(e.target.value);
+    };
+
     const onSubmit = async (data: FormData) => {
+        if (!imgSrc) {
+            setImageError('עליך להעלות תמונה של תרומתך');
+            return; // Prevent form submission
+        }
+
+        if (category === "מזון ושתייה" && data.expirationDate) {
+            const selectedDate = new Date(data.expirationDate);
+            const today = new Date();
+            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+            if (selectedDate <= nextWeek) {
+                alert('תאריך התפוגה צריך להיות לפחות שבוע מהיום');
+                return;
+            }
+        }
+
         try {
             let imageUrl = '';
             if (imgSrc) {
@@ -72,13 +101,13 @@ const UploadProduct = () => {
     };
 
     const accessToken = localStorage.getItem('accessToken');
-  if (!accessToken) {
-      return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'red' }}>שגיאה: עליך לבצע התחברות על מנת לתרום</p>
-          <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר</button>
-        </div>
-      );
+    if (!accessToken) {
+        return (
+            <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
+                <p style={{ color: 'red' }}>שגיאה: עליך לבצע התחברות על מנת לתרום</p>
+                <button onClick={() => navigate('/login')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר</button>
+            </div>
+        );
     }
 
     return (
@@ -97,7 +126,14 @@ const UploadProduct = () => {
                     {errors.quantity && <p className="text-danger">{errors.quantity.message}</p>}
                 </div>
                 <div className="form-floating mb-3">
-                    <input {...register("category")} type="text" className="form-control" id="category" placeholder="קטגוריה" />
+                    <select {...register("category")} className="form-control" id="category" placeholder="קטגוריה" onChange={handleCategoryChange}>
+                        <option value="">בחר קטגוריה</option>
+                        <option value="מזון ושתייה">מזון ושתייה</option>
+                        <option value="אביזרים">אביזרים</option>
+                        <option value="אלקטרוניקה">אלקטרוניקה</option>
+                        <option value="ביגוד">ביגוד</option>
+                        <option value="הנעלה">הנעלה</option>
+                    </select>
                     <label htmlFor="category">קטגוריה</label>
                     {errors.category && <p className="text-danger">{errors.category.message}</p>}
                 </div>
@@ -106,17 +142,22 @@ const UploadProduct = () => {
                     <label htmlFor="condition">מצב הפריט</label>
                     {errors.condition && <p className="text-danger">{errors.condition.message}</p>}
                 </div>
-                <div className="form-floating mb-3">
-                    <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
-                    <label htmlFor="expirationDate">תאריך תפוגה</label>
-                </div>
+                {category === "מזון ושתייה" && (
+                    <div className="form-floating mb-3">
+                        <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
+                        <label htmlFor="expirationDate">תאריך תפוגה</label>
+                        {errors.expirationDate && <p className="text-danger">{errors.expirationDate.message}</p>}
+                    </div>
+                )}
                 <div className="form-floating mb-3">
                     <input {...register("description")} type="text" className="form-control" id="description" placeholder="תיאור" />
                     <label htmlFor="description">תיאור</label>
+                    {errors.description && <p className="text-danger">{errors.description.message}</p>}
                 </div>
                 <div className="form-floating mb-3">
                     <input {...register("pickupAddress")} type="text" className="form-control" id="pickupAddress" placeholder="כתובת איסוף" />
                     <label htmlFor="pickupAddress">כתובת איסוף</label>
+                    {errors.pickupAddress && <p className="text-danger">{errors.pickupAddress.message}</p>}
                 </div>
                 <div className="text-center">
                     <div className="position-relative d-inline-block">
@@ -126,6 +167,7 @@ const UploadProduct = () => {
                             העלאת תמונה
                         </button>
                     </div>
+                    {imageError && <p className="text-danger">{imageError}</p>}
                 </div>
                 {imgPreview && <div className="text-center">
                     <img src={imgPreview} alt="Selected" className="img-preview" />

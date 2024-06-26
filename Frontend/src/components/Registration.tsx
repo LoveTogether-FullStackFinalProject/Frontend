@@ -1,4 +1,4 @@
-import {  ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { uploadPhoto } from '../services/uploadProductService';
@@ -7,10 +7,8 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import logoutServiece from '../services/logout-serviece';
-
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import './Registration.css';
 
 export let userID: string;
 
@@ -25,16 +23,12 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-
 const Registration = () => {
     const navigate = useNavigate();
     const [registerError, setRegisterError] = useState<string | null>(null);
-
-     const [imgSrc, setImgSrc] = useState<File | null>(null);
-    const { register, handleSubmit, formState: { errors }} = useForm<FormData>({ resolver: zodResolver(schema) });
-
+    const [imgSrc, setImgSrc] = useState<File | null>(null);
+    const { register, handleSubmit, formState: { errors }, setValue, trigger } = useForm<FormData>({ resolver: zodResolver(schema) });
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const { setValue, trigger } = useForm<FormData>({ resolver: zodResolver(schema) });
 
     useEffect(() => {
         if (imgSrc) {
@@ -68,11 +62,9 @@ const Registration = () => {
             userID = res._id ?? '';
 
             if (res.accessToken) {
-                console.log("res.accessToken: ", res.accessToken);
                 localStorage.setItem('accessToken', res.accessToken);
             }
             if (res.refreshToken) {
-                console.log("res.refreshToken: ", res.refreshToken);
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
@@ -96,10 +88,6 @@ const Registration = () => {
         }
     };
 
-   
-
-      
-
     const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
         try {
             const res = await googleSignIn(credentialResponse);
@@ -121,86 +109,126 @@ const Registration = () => {
         console.log("ההתחברות דרך חשבון Google נכשלה");
     };
 
-    const handleButtonClick = () => {
-        navigate('/login');
-    };
-
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
         return (
-            <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: "100vh", backgroundColor: "#f8d7da" }}>
-                <p className="mb-4 text-danger">שגיאה: כבר מחוברים למערכת.</p>
-                <button onClick={() => navigate('/feed')} className="btn btn-primary">חזור לדף הבית</button>
+            <div className="registration-container">
+                <div className="registration-card">
+                    <div className="registration-body">
+                        <p className="error-message">שגיאה: כבר מחוברים למערכת.</p>
+                        <button className="submit-button" onClick={() => navigate('/feed')}>חזור לדף הבית</button>
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#FFF8DC" }}>
-            <div className="card shadow-lg p-4" style={{ maxWidth: "600px", width: "100%" }}>
-                <div className="card-header text-center fw-bold" style={{ fontSize: "2.5rem", color: "burlywood" }}>ברוכים הבאים!</div>
-                <div className="text-center fw-bold mb-4" style={{ fontSize: "1.5rem", color: "brown" }}>♥ואהבתם ביחד♥ </div>
-                <h1 className="text-center fw-bold mb-4">הרשמה</h1>
-                <div className="d-flex justify-content-center position-relative mb-3">
-                    {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Profile" className="img-thumbnail mb-2" style={{ maxWidth: '150px', borderRadius: '50%' }} />} 
-                     <button type="button" className="btn position-absolute bottom-0 end-0" onClick={selectImg}>
-                        <FontAwesomeIcon icon={faImage} className="fa-2x" style={{ color: 'burlywood' }} />
+        <div className="registration-container">
+            <div className="registration-card">
+                <div className="registration-header">
+                    <h2>ברוכים הבאים!</h2>
+                    <p>♥ואהבתם ביחד♥</p>
+                </div>
+                <div className="registration-body">
+                    <h3>הרשמה</h3>
+                    <div className="profile-image-container">
+                        {imgSrc && (
+                            <img
+                                src={URL.createObjectURL(imgSrc)}
+                                alt="Profile"
+                                className="profile-image"
+                            />
+                        )}
+                        <button className="image-upload-button" onClick={selectImg}>
+                            <FontAwesomeIcon icon={faImage} />
+                        </button>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={imgSelected}
+                            accept="image/*"
+                        />
+                    </div>
+                    <form onSubmit={handleSubmit(registerUserHandler)}>
+                        <div className="form-group">
+                            <input
+                                {...register("firstName")}
+                                type="text"
+                                placeholder="שם פרטי"
+                                className={errors.firstName ? 'error' : ''}
+                            />
+                            {errors.firstName && <span className="error-message">{errors.firstName.message}</span>}
+                        </div>
+                        <div className="form-group">
+                            <input
+                                {...register("lastName")}
+                                type="text"
+                                placeholder="שם משפחה"
+                                className={errors.lastName ? 'error' : ''}
+                            />
+                            {errors.lastName && <span className="error-message">{errors.lastName.message}</span>}
+                        </div>
+                        <div className="form-group">
+                            <input
+                                {...register("email")}
+                                type="email"
+                                placeholder="כתובת דואר אלקטרוני"
+                                className={errors.email ? 'error' : ''}
+                            />
+                            {errors.email && <span className="error-message">{errors.email.message}</span>}
+                        </div>
+                        <div className="form-group">
+                            <input
+                                {...register("password")}
+                                type="password"
+                                placeholder="סיסמה"
+                                className={errors.password ? 'error' : ''}
+                            />
+                            {errors.password && <span className="error-message">{errors.password.message}</span>}
+                        </div>
+                        <div className="form-group">
+                            <input
+                                {...register("phoneNumber")}
+                                type="tel"
+                                placeholder="מספר טלפון"
+                                className={errors.phoneNumber ? 'error' : ''}
+                            />
+                            {errors.phoneNumber && <span className="error-message">{errors.phoneNumber.message}</span>}
+                        </div>
+                        <div className="form-group">
+                            <input
+                                {...register("mainAddress")}
+                                type="text"
+                                placeholder="כתובת ראשית"
+                                className={errors.mainAddress ? 'error' : ''}
+                            />
+                            {errors.mainAddress && <span className="error-message">{errors.mainAddress.message}</span>}
+                        </div>
+                        <button type="submit" className="submit-button">
+                            הרשמה
+                        </button>
+                    </form>
+                    {registerError && (
+                        <p className="error-message">{registerError}</p>
+                    )}
+                    <div className="google-login">
+                        <GoogleLogin
+                            onSuccess={onGoogleLoginSuccess}
+                            onError={onGoogleLoginFailure}
+                        />
+                    </div>
+                    <button
+                        className="login-link"
+                        onClick={() => navigate('/login')}
+                    >
+                        כבר רשום? התחבר כאן
                     </button>
                 </div>
-                 <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
-                {errors.image && <p className="text-danger">{errors.image.message}</p>} 
-                <div className="card-body">
-                    <form onSubmit={handleSubmit(registerUserHandler)}>
-                        <div className="form-floating mb-3">
-                            <input {...register("firstName")} type="text" className="form-control" id="floatingFirstName" placeholder="שם פרטי" />
-                            <label htmlFor="floatingFirstName">שם פרטי</label>
-                            {errors.firstName && <p className="text-danger">{errors.firstName.message}</p>}
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input {...register("lastName")} type="text" className="form-control" id="floatingLastName" placeholder="שם משפחה" />
-                            <label htmlFor="floatingLastName">שם משפחה</label>
-                            {errors.lastName && <p className="text-danger">{errors.lastName.message}</p>}
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input {...register("email")} type="text" className="form-control" id="floatingEmail" placeholder="כתובת דואר אלקטרוני" />
-                            <label htmlFor="floatingEmail">כתובת דואר אלקטרוני</label>
-                            {errors.email && <p className="text-danger">{errors.email.message}</p>}
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input {...register("password")} type="password" className="form-control" id="floatingPassword" placeholder="סיסמה" />
-                            <label htmlFor="floatingPassword">סיסמה</label>
-                            {errors.password && <p className="text-danger">{errors.password.message}</p>}
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input {...register("phoneNumber")} type="text" className="form-control" id="floatingPhoneNumber" placeholder="מספר טלפון" />
-                            <label htmlFor="floatingPhoneNumber">מספר טלפון</label>
-                            {errors.phoneNumber && <p className="text-danger">{errors.phoneNumber.message}</p>}
-                        </div>
-                        <div className="form-floating mb-3">
-                            <input {...register("mainAddress")} type="text" className="form-control" id="floatingMainAddress" placeholder="כתובת ראשית" />
-                            <label htmlFor="floatingMainAddress">כתובת ראשית</label>
-                            {errors.mainAddress && <p className="text-danger">{errors.mainAddress.message}</p>}
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <button type="submit" className="btn btn-success mt-3 w-100">הרשמה</button>
-                        </div>
-                    </form>
-                </div>
-                {registerError && <p className="text-danger text-center mt-3">{registerError}</p>}
-                <div className="d-flex justify-content-center my-3">
-                    <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure} />
-                </div>
-                <button onClick={handleButtonClick} className="btn btn-primary w-100">
-                    כבר רשום? התחבר כאן
-                </button>
-                
             </div>
         </div>
-        
     );
-    
 }
 
 export default Registration;
-
-

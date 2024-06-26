@@ -104,9 +104,13 @@ import person from './../assets/person.png';
         <Row>
           {chunk.map((request, index) => (
             <Col key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.productType}: ${request.amount}`}</p>
-              <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
-            </Col>
+            <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              {`${request.itemName}: ${request.amount}`}
+              {/* {request.expirationDate && ` תאריך תפוגה: ${request.expirationDate}`} */}
+              {request.expirationDate && ` תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`}
+            </p>
+            <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
+          </Col>
           ))}
         </Row>
       </Carousel.Item>
@@ -136,10 +140,11 @@ import person from './../assets/person.png';
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF', marginBottom: '80px' }}>
                 <h2>הקטגוריות שלנו</h2>
                 <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>משחקים לילדים</span>
-                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>כלי בית</span>
-                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>שתייה</span>
-                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>מזון</span>
+                <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>הנעלה</span>
+                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>ביגוד</span>
+                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>אלקטרוניקה</span>
+                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>אביזרים</span>
+                    <span style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '50px', backgroundColor: '#FFE4E1' }}>מזון ושתיה</span>
                 </div>
             </div>
 
@@ -147,8 +152,8 @@ import person from './../assets/person.png';
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', width: '45%', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F0FFFF' }}>
             <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>
                  עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!
-                 הצלחנו לגייס {countProducts('מזון')} ארוחות חמות,
-                {countProducts('שתייה')} משקאות, ו- {countProducts('כלי בית')} כלי בית
+                 הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות,
+                {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים
             </h2>
                   
                         {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>

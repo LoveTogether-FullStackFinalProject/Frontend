@@ -10,8 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import './UploadProduct.css';
 
-
-
 const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
     quantity: z.number().gt(0, "כמות הפריט חייבת להיות יותר מ-0"),
@@ -27,6 +25,7 @@ type FormData = z.infer<typeof schema>;
 const UploadProduct = () => {
     const [imgSrc, setImgSrc] = useState<File>();
     const [imgPreview, setImgPreview] = useState<string>();
+    const [imageError, setImageError] = useState<string>('');
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({ resolver: zodResolver(schema) });
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,6 +40,7 @@ const UploadProduct = () => {
                 setImgPreview(reader.result as string);
             };
             reader.readAsDataURL(file);
+            setImageError(''); // Clear any previous image error
         }
     };
 
@@ -50,6 +50,11 @@ const UploadProduct = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
+            if (!imgSrc) {
+                setImageError('עליך להעלות תמונה של תרומתך');
+                return;
+            }
+
             let imageUrl = '';
             if (imgSrc) {
                 imageUrl = await uploadPhoto(imgSrc);
@@ -130,6 +135,7 @@ const UploadProduct = () => {
                 {imgPreview && <div className="text-center">
                     <img src={imgPreview} alt="Selected" className="img-preview" />
                 </div>} 
+                {imageError && <p className="text-danger text-center">{imageError}</p>}
 
                 <div className="text-center">
                     <button type="submit" className="btn btn-primary">

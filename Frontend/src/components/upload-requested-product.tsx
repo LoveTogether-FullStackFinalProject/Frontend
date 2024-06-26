@@ -7,13 +7,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import {requestedDonation} from "../services/upload-requested-product-service";
 import  requestedProduectService,{ CanceledError } from "../services/upload-requested-product-service";
+import context from 'react-bootstrap/esm/AccordionContext';
 
 const RequestedProductSchema = z.object({
   category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
-   itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
+  itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
   itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
+  expirationDate: z.string().optional().refine((date) => {
+    if (!date) return true;
+    const selectedDate = new Date(date);
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+    return selectedDate > nextWeek;
+}, {
+    message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
+}),
   image: z.string().url({ message: 'חובה לצרף תמונה' }),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
 });
@@ -25,6 +35,8 @@ function UploadRequestedProduct() {
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   useEffect(() => {
     if (imgSrc) {
@@ -46,6 +58,13 @@ function UploadRequestedProduct() {
   console.log(errors);
 
   const addNewProduct = async (data: FormData) => {
+
+
+    if (category === "מזון ושתייה" && !data.expirationDate) {
+      setErrorMessage('חובה להכניס תאריך תפוגה');
+      return
+    }
+
     if (!imgSrc) {
       alert("Please select an image");
       return;
@@ -103,6 +122,14 @@ function UploadRequestedProduct() {
       {category === 'אחר' && (
         <input type="text" {...register("category")} className="form-control" placeholder="הזן קטגוריה" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem', marginTop: '10px' }} />
       )}
+      {category === "מזון ושתייה" && (
+        <div className="form-floating mb-3">
+          <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
+           <label htmlFor="expirationDate">תאריך תפוגה</label>
+           {errors.expirationDate && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.expirationDate.message}</p>}
+           {errorMessage && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessage}</p>}
+        </div>
+     )}
       {errors.category && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>}
     </div>
 

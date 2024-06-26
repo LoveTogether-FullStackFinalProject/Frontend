@@ -104,9 +104,13 @@ import person from './../assets/person.png';
         <Row>
           {chunk.map((request, index) => (
             <Col key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <p style={{ textAlign: 'center', fontWeight: 'bold' }}>{`${request.itemName}: ${request.amount}`}</p>
-              <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
-            </Col>
+            <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              {`${request.itemName}: ${request.amount}`}
+              {/* {request.expirationDate && ` תאריך תפוגה: ${request.expirationDate}`} */}
+              {request.expirationDate && ` תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`}
+            </p>
+            <img src={request.image} alt="Product" style={{ width: '200px', height: '200px' }} />
+          </Col>
           ))}
         </Row>
       </Carousel.Item>

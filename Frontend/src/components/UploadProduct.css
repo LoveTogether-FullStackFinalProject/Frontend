@@ -52,7 +52,35 @@
 }
 
 .form-group input,
-.form-group select,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d2b48c;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    appearance: none; /* Removes default styling on some browsers */
+    -webkit-appearance: none; /* Removes default styling on WebKit browsers */
+    -moz-appearance: none; /* Removes default styling on Mozilla browsers */
+}
+
+.form-group select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px; /* Make room for custom arrow */
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #c19a6b;
+}
+
+.form-group input.error,
+.form-group select.error {
+    border-color: #cd5c5c;
+}
 .form-group select option {
     color: #000;
 }

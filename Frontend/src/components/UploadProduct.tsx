@@ -14,7 +14,7 @@ const schema = z.object({
     itemName: z.string().min(2, "שם הפריט חייב להכיל לפחות 2 תווים"),
     quantity: z.number().gt(0, "כמות הפריט חייבת להיות יותר מ-0"),
     category: z.string().min(1, "יש לבחור קטגוריה"),
-    customCategory: z.string().optional(),
+    customCategory: z.string().min(2, "קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים").optional(),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
     expirationDate: z.string().optional().refine((date) => {
         if (!date) return true;
@@ -26,17 +26,20 @@ const schema = z.object({
         message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
     }),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
-    pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת")
+    pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
+    image: z.any().refine((files) => files?.length > 0, "יש להעלות תמונה")
 });
 
 type FormData = z.infer<typeof schema>;
 
 const UploadProduct = () => {
-    const [imgSrc, setImgSrc] = useState<File>();
-    const [imgPreview, setImgPreview] = useState<string>();
-    const [imageError, setImageError] = useState<string>('');
+    const [imgSrc, setImgSrc] = useState<File | null>(null);
+    const [imgPreview, setImgPreview] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, watch } = useForm<FormData>({ resolver: zodResolver(schema) });
+    const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<FormData>({ 
+        resolver: zodResolver(schema),
+        mode: "onChange"
+    });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const selectedCategory = watch("category");
@@ -50,7 +53,7 @@ const UploadProduct = () => {
                 setImgPreview(reader.result as string);
             };
             reader.readAsDataURL(file);
-            setImageError('');
+            setValue("image", e.target.files, { shouldValidate: true });
         }
     };
 
@@ -60,8 +63,7 @@ const UploadProduct = () => {
 
     const onSubmit = async (data: FormData) => {
         if (!imgSrc) {
-            setImageError('עליך להעלות תמונה של תרומתך');
-            return;
+            return; // The form won't submit due to Zod validation
         }
 
         if (data.category === "מזון ושתייה" && data.expirationDate) {
@@ -143,7 +145,8 @@ const UploadProduct = () => {
                         </div>
                         {selectedCategory === "אחר" && (
                             <div className="form-group">
-                                <input {...register("customCategory")} type="text" placeholder="הכנס קטגוריה מותאמת אישית" />
+                                <input {...register("customCategory")} type="text" placeholder="הכנס קטגוריה מותאמת אישית" className={errors.customCategory ? 'error' : ''} />
+                                {errors.customCategory && <span className="error-message">{errors.customCategory.message}</span>}
                             </div>
                         )}
                         <div className="form-group">
@@ -179,11 +182,12 @@ const UploadProduct = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
+                                {...register("image")}
                                 onChange={imgSelected}
                                 accept="image/*"
                             />
                         </div>
-                        {imageError && <span className="error-message">{imageError}</span>}
+                        {errors.image && <span className="error-message">{errors.image.message}</span>}
                         <button type="submit" className="submit-button">
                             שלח
                         </button>

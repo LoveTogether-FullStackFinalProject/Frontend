@@ -49,6 +49,10 @@ const getDonationsByUser = (userId: string) => {
   return { req, abort: () => abortController.abort() };
 };
 
+const updateUserData = (userId: string, data: Partial<DonorData>) => {
+  return apiClient.put(`/donor/${userId}`, data);
+};
+
 export const logout = () => {
   logoutServiece.postLogout();
   localStorage.removeItem('accessToken');
@@ -56,4 +60,4 @@ export const logout = () => {
   localStorage.removeItem('userID');
 };
 
-export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers };
+export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers,updateUserData};

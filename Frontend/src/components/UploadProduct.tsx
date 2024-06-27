@@ -16,15 +16,18 @@ const schema = z.object({
     category: z.string().min(1, "יש לבחור קטגוריה"),
     customCategory: z.string().min(2, "קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים").optional(),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
-    expirationDate: z.string().optional().refine((date) => {
-        if (!date) return true;
-        const selectedDate = new Date(date);
-        const today = new Date();
-        const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-        return selectedDate > nextWeek;
-    }, {
-        message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
-    }),
+    expirationDate: z.string()
+        .refine((date) => {
+            if (!date) return true; // Allow empty if not required
+            const selectedDate = new Date(date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Set to beginning of day for accurate comparison
+            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+            return selectedDate >= nextWeek;
+        }, {
+            message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
+        })
+        .optional(),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
     pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
     image: z.any().refine((files) => files?.length > 0, "יש להעלות תמונה")
@@ -155,7 +158,14 @@ const UploadProduct = () => {
                         </div>
                         {selectedCategory === "מזון ושתייה" && (
                             <div className="form-group">
-                                <input {...register("expirationDate")} type="date" placeholder="תאריך תפוגה" className={errors.expirationDate ? 'error' : ''} />
+                                <label htmlFor="expirationDate">תאריך תפוגה (לפחות שבוע מהיום)</label>
+                                <input 
+                                    {...register("expirationDate")} 
+                                    type="date" 
+                                    id="expirationDate"
+                                    className={errors.expirationDate ? 'error' : ''}
+                                    min={new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                                />
                                 {errors.expirationDate && <span className="error-message">{errors.expirationDate.message}</span>}
                             </div>
                         )}

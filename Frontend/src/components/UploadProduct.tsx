@@ -137,16 +137,16 @@ const UploadProduct = () => {
                             {errors.quantity && <span className="error-message">{errors.quantity.message}</span>}
                         </div>
                         <div className="form-group">
-                            <select {...register("category")} className={errors.category ? 'error' : ''}>
-                                <option value="">בחר קטגוריה</option>
-                                <option value="מזון ושתייה">מזון ושתייה</option>
-                                <option value="אביזרים">אביזרים</option>
-                                <option value="אלקטרוניקה">אלקטרוניקה</option>
-                                <option value="ביגוד">ביגוד</option>
-                                <option value="הנעלה">הנעלה</option>
-                                <option value="אחר">אחר</option>
-                            </select>
-                            {errors.category && <span className="error-message">{errors.category.message}</span>}
+                            <select {...register("category")} className={errors.category ? 'error' : ''} required>
+                             <option value="" disabled selected>בחר קטגוריה</option>
+                             <option value="מזון ושתייה">מזון ושתייה</option>
+                             <option value="אביזרים">אביזרים</option>
+                             <option value="אלקטרוניקה">אלקטרוניקה</option>
+                             <option value="ביגוד">ביגוד</option>
+                             <option value="הנעלה">הנעלה</option>
+                             <option value="אחר">אחר</option>
+                          </select>
+                          {errors.category && <span className="error-message">{errors.category.message}</span>}
                         </div>
                         {selectedCategory === "אחר" && (
                             <div className="form-group">
@@ -154,10 +154,6 @@ const UploadProduct = () => {
                                 {errors.customCategory && <span className="error-message">{errors.customCategory.message}</span>}
                             </div>
                         )}
-                        <div className="form-group">
-                            <input {...register("condition")} type="text" placeholder="מצב הפריט" className={errors.condition ? 'error' : ''} />
-                            {errors.condition && <span className="error-message">{errors.condition.message}</span>}
-                        </div>
                         {selectedCategory === "מזון ושתייה" && (
                             <div className="form-group">
                                 <label htmlFor="expirationDate">תאריך תפוגה (לפחות שבוע מהיום)</label>
@@ -171,6 +167,10 @@ const UploadProduct = () => {
                                 {errors.expirationDate && <span className="error-message">{errors.expirationDate.message}</span>}
                             </div>
                         )}
+                        <div className="form-group">
+                            <input {...register("condition")} type="text" placeholder="מצב הפריט" className={errors.condition ? 'error' : ''} />
+                            {errors.condition && <span className="error-message">{errors.condition.message}</span>}
+                        </div>
                         <div className="form-group">
                             <input {...register("description")} type="text" placeholder="תיאור" className={errors.description ? 'error' : ''} />
                             {errors.description && <span className="error-message">{errors.description.message}</span>}

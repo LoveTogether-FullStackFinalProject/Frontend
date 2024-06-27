@@ -48,6 +48,13 @@ const Profile: React.FC = () => {
         filterDonations();
     }, [donations, activeTab, itemsToShow]);
 
+    useEffect(() => {
+        if (user) {
+          const newRating = updateRating(donations.length);
+          dataService.updateUserData(user._id, { rating: newRating });
+        }
+      }, [donations]);
+
     const filterDonations = () => {
         const filtered = donations.filter((donation) => {
             switch (activeTab) {
@@ -132,6 +139,20 @@ const Profile: React.FC = () => {
         }
     };
 
+    function updateRating(donations: number) {
+        if (donations >= 20) {
+          return "1";
+        } else if (donations >= 15) {
+          return "2";
+        } else if (donations >= 10) {
+          return "3";
+        } else if (donations >= 5) {
+          return "4";
+        } else {
+          return "0";
+        }
+      }
+
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="loading">{error}</div>;
     if (!user) return <div className="loading">User not found</div>;
@@ -165,6 +186,11 @@ const Profile: React.FC = () => {
                         </button>
                     ))}
                 </div>
+
+                <div className="rating-status">
+                     הדירוג שלך הוא: {user.rating ?? 0}
+                </div>
+
                 <div className="donations-list row w-100 justify-content-center">
                     {filteredDonations.map((donation) => (
                         <div key={donation._id} className="donation-card col-lg-3 col-md-4 col-sm-6 mb-4 p-2">

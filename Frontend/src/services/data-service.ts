@@ -1,6 +1,7 @@
 import apiClient, { CanceledError } from './api-client';
 import { Donation } from '../components/donation';
 import { DonorData } from '../components/donorData'
+import {requestedDonation} from "../services/upload-requested-product-service";
 import { userDonation } from '../components/userDonation';
 import logoutServiece from './logout-serviece';
 
@@ -17,7 +18,7 @@ const getDonations = () => {
 
 const getRequestedProducts = () => {
   const abortController = new AbortController();
-  const req = apiClient.get<Donation[]>('/requestedDonation/rdonations', { signal: abortController.signal });
+  const req = apiClient.get<requestedDonation[]>('/requestedDonation/rdonations', { signal: abortController.signal });
   return { req, abort: () => abortController.abort() };
 };
 

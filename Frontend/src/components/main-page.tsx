@@ -85,15 +85,7 @@ import person from './../assets/person.png';
                 <h2>ברוכים הבאים לאתר התרומות של</h2>
                 <h1 style={{ color: 'brown' }}>"ואהבתם ביחד"</h1>
                 <h2>נשמח לעזרתכם עם המוצרים הדרושים לתרומות בביקוש גבוה כרגע בעמותה:</h2>
-            </div>
-            <div >
-                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
-                <button className="btn btn-primary">תרמו כאן</button>
-            </div>
-            <div >
-                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
-            </div>
-            
+            </div> 
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', marginBottom: '80px', backgroundColor: '#F0FFFF' }}>
             <Carousel
     nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Donation } from './donation';
 import { DonorData } from './donorData';
+import {requestedDonation} from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
@@ -11,7 +12,7 @@ import person from './../assets/person.png';
         const navigate = useNavigate();
         const [products, setProducts] = useState<Donation[]>([])
         const [users, setUsers] = useState<DonorData[]>([])
-        const [requests, setRequests] = useState<Donation[]>([])
+        const [requests, setRequests] = useState<requestedDonation[]>([])
         useEffect(() => {
             const { req, abort } = dataService.getDonations()
             req.then((res) => {

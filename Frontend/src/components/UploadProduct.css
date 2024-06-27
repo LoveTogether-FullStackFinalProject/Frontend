@@ -60,16 +60,27 @@
     font-size: 16px;
     background-color: #fff;
     color: #000;
-    appearance: none; /* Removes default styling on some browsers */
-    -webkit-appearance: none; /* Removes default styling on WebKit browsers */
-    -moz-appearance: none; /* Removes default styling on Mozilla browsers */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
+.form-group input::placeholder,
+.form-group select:invalid {
+    color: #999; /* Light grey color for placeholders */
+}
 .form-group select {
     background-image: url('data:image/svg+xml;utf8,<svg fill="%23000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
     background-repeat: no-repeat;
     background-position: right 10px center;
-    padding-right: 30px; /* Make room for custom arrow */
+    padding-right: 30px;
+}
+.form-group select option:first-child {
+    color: #999; /* Light grey color for the placeholder option */
+}
+
+.form-group select option:not(:first-child) {
+    color: #000; /* Black color for actual options */
 }
 .form-group input:focus,
 .form-group select:focus {

@@ -14,18 +14,17 @@ const schema = z.object({
     category: z.string().min(1, "יש לבחור קטגוריה"),
     customCategory: z.string().min(2, "קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים").optional(),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
-    expirationDate: z.string()
-        .refine((date) => {
-            if (!date) return true; // Allow empty if not required
-            const selectedDate = new Date(date);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const oneWeekFromNow = new Date(today);
-            oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
-            return selectedDate >= oneWeekFromNow;
-        }, {
-            message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
-        }),
+    expirationDate: z.string().refine((date) => {
+        if (!date) return true; // Allow empty if not required
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const oneWeekFromNow = new Date(today);
+        oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+        return selectedDate >= oneWeekFromNow;
+    }, {
+        message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
+    }).optional(),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
     pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
     image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
@@ -36,7 +35,7 @@ type FormData = z.infer<typeof schema>;
 const UploadProduct: React.FC = () => {
     const [imgPreview, setImgPreview] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<FormData>({ 
+    const { register, handleSubmit, formState: { errors }, watch, setValue, trigger } = useForm<FormData>({ 
         resolver: zodResolver(schema),
         mode: "onSubmit"
     });
@@ -61,6 +60,11 @@ const UploadProduct: React.FC = () => {
     };
 
     const onSubmit = async (data: FormData) => {
+        if (selectedCategory === "מזון ושתייה" && !data.expirationDate) {
+            trigger("expirationDate");
+            return;
+        }
+
         try {
             let imageUrl = '';
             if (data.image) {
@@ -137,7 +141,7 @@ const UploadProduct: React.FC = () => {
                         {selectedCategory === "מזון ושתייה" && (
                             <div className="form-group">
                                 <input 
-                                    {...register("expirationDate")} 
+                                    {...register("expirationDate", { required: selectedCategory === "מזון ושתייה" ? "יש להזין תאריך תפוגה" : false })} 
                                     type="date" 
                                     id="expirationDate"
                                     className={errors.expirationDate ? 'error' : ''}

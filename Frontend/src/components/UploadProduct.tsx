@@ -1,13 +1,11 @@
-import { ChangeEvent, useRef } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import * as z from "zod";
 import './UploadProduct.css';
 
 const schema = z.object({
@@ -22,20 +20,20 @@ const schema = z.object({
             const selectedDate = new Date(date);
             const today = new Date();
             today.setHours(0, 0, 0, 0); // Set to beginning of day for accurate comparison
-            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-            return selectedDate >= nextWeek;
+            const oneWeekFromNow = new Date(today);
+            oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+            return selectedDate <= oneWeekFromNow;
         }, {
-            message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
+            message: "תאריך התפוגה לכל היותר שבוע מהיום",
         })
         .optional(),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
     pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
-    image: z.any().refine((files) => files?.length > 0, "יש להעלות תמונה")
 });
 
 type FormData = z.infer<typeof schema>;
 
-const UploadProduct = () => {
+const UploadProduct: React.FC = () => {
     const [imgSrc, setImgSrc] = useState<File | null>(null);
     const [imgPreview, setImgPreview] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -56,7 +54,6 @@ const UploadProduct = () => {
                 setImgPreview(reader.result as string);
             };
             reader.readAsDataURL(file);
-            setValue("image", e.target.files, { shouldValidate: true });
         }
     };
 
@@ -66,17 +63,8 @@ const UploadProduct = () => {
 
     const onSubmit = async (data: FormData) => {
         if (!imgSrc) {
-            return; // The form won't submit due to Zod validation
-        }
-
-        if (data.category === "מזון ושתייה" && data.expirationDate) {
-            const selectedDate = new Date(data.expirationDate);
-            const today = new Date();
-            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-            if (selectedDate <= nextWeek) {
-                alert('תאריך התפוגה צריך להיות לפחות שבוע מהיום');
-                return;
-            }
+            alert('יש להעלות תמונה');
+            return;
         }
 
         try {
@@ -98,12 +86,10 @@ const UploadProduct = () => {
             await uploadProduct(productData);
             navigate('/profile');
         } catch (error) {
-            console.error('Error uploading product:', error.message);
-            alert(`Error: ${error.message}`);
+            console.error('Error uploading product:', error);
+            alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
         }
     };
-
-    
 
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -137,16 +123,16 @@ const UploadProduct = () => {
                             {errors.quantity && <span className="error-message">{errors.quantity.message}</span>}
                         </div>
                         <div className="form-group">
-                            <select {...register("category")} className={errors.category ? 'error' : ''} required>
-                             <option value="" disabled selected>בחר קטגוריה</option>
-                             <option value="מזון ושתייה">מזון ושתייה</option>
-                             <option value="אביזרים">אביזרים</option>
-                             <option value="אלקטרוניקה">אלקטרוניקה</option>
-                             <option value="ביגוד">ביגוד</option>
-                             <option value="הנעלה">הנעלה</option>
-                             <option value="אחר">אחר</option>
-                          </select>
-                          {errors.category && <span className="error-message">{errors.category.message}</span>}
+                            <select {...register("category")} className={errors.category ? 'error' : ''}>
+                                <option value="">בחר קטגוריה</option>
+                                <option value="מזון ושתייה">מזון ושתייה</option>
+                                <option value="אביזרים">אביזרים</option>
+                                <option value="אלקטרוניקה">אלקטרוניקה</option>
+                                <option value="ביגוד">ביגוד</option>
+                                <option value="הנעלה">הנעלה</option>
+                                <option value="אחר">אחר</option>
+                            </select>
+                            {errors.category && <span className="error-message">{errors.category.message}</span>}
                         </div>
                         {selectedCategory === "אחר" && (
                             <div className="form-group">
@@ -156,13 +142,14 @@ const UploadProduct = () => {
                         )}
                         {selectedCategory === "מזון ושתייה" && (
                             <div className="form-group">
-                                <label htmlFor="expirationDate">תאריך תפוגה (לפחות שבוע מהיום)</label>
+                                <label htmlFor="expirationDate">תאריך תפוגה (לכל היותר שבוע מהיום)</label>
                                 <input 
                                     {...register("expirationDate")} 
                                     type="date" 
                                     id="expirationDate"
                                     className={errors.expirationDate ? 'error' : ''}
-                                    min={new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                                    min={new Date().toISOString().split('T')[0]}
+                                    max={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
                                 />
                                 {errors.expirationDate && <span className="error-message">{errors.expirationDate.message}</span>}
                             </div>
@@ -194,12 +181,11 @@ const UploadProduct = () => {
                                 type="file"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
-                                {...register("image")}
                                 onChange={imgSelected}
                                 accept="image/*"
                             />
                         </div>
-                        {errors.image && <span className="error-message">{errors.image.message}</span>}
+                        {!imgSrc && <span className="error-message">יש להעלות תמונה</span>}
                         <button type="submit" className="submit-button">
                             שלח
                         </button>

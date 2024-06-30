@@ -1,7 +1,5 @@
-// DonationModal.tsx
 import React from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Modal, Button } from 'react-bootstrap';
 import { userDonation } from './userDonation';
 
 interface DonationModalProps {
@@ -13,45 +11,52 @@ interface DonationModalProps {
 }
 
 const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, onEditClick, onDeleteClick }) => {
-    if (!donation) return null;
+    if (!donation) {
+        return null;
+    }
+
+    const handleEdit = () => {
+        console.log('Edit button clicked in modal'); // Debug statement
+        onEditClick(donation);
+    };
 
     return (
-        <Modal show={show} onHide={onHide} className="custom-modal">
-            <Modal.Header closeButton className="bg-dark text-white">
+        <Modal show={show} onHide={onHide} dir="rtl">
+            <Modal.Header closeButton>
                 <Modal.Title>{donation.itemName}</Modal.Title>
             </Modal.Header>
-            <Modal.Body className="bg-dark text-white">
-                <div className="row">
-                    <div className="col-md-6">
-                        {donation.image && (
-                            <img
-                                src={donation.image}
-                                alt={donation.itemName}
-                                style={{ width: '100%', height: 'auto', borderRadius: '4px' }}
-                            />
-                        )}
-                    </div>
-                    <div className="col-md-6">
-                        <h4>Details</h4>
-                        <p>קטגוריה: {donation.category}</p>
-                        <p>כמות: {donation.quantity}</p>
-                        <p>מצב הפריט: {donation.condition}</p>
-                        <p>תיאור: {donation.description}</p>
-                        <p>תאריך תפוגה: {new Date(donation.expirationDate).toLocaleDateString()}</p>
-                        <p>כתובת לאיסוף: {donation.pickupAddress}</p>
-                        <p>סטטוס: {donation.status}</p>
+            <Modal.Body>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6" style={{ textAlign: 'right' }}>
+                            <h4>פרטים</h4>
+                            <p><strong>קטגוריה:</strong> {donation.category}</p>
+                            <p><strong>כמות:</strong> {donation.quantity}</p>
+                            <p><strong>מצב הפריט:</strong> {donation.condition}</p>
+                            <p><strong>תיאור:</strong> {donation.description}</p>
+                            <p><strong>תאריך תפוגה:</strong> {new Date(donation.expirationDate).toLocaleDateString()}</p>
+                            <p><strong>כתובת לאיסוף:</strong> {donation.pickupAddress}</p>
+                            <p><strong>סטטוס:</strong> {donation.status}</p>
+                        </div>
+                        <div className="col-md-6">
+                            <img src={donation.photoUrl} alt={donation.itemName} className="img-fluid" style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }} />
+                        </div>
                     </div>
                 </div>
-                <Button variant="primary" onClick={() => onEditClick(donation)}>
-                    Edit
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onHide}>
+                    סגור
+                </Button>
+                <Button variant="primary" onClick={handleEdit}>
+                    ערוך
                 </Button>
                 <Button variant="danger" onClick={() => onDeleteClick(donation._id)}>
-                    Delete
+                    מחק
                 </Button>
-            </Modal.Body>
+            </Modal.Footer>
         </Modal>
     );
 };
-//its good
 
 export default DonationModal;

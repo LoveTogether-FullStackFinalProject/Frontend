@@ -1,0 +1,17 @@
+
+.modal-body {
+    text-align: right;
+}
+
+.modal-title {
+    text-align: right;
+}
+
+.modal-footer {
+    justify-content: flex-start;
+}
+
+.modal-body .col-md-6 img {
+    display: block;
+    margin: 0 auto;
+}

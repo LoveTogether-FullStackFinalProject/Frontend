@@ -16,10 +16,10 @@ const schema = z.object({
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
     expirationDate: z.string()
         .refine((date) => {
-            if (!date) return false; // Require a date to be entered
+            if (!date) return true; // Allow empty if not required
             const selectedDate = new Date(date);
             const today = new Date();
-            today.setHours(0, 0, 0, 0); // Set to beginning of day for accurate comparison
+            today.setHours(0, 0, 0, 0);
             const oneWeekFromNow = new Date(today);
             oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
             return selectedDate >= oneWeekFromNow;
@@ -28,18 +28,17 @@ const schema = z.object({
         }),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
     pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
+    image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const UploadProduct: React.FC = () => {
-    const [imgSrc, setImgSrc] = useState<File | null>(null);
     const [imgPreview, setImgPreview] = useState<string | null>(null);
-    const [formSubmitted, setFormSubmitted] = useState(false);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<FormData>({ 
         resolver: zodResolver(schema),
-        mode: "onChange"
+        mode: "onSubmit"
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,7 +47,7 @@ const UploadProduct: React.FC = () => {
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImgSrc(file);
+            setValue("image", file); // Set the image in the form data
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImgPreview(reader.result as string);
@@ -62,15 +61,10 @@ const UploadProduct: React.FC = () => {
     };
 
     const onSubmit = async (data: FormData) => {
-        setFormSubmitted(true);
-        if (!imgSrc || (selectedCategory === "מזון ושתייה" && !data.expirationDate)) {
-            return;
-        }
-
         try {
             let imageUrl = '';
-            if (imgSrc) {
-                imageUrl = await uploadPhoto(imgSrc);
+            if (data.image) {
+                imageUrl = await uploadPhoto(data.image);
             }
             const userId = localStorage.getItem('userID');
             if (!userId) {
@@ -140,19 +134,18 @@ const UploadProduct: React.FC = () => {
                                 {errors.customCategory && <span className="error-message">{errors.customCategory.message}</span>}
                             </div>
                         )}
-                      {selectedCategory === "מזון ושתייה" && (
-            <div className="form-group">
-                <label htmlFor="expirationDate">תאריך תפוגה (לפחות שבוע מהיום)</label>
-                <input 
-                    {...register("expirationDate")} 
-                    type="date" 
-                    id="expirationDate"
-                    className={formSubmitted && !watch("expirationDate") ? 'error' : ''}
-                    min={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
-                />
-                {formSubmitted && !watch("expirationDate") && <span className="error-message">יש להזין תאריך תפוגה</span>}
-            </div>
-        )}
+                        {selectedCategory === "מזון ושתייה" && (
+                            <div className="form-group">
+                                <input 
+                                    {...register("expirationDate")} 
+                                    type="date" 
+                                    id="expirationDate"
+                                    className={errors.expirationDate ? 'error' : ''}
+                                    min={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
+                                />
+                                {errors.expirationDate && <span className="error-message">{errors.expirationDate.message}</span>}
+                            </div>
+                        )}
                         <div className="form-group">
                             <input {...register("condition")} type="text" placeholder="מצב הפריט" className={errors.condition ? 'error' : ''} />
                             {errors.condition && <span className="error-message">{errors.condition.message}</span>}
@@ -166,25 +159,26 @@ const UploadProduct: React.FC = () => {
                             {errors.pickupAddress && <span className="error-message">{errors.pickupAddress.message}</span>}
                         </div>
                         <div className="profile-image-container">
-            {imgPreview && (
-                <img
-                    src={imgPreview}
-                    alt="Product Preview"
-                    className="profile-image"
-                />
-            )}
-            <button type="button" className="image-upload-button" onClick={selectImg}>
-                <FontAwesomeIcon icon={faImage} />
-            </button>
-            <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                onChange={imgSelected}
-                accept="image/*"
-            />
-        </div>
-        {formSubmitted && !imgSrc && <span className="error-message">יש להעלות תמונה</span>}
+                            {imgPreview && (
+                                <img
+                                    src={imgPreview}
+                                    alt="Product Preview"
+                                    className="profile-image"
+                                />
+                            )}
+                            <button type="button" className="image-upload-button" onClick={selectImg}>
+                                <FontAwesomeIcon icon={faImage} />
+                            </button>
+                            <input
+                                {...register("image")}
+                                type="file"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                onChange={imgSelected}
+                                accept="image/*"
+                            />
+                        </div>
+                        {errors.image && <span className="error-message">{errors.image.message}</span>}
                         <button type="submit" className="submit-button">
                             שלח
                         </button>

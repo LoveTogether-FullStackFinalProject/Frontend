@@ -213,3 +213,9 @@ nav a {
 .load-more-button:hover {
   background-color: #8a4b2e;
 }
+
+.rating-status {
+  font-weight: bold;
+  color: green;
+  font-size: 1.5em;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Donation } from './donation';
 import { DonorData } from './donorData';
+import {requestedDonation} from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
@@ -11,7 +12,7 @@ import person from './../assets/person.png';
         const navigate = useNavigate();
         const [products, setProducts] = useState<Donation[]>([])
         const [users, setUsers] = useState<DonorData[]>([])
-        const [requests, setRequests] = useState<Donation[]>([])
+        const [requests, setRequests] = useState<requestedDonation[]>([])
         useEffect(() => {
             const { req, abort } = dataService.getDonations()
             req.then((res) => {
@@ -85,15 +86,7 @@ import person from './../assets/person.png';
                 <h2>ברוכים הבאים לאתר התרומות של</h2>
                 <h1 style={{ color: 'brown' }}>"ואהבתם ביחד"</h1>
                 <h2>נשמח לעזרתכם עם המוצרים הדרושים לתרומות בביקוש גבוה כרגע בעמותה:</h2>
-            </div>
-            <div >
-                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
-                <button className="btn btn-primary">תרמו כאן</button>
-            </div>
-            <div >
-                <button className="btn btn-primary" onClick={handleProfileClick}>החשבון שלי</button>
-            </div>
-            
+            </div> 
             <div style={{ border: '1px solid black', borderRadius: '5px', padding: '10px', margin: '10px', marginBottom: '80px', backgroundColor: '#F0FFFF' }}>
             <Carousel
     nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" style={{ color: 'black', backgroundColor: 'transparent' }} />}

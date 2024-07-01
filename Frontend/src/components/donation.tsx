@@ -11,8 +11,8 @@ interface User {
 export interface Donation{
   _id: string;
   category: string;
-  productType: string; 
-  amount: number;
+  itemName: string; 
+  quantity: number;
   itemCondition: string;
   expirationDate: Date;
   description: string;
@@ -31,8 +31,8 @@ function Donation({ donation }: DonationProps) {
     return (
     <div>
         <p>Category: {donation.category}</p>
-        <p>Donation Type: {donation.productType}</p>
-        <p>Amount: {donation.amount}</p>
+        <p>Donation Type: {donation.itemName}</p>
+        <p>Amount: {donation.quantity}</p>
         <p>Item Condition: {donation.itemCondition}</p>
         <p>Description: {donation.description}</p>
         <p>Pick Up Address: {donation.pickUpAddress}</p>

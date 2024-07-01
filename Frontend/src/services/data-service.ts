@@ -1,6 +1,7 @@
 import apiClient, { CanceledError } from './api-client';
 import { Donation } from '../components/donation';
 import { DonorData } from '../components/donorData'
+import {requestedDonation} from "../services/upload-requested-product-service";
 import { userDonation } from '../components/userDonation';
 import logoutServiece from './logout-serviece';
 
@@ -17,7 +18,7 @@ const getDonations = () => {
 
 const getRequestedProducts = () => {
   const abortController = new AbortController();
-  const req = apiClient.get<Donation[]>('/requestedDonation/rdonations', { signal: abortController.signal });
+  const req = apiClient.get<requestedDonation[]>('/requestedDonation/rdonations', { signal: abortController.signal });
   return { req, abort: () => abortController.abort() };
 };
 
@@ -48,6 +49,10 @@ const getDonationsByUser = (userId: string) => {
   return { req, abort: () => abortController.abort() };
 };
 
+const updateUserData = (userId: string, data: Partial<DonorData>) => {
+  return apiClient.put(`/donor/${userId}`, data);
+};
+
 export const logout = () => {
   logoutServiece.postLogout();
   localStorage.removeItem('accessToken');
@@ -55,4 +60,4 @@ export const logout = () => {
   localStorage.removeItem('userID');
 };
 
-export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers };
+export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers,updateUserData};

@@ -4,6 +4,7 @@ import {requestedDonation} from "../services/upload-requested-product-service";
 import  dataService,{ CanceledError } from "../services/data-service.ts";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom'
+import './statistics.css';
 
 
     function Statistics() {
@@ -56,7 +57,7 @@ import { useNavigate } from 'react-router-dom'
         return (
         <>
 
-<h1 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', textDecoration: 'underline' }}>
+{/* <h1 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', textDecoration: 'underline' }}>
     דוחות נתונים וסטטיסטיקות של התרומות בעמותה
 </h1>
 {error && <p className='text-danger'>{error}</p>}
@@ -102,21 +103,58 @@ import { useNavigate } from 'react-router-dom'
     </tbody>
   </table>
 </div>
+      </div> */}
 
-{/* <tr style={{ border: '1px solid black' }}>
-                         <td style={{ border: '1px solid black', padding: '10px' }}>3</td>
-                        <td style={{ border: '1px solid black', padding: '10px' }}>מטרנה</td>
-                    </tr>
-                     <tr style={{ border: '1px solid black' }}>
-                          <td style={{ border: '1px solid black', padding: '10px' }}>כמות למשפחה</td>
-                         <td style={{ border: '1px solid black', padding: '10px' }}>ירקות</td>
-                    </tr>
-                    <tr style={{ border: '1px solid black' }}>
-                     <td style={{ border: '1px solid black', padding: '10px' }}>30</td>
-                    <td style={{ border: '1px solid black', padding: '10px' }}>ארוחות חמות לחג</td>
-                    </tr> */}
 
-        </div>
+
+
+
+<h1>
+    דוחות נתונים וסטטיסטיקות של התרומות בעמותה
+</h1>
+{error && <p className='text-danger'>{error}</p>}
+<div className="data-container">
+    <div className="data-section">
+        <div className="data-title">נתוני התרומות בשנה האחרונה</div>
+        {Array.isArray(products) && (
+            <table className="data-table">
+                <thead>
+                    <tr>
+                        <th>שם המוצר</th>
+                        <th>כמות</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((product, index) => (
+                        <tr key={index}>
+                            <td>{product.itemName}</td>
+                            <td>{product.quantity}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        )}
+    </div>
+    <div className="data-section">
+        <div className="data-title">נתוני פריטים חסרים בעמותה שנדרשים לתרומות</div>
+        <table className="data-table">
+            <thead>
+                <tr>
+                    <th>שם המוצר</th>
+                    <th>כמות</th>
+                </tr>
+            </thead>
+            <tbody>
+                {requests.map((request, index) => (
+                    <tr key={index}>
+                        <td>{request.itemName}</td>
+                        <td>{request.amount}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    </div>
+</div>
     
         </>
         )

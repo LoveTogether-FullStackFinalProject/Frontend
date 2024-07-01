@@ -1,0 +1,86 @@
+.form-title {
+    color: brown;
+    font-size: 2.5rem;
+    margin-top: 0; 
+    margin-bottom: 20px;
+    text-align: center;
+    z-index: 10; 
+    position: relative;
+    padding-left: 40px; 
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid lightgray;
+    padding: 40px 20px 20px; 
+    background-color: #f9f9f9;
+  }
+  
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 50px;
+  }
+  
+  .form-control {
+    direction: rtl;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .floating-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    position: absolute;
+    top: -10px; 
+    right: 10px;
+    background-color: #f9f9f9;
+    padding: 0 5px;
+    z-index: 1;
+  }
+  
+  .error-message {
+    position: absolute;
+    right: 0;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 1px;
+  }
+  
+  .img-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .img-thumbnail {
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+  .btn-upload {
+    background-color: brown;
+    color: white;
+    width: 200px;
+    font-size: 1.2rem;
+  }
+  
+  .btn-submit {
+    color: white;
+    background-color: brown;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+  }
+  

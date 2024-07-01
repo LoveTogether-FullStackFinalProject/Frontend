@@ -51,6 +51,14 @@ const Profile: React.FC = () => {
         filterDonations();
     }, [donations, activeTab, itemsToShow]);
 
+    useEffect(() => {
+        if (user) {
+          const newRating = updateRating(donations.length);
+          dataService.updateUserData(user._id, { rating: newRating });
+        }
+      }, [donations]);
+
+
     const filterDonations = () => {
         const filtered = donations.filter((donation) => {
             switch (activeTab) {
@@ -147,6 +155,20 @@ const Profile: React.FC = () => {
         setShowModal(true);
     };
 
+    function updateRating(donations: number) {
+        if (donations >= 20) {
+          return "1";
+        } else if (donations >= 15) {
+          return "2";
+        } else if (donations >= 10) {
+          return "3";
+        } else if (donations >= 5) {
+          return "4";
+        } else {
+          return "0";
+        }
+      }
+
     if (loading) return <div className="loading">Loading...</div>;
     if (error) return <div className="loading">{error}</div>;
     if (!user) return <div className="loading">User not found</div>;
@@ -165,6 +187,7 @@ const Profile: React.FC = () => {
                     <span>שלום, {user.firstName} {user.lastName}</span>
                 </div>
             </header>
+            
             <main className="profile-content">
                 <div className="tabs">
                     {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (
@@ -179,6 +202,10 @@ const Profile: React.FC = () => {
                             {tab === 'all' && 'כל התרומות'}
                         </button>
                     ))}
+                </div>
+
+                <div className="rating-status">
+                     הדירוג שלך הוא: {user.rating ?? 0}
                 </div>
                 <div className="donations-list">
                     {filteredDonations.map((donation) => (

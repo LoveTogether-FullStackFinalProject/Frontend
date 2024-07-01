@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import emailIcon from './../assets/email.png';
 import passwordIcon from './../assets/password.png';
+import './login.css';
 
 function Login() {
     const navigate = useNavigate();
@@ -65,7 +66,7 @@ function Login() {
 
     return (
         <>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '5vh' }}>
+            {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '5vh' }}>
                 <div>
                     <h1 className="text-center fw-bold" style={{ color: 'brown', fontSize: '3rem', marginTop: '20px', marginBottom: '60px' }}>התחברות</h1>
                 </div>
@@ -105,7 +106,54 @@ function Login() {
 
                     {loginError && <p style={{ color: 'red', marginBottom: '20px' }}>{loginError}</p>}
                 </div>
-            </div>
+            </div> */}
+
+<div className="login-page">
+<div className="login-container">
+  <div>
+    <h1 className="login-title">התחברות</h1>
+  </div>
+</div>
+
+<div className="main-content">
+  <div className="content-box">
+
+    <div className="form-group">
+      <label htmlFor="floatingInput" className="form-label">:אימייל</label>
+      <div className="form-input-group">
+        <input ref={emailInputRef} type="text" className="form-control form-input" id="floatingInput" placeholder="הקלד/י  אימייל..." />
+        <img src={emailIcon} className="icon" />
+      </div>
+    </div>
+
+    <div className="form-group password-group">
+      <label htmlFor="floatingPassword" className="form-label">:סיסמה</label>
+      <div className="form-input-group">
+        <input ref={passwordInputRef} type="password" className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
+        <img src={passwordIcon} className="icon" />
+      </div>
+    </div>
+
+    <button onClick={handleButtonClick} className="btn btn-primary primary-btn">
+      עדיין לא יצרת משתמש? לחצ/י כאן
+    </button>
+
+    <div className="google-login">
+      <GoogleLogin
+        onSuccess={onGoogleLoginSuccess}
+        onError={onGoogleLoginFailure}
+      />
+    </div>
+
+    <button type="button" className="btn btn-primary secondary-btn" onClick={login}>התחבר/י</button>
+
+    {loginError && <p className="error-message">{loginError}</p>}
+  </div>
+</div>
+</div>
+
+
+            
         </>
     );
 }

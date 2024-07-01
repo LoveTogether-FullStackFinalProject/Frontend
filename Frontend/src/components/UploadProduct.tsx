@@ -1,13 +1,11 @@
-import { ChangeEvent, useRef } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import * as z from "zod";
 import './UploadProduct.css';
 
 const schema = z.object({
@@ -16,32 +14,30 @@ const schema = z.object({
     category: z.string().min(1, "יש לבחור קטגוריה"),
     customCategory: z.string().min(2, "קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים").optional(),
     condition: z.string().min(2, "מצב הפריט חייב להכיל לפחות 2 תווים"),
-    expirationDate: z.string()
-        .refine((date) => {
-            if (!date) return true; // Allow empty if not required
-            const selectedDate = new Date(date);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); // Set to beginning of day for accurate comparison
-            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-            return selectedDate >= nextWeek;
-        }, {
-            message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
-        })
-        .optional(),
+    expirationDate: z.string().refine((date) => {
+        if (!date) return true; // Allow empty if not required
+        const selectedDate = new Date(date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const oneWeekFromNow = new Date(today);
+        oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+        return selectedDate >= oneWeekFromNow;
+    }, {
+        message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
+    }).optional(),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
     pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
-    image: z.any().refine((files) => files?.length > 0, "יש להעלות תמונה")
+    image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const UploadProduct = () => {
-    const [imgSrc, setImgSrc] = useState<File | null>(null);
+const UploadProduct: React.FC = () => {
     const [imgPreview, setImgPreview] = useState<string | null>(null);
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<FormData>({ 
+    const { register, handleSubmit, formState: { errors }, watch, setValue, trigger } = useForm<FormData>({ 
         resolver: zodResolver(schema),
-        mode: "onChange"
+        mode: "onSubmit"
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -50,13 +46,12 @@ const UploadProduct = () => {
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImgSrc(file);
+            setValue("image", file); // Set the image in the form data
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImgPreview(reader.result as string);
             };
             reader.readAsDataURL(file);
-            setValue("image", e.target.files, { shouldValidate: true });
         }
     };
 
@@ -65,24 +60,15 @@ const UploadProduct = () => {
     };
 
     const onSubmit = async (data: FormData) => {
-        if (!imgSrc) {
-            return; // The form won't submit due to Zod validation
-        }
-
-        if (data.category === "מזון ושתייה" && data.expirationDate) {
-            const selectedDate = new Date(data.expirationDate);
-            const today = new Date();
-            const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-            if (selectedDate <= nextWeek) {
-                alert('תאריך התפוגה צריך להיות לפחות שבוע מהיום');
-                return;
-            }
+        if (selectedCategory === "מזון ושתייה" && !data.expirationDate) {
+            trigger("expirationDate");
+            return;
         }
 
         try {
             let imageUrl = '';
-            if (imgSrc) {
-                imageUrl = await uploadPhoto(imgSrc);
+            if (data.image) {
+                imageUrl = await uploadPhoto(data.image);
             }
             const userId = localStorage.getItem('userID');
             if (!userId) {
@@ -98,12 +84,10 @@ const UploadProduct = () => {
             await uploadProduct(productData);
             navigate('/profile');
         } catch (error) {
-            console.error('Error uploading product:', error.message);
-            alert(`Error: ${error.message}`);
+            console.error('Error uploading product:', error);
+            alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
         }
     };
-
-    
 
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
@@ -154,23 +138,22 @@ const UploadProduct = () => {
                                 {errors.customCategory && <span className="error-message">{errors.customCategory.message}</span>}
                             </div>
                         )}
-                        <div className="form-group">
-                            <input {...register("condition")} type="text" placeholder="מצב הפריט" className={errors.condition ? 'error' : ''} />
-                            {errors.condition && <span className="error-message">{errors.condition.message}</span>}
-                        </div>
                         {selectedCategory === "מזון ושתייה" && (
                             <div className="form-group">
-                                <label htmlFor="expirationDate">תאריך תפוגה (לפחות שבוע מהיום)</label>
                                 <input 
-                                    {...register("expirationDate")} 
+                                    {...register("expirationDate", { required: selectedCategory === "מזון ושתייה" ? "יש להזין תאריך תפוגה" : false })} 
                                     type="date" 
                                     id="expirationDate"
                                     className={errors.expirationDate ? 'error' : ''}
-                                    min={new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                                    min={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
                                 />
                                 {errors.expirationDate && <span className="error-message">{errors.expirationDate.message}</span>}
                             </div>
                         )}
+                        <div className="form-group">
+                            <input {...register("condition")} type="text" placeholder="מצב הפריט" className={errors.condition ? 'error' : ''} />
+                            {errors.condition && <span className="error-message">{errors.condition.message}</span>}
+                        </div>
                         <div className="form-group">
                             <input {...register("description")} type="text" placeholder="תיאור" className={errors.description ? 'error' : ''} />
                             {errors.description && <span className="error-message">{errors.description.message}</span>}
@@ -191,10 +174,10 @@ const UploadProduct = () => {
                                 <FontAwesomeIcon icon={faImage} />
                             </button>
                             <input
+                                {...register("image")}
                                 type="file"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
-                                {...register("image")}
                                 onChange={imgSelected}
                                 accept="image/*"
                             />

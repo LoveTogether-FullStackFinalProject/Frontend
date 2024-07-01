@@ -199,7 +199,7 @@ function UploadRequestedProduct() {
               id="floatingCategory"
               onChange={(e) => {
                 setCategory(e.target.value);
-                clearErrors("category"); // Clear the error for the category field
+                clearErrors("category"); 
               }}
             >
               <option value="">בחר קטגוריה</option>

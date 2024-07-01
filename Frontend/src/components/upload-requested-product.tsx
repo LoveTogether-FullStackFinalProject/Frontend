@@ -31,7 +31,7 @@ const RequestedProductSchema = z.object({
 type FormData = z.infer<typeof RequestedProductSchema>;
 
 function UploadRequestedProduct() {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
+  const { register,clearErrors, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -197,7 +197,10 @@ function UploadRequestedProduct() {
               {...register("category")}
               className="form-control"
               id="floatingCategory"
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                clearErrors("category"); // Clear the error for the category field
+              }}
             >
               <option value="">בחר קטגוריה</option>
               <option value="מזון ושתייה">מזון ושתייה</option>
@@ -304,8 +307,12 @@ function UploadRequestedProduct() {
               style={{ display: "none" }}
               {...register("image")}
               type="file"
-              onChange={imgSelected}
+              onChange={(e) => {
+                clearErrors('image');
+                imgSelected(e);
+              }}
               ref={fileInputRef}
+              
             />
             {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.image.message}</p>}
           </div>

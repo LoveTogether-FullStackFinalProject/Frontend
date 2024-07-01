@@ -108,7 +108,7 @@ function Login() {
                 </div>
             </div> */}
 
-
+<div className="login-page">
 <div className="login-container">
   <div>
     <h1 className="login-title">התחברות</h1>
@@ -150,6 +150,8 @@ function Login() {
     {loginError && <p className="error-message">{loginError}</p>}
   </div>
 </div>
+</div>
+
 
             
         </>

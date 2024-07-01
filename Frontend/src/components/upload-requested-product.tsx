@@ -8,6 +8,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons';
 import {requestedDonation} from "../services/upload-requested-product-service";
 import  requestedProduectService,{ CanceledError } from "../services/upload-requested-product-service";
 import context from 'react-bootstrap/esm/AccordionContext';
+ import './upload-requested-product.css';
 
 const RequestedProductSchema = z.object({
   category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
@@ -93,7 +94,7 @@ function UploadRequestedProduct() {
   return (
     <>
 
-<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '20px' }}>
+{/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '20px' }}>
   <div style={{ width: '100%', maxWidth: '600px', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9' }}>
     <h1 className="text-center fw-bold" style={{ color: 'brown', fontSize: '2.5rem', marginTop: '20px', marginBottom: '20px' }}>העלאת מוצר המבוקש לתרומה</h1>
 
@@ -167,7 +168,155 @@ function UploadRequestedProduct() {
       </div>
     </form>
   </div>
-</div>
+</div> */}
+
+
+
+<div className="container">
+<h1 className="form-title">העלאת מוצר המבוקש לתרומה</h1>
+      <div className="form-wrapper">  
+        <form onSubmit={handleSubmit(addNewProduct)}>
+          <div className="form-group"></div>
+          <div className="input-wrapper">
+            <input
+              {...register("itemName")}
+              type="text"
+              className="form-control"
+              id="floatingItemName"
+              placeholder=""
+            />
+            <label htmlFor="floatingItemName" className="floating-label">
+              שם המוצר
+            </label>
+            {errors.itemName && (
+              <p className="error-message">{errors.itemName.message}</p>
+            )}
+          </div>
+          <div className="input-wrapper">
+            <select
+              {...register("category")}
+              className="form-control"
+              id="floatingCategory"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">בחר קטגוריה</option>
+              <option value="מזון ושתייה">מזון ושתייה</option>
+              <option value="אביזרים">אביזרים</option>
+              <option value="אלקטרוניקה">אלקטרוניקה</option>
+              <option value="ביגוד">ביגוד</option>
+              <option value="הנעלה">הנעלה</option>
+              <option value="אחר">אחר...</option>
+            </select>
+            <label htmlFor="floatingCategory" className="floating-label">
+              קטגוריה
+            </label>
+            {category === "אחר" && (
+              <input
+                type="text"
+                {...register("category")}
+                className="form-control"
+                placeholder="הזן קטגוריה"
+              />
+            )}
+            {category === "מזון ושתייה" && (
+              <div className="input-wrapper">
+                <input
+                  {...register("expirationDate")}
+                  type="date"
+                  className="form-control"
+                  id="expirationDate"
+                  placeholder="תאריך תפוגה"
+                />
+                <label htmlFor="expirationDate" className="floating-label">
+                  תאריך תפוגה
+                </label>
+                {errors.expirationDate && (
+                  <p className="error-message">{errors.expirationDate.message}</p>
+                )}
+              </div>
+            )}
+            {errors.category && (
+              <p className="error-message">{errors.category.message}</p>
+            )}
+          </div>
+          <div className="input-wrapper">
+            <input
+              {...register("amount")}
+              type="number"
+              className="form-control"
+              id="floatingAmount"
+              placeholder=""
+            />
+            <label htmlFor="floatingAmount" className="floating-label">
+              כמות
+            </label>
+            {errors.amount && (
+              <p className="error-message">{errors.amount.message}</p>
+            )}
+          </div>
+          <div className="input-wrapper">
+            <input
+              {...register("itemCondition")}
+              type="text"
+              className="form-control"
+              id="floatingItemCondition"
+              placeholder=""
+            />
+            <label htmlFor="floatingItemCondition" className="floating-label">
+              מצב
+            </label>
+            {errors.itemCondition && (
+              <p className="error-message">{errors.itemCondition.message}</p>
+            )}
+          </div>
+          <div className="input-wrapper">
+            <input
+              {...register("description")}
+              type="text"
+              className="form-control"
+              id="floatingDescription"
+              placeholder=""
+            />
+            <label htmlFor="floatingDescription" className="floating-label">
+              תיאור המוצר
+            </label>
+            {errors.description && (
+              <p className="error-message">{errors.description.message}</p>
+            )}
+          </div>
+          <div className="img-upload-wrapper">
+            {imgSrc && (
+              <img
+                src={URL.createObjectURL(imgSrc)}
+                alt="Product Preview"
+                className="img-thumbnail mb-2"
+              />
+            )}
+            <button
+              type="button"
+              className="btn btn-upload mt-2"
+              onClick={selectImg}
+            >
+              <FontAwesomeIcon icon={faImage} className="me-2" />
+              העלאת תמונה
+            </button>
+            <input
+              style={{ display: "none" }}
+              {...register("image")}
+              type="file"
+              onChange={imgSelected}
+              ref={fileInputRef}
+            />
+            {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.image.message}</p>}
+          </div>
+          <div className="d-flex justify-content-center">
+            <button type="submit" className="btn btn-submit mt-3">
+              העלאה
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     </>
 

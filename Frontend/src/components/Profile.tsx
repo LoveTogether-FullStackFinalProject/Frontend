@@ -58,6 +58,9 @@ const Profile: React.FC = () => {
         }
       }, [donations]);
 
+  
+    
+
 
     const filterDonations = () => {
         const filtered = donations.filter((donation) => {
@@ -217,6 +220,7 @@ const Profile: React.FC = () => {
                             <h3>{donation.itemName}</h3>
                             <p>סטטוס: {donation.status}</p>
                             <p>תיאור: {donation.description}</p>
+                            <img src={donation.image} alt={donation.itemName} />
                         </div>
                     ))}
                 </div>

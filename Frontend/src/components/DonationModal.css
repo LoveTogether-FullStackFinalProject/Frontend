@@ -1,17 +1,75 @@
+/* General styling for the modal dialog to control size and centering */
+.modal-dialog {
+    margin: 20px auto; /* Centers the modal vertically and horizontally */
+    max-width: 500px; /* Sets a maximum width to make the modal look more contained */
+}
 
-.modal-body {
-    text-align: right;
+/* Ensures the modal content is well contained and visually distinct */
+.modal-content {
+    background-color: #fff; /* Maintains a clean white background */
+    border-radius: 10px; /* Rounds the corners for a smoother look */
+    border: 2px solid #a5673d; /* Adds a subtle border matching the theme */
+    overflow: hidden; /* Prevents content from spilling outside the borders */
+}
+
+/* Enhances the modal header with a consistent and thematic appearance */
+.modal-header {
+    background-color: #a5673d; /* Darker background for the header */
+    color: white; /* Ensures text is readable */
+    border-bottom: 2px solid white; /* Adds a clear separation from the body */
+    padding: 15px; /* Provides ample space around the text and close button */
+    display: flex;
+    justify-content: space-between; /* Ensures that the title and button are on opposite ends */
+    flex-direction: row-reverse; /* Flips the order of the close button and title */
+}
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto; /* Adjusts margins for proper alignment */
 }
 
 .modal-title {
-    text-align: right;
+    flex: 1;
+    text-align: right; /* Ensures the title is aligned to the right */
+    margin-right: 20px; /* Adds spacing between the title and the close button */
 }
 
+
+/* Adjusts modal body to have padding that matches the overall modal style */
+.modal-body {
+    padding: 20px; /* Ample padding for content */
+    color: #333; /* Ensures readability */
+}
+
+/* Ensures modal footer matches the header and remains visually integrated */
 .modal-footer {
-    justify-content: flex-start;
+    background-color: #a5673d; /* Consistent with the header for a unified look */
+    padding: 10px 20px; /* Proper padding for button spacing */
+    border-top: 2px solid white; /* Defines a clear transition from the body to footer */
 }
 
+/* Updates button styles in the footer for better visual integration */
+.modal-footer button {
+    background-color: #fff; /* Light background for buttons */
+    color: #a5673d; /* Text color matches the modal header/footer */
+    border-radius: 5px; /* Rounded corners for buttons */
+    border: 1px solid #a5673d; /* Outlines the button to maintain theme consistency */
+    padding: 5px 15px; /* Adequate padding within buttons */
+}
+
+/* Enhances hover effect for buttons to indicate interactivity */
+.modal-footer button:hover {
+    background-color: #a5673d; /* Darker shade on hover */
+    color: #fff; /* White text for contrast */
+}
+
+/* Styles for images within the modal to ensure they fit well */
 .modal-body .col-md-6 img {
-    display: block;
-    margin: 0 auto;
+    border-radius: 5px; /* Continues the use of rounded corners */
+    margin-bottom: 10px; /* Maintains spacing below the image */
+}
+
+/* Right-aligns text in the modal title for consistency with RTL layout */
+.modal-title {
+    text-align: right;
 }

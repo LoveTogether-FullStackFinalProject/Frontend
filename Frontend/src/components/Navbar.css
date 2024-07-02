@@ -5,4 +5,18 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+    direction: rtl;
+    display: flex;
+    gap: 10px; 
+    white-space: nowrap;
 }
+
+.logo {
+    width: 200px;
+    height: 70px;
+    margin-right: 1200px;
+  }
+
+  .navLink{
+    display: flex;
+  }

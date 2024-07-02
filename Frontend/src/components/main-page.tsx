@@ -179,7 +179,7 @@ import './main-page.css';
         </div> */}
 
 
-<div>
+<div className='body'>
   <div className="centerText brownText">
     <h2>ברוכים הבאים לאתר התרומות של</h2>
     <h1>"ואהבתם ביחד"</h1>

@@ -5,6 +5,10 @@
     margin-bottom: 60px;
 }
 
+.body{
+    margin-top: 500px;
+}
+
 .brownText {
     color: brown;
 }
@@ -15,7 +19,7 @@
     padding: 10px;
     margin: 10px;
     margin-bottom: 80px;
-    background-color: #F0FFFF;
+    background-color: #ffffff;
 }
 
 .carouselControlNextIcon,
@@ -45,7 +49,7 @@
     width: auto;
     padding: 10px;
     background-color: #CD853F;
-    color: white;
+    color: ffffff;
     font-weight: bold;
     margin-top: 10px;
     margin-left: auto;
@@ -60,7 +64,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #F0FFFF;
+    background-color: #ffffff;
     margin-bottom: 80px;
 }
 
@@ -72,7 +76,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #F0FFFF;
+    background-color: #ffffff;
     margin-bottom: 80px;
 }
 
@@ -81,7 +85,7 @@
     border-radius: 5px;
     padding: 10px;
     margin: 50px;
-    background-color: #FFE4E1;
+    background-color: #ffffff;
 }
 
 .flexSpaceBetween {
@@ -99,7 +103,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #F0FFFF;
+    background-color: #ffffff;
 }
 
 .flexCenter {

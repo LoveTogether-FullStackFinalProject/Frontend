@@ -67,14 +67,16 @@ import  UploadRequestedProduct  from './components/upload-requested-product';
 import { Navbar } from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';
+import Footer from './components/Footer'
 
 
 const App = () => {
     const [user, setUser] = useState<User | null>(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null);
 
     return (
-        
+       
         <Router>
+             <Footer />
             <Navbar user={user} setUser={setUser} googleSignIn={false} />
             
             <Routes>

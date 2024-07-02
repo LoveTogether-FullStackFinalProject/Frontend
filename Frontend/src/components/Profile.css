@@ -1,27 +1,17 @@
-html, body {
+body {
   height: 100%;
-  margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  overflow: hidden; /* Prevents double scrollbar */
+  background-color: #ffffff;
+  overflow: hidden; 
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #a5673d;
-  color: #fff;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
+.profile-content{
+  margin-bottom: 300px;
 }
-
-.logo {
-  width: 100px;
+.user-info{
+  direction: rtl;
+  margin-top: 2px;
 }
 
 nav a {
@@ -42,65 +32,52 @@ nav a {
   margin-left: 10px;
 }
 
-.profile-page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.profile-content {
-  flex: 1;
-  padding: 80px 20px 20px;
-  background-color: #fff;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto;
-}
 
 .tabs {
+  border: 8px;
+  box-shadow: black;
+  color: black;
   display: flex;
+  gap: 15px;
   justify-content: space-around;
-  margin-bottom: 20px;
   width: 100%;
   direction: rtl;
   text-align: right;
 }
 
 .tabs button {
+  margin-top: 1opx;
   padding: 10px 20px;
   border: none;
-  background-color: #dcdcdc;
+  background-color: #F9DA78;
   cursor: pointer;
   transition: background-color 0.3s;
   direction: rtl;
   text-align: right;
+  -webkit-text-stroke-width: 0.5px;
 }
 
 .tabs button.active, .tabs button:hover {
-  background-color: #a5673d;
-  color: #fff;
+  background-color: #F9DA78;
+  color: black;
+  text-shadow: black;
+  -webkit-text-stroke-width: 0.5px;
   direction: rtl;
   text-align: right;
 }
 
 .donations-list {
+  margin-top: 30px;
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
-  width: 100%;
-  justify-content: center;
-  flex-grow: 1;
+  justify-content: right;
   min-height: auto;/* Adjust this value as needed */
   direction: rtl;
   text-align: right;
 }
 
 .donation-card {
-  background-color: #ffe4e1;
+  background-color: #eee9e8;
   padding: 15px; /* Adjust padding as needed */
   border-radius: 10px;
   width: calc(33.33% - 16px); /* Slightly wider card */
@@ -164,16 +141,10 @@ nav a {
 }
 
 .edit-button:hover, .delete-button:hover, .save-button:hover, .cancel-button:hover {
-  background-color: #8a4b2e;
+  background-color: #F9DA78;
 }
 
-.footer {
-  text-align: center;
-  padding: 10px 0;
-  background-color: #a5673d;
-  color: #fff;
-  width: 100%;
-}
+
 
 .social-media {
   display: flex;
@@ -195,7 +166,7 @@ nav a {
 }
 
 .status-pending {
-  color: rgba(245, 129, 21, 0.623);
+  color:#F9DA78
 }
 
 .status-not-approved {
@@ -239,6 +210,6 @@ nav a {
 
 .rating-status {
   font-weight: bold;
-  color: green;
+  color: rgb(0, 0, 0);
   font-size: 1.5em;
 }

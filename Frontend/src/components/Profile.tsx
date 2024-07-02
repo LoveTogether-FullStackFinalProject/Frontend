@@ -3,9 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import dataService, { CanceledError, logout } from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
-import logo from '../assets/logoVeahavtem.png';
-import facebookLogo from '../assets/facebookLogo.png';
-import instagramLogo from '../assets/instagramLogo.png';
+
 import { userDonation } from './userDonation';
 import { DonorData } from './donorData';
 import DonationModal from './DonationModal'; // Import the new modal component
@@ -88,10 +86,10 @@ const Profile: React.FC = () => {
         setItemsToShow(8);
     };
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+    // const handleLogout = () => {
+    //     logout();
+    //     navigate('/login');
+    // };
 
     const handleDeleteClick = async (donationId: string) => {
         try {
@@ -177,21 +175,19 @@ const Profile: React.FC = () => {
     if (!user) return <div className="loading">User not found</div>;
 
     return (
-        <div className="profile-page">
-            <header className="header">
-                <img src={logo} alt="Logo" className="logo" />
-                <nav>
-                    <Link to="/mainPage">עמוד הבית</Link>
-                    <Link to="/donate">שליחת תרומה</Link>
-                    <button onClick={handleLogout}>התנתק</button>
-                </nav>
-                <div className="user-info">
+        <div className="profile-page">        
+            <div className="user-info">
                     <img src="../assets/person1.png" alt="User Avatar" className="avatar" />
                     <span>שלום, {user.firstName} {user.lastName}</span>
-                </div>
-            </header>
-            
+                </div> 
+
             <main className="profile-content">
+                
+
+                <div className="rating-status" style={{direction:"rtl"}}>
+                     הדירוג שלך הוא: {user.rating ?? 0}
+                </div>
+
                 <div className="tabs">
                     {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (
                         <button
@@ -207,9 +203,6 @@ const Profile: React.FC = () => {
                     ))}
                 </div>
 
-                <div className="rating-status">
-                     הדירוג שלך הוא: {user.rating ?? 0}
-                </div>
                 <div className="donations-list">
                     {filteredDonations.map((donation) => (
                         <div
@@ -217,10 +210,11 @@ const Profile: React.FC = () => {
                             className={`donation-card ${getStatusClass(donation.status)}`}
                             onClick={() => handleCardClick(donation)}
                         >
-                            <h3>{donation.itemName}</h3>
-                            <p>סטטוס: {donation.status}</p>
-                            <p>תיאור: {donation.description}</p>
                             <img src={donation.image} alt={donation.itemName} />
+                            <h5>{donation.itemName}</h5>
+                            <p>סטטוס: {donation.status}</p>
+                            
+                            
                         </div>
                     ))}
                 </div>
@@ -230,18 +224,7 @@ const Profile: React.FC = () => {
                     </button>
                 )}
             </main>
-            <footer className="footer">
-                <p>פרטי יצירת קשר</p>
-                <div className="social-media">
-                    <a href="https://www.facebook.com/veahavtem/" target="_blank" rel="noopener noreferrer">
-                        <img src={facebookLogo} alt="Facebook" />
-                    </a>
-                    <a href="https://www.instagram.com/veahavtem/" target="_blank" rel="noopener noreferrer">
-                        <img src={instagramLogo} alt="Instagram" />
-                    </a>
-                </div>
-                <p>עמותת וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ &copy; 2023</p>
-            </footer>
+           
             <DonationModal
                 show={showModal}
                 onHide={handleCancelClick} // Use handleCancelClick to close modal

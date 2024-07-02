@@ -88,10 +88,10 @@ const Profile: React.FC = () => {
         setItemsToShow(8);
     };
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+    // const handleLogout = () => {
+    //     logout();
+    //     navigate('/login');
+    // };
 
     const handleDeleteClick = async (donationId: string) => {
         try {
@@ -178,18 +178,19 @@ const Profile: React.FC = () => {
 
     return (
         <div className="profile-page">
-            <header className="header">
-                <img src={logo} alt="Logo" className="logo" />
+            {/* <header className="header"> */}
+                {/* <img src={logo} alt="Logo" className="logo" />
                 <nav>
                     <Link to="/mainPage">עמוד הבית</Link>
                     <Link to="/donate">שליחת תרומה</Link>
                     <button onClick={handleLogout}>התנתק</button>
-                </nav>
-                <div className="user-info">
+                </nav> */}
+
+            {/* </header> */}
+            {/* <div className="user-info">
                     <img src="../assets/person1.png" alt="User Avatar" className="avatar" />
                     <span>שלום, {user.firstName} {user.lastName}</span>
-                </div>
-            </header>
+                </div> */}
             
             <main className="profile-content">
                 <div className="tabs">

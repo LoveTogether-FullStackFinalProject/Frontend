@@ -5,7 +5,7 @@ import {requestedDonation} from "../services/upload-requested-product-service";
 import { userDonation } from '../components/userDonation';
 import logoutServiece from './logout-serviece';
 
-
+const AdminID="668567c7bd9e16d610a11718";
 
 export { CanceledError };
 
@@ -60,8 +60,8 @@ export const logout = () => {
   localStorage.removeItem('userID');
 };
 
-const getAdmin = () =>{
-  return apiClient.get('/admin/admin');
+export const getAdmin = () => {
+  return getUser(AdminID);
 }
 
 export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers,updateUserData,getAdmin};

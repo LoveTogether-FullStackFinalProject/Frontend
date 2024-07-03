@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
-import  dataService,{ CanceledError } from "../services/data-service.ts";
+import  dataService from "../services/data-service.ts";
 import {requestedDonation} from "../services/upload-requested-product-service";
 import  requestedProduectService,{ CanceledError } from "../services/upload-requested-product-service";
 import context from 'react-bootstrap/esm/AccordionContext';
@@ -80,18 +80,19 @@ function UploadRequestedProduct() {
     navigate('/mainPage'); 
   };
 
+     const [isAdmin, setIsAdmin] = useState(false);
+     useEffect(() => {
+       const userId = localStorage.getItem('userID');
+       if (userId) {
+         dataService.getUser(userId).req.then((res) => {
+           setIsAdmin(res.data.isAdmin);
+           console.log("isAdmin:", res.data.isAdmin);
+         });
+       }
+     }, []);
 
 
-  const accessToken = localStorage.getItem('accessToken');
-  let isAdmin= null;
-  const userId = localStorage.getItem('userID');
-  if (userId) {
-  dataService.getUser(userId).req.then((res) => {
-       isAdmin = res.data.isAdmin;
-     })}
-  console.log("isAdmin:",isAdmin);
-
-  if (!accessToken || !isAdmin) {
+     if (!isAdmin) {
       return (
           <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
           <p style={{ color: 'red' }}>שגיאה: אינך מחובר בתור מנהל</p>
@@ -99,6 +100,7 @@ function UploadRequestedProduct() {
         </div>
       );
     }
+
 
   return (
     <>

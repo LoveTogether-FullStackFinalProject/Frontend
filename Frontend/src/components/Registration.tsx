@@ -56,6 +56,7 @@ const Registration = () => {
             }
             const user = {
                 ...data,
+                isAdmin: false,
                 image: imageUrl
             };
             const res = await registerUser(user);

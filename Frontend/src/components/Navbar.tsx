@@ -57,14 +57,14 @@ export function Navbar() {
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              {userId ? (
-                <div className='navLink'>
-                  <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-                  <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-                  <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-                  <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-                </div>
-              ) : (
+            {userId ? (
+              <div className='navLink'>
+                <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
+                <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
+                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
+              </div>
+            ) : (
                 <div className='navLink'>
                   <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
                   <Nav.Link as={Link} to="login">התחבר</Nav.Link>

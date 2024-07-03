@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
@@ -33,6 +33,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const UploadProduct: React.FC = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [imgPreview, setImgPreview] = useState<string | null>(null);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, watch, setValue, trigger } = useForm<FormData>({ 
@@ -40,6 +41,20 @@ const UploadProduct: React.FC = () => {
         mode: "onSubmit"
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const checkLoginStatus = () => {
+            const accessToken = localStorage.getItem('accessToken');
+            setIsLoggedIn(!!accessToken);
+        };
+
+        checkLoginStatus();
+        window.addEventListener('storage', checkLoginStatus);
+
+        return () => {
+            window.removeEventListener('storage', checkLoginStatus);
+        };
+    }, []);
 
     const selectedCategory = watch("category");
 
@@ -60,19 +75,45 @@ const UploadProduct: React.FC = () => {
     };
 
     const onSubmit = async (data: FormData) => {
-        // ... (keep the onSubmit logic as it was)
+        if (selectedCategory === "מזון ושתייה" && !data.expirationDate) {
+            trigger("expirationDate");
+            return;
+        }
+
+        try {
+            let imageUrl = '';
+            if (data.image) {
+                imageUrl = await uploadPhoto(data.image);
+            }
+            const userId = localStorage.getItem('userID');
+            if (!userId) {
+                alert('User not logged in');
+                return;
+            }
+            const productData = { 
+                ...data, 
+                image: imageUrl, 
+                donor: userId,
+                category: data.category === 'אחר' ? data.customCategory : data.category
+            };
+            await uploadProduct(productData);
+            navigate('/profile');
+        } catch (error) {
+            console.error('Error uploading product:', error);
+            alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+        }
     };
 
-    const accessToken = localStorage.getItem('accessToken');
-    if (!accessToken) {
+    if (!isLoggedIn) {
         return (
-            <div className="upload-product-container">
-                <div className="upload-product-card">
-                    <div className="upload-product-body">
-                        <p className="error-message">שגיאה: עליך לבצע התחברות על מנת לתרום</p>
-                        <button onClick={() => navigate('/login')} className="submit-button">התחבר</button>
-                    </div>
+            <div className="error-container">
+                <div className="error-title">תרומת מוצר - עמותת ואהבתם ביחד</div>
+                <div className="error-message">
+                    על מנת להעלות פריט לתרומה, יש לבצע הרשמה לאתר
                 </div>
+                <button className="login-button" onClick={() => navigate('/login')}>
+                    Login
+                </button>
             </div>
         );
     }
@@ -87,15 +128,15 @@ const UploadProduct: React.FC = () => {
                 <div className="upload-product-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
-                            <input {...register("itemName")} type="text" placeholder="שם הפריט" className={errors.itemName ? 'error' : ''} />
-                            {errors.itemName && <span className="error-message">{errors.itemName.message}</span>}
+                            <input {...register("itemName")} type="text" placeholder="שם הפריט" className={`form-control ${errors.itemName ? 'is-invalid' : ''}`} />
+                            {errors.itemName && <div className="invalid-feedback">{errors.itemName.message}</div>}
                         </div>
                         <div className="form-group">
-                            <input {...register("quantity", { valueAsNumber: true })} type="number" placeholder="כמות" className={errors.quantity ? 'error' : ''} />
-                            {errors.quantity && <span className="error-message">{errors.quantity.message}</span>}
+                            <input {...register("quantity", { valueAsNumber: true })} type="number" placeholder="כמות" className={`form-control ${errors.quantity ? 'is-invalid' : ''}`} />
+                            {errors.quantity && <div className="invalid-feedback">{errors.quantity.message}</div>}
                         </div>
                         <div className="form-group">
-                            <select {...register("category")} className={errors.category ? 'error' : ''}>
+                            <select {...register("category")} className={`form-control ${errors.category ? 'is-invalid' : ''}`}>
                                 <option value="">בחר קטגוריה</option>
                                 <option value="מזון ושתייה">מזון ושתייה</option>
                                 <option value="אביזרים">אביזרים</option>
@@ -104,12 +145,12 @@ const UploadProduct: React.FC = () => {
                                 <option value="הנעלה">הנעלה</option>
                                 <option value="אחר">אחר</option>
                             </select>
-                            {errors.category && <span className="error-message">{errors.category.message}</span>}
+                            {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
                         </div>
                         {selectedCategory === "אחר" && (
                             <div className="form-group">
-                                <input {...register("customCategory")} type="text" placeholder="הכנס קטגוריה מותאמת אישית" className={errors.customCategory ? 'error' : ''} />
-                                {errors.customCategory && <span className="error-message">{errors.customCategory.message}</span>}
+                                <input {...register("customCategory")} type="text" placeholder="הכנס קטגוריה מותאמת אישית" className={`form-control ${errors.customCategory ? 'is-invalid' : ''}`} />
+                                {errors.customCategory && <div className="invalid-feedback">{errors.customCategory.message}</div>}
                             </div>
                         )}
                         {selectedCategory === "מזון ושתייה" && (
@@ -118,25 +159,25 @@ const UploadProduct: React.FC = () => {
                                     {...register("expirationDate", { required: selectedCategory === "מזון ושתייה" ? "יש להזין תאריך תפוגה" : false })} 
                                     type="date" 
                                     id="expirationDate"
-                                    className={errors.expirationDate ? 'error' : ''}
+                                    className={`form-control ${errors.expirationDate ? 'is-invalid' : ''}`}
                                     min={new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]}
                                 />
-                                {errors.expirationDate && <span className="error-message">{errors.expirationDate.message}</span>}
+                                {errors.expirationDate && <div className="invalid-feedback">{errors.expirationDate.message}</div>}
                             </div>
                         )}
                         <div className="form-group">
-                            <input {...register("condition")} type="text" placeholder="מצב הפריט" className={errors.condition ? 'error' : ''} />
-                            {errors.condition && <span className="error-message">{errors.condition.message}</span>}
+                            <input {...register("condition")} type="text" placeholder="מצב הפריט" className={`form-control ${errors.condition ? 'is-invalid' : ''}`} />
+                            {errors.condition && <div className="invalid-feedback">{errors.condition.message}</div>}
                         </div>
                         <div className="form-group">
-                            <input {...register("description")} type="text" placeholder="תיאור" className={errors.description ? 'error' : ''} />
-                            {errors.description && <span className="error-message">{errors.description.message}</span>}
+                            <input {...register("description")} type="text" placeholder="תיאור" className={`form-control ${errors.description ? 'is-invalid' : ''}`} />
+                            {errors.description && <div className="invalid-feedback">{errors.description.message}</div>}
                         </div>
                         <div className="form-group">
-                            <input {...register("pickupAddress")} type="text" placeholder="כתובת איסוף" className={errors.pickupAddress ? 'error' : ''} />
-                            {errors.pickupAddress && <span className="error-message">{errors.pickupAddress.message}</span>}
+                            <input {...register("pickupAddress")} type="text" placeholder="כתובת איסוף" className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`} />
+                            {errors.pickupAddress && <div className="invalid-feedback">{errors.pickupAddress.message}</div>}
                         </div>
-                        <div className="profile-image-container">
+                        <div className="profile-image-container form-group">
                             {imgPreview && (
                                 <img
                                     src={imgPreview}
@@ -144,7 +185,7 @@ const UploadProduct: React.FC = () => {
                                     className="profile-image"
                                 />
                             )}
-                            <button type="button" className="image-upload-button" onClick={selectImg}>
+                            <button type="button" className="image-upload-button btn btn-primary" onClick={selectImg}>
                                 <FontAwesomeIcon icon={faImage} />
                             </button>
                             <input
@@ -154,10 +195,11 @@ const UploadProduct: React.FC = () => {
                                 style={{ display: 'none' }}
                                 onChange={imgSelected}
                                 accept="image/*"
+                                className={`form-control ${errors.image ? 'is-invalid' : ''}`}
                             />
+                            {errors.image && <div className="invalid-feedback" style={{marginTop: '5px'}}>יש להעלות תמונה</div>}
                         </div>
-                        {errors.image && <span className="error-message">{errors.image.message}</span>}
-                        <button type="submit" className="submit-button">
+                        <button type="submit" className="submit-button btn btn-success">
                             שלח
                         </button>
                     </form>

@@ -143,11 +143,4 @@ const addRequestedProduct = async (donation: requestedDonation) => {
 };
 
 
-
-
-
-
-
-
-
   export default {uploadPhoto, addRequestedProduct  };

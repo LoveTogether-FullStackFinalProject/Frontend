@@ -9,6 +9,7 @@ export interface DonorData {
   phoneNumber: string;
   address: string; // Address should be a string
   rating: string;
+  isAdmin: boolean;
   image: string;
 }
 

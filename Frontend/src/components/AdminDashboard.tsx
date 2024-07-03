@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom';
 import  dataService,{ CanceledError } from "../services/data-service";
+import { DonorData } from './donorData';
 
 
 const AdminPage = () => {
-  const [adminData, setAdminData] = useState({ name: '', email: '' });
+  const [adminData, setAdminData] = useState<DonorData[]>([])
   const navigate = useNavigate();
 
   useEffect(() => {
-    dataService.getAdmin()
+    dataService.getAdmin().req
       .then(( {data} ) => {
         console.log(data)
         setAdminData(data);
@@ -33,7 +34,7 @@ const AdminPage = () => {
       </div>
       <div className="row">
         <div className="label">שם:</div>
-        <div>{adminData.name}</div>
+        <div>{adminData.firstName}</div>
       </div>
       <div className="row">
         <div className="label">אימייל:</div>

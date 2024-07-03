@@ -1,5 +1,6 @@
 import axios from 'axios';
 import apiClient from "./api-client";
+import { AxiosError, AxiosResponse } from "axios";
 
 // Comment out or keep for future use
 // export const uploadPhoto = async (file: File) => {
@@ -41,12 +42,55 @@ export const uploadPhoto = async (photo: File) => {
     });
 };
 
-export const uploadProduct = async (productData: any) => {
+// export const uploadProduct = async (productData: any) => {
+//     try {
+//         const response = await apiClient.post(`/donation/upload`, productData);
+//         return response.data;
+//     } catch (error) {
+//         console.error('Product upload error:', error.response?.data?.message || error.message);
+//         throw new Error(error.response?.data?.message || 'Product upload failed');
+//     }
+// };
+
+
+const makeRequest = async (request: () => Promise<AxiosResponse>) => {
+    console.log(1);
     try {
-        const response = await apiClient.post(`/donation/upload`, productData);
-        return response.data;
-    } catch (error) {
-        console.error('Product upload error:', error.response?.data?.message || error.message);
-        throw new Error(error.response?.data?.message || 'Product upload failed');
+      const response = await request();
+      return response;
+    } catch (axiosError: unknown) {
+      if (axiosError instanceof AxiosError && axiosError.response) {
+        console.log("error!!", axiosError);
+        console.log(2);
+  
+        if (axiosError.response.status === 401) {
+          const error = axiosError.response.data.error;
+          if (error === "Token is expired") {
+            const refreshToken = localStorage.getItem('refreshToken');
+            if (!refreshToken) {
+              throw new Error("Authentication expired, please login again");
+            }
+  
+            const refreshResponse = await apiClient.post(`/auth/refreshToken`, {
+              refreshToken,
+            });
+  
+            if (refreshResponse.status === 200) {
+              localStorage.setItem( 'accessToken',refreshResponse.data.accessToken);
+              localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+              return request();
+            }
+          }
+        }
+      }
     }
-};
+  };
+  
+  
+   export const uploadProduct = async (productData: any) => {
+    const request = () => {
+      return apiClient.post(`/donation/upload`, productData);
+    };
+    return makeRequest(request);
+  };
+  

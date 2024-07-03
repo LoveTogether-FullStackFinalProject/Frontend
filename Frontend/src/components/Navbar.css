@@ -1,22 +1,32 @@
-
-
-.navLink{
-    color: black;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    direction: rtl;
-    display: flex;
-    gap: 10px; 
-    white-space: nowrap;
+.navLink {
+  color: black;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 20px; 
+  white-space: nowrap;
+  font-size: 1.2rem;
 }
 
 .logo {
-    width: 200px;
-    height: 70px;
-    margin-right: 1200px;
-  }
+  width: 250px;
+  height: auto;
+}
 
-  .navLink{
-    display: flex;
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .navLink {
+      flex-direction: column;
+      align-items: flex-end;
   }
+  
+  .logo {
+      width: 150px;
+  }
+}

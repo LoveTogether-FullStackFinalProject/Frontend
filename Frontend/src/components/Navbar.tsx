@@ -34,8 +34,6 @@ export function Navbar() {
     setUserId(null);
   }
 
-
-
   return (
     <BootstrapNavbar 
       style={{
@@ -46,36 +44,40 @@ export function Navbar() {
         right: 0,
         width: "100%",
         zIndex: 1000,
-        height: "70px",
+        minHeight: "80px",
+        padding: "10px 0",
       }}
-
-      
-      dir="rtl"
+      expand="md"
     >
-      <Container fluid style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
-        <BootstrapNavbar.Brand style={{ marginRight: '0', marginLeft: '10px' }}> 
-          <Link to='/mainPage'>
-            <MdHome size={"1.7em"} style={{color:"black"}} />
-          </Link>
-        </BootstrapNavbar.Brand>
-        <Nav style={{ display: 'flex', alignItems: 'center', marginRight: '20px' }}>
-          {userId ? (
-            <div className='navLink'>
-              <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-              <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-              <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-              <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-            </div>
-          ) : (
-            <div className='navLink'>
-              <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
-              <Nav.Link as={Link} to="login">התחבר</Nav.Link>
-              <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-              <Nav.Link as={Link} to="about">על העמותה</Nav.Link>
-            </div>
-          )}
-        </Nav>
-        <img src={logo}  alt="Logo" className="logo"  />
+      <Container fluid>
+        <div className="navbar-container">
+          <BootstrapNavbar.Brand>
+            <img src={logo} alt="Logo" className="logo" />
+          </BootstrapNavbar.Brand>
+          <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+          <BootstrapNavbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Link to='/mainPage' className="nav-link">
+                <MdHome size={"2em"} style={{color:"black"}} />
+              </Link>
+              {userId ? (
+                <div className='navLink'>
+                  <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
+                  <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                  <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
+                  <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
+                </div>
+              ) : (
+                <div className='navLink'>
+                  <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
+                  <Nav.Link as={Link} to="login">התחבר</Nav.Link>
+                  <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                  <Nav.Link as={Link} to="about">על העמותה</Nav.Link>
+                </div>
+              )}
+            </Nav>
+          </BootstrapNavbar.Collapse>
+        </div>
       </Container>
     </BootstrapNavbar>
   );

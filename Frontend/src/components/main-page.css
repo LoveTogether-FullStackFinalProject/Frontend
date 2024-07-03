@@ -1,149 +1,133 @@
-/* main-page.css */
-.centerText {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  body > .container {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .centerText {
     text-align: center;
     padding-top: 10px;
-    margin-bottom: 60px;
-}
-
-.brownText {
-    color: brown;
-}
-
-.borderBox {
+    margin-bottom: 20px;
+  }
+  
+  .brownText h1 {
+    color: #F9DA78;
+  }
+  
+  .borderBox {
     border: 1px solid black;
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    margin-bottom: 80px;
-    background-color: #F0FFFF;
-}
-
-.carouselControlNextIcon,
-.carouselControlPrevIcon {
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .categorySection{
+    margin-top: 57px;
+  }
+  .productImage {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .carouselControlNextIcon, .carouselControlPrevIcon {
     color: black;
     background-color: transparent;
-}
-
-.carouselControlIcons:after {
-    font-size: 30px;
-    color: black;
-}
-
-.carouselControlPrevIcon:after {
-    content: '<';
-    color: black;
-    font-size: 50px; 
-}
-
-.carouselControlNextIcon:after {
-    content: '>';
-    color: black;
-    font-size: 50px; 
-}
-.donateButton {
+  }
+  
+  .donateButton {
     display: block;
     width: auto;
     padding: 10px;
-    background-color: #CD853F;
-    color: white;
+    background-color: #F9DA78;
+    color: black;
     font-weight: bold;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.categorySection {
-    /* border: 1px solid black;
-    border-radius: 5px; */
-    padding: 10px;
-    margin: 10px;
+  }
+  
+  .categorySection {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F0FFFF;
-    margin-bottom: 80px;
-}
-
-.categorySection2 {
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  .categoryItem {
     border: 1px solid black;
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F0FFFF;
-    margin-bottom: 80px;
-}
-
-.categoryItem {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 50px;
-    background-color: #FFE4E1;
-}
-
-.flexSpaceBetween {
+    background-color: #ffffff;
+  }
+  
+  .flexSpaceBetween {
     display: flex;
     justify-content: space-between;
-}
-
-.flexCenterColumn {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    width: 45%;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F0FFFF;
-}
-
-.flexCenter {
+  }
+  
+  .flexCenter {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-}
-
-.productImage {
-    width: 15%;
-    margin: 20px;
-    border: 2px solid black;
-}
-
-.donorSection {
+  }
+  
+  .flexCenterColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .donorSection {
     font-size: 2em;
-    color: red;
+    color: #F9DA78;
     text-align: center;
-}
-
-.donorInfo {
+  }
+  
+  .donorInfo {
     font-size: 1em;
     text-align: center;
-}
-
-.donorDisplay {
+  }
+  
+  .donorDisplay {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 50px;
-}
-
-.donorItem {
-    margin: 20px;
-    flex: 0 0 auto;
-}
-
-.donorImage {
+    margin-top: 20px;
+  }
+  
+  .donorItem {
+    margin: 10px;
+  }
+  
+  .donorImage {
     width: 100px;
     height: 100px;
-}
-
-.donorName {
+  }
+  
+  .donorName {
     font-size: 20px;
     text-align: center;
-}
+  }

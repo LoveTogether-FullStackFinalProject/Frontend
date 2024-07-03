@@ -2,7 +2,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .logo {
@@ -39,5 +39,18 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .donation-card {
+    width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .donation-card {
+    width: calc(100% - 16px); /* One card per row on smaller screens */
+  }
 }
 

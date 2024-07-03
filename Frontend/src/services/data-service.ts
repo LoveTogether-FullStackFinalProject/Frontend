@@ -60,4 +60,8 @@ export const logout = () => {
   localStorage.removeItem('userID');
 };
 
-export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers,updateUserData};
+const getAdmin = () =>{
+  return apiClient.get('/admin/admin');
+}
+
+export default { getUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, getUsers,updateUserData,getAdmin};

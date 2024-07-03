@@ -57,9 +57,6 @@ export function Navbar() {
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Link to='/mainPage' className="nav-link">
-                <MdHome size={"2em"} style={{color:"black"}} />
-              </Link>
               {userId ? (
                 <div className='navLink'>
                   <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
@@ -75,6 +72,9 @@ export function Navbar() {
                   <Nav.Link as={Link} to="about">על העמותה</Nav.Link>
                 </div>
               )}
+              <Link to='/mainPage' className="nav-link home-icon">
+                <MdHome size={"2em"} style={{color:"black"}} />
+              </Link>
             </Nav>
           </BootstrapNavbar.Collapse>
         </div>

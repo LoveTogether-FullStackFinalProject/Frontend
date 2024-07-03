@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import emailIcon from './../assets/email.png';
 import passwordIcon from './../assets/password.png';
 import './login.css';
+import  dataService from "../services/data-service.ts";
 
 function Login() {
     const navigate = useNavigate();
@@ -21,7 +22,17 @@ function Login() {
                     localStorage.setItem('accessToken', res.accessToken!);
                     localStorage.setItem('refreshToken', res.refreshToken!);
                     window.dispatchEvent(new Event('localStorageChanged'));
+
+                    const userId = localStorage.getItem('userID');
+                    if (userId) {
+                    dataService.getUser(userId).req.then((res) => {
+                    if(res.data.isAdmin){
+                        navigate('/adminDashboard');
+                    }
+                    })}
+                    else {
                     navigate('/mainPage');
+                    }
                 }
             } catch (err) {
                 console.log("err: " + err);

@@ -10,6 +10,7 @@ import z from "zod";
 import { useNavigate } from 'react-router-dom';
 import './Registration.css';
 
+
 export let userID: string;
 
 const schema = z.object({
@@ -69,6 +70,7 @@ const Registration = () => {
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
+
 
             navigate('/mainPage');
         } catch (err: any) {

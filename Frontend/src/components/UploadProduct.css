@@ -6,21 +6,30 @@ body, html {
     background-color: #f0f0f0;
 }
 
+.upload-product-body {
+    /* padding: 20px; */
+    flex-grow: 1;
+     width: 100%; 
+
+    background-color: rgb(199, 239, 239);
+    
+}
+
 /* Container to ensure form is between navbar and footer */
 .upload-product-container {
-    padding: 20px;
-    box-sizing: border-box;
+    margin-top: 120px;
+    box-sizing: border-box; 
     display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    min-height: calc(100vh - 100px); /* Adjust this value if needed to fit your navbar and footer */
+    min-height: calc(100vh - 100px); Adjust this value if needed to fit your navbar and footer
 }
 
 /* Main card styling */
 .upload-product-card {
     background-color: #ffffff;
-    width: 80%; /* Make the card wider */
+    width: 100%; 
     max-width: 1200px;
     border-radius: 12px;
     overflow-y: auto;
@@ -39,11 +48,10 @@ body, html {
     border-bottom: 1px solid #ccc;
 }
 
-/* Body styling */
-.upload-product-body {
-    padding: 20px;
-    flex-grow: 1;
+.image-upload-button{
+    margin-bottom: 90px;
 }
+
 
 /* Form group styling */
 .form-group {

@@ -1,0 +1,33 @@
+
+.table-responsive {
+    max-height: 70vh;
+    overflow-y: auto;
+    direction: rtl;
+  }
+  
+  .table-responsive table {
+    min-width: 1000px; 
+  }
+  
+  thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 1;
+  }
+
+  .container {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .table th, .table td {
+    text-align: right;
+  }
+  
+  .modal-body {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  

@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import dataService, { CanceledError, logout } from '../services/data-service';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
-
 import { userDonation } from './userDonation';
 import { DonorData } from './donorData';
 import DonationModal from './DonationModal'; // Import the new modal component
@@ -56,10 +55,6 @@ const Profile: React.FC = () => {
         }
       }, [donations]);
 
-  
-    
-
-
     const filterDonations = () => {
         const filtered = donations.filter((donation) => {
             switch (activeTab) {
@@ -86,11 +81,6 @@ const Profile: React.FC = () => {
         setItemsToShow(8);
     };
 
-    // const handleLogout = () => {
-    //     logout();
-    //     navigate('/login');
-    // };
-
     const handleDeleteClick = async (donationId: string) => {
         try {
             await dataService.deleteDonation(donationId);
@@ -102,7 +92,6 @@ const Profile: React.FC = () => {
     };
 
     const handleEditClick = (donation: userDonation) => {
-        console.log('Editing donation:', donation); // Debug statement
         setEditDonationId(donation._id);
         setEditableDonation(donation);
         setShowModal(true);
@@ -110,12 +99,10 @@ const Profile: React.FC = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        console.log('Input change:', name, value); // Debug statement
         setEditableDonation((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSaveClick = async () => {
-        console.log('Saving donation:', editableDonation); // Debug statement
         try {
             await dataService.updateDonation(editDonationId!, editableDonation);
             setDonations((prev) =>
@@ -132,7 +119,6 @@ const Profile: React.FC = () => {
     };
 
     const handleCancelClick = () => {
-        console.log('Cancel edit'); // Debug statement
         setEditDonationId(null);
         setEditableDonation({});
         setShowModal(false);
@@ -213,8 +199,7 @@ const Profile: React.FC = () => {
                             <img src={donation.image} alt={donation.itemName} />
                             <h5>{donation.itemName}</h5>
                             <p>סטטוס: {donation.status}</p>
-                            
-                            
+                            <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p> {/* Display the approval status */}
                         </div>
                     ))}
                 </div>

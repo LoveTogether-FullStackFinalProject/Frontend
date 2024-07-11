@@ -53,11 +53,11 @@ const ManageDonationPage: React.FC = () => {
   
 
   const unapprovedDonations = donations.filter(
-    (donation) => donation.approvedByAdmin === 'approve'
+    (donation) => donation.approvedByAdmin === 'approved'
   );
 
   const notArrivedDonations = donations.filter(
-    (donation) => donation.status === 'not arrived'
+    (donation) => donation.status === 'new'
   );
 
   

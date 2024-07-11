@@ -77,6 +77,7 @@ function Login() {
     }
 
     return (
+        <div className="main-content">
         <div className="login-page">
             <div className="login-header">
                 <img src={logo} alt="Logo" className="logo" />
@@ -115,6 +116,7 @@ function Login() {
 
                 {loginError && <p className="error-message">{loginError}</p>}
             </div>
+        </div>
         </div>
     );
 }

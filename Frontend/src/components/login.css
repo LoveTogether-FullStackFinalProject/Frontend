@@ -2,10 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-  font-family: Arial, sans-serif;
+  padding: 1rem;
+  margin-bottom: 80px; /* Add margin to ensure content doesn't hide behind the footer */
 }
 
 .login-header {
@@ -14,6 +12,7 @@
 }
 
 .logo {
+  max-width: 100px;
   width: 100px;
   height: auto;
   margin-bottom: 1rem;
@@ -21,18 +20,16 @@
 
 .title {
   color: #010100ed;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
-.login-form {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
+
+  .login-form {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
 
 .form-group {
   margin-bottom: 1.5rem;
@@ -94,7 +91,8 @@
 }
 
 .google-login {
-  margin-top: 1rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
 }
@@ -125,4 +123,24 @@
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+}
+@media (max-width: 480px) {
+  .login-form {
+    padding: 1rem;
+  }
+
+  .form-input-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .icon {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .login-button,
+  .register-link {
+    font-size: 0.9rem;
+  }
 }

@@ -119,24 +119,24 @@ const UploadProduct: React.FC = () => {
     }
 
     return (
-        <div className="upload-product-container">
+    //     <div className="upload-product-header">
+    //     <h2>ואהבתם ביחד - תרומת מוצר</h2>
+    //     <p>הוספת מוצר חדש</p>
+    // </div>
             <div className="upload-product-card">
-                <div className="upload-product-header">
-                    <h2>ואהבתם ביחד - תרומת מוצר</h2>
-                    <p>הוספת מוצר חדש</p>
-                </div>
+               <h2 className="upload-product-title">ואהבתם ביחד - תרומת מוצר</h2>
                 <div className="upload-product-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="form-group">
+                        <div className="form-group" >
                             <input {...register("itemName")} type="text" placeholder="שם הפריט" className={`form-control ${errors.itemName ? 'is-invalid' : ''}`} />
                             {errors.itemName && <div className="invalid-feedback">{errors.itemName.message}</div>}
                         </div>
-                        <div className="form-group">
+                        <div className="form-group" >
                             <input {...register("quantity", { valueAsNumber: true })} type="number" placeholder="כמות" className={`form-control ${errors.quantity ? 'is-invalid' : ''}`} />
                             {errors.quantity && <div className="invalid-feedback">{errors.quantity.message}</div>}
                         </div>
                         <div className="form-group">
-                            <select {...register("category")} className={`form-control ${errors.category ? 'is-invalid' : ''}`}>
+                            <select {...register("category")} className={`form-control ${errors.category ? 'is-invalid' : ''}`} style={{fontSize:"16px"}}>
                                 <option value="">בחר קטגוריה</option>
                                 <option value="מזון ושתייה">מזון ושתייה</option>
                                 <option value="אביזרים">אביזרים</option>
@@ -199,13 +199,14 @@ const UploadProduct: React.FC = () => {
                             />
                             {errors.image && <div className="invalid-feedback" style={{marginTop: '5px'}}>יש להעלות תמונה</div>}
                         </div>
+                
                         <button type="submit" className="submit-button btn btn-success">
                             שלח
                         </button>
                     </form>
                 </div>
             </div>
-        </div>
+      
     );
 };
 

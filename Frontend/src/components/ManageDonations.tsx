@@ -46,33 +46,21 @@ const ManageDonationPage: React.FC = () => {
     };
   }, []);
 
-  const handleStatusUpdate = (donation: Donation, status: string) => {
-    const updatedDonation = { ...donation, status };
-    setPendingChanges((prev) => {
-      const existingChange = prev.find((d) => d._id === donation._id);
-      if (existingChange) {
-        return prev.map((d) => (d._id === donation._id ? updatedDonation : d));
-      }
-      return [...prev, updatedDonation];
-    });
-    setDonations((prev) =>
-      prev.map((d) => (d._id === donation._id ? updatedDonation : d))
-    );
-  };
+  // useEffect(() => {
+  //   fetchDonations();
+  // }, []);
 
-  const handleApprovalUpdate = (donation: Donation, approved: string) => {
-    const updatedDonation = { ...donation, approvedByAdmin: approved };
-    setPendingChanges((prev) => {
-      const existingChange = prev.find((d) => d._id === donation._id);
-      if (existingChange) {
-        return prev.map((d) => (d._id === donation._id ? updatedDonation : d));
-      }
-      return [...prev, updatedDonation];
-    });
-    setDonations((prev) =>
-      prev.map((d) => (d._id === donation._id ? updatedDonation : d))
-    );
-  };
+  
+
+  const unapprovedDonations = donations.filter(
+    (donation) => donation.approvedByAdmin === 'approve'
+  );
+
+  const notArrivedDonations = donations.filter(
+    (donation) => donation.status === 'not arrived'
+  );
+
+  
 
   const handleCheckboxChange = (donationId: string) => {
     setSelectedDonations((prevSelectedDonations) =>

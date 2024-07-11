@@ -3,113 +3,100 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
+.upload-product-title{
+    margin-top: 20px;
+    padding-bottom: 5px;
+    color: black;
+}
+
 
 .upload-product-body {
     /* padding: 20px; */
     flex-grow: 1;
      width: 100%; 
-
-    background-color: rgb(199, 239, 239);
-    
+    border-radius: 10px;
 }
 
-/* Container to ensure form is between navbar and footer */
 .upload-product-container {
-    margin-top: 120px;
-    box-sizing: border-box; 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-    min-height: calc(100vh - 100px); Adjust this value if needed to fit your navbar and footer
-}
-
-/* Main card styling */
-.upload-product-card {
-    background-color: #ffffff;
-    width: 100%; 
-    max-width: 1200px;
-    border-radius: 12px;
-    overflow-y: auto;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    margin: auto; /* Center the card */
+    align-items: center;
+    width: 100%;
+    padding: 20px;
 }
 
-/* Header styling */
-.upload-product-header {
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 20px;
+.upload-product-title {
     text-align: center;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-image {
+    max-width: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+
+.upload-product-card {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+}
+
+.upload-product-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    border: 1px solid black !important;
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.form-control:focus {
+    border-color: black !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25) !important;
+}
+
+.form-control.is-invalid {
+    border-color: black !important;
+    background-image: none !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    width: 100%;
+    margin-top: 20px;
 }
 
 .image-upload-button{
-    margin-bottom: 90px;
-}
-
-
-/* Form group styling */
-.form-group {
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    color: #333;
-    background-color: #fff;
-}
-
-.form-group input::placeholder,
-.form-group select:invalid {
-    color: #999;
-}
-
-/* Error message styling */
-.error-message {
-    font-size: 14px;
-    color: red;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    border-radius: 5px;
-    padding: 5px 10px;
-    position: absolute;
-    top: 100%; /* Move below the input */
-    left: 0;
-    white-space: nowrap;
-    margin-top: 5px;
-    z-index: 10;
-}
-
-/* Button styling */
-.submit-button,
-.image-upload-button,
-.login-button {
-    background-color: #e0e0e0;
-    color: #333;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
+    margin-bottom: 100px;
+    display: flex;
+    margin-right: -60px;
 }
 
 .submit-button:hover,
 .image-upload-button:hover,
 .login-button:hover {
-    background-color: #ccc;
+    background-color: #ffffff;
 }
 
 /* Error container for login check */

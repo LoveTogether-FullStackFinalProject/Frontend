@@ -54,7 +54,7 @@ body, html {
 .registration-body h3 {
     margin: 0 0 20px;
     text-align: center;
-    color: #8b4513;
+    color: #010100ed;
 }
 
 .profile-image-container {
@@ -142,7 +142,7 @@ body, html {
     display: block;
     margin-top: 20px;
     text-align: center;
-    color: #8b4513;
+    color: #010100ed;
     text-decoration: none;
     font-size: 16px;
     background: none;

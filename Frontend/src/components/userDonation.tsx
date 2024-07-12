@@ -16,7 +16,7 @@ export interface userDonation {
     address?: string;
   };
   status: string;
-  approvedByAdmin?: string;
+  approvedByAdmin?: boolean | string;
   image?: string;
 }
 

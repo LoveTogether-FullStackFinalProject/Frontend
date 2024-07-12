@@ -14,12 +14,15 @@ import { Navbar } from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';
 import Footer from './components/Footer'
+import './styles/globals.css';
 
 
 const App = () => {
     const [user, setUser] = useState<User | null>(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null);
 
     return (
+        <div className="scrollable-container">
+            <div style={{ height: "100vh" }}>
        <div className="App">
         <div className="main-content">
         <Router>
@@ -45,6 +48,8 @@ const App = () => {
         </Router>
         </div>
         <Footer />
+        </div>
+        </div>
         </div>
         
     );

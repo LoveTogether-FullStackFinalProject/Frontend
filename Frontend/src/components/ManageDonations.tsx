@@ -15,7 +15,7 @@ interface Donation {
   description: string;
   pickUpAddress: string;
   status: string;
-  approvedByAdmin?: string;
+  approvedByAdmin?: boolean | string;
   donor: {
     firstName: string;
     lastName: string;
@@ -46,22 +46,6 @@ const ManageDonationPage: React.FC = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   fetchDonations();
-  // }, []);
-
-  
-
-  const unapprovedDonations = donations.filter(
-    (donation) => donation.approvedByAdmin === 'approve'
-  );
-
-  const notArrivedDonations = donations.filter(
-    (donation) => donation.status === 'not arrived'
-  );
-
-  
-
   const handleCheckboxChange = (donationId: string) => {
     setSelectedDonations((prevSelectedDonations) =>
       prevSelectedDonations.includes(donationId)
@@ -81,10 +65,42 @@ const ManageDonationPage: React.FC = () => {
       description: d.description,
       pickUpAddress: d.pickUpAddress,
       status: d.status,
-      approvedByAdmin: d.approvedByAdmin === 'true' ? "כן" : "לא",
+      approvedByAdmin: d.approvedByAdmin === true || d.approvedByAdmin === 'true' ? "כן" : "לא",
       donor: `${d.donor.firstName} ${d.donor.lastName}`,
     }));
     return csvData;
+  };
+
+  const handleStatusUpdate = (donation: Donation, status: string) => {
+    const updatedDonation = { ...donation, status };
+    setDonations((prevDonations) =>
+      prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
+    );
+    setPendingChanges((prevPendingChanges) => {
+      const existingChange = prevPendingChanges.find((d) => d._id === donation._id);
+      if (existingChange) {
+        return prevPendingChanges.map((d) =>
+          d._id === donation._id ? updatedDonation : d
+        );
+      }
+      return [...prevPendingChanges, updatedDonation];
+    });
+  };
+
+  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean | string) => {
+    const updatedDonation = { ...donation, approvedByAdmin };
+    setDonations((prevDonations) =>
+      prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
+    );
+    setPendingChanges((prevPendingChanges) => {
+      const existingChange = prevPendingChanges.find((d) => d._id === donation._id);
+      if (existingChange) {
+        return prevPendingChanges.map((d) =>
+          d._id === donation._id ? updatedDonation : d
+        );
+      }
+      return [...prevPendingChanges, updatedDonation];
+    });
   };
 
   const saveChanges = async () => {
@@ -153,13 +169,13 @@ const ManageDonationPage: React.FC = () => {
               <td>
                 <Dropdown>
                   <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                    {donation.approvedByAdmin === 'true' ? "כן" : "לא"}
+                    {donation.approvedByAdmin === true || donation.approvedByAdmin === 'true' ? "כן" : "לא"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, 'true')}>
+                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, true)}>
                       כן
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, 'false')}>
+                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, false)}>
                       לא
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -196,7 +212,7 @@ const ManageDonationPage: React.FC = () => {
               <p><strong>תאריך תפוגה:</strong> {new Date(currentDonation.expirationDate).toLocaleDateString()}</p>
               <p><strong>כתובת לאיסוף:</strong> {currentDonation.pickUpAddress}</p>
               <p><strong>סטטוס:</strong> {currentDonation.status}</p>
-              <p><strong>אושר על ידי מנהל:</strong> {currentDonation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
+              <p><strong>אושר על ידי מנהל:</strong> {currentDonation.approvedByAdmin === true || currentDonation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
               {currentDonation.image && (
                 <div>
                   <p><strong>תמונה:</strong></p>

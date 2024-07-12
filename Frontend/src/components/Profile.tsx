@@ -31,13 +31,17 @@ const Profile: React.FC = () => {
             const { req: donationsReq } = dataService.getDonationsByUser(userId!);
             const donationsResponse = await donationsReq;
             setDonations(donationsResponse.data);
+
+            // Log all statuses to understand what values they have
+            donationsResponse.data.forEach(donation => {
+                console.log('Donation status:', donation.status);
+            });
         } catch (error) {
             if (error instanceof CanceledError) return;
             console.error('Error fetching data:', error);
 
             if (error.response) {
                 if (error.response.status === 404) {
-                    // If no donations are found, set donations to an empty array
                     setDonations([]);
                 } else {
                     console.error('Server responded with:', error.response.status, error.response.data);
@@ -71,19 +75,21 @@ const Profile: React.FC = () => {
       }, [donations]);
 
     const filterDonations = () => {
+        console.log('Filtering donations with activeTab:', activeTab);
         const filtered = donations.filter((donation) => {
             switch (activeTab) {
                 case 'אושר':
-                    return donation.status === 'אושר';
+                    return donation.approvedByAdmin === 'true';
                 case 'ממתין לאישור':
-                    return donation.status === 'ממתין לאישור';
+                    return donation.approvedByAdmin === 'false';
                 case 'טרם נמסר':
-                    return donation.status === 'טרם נמסר';
+                    return donation.status !== 'הגיע לעמותה' && donation.status !== 'נמסר';
                 case 'all':
                 default:
                     return true;
             }
         });
+        console.log('Filtered donations:', filtered);
         setFilteredDonations(filtered.slice(0, itemsToShow));
     };
 
@@ -141,9 +147,9 @@ const Profile: React.FC = () => {
 
     const getStatusClass = (status: string) => {
         switch (status) {
-            case 'אושר':
+            case 'הגיע לעמותה':
                 return 'status-approved';
-            case 'ממתין לאישור':
+            case 'נמסר':
                 return 'status-pending';
             case 'טרם נמסר':
                 return 'status-not-approved';

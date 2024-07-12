@@ -8,12 +8,18 @@ const AdminPage = () => {
   const [adminData, setAdminData] = useState<DonorData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userID');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await dataService.getAdmin().req;
-        setAdminData(data);
+        const { req, abort } = dataService.getUser(userId!);
+        const userResponse = await req;
+        if (userResponse.data.isAdmin) {
+          setAdminData(userResponse.data);
+        } else {
+          setError('User is not an admin');
+        }
       } catch (err) {
         if (err instanceof CanceledError) return;
         setError(err instanceof Error ? err.message : String(err));
@@ -21,7 +27,7 @@ const AdminPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   const handleButtonClick = (path: string) => {
     navigate(path);
@@ -50,7 +56,7 @@ const AdminPage = () => {
       </div>
       <div className="button-row">
         <button className="admin-button" onClick={() => handleButtonClick('/')}>עמוד הבית</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/manage-donations')}>נהל תרומות</button>
+        <button className="admin-button" onClick={() => handleButtonClick('/manageDonations')}>נהל תרומות</button>
         <button className="admin-button" onClick={() => handleButtonClick('/reports')}>דוחות נתונים</button>
         <button className="admin-button" onClick={() => handleButtonClick('/manage-users')}>נהל יוזרים</button>
       </div>

@@ -8,12 +8,18 @@ const AdminPage = () => {
   const [adminData, setAdminData] = useState<DonorData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userID');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await dataService.getUser(localStorage.getItem('userID')).req;
-        setAdminData(data);
+        const { req, abort } = dataService.getUser(userId!);
+        const userResponse = await req;
+        if (userResponse.data.isAdmin) {
+          setAdminData(userResponse.data);
+        } else {
+          setError('User is not an admin');
+        }
       } catch (err) {
         if (err instanceof CanceledError) return;
         setError(err instanceof Error ? err.message : String(err));
@@ -21,7 +27,7 @@ const AdminPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   const handleButtonClick = (path: string) => {
     navigate(path);

@@ -12,7 +12,7 @@ const AdminPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await dataService.getAdmin().req;
+        const { data } = await dataService.getUser(localStorage.getItem('userID')).req;
         setAdminData(data);
       } catch (err) {
         if (err instanceof CanceledError) return;

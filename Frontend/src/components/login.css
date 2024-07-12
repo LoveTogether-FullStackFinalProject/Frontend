@@ -1,9 +1,21 @@
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
 .login-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  margin-bottom: 80px; /* Add margin to ensure content doesn't hide behind the footer */
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
 }
 
 .login-header {
@@ -12,24 +24,23 @@
 }
 
 .logo {
-  max-width: 100px;
-  width: 100px;
+  max-width: 120px;
+  width: 100%;
   height: auto;
   margin-bottom: 1rem;
+  object-fit: contain;
 }
 
 .title {
   color: #010100ed;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
+  margin: 0;
 }
 
-
-  .login-form {
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-  }
+.login-form {
+  width: 100%;
+}
 
 .form-group {
   margin-bottom: 1.5rem;
@@ -78,7 +89,7 @@
 }
 
 .login-button:hover {
-  background-color: #010100ed;
+  background-color: #000000;
 }
 
 .register-link {
@@ -124,19 +135,23 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 @media (max-width: 480px) {
-  .login-form {
+  .main-content {
     padding: 1rem;
   }
 
+  .login-page {
+    padding: 1.5rem;
+  }
+
   .form-input-group {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row-reverse;
   }
 
   .icon {
     margin-left: 0;
-    margin-top: 0.5rem;
+    margin-right: 10px;
   }
 
   .login-button,

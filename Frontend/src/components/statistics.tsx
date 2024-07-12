@@ -1,163 +1,178 @@
-import {  useEffect, useState } from 'react';
-import { Donation } from './donation.tsx';
-import {requestedDonation} from "../services/upload-requested-product-service";
-import  dataService,{ CanceledError } from "../services/data-service.ts";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Donation } from './donation';
+import { requestedDonation } from "../services/upload-requested-product-service";
+import dataService, { CanceledError } from "../services/data-service";
+import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Box,
+  Grid,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { styled } from '@mui/system';
 import './statistics.css';
 
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+  marginBottom: theme.spacing(4),
+}));
 
-    function Statistics() {
-        const navigate = useNavigate();
-        const [products, setProducts] = useState<Donation[]>([])
-        const [requests, setRequests] = useState<requestedDonation[]>([])
-        const [error, setError] = useState()
+const Statistics = () => {
+  const navigate = useNavigate();
+  const [products, setProducts] = useState<Donation[]>([]);
+  const [requests, setRequests] = useState<requestedDonation[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [xAxisField, setXAxisField] = useState<string>('שם פריט');
+  const [yAxisField, setYAxisField] = useState<string>('כמות');
 
-        useEffect(() => {
-            const { req, abort } = dataService.getDonations()
-            req.then((res) => {
-                setProducts(res.data)
-            }).catch((err) => {
-                console.log(err)
-                if (err instanceof CanceledError) return
-                setError(err.message)
-            })
-            return () => {
-                abort()
-            }
-        }, [])
+  useEffect(() => {
+    const { req, abort } = dataService.getDonations();
+    req.then((res) => {
+      setProducts(res.data);
+    }).catch((err) => {
+      if (err instanceof CanceledError) return;
+      setError(err.message);
+    });
+    return () => abort();
+  }, []);
 
+  useEffect(() => {
+    const { req, abort } = dataService.getRequestedProducts();
+    req.then((res) => {
+      setRequests(res.data);
+    }).catch((err) => {
+      if (err instanceof CanceledError) return;
+      setError(err.message);
+    });
+    return () => abort();
+  }, []);
 
-        useEffect(() => {
-            const { req, abort } = dataService.getRequestedProducts()
-            req.then((res) => {
-                setRequests(res.data)
-            }).catch((err) => {
-                console.log(err)
-                if (err instanceof CanceledError) return
-                setError(err.message)
-            })
-            
-            return () => {
-                abort()
-            }
-        }, [])
+  const handleXAxisFieldChange = (event: any) => {
+    setXAxisField(event.target.value);
+  };
 
+  const handleYAxisFieldChange = (event: any) => {
+    setYAxisField(event.target.value);
+  };
 
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken) {
-            return (
-                <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
-                <p style={{ color: 'red' }}>שגיאה: אינך מחובר בתור מנהל</p>
-                <button onClick={() => navigate('/adminDashboard')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר בתור מנהל</button>
-              </div>
-            );
-          }
+  const accessToken = localStorage.getItem('accessToken');
+  if (!accessToken) {
+    return (
+      <Box
+        sx={{
+          backgroundColor: 'white',
+          width: '100%',
+          height: '50vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          border: '1px solid black'
+        }}
+      >
+        <Typography variant="h6" color="error">
+          שגיאה: אינך מחובר בתור מנהל
+        </Typography>
+        <Button
+          onClick={() => navigate('/adminDashboard')}
+          variant="contained"
+          color="primary"
+          sx={{ marginTop: '20px' }}
+        >
+          התחבר בתור מנהל
+        </Button>
+      </Box>
+    );
+  }
 
-        return (
-        <>
+  return (
+    <Container>
+      <Typography variant="h4" component="h1" gutterBottom align="center">
+        דוחות נתונים וסטטיסטיקות של התרומות בעמותה
+      </Typography>
+      {error && <Typography color="error">{error}</Typography>}
+      <Box mb={4}>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <Select value={xAxisField} onChange={handleXAxisFieldChange}>
+            <MenuItem value="itemName">שם המוצר</MenuItem>
+            <MenuItem value="category">קטגוריה</MenuItem>
+            <MenuItem value="condition">מצב</MenuItem>
+            <MenuItem value="pickupAddress">כתובת איסוף</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="primary" gutterBottom>
+                נתוני התרומות בשנה האחרונה
+              </Typography>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={products}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey={xAxisField} />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey={yAxisField} fill="#8884d8" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" color="secondary" gutterBottom>
+                נתוני פריטים חסרים בעמותה שנדרשים לתרומות
+              </Typography>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie data={requests} dataKey="amount" nameKey="itemName" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d" label />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                תרומות לאורך זמן
+              </Typography>
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={products}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey={xAxisField} />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey={yAxisField} stroke="#8884d8" />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
 
-{/* <h1 style={{ fontWeight: 'bold', textAlign: 'center', marginBottom: '50px', textDecoration: 'underline' }}>
-    דוחות נתונים וסטטיסטיקות של התרומות בעמותה
-</h1>
-{error && <p className='text-danger'>{error}</p>}
-        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-      
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', direction: 'rtl' }}>
-            <div style={{ marginBottom: '10px', color: 'red', textAlign: 'center', fontSize: '20px' }}>נתוני התרומות בשנה האחרונה</div>
-            {Array.isArray(products) && (
-                <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
-                <thead>
-                    <tr>
-                    <th style={{ color: 'red', border: '1px solid black', textAlign: 'center', width: '50%' }}>שם המוצר</th>
-                    <th style={{ color: 'red', border: '1px solid black', textAlign: 'center', width: '50%' }}>כמות</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product, index) => (
-                    <tr key={index} style={{ border: '1px solid black' }}>
-                        <td style={{ border: '1px solid black', padding: '20px', fontSize: '18px', width: '50%', textAlign: 'center' }}>{product.itemName}</td>
-                        <td style={{ border: '1px solid black', padding: '20px', fontSize: '18px', width: '50%', textAlign: 'center' }}>{product.quantity}</td>
-                    </tr>
-                     ))}
-                </tbody>
-                </table>
-            )}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid black', padding: '10px', backgroundColor: '#DCDCDC', width: '40%', direction: 'rtl' }}>
-  <div style={{ marginBottom: '10px', color: 'red', textAlign: 'center', fontSize: '20px'}}>נתוני פריטים חסרים בעמותה שנדרשים לתרומות </div>
-  <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
-    <thead>
-      <tr>
-        <th style={{ color: 'red', border: '1px solid black', textAlign: 'center', width: '50%' }}>שם המוצר</th>
-        <th style={{ color: 'red', border: '1px solid black', textAlign: 'center', width: '50%' }}>כמות</th>
-      </tr>
-    </thead>
-    <tbody>
-      {requests.map((request, index) => (
-        <tr key={index} style={{ border: '1px solid black' }}>
-          <td style={{ border: '1px solid black', padding: '20px', fontSize: '18px', width: '50%', textAlign: 'center' }}>{request.itemName}</td>
-          <td style={{ border: '1px solid black', padding: '20px', fontSize: '18px', width: '50%', textAlign: 'center' }}>{request.amount}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-      </div> */}
-
-
-
-
-
-<h1>
-    דוחות נתונים וסטטיסטיקות של התרומות בעמותה
-</h1>
-{error && <p className='text-danger'>{error}</p>}
-<div className="data-container">
-    <div className="data-section">
-        <div className="data-title">נתוני התרומות בשנה האחרונה</div>
-        {Array.isArray(products) && (
-            <table className="data-table">
-                <thead>
-                    <tr>
-                        <th>שם המוצר</th>
-                        <th>כמות</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product, index) => (
-                        <tr key={index}>
-                            <td>{product.itemName}</td>
-                            <td>{product.quantity}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        )}
-    </div>
-    <div className="data-section">
-        <div className="data-title">נתוני פריטים חסרים בעמותה שנדרשים לתרומות</div>
-        <table className="data-table">
-            <thead>
-                <tr>
-                    <th>שם המוצר</th>
-                    <th>כמות</th>
-                </tr>
-            </thead>
-            <tbody>
-                {requests.map((request, index) => (
-                    <tr key={index}>
-                        <td>{request.itemName}</td>
-                        <td>{request.amount}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    </div>
-</div>
-    
-        </>
-        )
-    }
-    
-    export default Statistics
+export default Statistics;

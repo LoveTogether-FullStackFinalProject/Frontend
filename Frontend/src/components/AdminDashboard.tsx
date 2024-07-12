@@ -57,8 +57,8 @@ const AdminPage = () => {
       <div className="button-row">
         <button className="admin-button" onClick={() => handleButtonClick('/')}>עמוד הבית</button>
         <button className="admin-button" onClick={() => handleButtonClick('/manageDonations')}>נהל תרומות</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/reports')}>דוחות נתונים</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/manage-users')}>נהל יוזרים</button>
+        <button className="admin-button" onClick={() => handleButtonClick('/statistics')}>דוחות נתונים</button>
+        <button className="admin-button" onClick={() => handleButtonClick('/manageUsers')}>נהל יוזרים</button>
       </div>
     </div>
   );

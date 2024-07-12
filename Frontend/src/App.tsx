@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Registration from './components/Registration';
 import LogIn from "./components/login"
 import MainPage from "./components/main-page"
-import Statictics from "./components/statistics"
+import Statistics from "./components/statistics"
 import ManageUsers from "./components/ManageUsers"
 import AdminDashboard from "./components/AdminDashboard"
 import ManageDonationPage from './components/ManageDonations';
@@ -34,7 +34,7 @@ const App = () => {
 
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/mainPage" element={<MainPage />} />
-                <Route path="/statictics" element={<Statictics />} />
+                <Route path="/statistics" element={<Statistics />} />
                 <Route path="/uploadRequestedProduct" element={<UploadRequestedProduct />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
@@ -43,7 +43,8 @@ const App = () => {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/uploadproduct" element={<UploadProduct />} />
-                <Route path="/manageDonations" element={<ManageDonationPage />} />              
+                <Route path="/manageDonations" element={<ManageDonationPage />} />
+                <Route path="/manageUsers" element={<ManageUsers />} />                            
             </Routes>
         </Router>
         </div>

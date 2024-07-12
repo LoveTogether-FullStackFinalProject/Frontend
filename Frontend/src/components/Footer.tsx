@@ -7,14 +7,14 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <p>פרטי יצירת קשר</p>
-      <div className="social-media">
+      {/* <div className="social-media">
         <a href="https://www.facebook.com/veahavtem/" target="_blank" rel="noopener noreferrer">
           <img src={facebookLogo} alt="Facebook" />
         </a>
         <a href="https://www.instagram.com/veahavtem/" target="_blank" rel="noopener noreferrer">
           <img src={instagramLogo} alt="Instagram" />
         </a>
-      </div>
+      </div> */}
       <p>עמותת וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ &copy; {new Date().getFullYear()}</p>
     </footer>
   );

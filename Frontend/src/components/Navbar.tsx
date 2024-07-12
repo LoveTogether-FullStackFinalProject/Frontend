@@ -45,7 +45,7 @@ export function Navbar() {
         width: "100%",
         zIndex: 1000,
         minHeight: "80px",
-        padding: "10px 0",
+        padding: "0",
       }}
       expand="md"
     >

@@ -33,10 +33,11 @@ function Login() {
                     if(res.data.isAdmin){
                         navigate('/adminDashboard');
                     }
-                    })}
                     else {
-                    navigate('/mainPage');
-                    }
+                        navigate('/mainPage');
+                        }
+                    })}
+                    
                 }
             } catch (err) {
                 console.log("err: " + err);

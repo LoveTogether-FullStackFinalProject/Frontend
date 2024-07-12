@@ -161,18 +161,6 @@ nav a {
   height: 30px;
 }
 
-.status-approved {
-  color: green;
-}
-
-.status-pending {
-  color:#F9DA78
-}
-
-.status-not-approved {
-  color: red;
-}
-
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .donation-card {

@@ -34,7 +34,22 @@ const Profile: React.FC = () => {
         } catch (error) {
             if (error instanceof CanceledError) return;
             console.error('Error fetching data:', error);
-            setError('Error fetching data');
+
+            if (error.response) {
+                if (error.response.status === 404) {
+                    // If no donations are found, set donations to an empty array
+                    setDonations([]);
+                } else {
+                    console.error('Server responded with:', error.response.status, error.response.data);
+                    setError(`Error fetching data: ${error.response.status} - ${error.response.data}`);
+                }
+            } else if (error.request) {
+                console.error('No response received:', error.request);
+                setError('Error fetching data: No response received from server');
+            } else {
+                console.error('Error setting up request:', error.message);
+                setError(`Error fetching data: ${error.message}`);
+            }
         } finally {
             setLoading(false);
         }
@@ -168,8 +183,6 @@ const Profile: React.FC = () => {
                 </div> 
 
             <main className="profile-content">
-                
-
                 <div className="rating-status" style={{direction:"rtl"}}>
                      הדירוג שלך הוא: {user.rating ?? 0}
                 </div>
@@ -190,18 +203,22 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div className="donations-list">
-                    {filteredDonations.map((donation) => (
-                        <div
-                            key={donation._id}
-                            className={`donation-card ${getStatusClass(donation.status)}`}
-                            onClick={() => handleCardClick(donation)}
-                        >
-                            <img src={donation.image} alt={donation.itemName} />
-                            <h5>{donation.itemName}</h5>
-                            <p>סטטוס: {donation.status}</p>
-                            <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p> {/* Display the approval status */}
-                        </div>
-                    ))}
+                    {filteredDonations.length > 0 ? (
+                        filteredDonations.map((donation) => (
+                            <div
+                                key={donation._id}
+                                className={`donation-card ${getStatusClass(donation.status)}`}
+                                onClick={() => handleCardClick(donation)}
+                            >
+                                <img src={donation.image} alt={donation.itemName} />
+                                <h5>{donation.itemName}</h5>
+                                <p>סטטוס: {donation.status}</p>
+                                <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No donations found</p>
+                    )}
                 </div>
                 {filteredDonations.length > itemsToShow && (
                     <button className="show-more" onClick={handleShowMoreClick}>

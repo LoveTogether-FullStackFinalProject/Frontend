@@ -247,6 +247,7 @@ function UploadRequestedProduct() {
                 {errors.expirationDate && (
                   <p className="error-message">{errors.expirationDate.message}</p>
                 )}
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
               </div>
             )}
             {errors.category && (

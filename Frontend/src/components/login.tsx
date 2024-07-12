@@ -17,8 +17,11 @@ function Login() {
     const login = async () => {
         if (emailInputRef.current?.value && passwordInputRef.current?.value) {
             try {
+                console.log("email: " + emailInputRef.current?.value);
+                console.log("password: " + passwordInputRef.current?.value);
                 const res = await postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
                 if (res._id) {
+                    console.log("res: " + res._id);
                     localStorage.setItem('userID', res._id);
                     localStorage.setItem('accessToken', res.accessToken!);
                     localStorage.setItem('refreshToken', res.refreshToken!);
@@ -30,10 +33,11 @@ function Login() {
                     if(res.data.isAdmin){
                         navigate('/adminDashboard');
                     }
-                    })}
                     else {
-                    navigate('/mainPage');
-                    }
+                        navigate('/mainPage');
+                        }
+                    })}
+                    
                 }
             } catch (err) {
                 console.log("err: " + err);

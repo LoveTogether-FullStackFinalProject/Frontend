@@ -7,10 +7,13 @@ export interface IDonor {
   _id?: string;
   accessToken?: string;
   refreshToken?: string;
+  isAdmin?: boolean;
 }
 
 export const postLogIn = async (email: string, password: string): Promise<IDonor> => {
   return new Promise<IDonor>((resolve, reject) => {
+    console.log("email: " + email);
+    console.log("password: " + password);
     apiClient.post<IDonor>("auth/login", { email, password })
       .then((response) => {
         if (response.data._id) {

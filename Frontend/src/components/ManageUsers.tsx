@@ -21,6 +21,7 @@ import {
   InputAdornment
 } from '@mui/material';
 import { Edit, Delete, Search } from '@mui/icons-material';
+import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 
 interface User {
@@ -136,6 +137,19 @@ const ManageUsers: React.FC = () => {
       });
   };
 
+  const handleExport = () => {
+    const csvData = users.map((u) => ({
+      id: u._id,
+      firstName: u.firstName,
+      lastName: u.lastName,
+      email: u.email,
+      address: u.address,
+      phoneNumber: u.phoneNumber,
+      rating: u.rating,
+    }));
+    return csvData;
+  };
+
   const sortedAndFilteredUsers = applySortAndFilter(users);
 
   return (
@@ -159,6 +173,13 @@ const ManageUsers: React.FC = () => {
             ),
           }}
         />
+           <CSVLink
+          data={handleExport()}
+          filename="users.csv"
+          className="btn btn-success mb-3"
+        >
+          ייצוא לאקסל
+        </CSVLink>
       </Toolbar>
       {error && <Typography color="error" align="center">{error}</Typography>}
       <TableContainer component={Paper}>

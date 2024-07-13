@@ -16,7 +16,7 @@ interface Donation {
   pickUpAddress: string;
   status: string;
   approvedByAdmin?: boolean | string;
-  donor: {
+  donor?: {
     firstName: string;
     lastName: string;
   };
@@ -61,12 +61,11 @@ const ManageDonationPage: React.FC = () => {
       productType: d.productType,
       amount: d.amount,
       itemCondition: d.itemCondition,
-      expirationDate: d.expirationDate,
+      expirationDate: d.expirationDate ? new Date(d.expirationDate).toLocaleDateString() : 'לא צוין',
       description: d.description,
       pickUpAddress: d.pickUpAddress,
       status: d.status,
       approvedByAdmin: d.approvedByAdmin === true || d.approvedByAdmin === 'true' ? "כן" : "לא",
-      donor: `${d.donor.firstName} ${d.donor.lastName}`,
     }));
     return csvData;
   };
@@ -126,13 +125,13 @@ const ManageDonationPage: React.FC = () => {
       <Button className="mb-3" onClick={saveChanges} disabled={pendingChanges.length === 0}>
         שמור שינויים
       </Button>
+      {error && <p className="text-danger">{error}</p>}
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>בחירה</th>
             <th>קטגוריה</th>
             <th>תיאור</th>
-            <th>שם התורם</th>
             <th>סטטוס</th>
             <th>אושר ע"י מנהל</th>
             <th>פעולות</th>
@@ -150,7 +149,6 @@ const ManageDonationPage: React.FC = () => {
               </td>
               <td>{donation.category}</td>
               <td>{donation.description}</td>
-              <td>{`${donation.donor.firstName} ${donation.donor.lastName}`}</td>
               <td>
                 <Dropdown>
                   <Dropdown.Toggle variant="secondary" id="dropdown-basic">

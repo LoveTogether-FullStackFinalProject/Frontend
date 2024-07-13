@@ -36,23 +36,27 @@ const Statistics = () => {
   const [products, setProducts] = useState<Donation[]>([]);
   const [requests, setRequests] = useState<requestedDonation[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [xAxisField, setXAxisField] = useState<string>('שם פריט');
-  const [yAxisField, setYAxisField] = useState<string>('כמות');
+  const [xAxisField, setXAxisField] = useState<string>('itemName');
+  const [yAxisField, setYAxisField] = useState<string>('quantity');
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
     req.then((res) => {
+      console.log('Fetched Donations:', res.data);
       setProducts(res.data);
+      logAggregatedData(); // Add this line
+
     }).catch((err) => {
       if (err instanceof CanceledError) return;
       setError(err.message);
     });
     return () => abort();
   }, []);
-
+  
   useEffect(() => {
     const { req, abort } = dataService.getRequestedProducts();
     req.then((res) => {
+      console.log('Fetched Requested Products:', res.data);
       setRequests(res.data);
     }).catch((err) => {
       if (err instanceof CanceledError) return;
@@ -60,6 +64,7 @@ const Statistics = () => {
     });
     return () => abort();
   }, []);
+  
 
   const handleXAxisFieldChange = (event: any) => {
     setXAxisField(event.target.value);
@@ -68,6 +73,28 @@ const Statistics = () => {
   const handleYAxisFieldChange = (event: any) => {
     setYAxisField(event.target.value);
   };
+
+  const calculateAggregatedData = (data, field) => {
+    return data.reduce((acc, item) => {
+      const key = item[field];
+      if (!acc[key]) {
+        acc[key] = 0;
+      }
+      acc[key] += item.quantity; // Assuming quantity is the field to sum up
+      return acc;
+    }, {});
+  };
+  
+  const logAggregatedData = () => {
+    const aggregatedByCategory = calculateAggregatedData(products, 'category');
+    const aggregatedByItemName = calculateAggregatedData(products, 'itemName');
+    const aggregatedByCondition = calculateAggregatedData(products, 'condition');
+  
+    console.log('Aggregated by Category:', aggregatedByCategory);
+    console.log('Aggregated by Item Name:', aggregatedByItemName);
+    console.log('Aggregated by Condition:', aggregatedByCondition);
+  };
+  
 
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
@@ -108,7 +135,11 @@ const Statistics = () => {
       {error && <Typography color="error">{error}</Typography>}
       <Box mb={4}>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <Select value={xAxisField} onChange={handleXAxisFieldChange}>
+          <Select
+            labelId="x-axis-select-label"
+            value={xAxisField}
+            onChange={handleXAxisFieldChange}
+          >
             <MenuItem value="itemName">שם המוצר</MenuItem>
             <MenuItem value="category">קטגוריה</MenuItem>
             <MenuItem value="condition">מצב</MenuItem>

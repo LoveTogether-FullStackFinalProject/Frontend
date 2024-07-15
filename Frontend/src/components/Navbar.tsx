@@ -5,22 +5,37 @@ import BootstrapNavbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { MdHome } from "react-icons/md";
 import logo from '../assets/logoVeahavtem.png';
-import './Navbar.css'
+import dataService, { CanceledError } from '../services/data-service';
+import './Navbar.css';
 
 export function Navbar() {
   const [userId, setUserId] = useState<string | null>(localStorage.getItem("userID"));
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkUserStatus = () => {
+    const checkUserStatus = async () => {
       const currentUserId = localStorage.getItem("userID");
       console.log("Current userID:", currentUserId);
       setUserId(currentUserId);
+
+      if (currentUserId) {
+        try {
+          const { req, abort } = dataService.getUser(currentUserId);
+          const userResponse = await req;
+          setIsAdmin(userResponse.data.isAdmin);
+          abort();
+        } catch (err) {
+          if (err instanceof CanceledError) return;
+          setError(err instanceof Error ? err.message : String(err));
+        }
+      }
     };
-  
+
     checkUserStatus();
     window.addEventListener('storage', checkUserStatus);
     window.addEventListener('localStorageChanged', checkUserStatus);
-  
+
     return () => {
       window.removeEventListener('storage', checkUserStatus);
       window.removeEventListener('localStorageChanged', checkUserStatus);
@@ -32,6 +47,7 @@ export function Navbar() {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userID");
     setUserId(null);
+    setIsAdmin(false);
   }
 
   return (
@@ -57,19 +73,23 @@ export function Navbar() {
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-            {userId ? (
-              <div className='navLink'>
-                <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-                <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-                <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-              </div>
-            ) : (
+              {userId ? (
+                <div className='navLink'>
+                  <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
+                  {isAdmin ? (
+                    <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>
+                  ) : (
+                    <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
+                  )}
+                  <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                  <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
+                </div>
+              ) : (
                 <div className='navLink'>
                   <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
-                  <Nav.Link as={Link} to="login">התחבר</Nav.Link>
+                  <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
                   <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-                  <Nav.Link as={Link} to="about">על העמותה</Nav.Link>
+                  <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
                 </div>
               )}
               <Link to='/mainPage' className="nav-link home-icon">

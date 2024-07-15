@@ -60,8 +60,11 @@ export function Navbar() {
             {userId ? (
               <div className='navLink'>
                 <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-                <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                {isAdmin ? (
+                    <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>
+                  ) : (
+                    <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
+                  )}                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
                 <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
               </div>
             ) : (

@@ -1,3 +1,4 @@
+
 import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +27,7 @@ const schema = z.object({
         message: "תאריך התפוגה חייב להיות לפחות שבוע מהיום",
     }).optional(),
     description: z.string().min(1, "תיאור חייב להיות מוגדר"),
-    pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת"),
+    pickupAddress: z.string().min(1, "כתובת איסוף חייבת להיות מוגדרת").default(""),
     image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
 });
 
@@ -35,6 +36,10 @@ type FormData = z.infer<typeof schema>;
 const UploadProduct: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [imgPreview, setImgPreview] = useState<string | null>(null);
+    const [status, setStatus] = useState('');
+    const [showPickupAddress, setShowPickupAddress] = useState(false);
+    //const [pickupAddress, setPickupAddress] = useState('');
+    const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, watch, setValue, trigger } = useForm<FormData>({ 
         resolver: zodResolver(schema),
@@ -79,7 +84,7 @@ const UploadProduct: React.FC = () => {
             trigger("expirationDate");
             return;
         }
-
+ 
         try {
             let imageUrl = '';
             if (data.image) {
@@ -94,6 +99,8 @@ const UploadProduct: React.FC = () => {
                 ...data, 
                 image: imageUrl, 
                 donor: userId,
+                approvedByAdmin: false,
+                status,
                 category: data.category === 'אחר' ? data.customCategory : data.category
             };
             await uploadProduct(productData);
@@ -103,6 +110,19 @@ const UploadProduct: React.FC = () => {
             alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
         }
     };
+
+    const handleDeliveryOptionChange = (event) => {
+        const { value } = event.target;
+        setSelectedDeliveryOption(value);
+        if (value === 'ממתין לאיסוף מבית התורם') {
+          setShowPickupAddress(true);
+          setStatus('ממתין לאיסוף מבית התורם');
+        } else {
+          setShowPickupAddress(false);
+          setStatus('טרם הגיע לעמותה');
+          setValue("pickupAddress", "default");
+        }
+      };
 
     if (!isLoggedIn) {
         return (
@@ -173,10 +193,55 @@ const UploadProduct: React.FC = () => {
                             <input {...register("description")} type="text" placeholder="תיאור" className={`form-control ${errors.description ? 'is-invalid' : ''}`} />
                             {errors.description && <div className="invalid-feedback">{errors.description.message}</div>}
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <input {...register("pickupAddress")} type="text" placeholder="כתובת איסוף" className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`} />
                             {errors.pickupAddress && <div className="invalid-feedback">{errors.pickupAddress.message}</div>}
-                        </div>
+                        </div> */}
+
+<div className="form-group">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="deliveryOption"
+            id="deliveryOption1"
+            value="טרם הגיע לעמותה"
+            onChange={handleDeliveryOptionChange}
+          />
+          <label className="form-check-label" htmlFor="deliveryOption1">
+            אביא את התרומה בעצמי למרכז האיסוף
+          </label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="deliveryOption"
+            id="deliveryOption2"
+            value="ממתין לאיסוף מבית התורם"
+            onChange={handleDeliveryOptionChange}
+          />
+          <label className="form-check-label" htmlFor="deliveryOption2">
+            מבקש שיאספו ממני את הפריט
+          </label>
+        </div>
+      </div>
+
+
+      {showPickupAddress && (
+        <div className="form-group">
+          <input
+            {...register("pickupAddress")}
+            type="text"
+            placeholder="כתובת איסוף"
+            className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`}
+          />
+          {errors.pickupAddress && <div className="invalid-feedback">{errors.pickupAddress.message}</div>}
+        </div>
+      )}
+
+
+
                         <div className="profile-image-container form-group">
                             {imgPreview && (
                                 <img

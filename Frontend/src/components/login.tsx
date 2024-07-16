@@ -97,7 +97,10 @@ function Login() {
                         <input ref={passwordInputRef} type="password" className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
                         <img src={passwordIcon} className="icon" alt="Password icon" />
                     </div>
+                    {loginError && <p className="error-message">{loginError}</p>}
                 </div>
+
+                
 
                 <button type="button" className="btn btn-primary login-button" onClick={login}>התחבר/י</button>
 
@@ -112,7 +115,7 @@ function Login() {
                     />
                 </div>
 
-                {loginError && <p className="error-message">{loginError}</p>}
+               
             </div>
         </div>
         </div>

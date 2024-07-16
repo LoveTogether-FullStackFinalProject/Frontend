@@ -38,6 +38,7 @@ function UploadRequestedProduct() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
 
 
   useEffect(() => {
@@ -63,7 +64,7 @@ function UploadRequestedProduct() {
 
 
     if (category === "מזון ושתייה" && !data.expirationDate) {
-      setErrorMessage('חובה להכניס תאריך תפוגה');
+      setErrorMessageexpirationDate('חובה להכניס תאריך תפוגה');
       return
     }
 
@@ -247,6 +248,7 @@ function UploadRequestedProduct() {
                 {errors.expirationDate && (
                   <p className="error-message">{errors.expirationDate.message}</p>
                 )}
+                {errorMessageexpirationDate && <div className="error-message1">{errorMessageexpirationDate}</div>}
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
               </div>
             )}

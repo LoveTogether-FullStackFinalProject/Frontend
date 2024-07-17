@@ -129,12 +129,8 @@ const Registration = () => {
     return (
         <div className="registration-container">
             <div className="registration-card">
-                <div className="registration-header">
-                    <h2>ברוכים הבאים!</h2>
-                    <p>♥ואהבתם ביחד♥</p>
-                </div>
                 <div className="registration-body">
-                    <h3>הרשמה</h3>
+                    <h3 className='h3-header'>הרשמה</h3>
                     <div className="profile-image-container">
                         {imgSrc && (
                             <img
@@ -154,7 +150,8 @@ const Registration = () => {
                             accept="image/*"
                         />
                     </div>
-                    <form onSubmit={handleSubmit(registerUserHandler)}>
+                    <form onSubmit={handleSubmit(registerUserHandler)} className="horizontal-form">
+
                         <div className="form-group">
                             <input
                                 {...register("firstName")}

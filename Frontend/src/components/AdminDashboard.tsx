@@ -59,6 +59,7 @@ const AdminPage = () => {
         <button className="admin-button" onClick={() => handleButtonClick('/manageDonations')}>נהל תרומות</button>
         <button className="admin-button" onClick={() => handleButtonClick('/statistics')}>דוחות נתונים</button>
         <button className="admin-button" onClick={() => handleButtonClick('/manageUsers')}>נהל יוזרים</button>
+        <button className="admin-button" onClick={() => handleButtonClick('.uploadRequestedProduct')}>העלאת בקשת פריט</button>
       </div>
     </div>
   );

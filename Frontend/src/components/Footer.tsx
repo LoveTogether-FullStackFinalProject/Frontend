@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
           <img src={instagramLogo} alt="Instagram" />
         </a>
       </div> */}
-      <p>עמותת וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ &copy; {new Date().getFullYear()}</p>
+      <p>עמותת ואהבתם ביחד &copy; {new Date().getFullYear()}</p>
     </footer>
   );
 };

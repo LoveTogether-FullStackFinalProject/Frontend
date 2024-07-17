@@ -197,7 +197,7 @@ const UploadProduct: React.FC = () => {
                 {errors.expirationDate && <div className="invalid-feedback">{errors.expirationDate.message}</div>}
                 
                 <div className="form-group">
-                    <input {...register("condition")} type="text" placeholder="מצב הפר" className={`form-control ${errors.condition ? 'is-invalid' : ''}`} />
+                    <input {...register("condition")} type="text" placeholder="מצב הפריט" className={`form-control ${errors.condition ? 'is-invalid' : ''}`} />
                 </div>
                 {errors.condition && <div className="invalid-feedback">{errors.condition.message}</div>}
                 

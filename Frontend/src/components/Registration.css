@@ -1,16 +1,26 @@
-body, html {
-    margin: 0;
-    padding: 0;
+
+.main-content{
+    background-color: #fff;
+    width: 100%;
     height: 100%;
-    overflow: hidden;
+}
+
+.h3-header{
+    text-align: center;
+    font-size: 40px;
+    color: #000;
+    margin-top: 20px;
+
 }
 
 .registration-container {
+    width: 100%;
+    direction: rtl;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0e6d2;
+    background-color: #fff;
     padding: 0;
     box-sizing: border-box;
     overflow-y: auto;
@@ -18,7 +28,7 @@ body, html {
 
 .registration-card {
     background-color: #fff;
-    width: 100%;
+    width: 50%;
     height: 100%;
     max-width: none;
     max-height: none;
@@ -27,41 +37,23 @@ body, html {
     flex-direction: column;
 }
 
-.registration-header {
-    background-color: #d2b48c;
-    color: #4a3728;
-    padding: 20px;
-    text-align: center;
-    flex-shrink: 0;
-}
-
-.registration-header h2 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.registration-header p {
-    margin: 10px 0 0;
-    font-size: 16px;
-}
-
 .registration-body {
+    background-color: #fff;
+    width: 100%;
+    margin-top: 80px;
     padding: 20px;
     flex-grow: 1;
     overflow-y: auto;
-}
-
-.registration-body h3 {
-    margin: 0 0 20px;
-    text-align: center;
-    color: #010100ed;
 }
 
 .profile-image-container {
     position: relative;
     width: 150px;
     height: 150px;
-    margin: 0 auto 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: -80px;
+    margin-right: 60px;
 }
 
 .profile-image {
@@ -69,14 +61,32 @@ body, html {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #d2b48c;
+    border: 3px solid #070707;
 }
 
+.horizontal-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.horizontal-form .form-group {
+    width: calc(50% - 10px); /* This will create 2 columns */
+    margin-bottom: 15px;
+}
+
+.submit-button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .horizontal-form .form-group {
+        width: 100%; /* Full width on smaller screens */
+    }
+}
 .image-upload-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: #c19a6b;
+    background-color: #000000;
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -86,11 +96,12 @@ body, html {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.image-upload-button:hover {
-    background-color: #a37e58;
+.image-upload-button:hover{
+    background-color: #000000;
+    color: #000000;
+    box-shadow: 0 0 5px 0 #000000;
 }
 
 .form-group {
@@ -98,9 +109,10 @@ body, html {
 }
 
 .form-group input {
+    direction: rtl;
     width: 100%;
     padding: 10px;
-    border: 1px solid #d2b48c;
+    border: 1px solid #000000;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -117,20 +129,23 @@ body, html {
 }
 
 .submit-button {
-    width: 100%;
     padding: 12px;
-    background-color: #c19a6b;
+    background-color: #0b98e4;
     color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
 }
 
 .submit-button:hover {
-    background-color: #a37e58;
+    background-color: #000;
+    color: #0b98e4;
+    box-shadow: 0 0 5px 0 #000000;
 }
+
 
 .google-login {
     margin-top: 20px;
@@ -187,11 +202,5 @@ body, html {
         margin-bottom: 10px;
     }
 
-    .registration-header h2 {
-        font-size: 20px;
-    }
 
-    .registration-header p {
-        font-size: 14px;
-    }
 }

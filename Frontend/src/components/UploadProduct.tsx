@@ -16,7 +16,18 @@ const schema = z.object({
     .min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים')
     .optional(),
   condition: z.string().min(2, 'מצב הפריט חייב להכיל לפחות 2 תווים'),
-  expirationDate: z.string().optional(),
+  expirationDate: z
+    .string()
+    .refine((dateString) => {
+      const selectedDate = new Date(dateString);
+      const currentDate = new Date();
+      const nextWeek = new Date();
+      nextWeek.setDate(currentDate.getDate() + 7);
+      return (
+        selectedDate > currentDate && selectedDate > nextWeek
+      );
+    }, 'תאריך התפוגה חייב להיות לפחות שבוע מהתאריך הנוכחי ולא בתוך השבוע הקרוב.')
+    .optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
   pickupAddress: z
     .string()
@@ -182,10 +193,10 @@ const UploadProduct: React.FC = () => {
             >
               <option value="">בחר קטגוריה</option>
               <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="אביזרים">אביזרים</option>
+              <option value="ציוד בית וגן">ציוד בית וגן</option>
               <option value="אלקטרוניקה">אלקטרוניקה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
+              <option value="תקשורת">תקשורת</option>
+              <option value="בגדים ואקססוריז">בגדים ואקססוריז</option>
               <option value="אחר">אחר</option>
             </select>
             {errors.category && (
@@ -221,102 +232,108 @@ const UploadProduct: React.FC = () => {
             )}
           </div>
 
+          {selectedCategory === 'מזון ושתייה' && (
+            <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+              <input
+                {...register('expirationDate')}
+                type="date"
+                placeholder="תאריך תפוגה"
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
+                className={`${errors.expirationDate ? 'is-invalid' : ''}`}
+              />
+              {errors.expirationDate && (
+                <div className="invalid-feedback">{errors.expirationDate.message}</div>
+              )}
+            </div>
+          )}
+
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
-            <input
-              {...register('expirationDate')}
-              type="date"
-              placeholder="תאריך תפוגה"
+            <textarea
+              {...register('description')}
+              placeholder="תיאור הפריט"
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.expirationDate ? 'is-invalid' : ''}`}
+              className={`${errors.description ? 'is-invalid' : ''}`}
             />
-            {errors.expirationDate && (
-              <div className="invalid-feedback">
-                {errors.expirationDate.message}
-              </div>
+            {errors.description && (
+              <div className="invalid-feedback">{errors.description.message}</div>
             )}
           </div>
-        </div>
 
-        <div style={{ margin: '10px', textAlign: 'right', width: '100%' }}>
-          <textarea
-            {...register('description')}
-            placeholder="תיאור הפריט"
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-            className={`${errors.description ? 'is-invalid' : ''}`}
-          />
-          {errors.description && (
-            <div className="invalid-feedback">{errors.description.message}</div>
-          )}
-        </div>
-
-        <div style={{ margin: '10px', textAlign: 'right', width: '100%' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
             <input
+              {...register('image')}
               type="file"
+              accept="image/*"
+              onChange={imgSelected}
               ref={fileInputRef}
               style={{ display: 'none' }}
-              onChange={imgSelected}
-              accept="image/*"
             />
-            <button type="button" className="image-upload-button" onClick={selectImg} style={{ padding: '10px 20px', borderRadius: '4px', backgroundColor: '#007bff', color: '#fff', border: 'none', fontSize: '16px', cursor: 'pointer' }}>
-              <FontAwesomeIcon icon={faImage} style={{ marginRight: '10px' }} />
+            <button
+              type="button"
+              onClick={selectImg}
+              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
+              className={`${errors.image ? 'is-invalid' : ''}`}
+            >
+              <FontAwesomeIcon icon={faImage} style={{ marginRight: '8px' }} />
               העלאת תמונה
             </button>
             {imgPreview && (
-              <img src={imgPreview} alt="תצלום פריט" className="profile-image" style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: '10px' }} />
-            )}
-          </div>
-        </div>
-
-        <div style={{ margin: '10px', textAlign: 'right', width: '100%' }}>
-          <div className="form-check">
-            <input
-              type="radio"
-              id="pickup"
-              {...register('deliveryOption')}
-              value="מבקש שיאספו ממני את הפריט"
-              className="form-check-input"
-              onChange={handleDeliveryOptionChange}
-            />
-            <label htmlFor="pickup" className="form-check-label">
-              מבקש שיאספו ממני את הפריט
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              type="radio"
-              id="bring"
-              {...register('deliveryOption')}
-              value="אביא את התרומה בעצמי למרכז האיסוף"
-              className="form-check-input"
-              onChange={handleDeliveryOptionChange}
-            />
-            <label htmlFor="bring" className="form-check-label">
-              אביא את התרומה בעצמי למרכז האיסוף
-            </label>
-          </div>
-        </div>
-
-        {showPickupAddress && (
-          <div style={{ margin: '10px', textAlign: 'right', width: '100%' }}>
-            <input
-              {...register('pickupAddress')}
-              type="text"
-              placeholder="כתובת לאיסוף"
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.pickupAddress ? 'is-invalid' : ''}`}
-            />
-            {errors.pickupAddress && (
-              <div className="invalid-feedback">
-                {errors.pickupAddress.message}
+              <div style={{ marginTop: '10px', maxWidth: '100%' }}>
+                <img src={imgPreview} alt="Preview" style={{ maxWidth: '100%', height: 'auto' }} />
               </div>
             )}
+            {errors.image && (
+              <div className="invalid-feedback">{errors.image.message}</div>
+            )}
           </div>
-        )}
 
-        <div style={{ margin: '10px', textAlign: 'center', width: '100%' }}>
-          <button type="submit" className="submit-button" style={{ width: '200px', backgroundColor: '#28a745', color: '#fff', border: 'none', padding: '12px', borderRadius: '4px', cursor: 'pointer', fontSize: '18px' }}>
-            שליחה
+          <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <label style={{ marginBottom: '10px' }}>בחרו את אפשרות המשלוח:</label>
+              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+                <label>
+                  <input
+                    type="radio"
+                    {...register('deliveryOption')}
+                    value="מבקש שיאספו ממני את הפריט"
+                    onChange={handleDeliveryOptionChange}
+                    checked={selectedDeliveryOption === 'מבקש שיאספו ממני את הפריט'}
+                  />
+                  מבקש שיאספו ממני את הפריט
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    {...register('deliveryOption')}
+                    value="אשמח להביא את הפריט אליך"
+                    onChange={handleDeliveryOptionChange}
+                    checked={selectedDeliveryOption === 'אשמח להביא את הפריט אליך'}
+                  />
+                  אשמח להביא את הפריט אליך
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {showPickupAddress && (
+            <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+              <input
+                {...register('pickupAddress')}
+                type="text"
+                placeholder="כתובת איסוף"
+                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
+                className={`${errors.pickupAddress ? 'is-invalid' : ''}`}
+              />
+              {errors.pickupAddress && (
+                <div className="invalid-feedback">{errors.pickupAddress.message}</div>
+              )}
+            </div>
+          )}
+
+        </div>
+        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>
+          <button type="submit" style={{ padding: '10px 20px', borderRadius: '4px', border: 'none', background: '#007bff', color: 'white', fontSize: '16px' }}>
+            העלאת פריט לתרומה
           </button>
         </div>
       </form>
@@ -325,4 +342,3 @@ const UploadProduct: React.FC = () => {
 };
 
 export default UploadProduct;
-

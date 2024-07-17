@@ -26,7 +26,7 @@ const schema = z.object({
       return (
         selectedDate > currentDate && selectedDate > nextWeek
       );
-    }, 'תאריך התפוגה חייב להיות לפחות שבוע מהתאריך הנוכחי ולא בתוך השבוע הקרוב.')
+    }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.')
     .optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
   pickupAddress: z
@@ -247,17 +247,19 @@ const UploadProduct: React.FC = () => {
             </div>
           )}
 
-          <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
-            <textarea
-              {...register('description')}
-              placeholder="תיאור הפריט"
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.description ? 'is-invalid' : ''}`}
-            />
-            {errors.description && (
-              <div className="invalid-feedback">{errors.description.message}</div>
-            )}
-          </div>
+<div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+  <textarea
+    {...register('description')}
+    placeholder="תיאור הפריט"
+    style={{ width: '100%', height: '100px', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
+    className={`${errors.description ? 'is-invalid' : ''}`}
+  />
+  {errors.description && (
+    <div className="invalid-feedback">{errors.description.message}</div>
+  )}
+</div>
+
+
 
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
             <input

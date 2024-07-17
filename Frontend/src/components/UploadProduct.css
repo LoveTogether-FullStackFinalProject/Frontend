@@ -41,13 +41,18 @@ body, html {
 }
 
 .upload-product-card {
-    margin-top: 20px;
+    position: absolute; /* or 'fixed', depending on your layout */
+    top: 60px; /* Assuming the navbar is 60px high */
+    left: 0;
     width: 100%;
-    max-width: 800px;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+    height: calc(100vh - 60px - 50px); /* Assuming the bottom bar is 50px high */
+    margin: 0;
+    padding: 0;
+    overflow-y: auto; /* Adds scroll to the form if it exceeds the available space */
+}
+
+.upload-product-card form {
+    width: 100%;
 }
 
 .upload-product-title {

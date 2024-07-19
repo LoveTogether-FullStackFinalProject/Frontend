@@ -48,8 +48,9 @@ body, html {
   }
   
   .carouselControlNextIcon, .carouselControlPrevIcon {
-    color: black;
-    background-color: transparent;
+    color: white;
+    background-color:  rgba(0, 0, 0, 0.5);
+    font-size: 100x;
   }
   
   .donateButton {

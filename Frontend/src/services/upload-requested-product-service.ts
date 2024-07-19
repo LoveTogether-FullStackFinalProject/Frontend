@@ -117,9 +117,6 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
        if (!refreshToken) {
         throw new Error("No refresh token found");
        }
-      //  const refreshResponse = await apiClient.post(`/auth/refreshToken`, {
-      //   refreshToken,
-      //   });
         const refreshResponse = await apiClient.get('auth/refreshToken', { 
           headers: {
             'Authorization': `Bearer ${refreshToken}`
@@ -143,7 +140,7 @@ const addRequestedProduct = async (donation: requestedDonation) => {
         throw new Error("No access token found");
       }
 
-      
+
   const request = () => {
     return  apiClient.post<Donation>("/requestedDonation/rdonation", donation,{
       headers: {

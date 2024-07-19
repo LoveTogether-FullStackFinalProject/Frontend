@@ -54,42 +54,49 @@ export const uploadPhoto = async (photo: File) => {
 
 
 const makeRequest = async (request: () => Promise<AxiosResponse>) => {
-    console.log(1);
-    try {
-      const response = await request();
-      return response;
-    } catch (axiosError: unknown) {
-      if (axiosError instanceof AxiosError && axiosError.response) {
-        console.log("error!!", axiosError);
-        console.log(2);
-  
-        if (axiosError.response.status === 401) {
-          const error = axiosError.response.data.error;
-          if (error === "Token is expired") {
-            const refreshToken = localStorage.getItem('refreshToken');
-            if (!refreshToken) {
-              throw new Error("Authentication expired, please login again");
-            }
-  
-            const refreshResponse = await apiClient.post(`/auth/refreshToken`, {
-              refreshToken,
-            });
-  
-            if (refreshResponse.status === 200) {
-              localStorage.setItem( 'accessToken',refreshResponse.data.accessToken);
-              localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
-              return request();
-            }
-          }
+  console.log(1);
+  try {
+    const response = await request();
+    return response;
+  } catch (axiosError: unknown) {
+    if (axiosError instanceof AxiosError && axiosError.response) {
+      console.log("error!!", axiosError);
+      console.log(2);
+
+      if (axiosError.response.status === 401) {
+        console.log(3);
+        const refreshToken = localStorage.getItem("refreshToken");
+       if (!refreshToken) {
+        throw new Error("No refresh token found");
+       }
+        const refreshResponse = await apiClient.get('auth/refreshToken', { 
+          headers: {
+            'Authorization': `Bearer ${refreshToken}`
+          },
+       });
+
+        if (refreshResponse.status === 200) {
+          localStorage.setItem('accessToken',refreshResponse.data.accessToken);
+          localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+          return request();
         }
       }
     }
-  };
-  
+  }
+};
   
    export const uploadProduct = async (productData: any) => {
+    const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
     const request = () => {
-      return apiClient.post(`/donation/upload`, productData);
+      return apiClient.post(`/donation/upload`, productData,{
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
+      });
     };
     return makeRequest(request);
   };

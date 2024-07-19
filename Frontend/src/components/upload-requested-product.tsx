@@ -27,7 +27,6 @@ const RequestedProductSchema = z.object({
     message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
 }),
   image: z.string().url({ message: 'חובה לצרף תמונה' }),
-  //image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
 });
 type FormData = z.infer<typeof RequestedProductSchema>;
@@ -62,6 +61,7 @@ function UploadRequestedProduct() {
   console.log(errors);
 
   const addNewProduct = async (data: FormData) => {
+    console.log(errors);
 
 
     if (category === "מזון ושתייה" && !data.expirationDate) {

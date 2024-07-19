@@ -57,6 +57,7 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
   console.log(1);
   try {
     const response = await request();
+    console.log("makeRequest",response);
     return response;
   } catch (axiosError: unknown) {
     if (axiosError instanceof AxiosError && axiosError.response) {

@@ -32,7 +32,7 @@ const schema = z.object({
   pickupAddress: z
     .string()
     .min(1, 'כתובת איסוף חייבת להיות מוגדרת')
-    .default(''),
+    .default('').optional(),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
 });
 
@@ -44,6 +44,8 @@ const UploadProduct: React.FC = () => {
   const [status, setStatus] = useState('');
   const [showPickupAddress, setShowPickupAddress] = useState(false);
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
+  const [deliveryOption, setDeliveryOption] = useState('');
+  const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -91,6 +93,13 @@ const UploadProduct: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
+
+    if (!status) {
+      setShowError(true);
+      return;
+    }
+
+
     if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
       trigger('expirationDate');
       return;
@@ -124,21 +133,41 @@ const UploadProduct: React.FC = () => {
     }
   };
 
+  // const handleDeliveryOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = event.target;
+  //   setSelectedDeliveryOption(value);
+  //   if (value === 'מבקש שיאספו ממני את הפריט') {
+  //     // Show the pickup address field
+  //     setValue('pickupAddress', ''); // Clear the pickup address field if needed
+  //     trigger('pickupAddress'); // Trigger validation if necessary
+  //     setShowPickupAddress(true);
+  //   } else {
+  //     // Hide or clear the pickup address field
+  //     setValue('pickupAddress', ''); // Clear the pickup address field if needed
+  //     trigger('pickupAddress'); // Trigger validation if necessary
+  //     setShowPickupAddress(false);
+  //   }
+  // };
+
   const handleDeliveryOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+
+    // setDeliveryOption(value);
+    if (showError) setShowError(false);
+
     setSelectedDeliveryOption(value);
-    if (value === 'מבקש שיאספו ממני את הפריט') {
-      // Show the pickup address field
-      setValue('pickupAddress', ''); // Clear the pickup address field if needed
-      trigger('pickupAddress'); // Trigger validation if necessary
+    if (value === 'ממתין לאיסוף מבית התורם') {
       setShowPickupAddress(true);
+      setStatus('ממתין לאיסוף מבית התורם');
     } else {
-      // Hide or clear the pickup address field
-      setValue('pickupAddress', ''); // Clear the pickup address field if needed
-      trigger('pickupAddress'); // Trigger validation if necessary
       setShowPickupAddress(false);
+      setStatus('טרם הגיע לעמותה');
+      setValue("pickupAddress", "default");
     }
+
   };
+
+ 
 
   if (!isLoggedIn) {
     return (
@@ -289,7 +318,7 @@ const UploadProduct: React.FC = () => {
             )}
           </div>
 
-          <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+          {/* <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
               <label style={{ marginBottom: '10px' }}>בחרו את אפשרות המשלוח:</label>
               <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
@@ -330,7 +359,119 @@ const UploadProduct: React.FC = () => {
                 <div className="invalid-feedback">{errors.pickupAddress.message}</div>
               )}
             </div>
-          )}
+                {showError && (
+          <div className="error-message" style={{ marginLeft: '20px' }}>אנא בחר דרך שליחת פריט</div>
+        )}            className="form-check-input"
+            type="radio"
+            name="deliveryOption"
+            id="deliveryOption1"
+            value="טרם הגיע לעמותה"
+            onChange={handleDeliveryOptionChange}
+          />
+          <label className="form-check-label" htmlFor="deliveryOption1">
+            אביא את התרומה בעצמי למרכז האיסוף
+          </label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="deliveryOption"
+            id="deliveryOption2"
+            value="ממתין לאיסוף מבית התורם"
+            onChange={handleDeliveryOptionChange}
+          />
+          <label className="form-check-label" htmlFor="deliveryOption2">
+            מבקש שיאספו ממני את הפריט
+          </label>
+        </div>
+     
+        {showError && (
+          <div className="error-message">אנא בחר דרך שליחת פריט</div>
+        )}
+     
+      </div> */}
+
+<style>
+        {`
+          .form-check-input {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: absolute;
+            opacity: 0;
+          }
+
+          .form-check-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
+
+          .form-check-label .custom-square {
+            width: 16px; /* Small square size */
+            height: 16px; /* Small square size */
+            border: 2px solid #007bff; /* Square border */
+            margin-right: 8px; /* Space between square and label text */
+            display: inline-block;
+            border-radius: 0; /* Ensure square corners */
+          }
+
+          .form-check-input:checked + label .custom-square {
+            background-color: #007bff; /* Change color when checked */
+          }
+        `}
+      </style>
+      <div className="form-group">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="deliveryOption"
+            id="deliveryOption1"
+            value="טרם הגיע לעמותה"
+            onChange={handleDeliveryOptionChange}
+          />
+          <label className="form-check-label" htmlFor="deliveryOption1">
+            <span className="custom-square"></span>
+            אביא את התרומה בעצמי למרכז האיסוף
+          </label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="deliveryOption"
+            id="deliveryOption2"
+            value="ממתין לאיסוף מבית התורם"
+            onChange={handleDeliveryOptionChange}
+          />
+          <label className="form-check-label" htmlFor="deliveryOption2">
+            <span className="custom-square"></span> 
+            מבקש שיאספו ממני את הפריט
+          </label>
+        </div>
+
+        {showError && (
+      <div className="error-message" style={{ marginRight: '200px' }}>אנא בחר דרך שליחת פריט</div>
+      )}
+      </div>
+      
+
+
+      {showPickupAddress && (
+        <div className="form-group">
+          <input
+            {...register("pickupAddress")}
+            type="text"
+            placeholder="כתובת איסוף"
+            className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`}
+          />
+          {errors.pickupAddress && <div className="invalid-feedback">{errors.pickupAddress.message}</div>}
+        </div>
+      )}
+
+
 
         </div>
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>

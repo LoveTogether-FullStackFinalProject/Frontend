@@ -61,6 +61,7 @@ function UploadRequestedProduct() {
   console.log(errors);
 
   const addNewProduct = async (data: FormData) => {
+    console.log(errors);
 
 
     if (category === "מזון ושתייה" && !data.expirationDate) {
@@ -241,6 +242,7 @@ function UploadRequestedProduct() {
                   className="form-control"
                   id="expirationDate"
                   placeholder="תאריך תפוגה"
+                  min={new Date().toISOString().split('T')[0]} 
                 />
                 <label htmlFor="expirationDate" className="floating-label">
                   תאריך תפוגה

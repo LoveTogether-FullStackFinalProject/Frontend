@@ -223,7 +223,9 @@ const Profile: React.FC = () => {
                             </div>
                         ))
                     ) : (
-                        <p>No donations found</p>
+                        <div className="no-donations-container">
+                             <p>לא נמצאו תרומות</p>
+                        </div>
                     )}
                 </div>
                 {filteredDonations.length > itemsToShow && (

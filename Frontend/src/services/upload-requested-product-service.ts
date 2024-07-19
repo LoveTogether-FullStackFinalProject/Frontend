@@ -112,22 +112,21 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
       console.log(2);
 
       if (axiosError.response.status === 401) {
-        const error = axiosError.response.data.error;
-        if (error === "Token is expired") {
-          const refreshToken = localStorage.getItem('refreshToken');
-          if (!refreshToken) {
-            throw new Error("Authentication expired, please login again");
-          }
+        console.log(3);
+        const refreshToken = localStorage.getItem("refreshToken");
+       if (!refreshToken) {
+        throw new Error("No refresh token found");
+       }
+        const refreshResponse = await apiClient.get('auth/refreshToken', { 
+          headers: {
+            'Authorization': `Bearer ${refreshToken}`
+          },
+       });
 
-          const refreshResponse = await apiClient.post(`/auth/refreshToken`, {
-            refreshToken,
-          });
-
-          if (refreshResponse.status === 200) {
-            localStorage.setItem( 'accessToken',refreshResponse.data.accessToken);
-            localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
-            return request();
-          }
+        if (refreshResponse.status === 200) {
+          localStorage.setItem('accessToken',refreshResponse.data.accessToken);
+          localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+          return request();
         }
       }
     }
@@ -136,11 +135,22 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
 
 
 const addRequestedProduct = async (donation: requestedDonation) => {
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+
   const request = () => {
-    return  apiClient.post<Donation>("/requestedDonation/rdonation", donation);
+    return  apiClient.post<Donation>("/requestedDonation/rdonation", donation,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
   };
   return makeRequest(request);
+
 };
 
 
-  export default {uploadPhoto, addRequestedProduct  };
+  export default {uploadPhoto, addRequestedProduct};

@@ -58,6 +58,7 @@ const Registration = () => {
             const user = {
                 ...data,
                 isAdmin: false,
+                rating: 0,
                 image: imageUrl
             };
             const res = await registerUser(user);
@@ -119,7 +120,7 @@ const Registration = () => {
                 <div className="registration-card">
                     <div className="registration-body">
                         <p className="error-message">שגיאה: כבר מחוברים למערכת.</p>
-                        <button className="submit-button" onClick={() => navigate('/feed')}>חזור לדף הבית</button>
+                        <button className="submit-button" onClick={() => navigate('/mainPage')}>חזור לדף הבית</button>
                     </div>
                 </div>
             </div>

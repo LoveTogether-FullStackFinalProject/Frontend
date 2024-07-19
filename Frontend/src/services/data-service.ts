@@ -21,22 +21,21 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
       console.log(2);
 
       if (axiosError.response.status === 401) {
-        const error = axiosError.response.data.error;
-        if (error === "Token is expired") {
-          const refreshToken = localStorage.getItem('refreshToken');
-          if (!refreshToken) {
-            throw new Error("Authentication expired, please login again");
-          }
+        console.log(3);
+        const refreshToken = localStorage.getItem("refreshToken");
+       if (!refreshToken) {
+        throw new Error("No refresh token found");
+       }
+        const refreshResponse = await apiClient.get('auth/refreshToken', { 
+          headers: {
+            'Authorization': `Bearer ${refreshToken}`
+          },
+       });
 
-          const refreshResponse = await apiClient.post(`/auth/refreshToken`, {
-            refreshToken,
-          });
-
-          if (refreshResponse.status === 200) {
-            localStorage.setItem('accessToken', refreshResponse.data.accessToken);
-            localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
-            return request();
-          }
+        if (refreshResponse.status === 200) {
+          localStorage.setItem('accessToken',refreshResponse.data.accessToken);
+          localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+          return request();
         }
       }
     }
@@ -68,23 +67,65 @@ const getUser = (userId: string) => {
 };
 
 const updateUser = (userId: string, data: Partial<DonorData>) => {
-  return apiClient.put(`/donor/${userId}`, data);
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+  const request = () => {
+    return apiClient.put(`/donor/${userId}`,data,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+  };
+  return makeRequest(request);
 };
 
 const deleteUser = (userId: string) => {
-  return apiClient.delete(`/donor/${userId}`);
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+  const request = () => {
+    return apiClient.delete(`/donor/${userId}`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+  };
+  return makeRequest(request);
 };
 
 const updateDonation = async (donationId: string, data: Partial<userDonation>) => {
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
   const request = () => {
-    return apiClient.put(`/donation/update/${donationId}`, data);
+    return apiClient.put(`/donation/update/${donationId}`, data,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
   };
   return makeRequest(request);
 };
 
 const deleteDonation = async (donationId: string) => {
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
   const request = () => {
-    return apiClient.delete(`/donation/delete/${donationId}`);
+    return apiClient.delete(`/donation/delete/${donationId}`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
   };
   return makeRequest(request);
 };
@@ -96,8 +137,17 @@ const getDonationsByUser = (userId: string) => {
 };
 
 const updateUserData = async (userId: string, data: Partial<DonorData>) => {
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
   const request = () => {
-    return apiClient.put(`/donor/${userId}`, data);
+    return apiClient.put(`/donor/${userId}`, data,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
   };
   return makeRequest(request);
 };

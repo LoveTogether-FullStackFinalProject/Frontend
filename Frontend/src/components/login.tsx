@@ -22,6 +22,8 @@ function Login() {
                     localStorage.setItem('userID', res._id);
                     localStorage.setItem('accessToken', res.accessToken!);
                     localStorage.setItem('refreshToken', res.refreshToken!);
+                    console.log("accessToken:",res.accessToken!)
+                    console.log("refreshToken:",res.refreshToken!)
                     window.dispatchEvent(new Event('localStorageChanged'));
 
                     const userId = localStorage.getItem('userID');
@@ -49,6 +51,8 @@ function Login() {
                 localStorage.setItem('userID', res._id);
                 localStorage.setItem('accessToken', res.accessToken!);
                 localStorage.setItem('refreshToken', res.refreshToken!);
+                console.log("accessToken:",res.accessToken!)
+                console.log("refreshToken:",res.refreshToken!)
                 navigate('/mainPage');
             }
         } catch (e) {

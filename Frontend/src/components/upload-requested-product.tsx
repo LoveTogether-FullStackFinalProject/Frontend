@@ -242,6 +242,7 @@ function UploadRequestedProduct() {
                   className="form-control"
                   id="expirationDate"
                   placeholder="תאריך תפוגה"
+                  min={new Date().toISOString().split('T')[0]} 
                 />
                 <label htmlFor="expirationDate" className="floating-label">
                   תאריך תפוגה

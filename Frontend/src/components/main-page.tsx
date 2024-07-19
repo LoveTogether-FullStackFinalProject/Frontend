@@ -90,7 +90,8 @@ import './main-page.css';
   </div>
   
   <div className="borderBox">
-    <Carousel nextIcon={<span aria-hidden="true" className="carouselControlNextIcon" />} prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon" />} >
+    <Carousel 
+    nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&gt;</span>} prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&lt;</span>} >
       {chunkedRequests.map((chunk, chunkIndex) => (
         <Carousel.Item key={chunkIndex}>
           <Row>

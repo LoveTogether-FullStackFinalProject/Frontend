@@ -43,6 +43,7 @@
 }
 
 .form-group {
+  
   margin-bottom: 1.5rem;
 }
 
@@ -99,6 +100,10 @@
   color: #010100ed;
   text-decoration: none;
   font-size: 0.9rem;
+  margin-right: 100px;
+  left: 50px;
+  position: relative;
+
 }
 
 .google-login {
@@ -110,9 +115,10 @@
 
 .error-message {
   color: #ff0000;
-  text-align: center;
+  text-align: center ;
   margin-top: 0.5rem;
-  margin-right: 90rem;
+  margin-right: 50rem;
+  position: fixed;
 }
 
 .already-logged-in {
@@ -159,4 +165,6 @@
   .register-link {
     font-size: 0.9rem;
   }
+
+  
 }

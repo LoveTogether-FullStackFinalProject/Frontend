@@ -138,7 +138,7 @@ import './main-page.css';
       <h1 className="donorSection">התורמים שלנו</h1>
       <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
       <div className="donorDisplay">
-        {users.filter(user => user.rating === "1").map((user, index) => (
+        {users.filter(user => user.rating === "1").slice(0, 3).map((user, index) => (
           <div key={index} className="donorItem">
             <img src={user.image || person} alt={`${user.firstName} ${user.lastName}`} className="donorImage" />
             <p className="donorName">{user.firstName} {user.lastName}</p>

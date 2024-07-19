@@ -266,6 +266,7 @@ const UploadProduct: React.FC = () => {
               <input
                 {...register('expirationDate')}
                 type="date"
+                min={new Date().toISOString().split('T')[0]} 
                 placeholder="תאריך תפוגה"
                 style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
                 className={`${errors.expirationDate ? 'is-invalid' : ''}`}

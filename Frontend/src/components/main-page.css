@@ -155,3 +155,13 @@ body, html {
     font-size: 20px;
     text-align: center;
   }
+
+  .squareContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 650px; /* Adjust based on your needs */
+    height: 300px; /* Adjust based on your needs */
+    border: 2px solid black; /* Black border around the box */
+  }

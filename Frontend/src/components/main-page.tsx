@@ -121,15 +121,20 @@ import './main-page.css';
     </div>
   </div>
   <div className="flexSpaceBetween">
-    <div className="flexCenterColumn">
-      <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה! הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות, {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים</h2>
+    <div className="squareContainer flexCenterColumn">
+      {/* <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה! הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות, {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים</h2> */}
+      <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>
+  עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!<br />
+  הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות,<br />
+  {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים
+</h2>
       <div className="flexCenter">
         {products.slice(0, 3).map((product, index) => (
           <img key={index} src={product.image} alt={`Product ${index + 1}`} className="productImage" />
         ))}
       </div>
     </div>
-    <div className="flexCenterColumn">
+    <div className="squareContainer flexCenterColumn">
       <h1 className="donorSection">התורמים שלנו</h1>
       <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
       <div className="donorDisplay">

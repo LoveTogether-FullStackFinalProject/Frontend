@@ -112,7 +112,7 @@ import './main-page.css';
   </div>
   <div className="categorySection">
     <h2>הקטגוריות שלנו</h2>
-    <div className="flexSpaceBetween">
+    <div className="categoryItemsContainer">
       <span className="categoryItem">הנעלה</span>
       <span className="categoryItem">ביגוד</span>
       <span className="categoryItem">אלקטרוניקה</span>

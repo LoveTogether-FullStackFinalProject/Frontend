@@ -73,7 +73,7 @@ body, html {
     margin-right: auto;
   }
   
-  .categorySection {
+  /* .categorySection {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -82,6 +82,21 @@ body, html {
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
+  } */
+
+  .categorySection {
+    margin: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .categoryItemsContainer { 
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
   
   .categoryItem {

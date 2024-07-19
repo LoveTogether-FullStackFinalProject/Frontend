@@ -1,3 +1,4 @@
+
 import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
@@ -31,8 +32,8 @@ const schema = z.object({
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
   pickupAddress: z
     .string()
-    .min(1, 'כתובת איסוף חייבת להיות מוגדרת')
-    .default('').optional(),
+    // .min(1, 'כתובת איסוף חייבת להיות מוגדרת')
+    .optional(),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
 });
 
@@ -46,6 +47,7 @@ const UploadProduct: React.FC = () => {
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
   const [deliveryOption, setDeliveryOption] = useState('');
   const [showError, setShowError] = useState(false);
+  const [showPickUpError, setPickUpShowError] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -98,7 +100,11 @@ const UploadProduct: React.FC = () => {
       setShowError(true);
       return;
     }
-
+    if(showPickupAddress && data.pickupAddress=="") {
+      setPickUpShowError(true);
+      console.log("showPickUpError",showPickUpError);
+      return;
+    }
 
     if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
       trigger('expirationDate');
@@ -159,6 +165,7 @@ const UploadProduct: React.FC = () => {
     if (value === 'ממתין לאיסוף מבית התורם') {
       setShowPickupAddress(true);
       setStatus('ממתין לאיסוף מבית התורם');
+      setValue("pickupAddress", "");
     } else {
       setShowPickupAddress(false);
       setStatus('טרם הגיע לעמותה');
@@ -395,35 +402,42 @@ const UploadProduct: React.FC = () => {
 
 <style>
         {`
-          .form-check-input {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            position: absolute;
-            opacity: 0;
-          }
+.form-check-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: absolute;
+  opacity: 0;
+}
 
-          .form-check-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-          }
+.form-check-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
-          .form-check-label .custom-square {
-            width: 16px; /* Small square size */
-            height: 16px; /* Small square size */
-            border: 2px solid #007bff; /* Square border */
-            margin-right: 8px; /* Space between square and label text */
-            display: inline-block;
-            border-radius: 0; /* Ensure square corners */
-          }
+.form-check-label .custom-square {
+  width: 16px; /* Small square size */
+  height: 16px; /* Small square size */
+  border: 2px solid black; /* Change square border to black */
+  margin-right: 8px; /* Space between square and label text */
+  display: inline-block;
+  border-radius: 50%; /* Change to round corners */
+}
 
-          .form-check-input:checked + label .custom-square {
-            background-color: #007bff; /* Change color when checked */
+.form-check-input:checked + label .custom-square {
+  background-color: black; /* Change color when checked to black */
+}
+          .error-message{
+           color: #dc3545;
+            font-size: 14px;
+           margin-top: 20px; 
+           margin-right: 95px
           }
         `}
       </style>
       <div className="form-group">
+      <label style={{ marginBottom: '10px' }}>בחרו את אפשרות המשלוח:</label>
         <div className="form-check">
           <input
             className="form-check-input"
@@ -454,25 +468,23 @@ const UploadProduct: React.FC = () => {
         </div>
 
         {showError && (
-      <div className="error-message" style={{ marginRight: '200px' }}>אנא בחר דרך שליחת פריט</div>
+      <div className="error-message" >אנא בחר דרך שליחת פריט</div>
       )}
       </div>
       
-
-
       {showPickupAddress && (
         <div className="form-group">
           <input
             {...register("pickupAddress")}
             type="text"
-            placeholder="כתובת איסוף"
-            className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`}
+             placeholder="כתובת איסוף"
+            //  className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`}
           />
-          {errors.pickupAddress && <div className="invalid-feedback">{errors.pickupAddress.message}</div>}
+            {showPickUpError && (
+          <div className="error-message" style={{ marginRight: '680px' }}>כתובת האיסוף חייבת להיות מוגדרת</div>
+          )}
         </div>
       )}
-
-
 
         </div>
         <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}>

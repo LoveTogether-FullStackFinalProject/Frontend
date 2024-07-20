@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { MdHome } from "react-icons/md";
 import logo from '../assets/logoVeahavtem.png';
 import dataService, { CanceledError } from '../services/data-service';
+import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
 
 export function Navbar() {
@@ -43,6 +44,7 @@ export function Navbar() {
   }, []);
 
   function handleLogout() {
+    logoutServiece.postLogout();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userID");

@@ -160,7 +160,7 @@ const Registration = () => {
                                 placeholder="שם פרטי"
                                 className={errors.firstName ? 'error' : ''}
                             />
-                            {errors.firstName && <span className="error-message">{errors.firstName.message}</span>}
+                            {errors.firstName && <span style={{ color: 'red', fontSize: '14px', marginLeft: '140px' }}>{errors.firstName.message}</span>}
                         </div>
                         <div className="form-group">
                             <input
@@ -169,7 +169,7 @@ const Registration = () => {
                                 placeholder="שם משפחה"
                                 className={errors.lastName ? 'error' : ''}
                             />
-                            {errors.lastName && <span className="error-message">{errors.lastName.message}</span>}
+                            {errors.lastName && <span style={{ color: 'red', fontSize: '14px', marginLeft: '120px' }}>{errors.lastName.message}</span>}
                         </div>
                         <div className="form-group">
                             <input
@@ -178,7 +178,7 @@ const Registration = () => {
                                 placeholder="כתובת דואר אלקטרוני"
                                 className={errors.email ? 'error' : ''}
                             />
-                            {errors.email && <span className="error-message">{errors.email.message}</span>}
+                            {errors.email && <span style={{ color: 'red', fontSize: '14px', marginLeft: '140px' }}>{errors.email.message}</span>}
                         </div>
                         <div className="form-group">
                             <input
@@ -187,7 +187,7 @@ const Registration = () => {
                                 placeholder="סיסמה"
                                 className={errors.password ? 'error' : ''}
                             />
-                            {errors.password && <span className="error-message">{errors.password.message}</span>}
+                            {errors.password && <span style={{ color: 'red', fontSize: '14px', marginLeft: '12px' }}>{errors.password.message}</span>}
                         </div>
                         <div className="form-group">
                             <input
@@ -196,7 +196,7 @@ const Registration = () => {
                                 placeholder="מספר טלפון"
                                 className={errors.phoneNumber ? 'error' : ''}
                             />
-                            {errors.phoneNumber && <span className="error-message">{errors.phoneNumber.message}</span>}
+                            {errors.phoneNumber && <span style={{ color: 'red', fontSize: '14px', marginLeft: '140px' }}>{errors.phoneNumber.message}</span>}
                         </div>
                         <div className="form-group">
                             <input
@@ -205,7 +205,7 @@ const Registration = () => {
                                 placeholder="כתובת ראשית"
                                 className={errors.mainAddress ? 'error' : ''}
                             />
-                            {errors.mainAddress && <span className="error-message">{errors.mainAddress.message}</span>}
+                            {errors.mainAddress && <span style={{ color: 'red', fontSize: '14px', marginLeft: '120px' }}>{errors.mainAddress.message}</span>}
                         </div>
                         <button type="submit" className="submit-button">
                             הרשמה

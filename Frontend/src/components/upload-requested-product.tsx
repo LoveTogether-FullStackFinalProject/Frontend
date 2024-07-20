@@ -64,18 +64,15 @@ function UploadRequestedProduct() {
   const addNewProduct = async (data: FormData) => {
     console.log(errors);
 
-
     if (category === "מזון ושתייה" && !data.expirationDate) {
       setisExpirationFilled(true);
       setErrorMessageexpirationDate('חובה להכניס תאריך תפוגה');
-      //trigger('expirationDate');
       return
     }
     else{
       setisExpirationFilled(false);
     }
  
-
     if (!imgSrc) {
       alert("Please select an image");
       return;
@@ -114,244 +111,6 @@ function UploadRequestedProduct() {
 
   return (
     <>
-
-{/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '20px' }}>
-  <div style={{ width: '100%', maxWidth: '600px', border: '1px solid lightgray', padding: '20px', backgroundColor: '#f9f9f9' }}>
-    <h1 className="text-center fw-bold" style={{ color: 'brown', fontSize: '2.5rem', marginTop: '20px', marginBottom: '20px' }}>העלאת מוצר המבוקש לתרומה</h1>
-
-    <form onSubmit={handleSubmit(addNewProduct)}>
-      <div className="form-group" style={{ marginBottom: '20px' }}>
-      </div>
-
-      <div className="mb-3" style={{ position: 'relative' }}>
-        <input {...register("itemName")} type="text" className="form-control" id="floatingCategory" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
-        <label htmlFor="floatingItemName" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>שם המוצר</label>
-        {errors.itemName && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemName.message}</p>}
-      </div>
-
-<div className="mb-3" style={{ position: 'relative' }}>
-      <select {...register("category")} className="form-control" id="floatingCategory" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }}
-        onChange={(e) => setCategory(e.target.value)}>
-        <option value="">בחר קטגוריה</option>
-        <option value="מזון ושתייה">מזון ושתייה</option>
-        <option value="אביזרים">אביזרים</option>
-        <option value="אלקטרוניקה">אלקטרוניקה</option>
-        <option value="ביגוד">ביגוד</option>
-        <option value="הנעלה">הנעלה</option>
-        <option value="אחר">אחר...</option>
-      </select>
-      <label htmlFor="floatingCategory" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>קטגוריה</label>
-      {category === 'אחר' && (
-        <input type="text" {...register("category")} className="form-control" placeholder="הזן קטגוריה" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem', marginTop: '10px' }} />
-      )}
-      {category === "מזון ושתייה" && (
-        <div className="form-floating mb-3">
-          <input {...register("expirationDate")} type="date" className="form-control" id="expirationDate" placeholder="תאריך תפוגה" />
-           <label htmlFor="expirationDate">תאריך תפוגה</label>
-           {errors.expirationDate && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.expirationDate.message}</p>}
-           {errorMessage && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessage}</p>}
-        </div>
-     )}
-      {errors.category && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>}
-    </div>
-
-
-      <div className="mb-3" style={{ position: 'relative' }}>
-        <input {...register("amount")} type="number" className="form-control" id="floatingAmount" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
-        <label htmlFor="floatingAmount" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>כמות</label>
-        {errors.amount && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>}
-      </div>
-
-      <div className="mb-3" style={{ position: 'relative' }}>
-        <input {...register("itemCondition")} type="text" className="form-control" id="floatingItemCondition" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
-        <label htmlFor="floatingItemCondition" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>מצב</label>
-        {errors.itemCondition && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemCondition.message}</p>}
-      </div>
-
-      <div className="mb-3" style={{ position: 'relative' }}>
-        <input {...register("description")} type="text" className="form-control" id="floatingDescription" placeholder="" style={{ direction: 'rtl', width: '100%', padding: '10px', fontSize: '1.2rem' }} />
-        <label htmlFor="floatingDescription" style={{ fontSize: '0.75rem', fontWeight: 'bold', position: 'absolute', top: 0, right: '10px' }}>תיאור המוצר</label>
-        {errors.description && <p style={{ position: 'absolute', right: 0, color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.description.message}</p>}
-      </div>
-
-      <div className="d-flex flex-column justify-content-center align-items-center" style={{ width: '100%', marginTop: '20px' }}>
-        {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Product Preview" className="img-thumbnail mb-2" style={{ maxWidth: '150px', maxHeight: '150px' }} />}
-        <button type="button" className="btn mt-2" onClick={selectImg} style={{ backgroundColor: 'brown', color: 'white', width: '200px', fontSize: '1.2rem' }}>
-          <FontAwesomeIcon icon={faImage} className="me-2" />
-          העלאת תמונה
-        </button>
-        <input style={{ display: "none" }} {...register("image")} type="file" onChange={imgSelected} ref={fileInputRef}></input>
-        {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.image.message}</p>}
-      </div>
-
-      <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-primary mt-3" style={{ color: 'white', backgroundColor: 'brown', padding: '10px 20px', fontSize: '1.2rem' }}>העלאה</button>
-      </div>
-    </form>
-  </div>
-</div> */}
-
-
-
-{/* <div className="container">
-<h1 className="form-title">העלאת מוצר המבוקש לתרומה</h1>
-      <div className="form-wrapper">  
-        <form onSubmit={handleSubmit(addNewProduct)}>
-          <div className="form-group"></div>
-          <div className="input-wrapper">
-            <input
-              {...register("itemName")}
-              type="text"
-              className="form-control"
-              id="floatingItemName"
-              placeholder=""
-            />
-            <label htmlFor="floatingItemName" className="floating-label">
-              שם המוצר
-            </label>
-            {errors.itemName && (
-              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemName.message}</p>
-            )}
-          </div>
-          <div className="input-wrapper">
-            <select
-              {...register("category")}
-              className="form-control"
-              id="floatingCategory"
-              onChange={(e) => {
-                setCategory(e.target.value);
-                clearErrors("category"); 
-              }}
-            >
-              <option value="">בחר קטגוריה</option>
-              <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="אביזרים">אביזרים</option>
-              <option value="אלקטרוניקה">אלקטרוניקה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
-              <option value="אחר">אחר...</option>
-            </select>
-            <label htmlFor="floatingCategory" className="floating-label">
-              קטגוריה
-            </label>
-            {category === "אחר" && (
-              <input
-                type="text"
-                {...register("category")}
-                className="form-control"
-                placeholder="הזן קטגוריה"
-              />
-            )}
-            {category === "מזון ושתייה" && (
-              <div className="input-wrapper">
-                <input
-                  {...register("expirationDate")}
-                  type="date"
-                  className="form-control"
-                  id="expirationDate"
-                  placeholder="תאריך תפוגה"
-                  min={new Date().toISOString().split('T')[0]} 
-                />
-                <label htmlFor="expirationDate" className="floating-label">
-                  תאריך תפוגה
-                </label>
-                {errors.expirationDate && (
-                  <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.expirationDate.message}</p>
-                )}
-                {errorMessageexpirationDate && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessageexpirationDate}</div>}
-
-              </div>
-            )}
-            {errors.category && (
-              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>
-            )}
-          </div>
-          <div className="input-wrapper">
-            <input
-              {...register("amount")}
-              type="number"
-              className="form-control"
-              id="floatingAmount"
-              placeholder=""
-            />
-            <label htmlFor="floatingAmount" className="floating-label">
-              כמות
-            </label>
-            {errors.amount && (
-              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>
-            )}
-          </div>
-          <div className="input-wrapper">
-            <input
-              {...register("itemCondition")}
-              type="text"
-              className="form-control"
-              id="floatingItemCondition"
-              placeholder=""
-            />
-            <label htmlFor="floatingItemCondition" className="floating-label">
-              מצב
-            </label>
-            {errors.itemCondition && (
-              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemCondition.message}</p>
-            )}
-          </div>
-          <div className="input-wrapper">
-            <input
-              {...register("description")}
-              type="text"
-              className="form-control"
-              id="floatingDescription"
-              placeholder=""
-            />
-            <label htmlFor="floatingDescription" className="floating-label">
-              תיאור המוצר
-            </label>
-            {errors.description && (
-              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.description.message}</p>
-            )}
-          </div>
-          <div className="img-upload-wrapper">
-            {imgSrc && (
-              <img
-                src={URL.createObjectURL(imgSrc)}
-                alt="Product Preview"
-                className="img-thumbnail mb-2"
-              />
-            )}
-            <button
-              type="button"
-              className="btn btn-upload mt-2"
-              onClick={selectImg}
-            >
-              <FontAwesomeIcon icon={faImage} className="me-2" />
-              העלאת תמונה
-            </button>
-            <input
-              style={{ display: "none" }}
-              {...register("image")}
-              type="file"
-              onChange={(e) => {
-                clearErrors('image');
-                imgSelected(e);
-              }}
-              ref={fileInputRef}
-              
-            />
-            {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.image.message}</p>}
-          </div>
-          <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-submit mt-3">
-              העלאה
-            </button>
-          </div>
-        </form>
-      </div>
-    </div> */}
-
-
-
-
 <div className="container">
   <h1 className="form-title">העלאת מוצר המבוקש לתרומה</h1>
   <div className="form-wrapper">  
@@ -407,7 +166,7 @@ function UploadRequestedProduct() {
                 <input
                   {...register("expirationDate")}
                   type="date"
-                  className={`form-control ${errors.expirationDate ? 'is-invalid' : ''}`}
+                  className="form-control"
                   id="expirationDate"
                   placeholder="תאריך תפוגה"
                   min={new Date().toISOString().split('T')[0]} 
@@ -499,7 +258,7 @@ function UploadRequestedProduct() {
           }}
           ref={fileInputRef}
         />
-        {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.image.message}</p>}
+        {errors.image && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>יש להעלות תמונה של המוצר</p>}
       </div>
       <div className="d-flex justify-content-center">
         <button type="submit" className="btn btn-submit mt-3">
@@ -509,18 +268,6 @@ function UploadRequestedProduct() {
     </form>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
     </>
 

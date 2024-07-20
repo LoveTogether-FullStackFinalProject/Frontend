@@ -202,7 +202,7 @@ function UploadRequestedProduct() {
               שם המוצר
             </label>
             {errors.itemName && (
-              <p className="error-message">{errors.itemName.message}</p>
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemName.message}</p>
             )}
           </div>
           <div className="input-wrapper">
@@ -248,14 +248,14 @@ function UploadRequestedProduct() {
                   תאריך תפוגה
                 </label>
                 {errors.expirationDate && (
-                  <p className="error-message">{errors.expirationDate.message}</p>
+                  <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.expirationDate.message}</p>
                 )}
-                {errorMessageexpirationDate && <div className="error-message1">{errorMessageexpirationDate}</div>}
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                {errorMessageexpirationDate && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessageexpirationDate}</div>}
+                {/* {errorMessage && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessage}</div>} */}
               </div>
             )}
             {errors.category && (
-              <p className="error-message">{errors.category.message}</p>
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>
             )}
           </div>
           <div className="input-wrapper">
@@ -270,7 +270,7 @@ function UploadRequestedProduct() {
               כמות
             </label>
             {errors.amount && (
-              <p className="error-message">{errors.amount.message}</p>
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>
             )}
           </div>
           <div className="input-wrapper">
@@ -285,7 +285,7 @@ function UploadRequestedProduct() {
               מצב
             </label>
             {errors.itemCondition && (
-              <p className="error-message">{errors.itemCondition.message}</p>
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.itemCondition.message}</p>
             )}
           </div>
           <div className="input-wrapper">
@@ -300,7 +300,7 @@ function UploadRequestedProduct() {
               תיאור המוצר
             </label>
             {errors.description && (
-              <p className="error-message">{errors.description.message}</p>
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.description.message}</p>
             )}
           </div>
           <div className="img-upload-wrapper">

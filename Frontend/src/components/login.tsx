@@ -101,7 +101,8 @@ function Login() {
                         <input ref={passwordInputRef} type="password" className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
                         <img src={passwordIcon} className="icon" alt="Password icon" />
                     </div>
-                    {loginError && <p className="error-message">{loginError}</p>}
+                    {/* {loginError && <p className="error-message">{loginError}</p>} */}
+                    {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
                 </div>
 
                 

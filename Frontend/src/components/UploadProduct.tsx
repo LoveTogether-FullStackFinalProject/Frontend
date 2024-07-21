@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import './UploadProduct.css';
 
 const schema = z.object({
   itemName: z.string().min(2, 'שם הפריט חייב להכיל לפחות 2 תווים'),
@@ -481,7 +482,7 @@ const UploadProduct: React.FC = () => {
             //  className={`form-control ${errors.pickupAddress ? 'is-invalid' : ''}`}
           />
             {showPickUpError && (
-          <div className="error-message" style={{ marginRight: '680px' }}>כתובת האיסוף חייבת להיות מוגדרת</div>
+          <div className="pickup-address-error" >כתובת האיסוף חייבת להיות מוגדרת</div>
           )}
         </div>
       )}

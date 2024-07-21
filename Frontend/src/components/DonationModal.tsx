@@ -12,7 +12,7 @@ interface DonationModalProps {
 
 const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, onEditClick, onDeleteClick }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [editData, setEditData] = useState(donation ?? { /* default userDonation object */ });
+    const [editData, setEditData] = useState<userDonation | null>(null);
 
     useEffect(() => {
         setEditData(donation);
@@ -23,26 +23,31 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
     };
 
     const handleSave = () => {
-        onEditClick(editData);
-        setIsEditing(false);
+        if (editData) {
+            onEditClick(editData);
+            setIsEditing(false);
+        }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setEditData(prev => ({ ...prev, [name]: value }));
+        setEditData(prev => prev ? { ...prev, [name]: value } : null);
     };
 
-    if (!donation) {
+    const handleClose = () => {
+        setIsEditing(false);
+        setEditData(donation); // Reset editData to original donation data
+        onHide();
+    };
+
+    if (!donation || !editData) {
         return null;
     }
 
     return (
-        <Modal show={show} onHide={() => {
-            setIsEditing(false);
-            onHide();
-        }} dir="rtl">
+        <Modal show={show} onHide={handleClose} dir="rtl">
             <Modal.Header closeButton>
-                <Modal.Title>{donation.itemName}</Modal.Title>
+                <Modal.Title>{editData.itemName}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="container">
@@ -68,7 +73,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         <Form.Control
                                             type="number"
                                             name="quantity"
-                                            value={editData?.quantity}
+                                            value={editData.quantity}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -90,53 +95,61 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
-                                    <Form.Group>
-                                        <Form.Label>תאריך תפוגה</Form.Label>
-                                        <Form.Control
-                                            type="date"
-                                            name="expirationDate"
-                                            value={editData.expirationDate ? new Date(editData.expirationDate).toISOString().split('T')[0] : ''}
-                                            onChange={handleChange}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group>
-                                        <Form.Label>כתובת לאיסוף</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="pickupAddress"
-                                            value={editData.pickupAddress}
-                                            onChange={handleChange}
-                                        />
-                                    </Form.Group>
+                                    {editData.category === 'מזון ושתייה' && (
+                                        <Form.Group>
+                                            <Form.Label>תאריך תפוגה</Form.Label>
+                                            <Form.Control
+                                                type="date"
+                                                name="expirationDate"
+                                                value={editData.expirationDate ? new Date(editData.expirationDate).toISOString().split('T')[0] : ''}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                    )}
+                                    {editData.status === 'ממתין לאיסוף מבית התורם' && (
+                                        <Form.Group>
+                                            <Form.Label>כתובת לאיסוף</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="pickupAddress"
+                                                value={editData.pickupAddress}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                    )}
                                 </Form>
                             ) : (
                                 <>
-                                    <p><strong>קטגוריה:</strong> {donation.category}</p>
-                                    <p><strong>כמות:</strong> {donation.quantity}</p>
-                                    <p><strong>מצב הפריט:</strong> {donation.condition}</p>
-                                    <p><strong>תיאור:</strong> {donation.description}</p>
-                                    <p><strong>תאריך תפוגה:</strong> {new Date(donation.expirationDate).toLocaleDateString()}</p>
-                                    <p><strong>כתובת לאיסוף:</strong> {donation.pickupAddress}</p>
+                                    <p><strong>קטגוריה:</strong> {editData.category}</p>
+                                    <p><strong>כמות:</strong> {editData.quantity}</p>
+                                    <p><strong>מצב הפריט:</strong> {editData.condition}</p>
+                                    <p><strong>תיאור:</strong> {editData.description}</p>
+                                    {editData.category === 'מזון ושתייה' && editData.expirationDate && (
+                                        <p><strong>תאריך תפוגה:</strong> {new Date(editData.expirationDate).toLocaleDateString()}</p>
+                                    )}
+                                    {editData.status === 'ממתין לאיסוף מבית התורם' && editData.pickupAddress && (
+                                        <p><strong>כתובת לאיסוף:</strong> {editData.pickupAddress}</p>
+                                    )}
                                 </>
                             )}
                         </div>
                         <div className="col-md-6">
-                            <img src={donation.image} alt={donation.itemName} className="img-fluid" style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }} />
+                            <img src={editData.image} alt={editData.itemName} className="img-fluid" style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }} />
                         </div>
                     </div>
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>סגור</Button>
+                <Button variant="secondary" onClick={handleClose}>סגור</Button>
                 {isEditing ? (
                     <Button variant="primary" onClick={handleSave}>שמור</Button>
                 ) : (
                     <Button variant="primary" onClick={handleEdit}>ערוך</Button>
                 )}
-                <Button variant="danger" onClick={() => onDeleteClick(donation._id)}>מחק</Button>
+                <Button variant="danger" onClick={() => onDeleteClick(editData._id)}>מחק</Button>
             </Modal.Footer>
         </Modal>
     );
 };
-//CHANGE TO PUSH
+
 export default DonationModal;

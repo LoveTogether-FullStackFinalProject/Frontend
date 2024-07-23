@@ -22,6 +22,11 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
         setIsEditing(true);
     };
 
+    const handelDelete = (id : string) => {
+        onDeleteClick(id);
+        onHide();
+    }
+
     const handleSave = () => {
         if (editData) {
             onEditClick(editData);
@@ -146,7 +151,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                 ) : (
                     <Button variant="primary" onClick={handleEdit}>ערוך</Button>
                 )}
-                <Button variant="danger" onClick={() => onDeleteClick(editData._id)}>מחק</Button>
+                <Button variant="danger" onClick={() => handelDelete(editData._id)}>מחק</Button>
             </Modal.Footer>
         </Modal>
     );

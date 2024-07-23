@@ -13,7 +13,6 @@ export function Navbar() {
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
 
   useEffect(() => {
-    // Update state whenever localStorage changes or custom authChange event is dispatched
     const handleAuthChange = () => {
       setUserId(localStorage.getItem("userID"));
       setToken(localStorage.getItem("accessToken"));

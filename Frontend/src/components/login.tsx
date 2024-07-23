@@ -24,7 +24,7 @@ function Login() {
                     localStorage.setItem('refreshToken', res.refreshToken!);
                     console.log("accessToken:",res.accessToken!)
                     console.log("refreshToken:",res.refreshToken!)
-                    window.dispatchEvent(new Event('localStorageChanged'));
+                    window.dispatchEvent(new Event('authChange'));
 
                     const userId = localStorage.getItem('userID');
                     if (userId) {
@@ -53,6 +53,8 @@ function Login() {
                 localStorage.setItem('refreshToken', res.refreshToken!);
                 console.log("accessToken:",res.accessToken!)
                 console.log("refreshToken:",res.refreshToken!)
+                window.dispatchEvent(new Event('authChange'));
+
                 navigate('/mainPage');
             }
         } catch (e) {

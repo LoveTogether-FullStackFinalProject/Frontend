@@ -165,15 +165,15 @@ const Profile: React.FC = () => {
 
     function updateRating(donations: number) {
         if (donations >= 20) {
-          return "1";
+          return "⭐⭐⭐⭐⭐";
         } else if (donations >= 15) {
-          return "2";
+          return "⭐⭐⭐⭐";
         } else if (donations >= 10) {
-          return "3";
+          return "⭐⭐⭐";
         } else if (donations >= 5) {
-          return "4";
+          return "⭐⭐";
         } else {
-          return "0";
+          return "⭐";
         }
       }
 
@@ -190,8 +190,9 @@ const Profile: React.FC = () => {
 
             <main className="profile-content">
                 <div className="rating-status" style={{direction:"rtl"}}>
-                     הדירוג שלך הוא: {user.rating ?? 0}
+                     דירוג: {user.rating ?? 0}
                 </div>
+                
 
                 <div className="tabs">
                     {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (

@@ -83,10 +83,10 @@ import './main-page.css';
         return (
             <>
 <div className='body'>
-  <div className="centerText brownText">
-    <h2>ברוכים הבאים לאתר התרומות של</h2>
-    <h1>"ואהבתם ביחד"</h1>
-    <h2 style={{direction:"rtl"}}>נשמח לעזרתכם עם המוצרים הדרושים לתרומות בביקוש גבוה כרגע בעמותה:</h2>
+  <div className="centerText-brownText">
+    <h2>כמה קל לתרום היום</h2>
+    {/* <h1>"ואהבתם ביחד"</h1> */}
+    {/* <h2 style={{direction:"rtl"}}>פריטים נדרשים כעת:</h2> */} 
   </div>
   
   <div className="borderBox">

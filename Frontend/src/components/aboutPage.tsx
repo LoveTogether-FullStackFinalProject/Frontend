@@ -7,31 +7,17 @@ import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
 import bagForAll from '../assets/bagForAlll.png';
-import facebookLogo from '../assets/facebookLogo.png';
-import instagramLogo from '../assets/instagramLogo.png';
+
 
 const AboutPage = () => {
   return (
     <div className="about-page">
-      {/* <header className="header">
-        <img src={logo} alt="Logo" className="logo" />
-        <nav>
-          <Link to="/mainPage">עמוד הבית</Link>
-          <Link to="/donate">תרומה</Link>
-          <Link to="/login">התנתק</Link>
-          <Link to="/about">על העמותה</Link>
-        </nav>
-      </header> */}
+ 
 
-      {/* <section className="hero-section" style={{ backgroundImage: `url(${bgImage})` }}>
-        <div className="hero-text">
-          <h1>על העמותה</h1>
-        </div>
-      </section> */}
-
-      <section className="description-section">
-        <h2>מי אנחנו</h2>
-        <p>עמותת ואהבתם ביחד מסייעת לאוכלוסיות נזקקות ומפעילה בין היתר את המכולת החברתית , המקרר השיתופי, תיק לכל ילד, קיר המעילים ועוד...</p>
+      
+        <h2 className='about-header'>קצת עלינו</h2>
+        <p className='aboutUsP'>עמותת ואהבתם ביחד מסייעת לאוכלוסיות נזקקות ומפעילה בין היתר את המכולת החברתית , המקרר השיתופי, תיק לכל ילד, קיר המעילים ועוד...</p>
+        <section className="description-section">
         <div className="video-container">
           <iframe
             src="https://www.facebook.com/plugins/video.php?height=316&href=https%3A%2F%2Fwww.facebook.com%2Fveahavtembeyahad%2Fvideos%2F907666304163438%2F&show_text=false&width=560&t=0"
@@ -86,18 +72,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <footer className="footer">
-        <p>© 2024 עמותת ואהבתם ביחד. כל הזכויות שמורות.</p>
-        <div className="social-media">
-          <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
-            <img src={facebookLogo}   alt="Facebook"
-          />
-        </a>
-        <a href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
-          <img src={instagramLogo} alt="Instagram" />
-        </a>
-      </div>
-    </footer>
+  
   </div>
   );
 };

@@ -85,8 +85,9 @@ function Login() {
         <div className="login-page">
             <div className="login-header">
                 <img src={logo} alt="Logo" className="logo" />
-                <h1 className="title">ואהבתם ביחד</h1>
+                <h1 className="title">התחברות</h1>
             </div>
+            
 
             <div className="login-form">
                 <div className="form-group">
@@ -108,13 +109,14 @@ function Login() {
                 </div>
 
                 
+                
+                <button type="button" className="btn-primary-login-button" onClick={login}>התחבר/י</button>
 
-                <button type="button" className="btn btn-primary login-button" onClick={login}>התחבר/י</button>
-
-                <button onClick={handleButtonClick} className="btn btn-secondary register-link">
+                <div>
+                <button onClick={handleButtonClick} className="btn-secondary register-link">
                     עדיין לא יצרת משתמש? לחצ/י כאן
                 </button>
-
+                </div>
                 <div className="google-login">
                     <GoogleLogin
                         onSuccess={onGoogleLoginSuccess}

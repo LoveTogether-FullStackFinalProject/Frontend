@@ -2,13 +2,32 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    width: 100%;
     overflow: hidden;
+    background-color: #ffffff;
   }
+
+  .main-content {
+    background-color: #ffffff;
+    width: 100%;
+
+  }
+
+  .centerText-brownText{
+    margin-top: 100px;
+    text-align: right;
+    margin-bottom: 90px;
+    color: rgba(0, 0, 0, 0.918);
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
+    font-size: 1.2rem;
+  }
+  
   
   body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+   
   }
   
   body > .container {
@@ -27,7 +46,6 @@ body, html {
   }
   
   .borderBox {
-    border: 1px solid black;
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
@@ -88,12 +106,13 @@ body, html {
     margin: 10px;
     background-color: #ffffff;
     padding: 10px;
-    border: 1px solid black;
     border-radius: 5px;
     text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
   .categoryItemsContainer { 
+
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;

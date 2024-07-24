@@ -6,17 +6,40 @@ body {
   width: 100%;
 }
 
+
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #a5673d;
+  background-color: #000000;
   color: #fff;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
+}
+
+
+.about-header{
+  margin-top: 140px;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
+  font-weight: 600;
+}
+
+.aboutUsP{
+  margin-top: 25px;
+  font-size: 1.2rem;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
+  font-weight: 600;
+}
+
+.video-container{
+  align-items: right;
+  
 }
 
 .logo {
@@ -75,7 +98,9 @@ nav a {
 .description-section h2, .initiatives-section h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #a5673d;
+  color: black;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
+  font-weight: 600;
 }
 
 .description-section p {
@@ -98,12 +123,12 @@ nav a {
 }
 
 .card {
-  background-color: #ffe4e1;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
   width: 22%; /* Adjusted card size */
   margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,17 +154,12 @@ nav a {
 }
 
 .card-content a {
-  color: #a5673d;
+  color: #000000;
   text-decoration: none;
   font-weight: bold;
 }
 
-.footer {
-  text-align: center;
-  padding: 10px 0;
-  background-color: #a5673d;
-  color: #fff;
-}
+
 
 .social-media {
   margin-top: 10px;

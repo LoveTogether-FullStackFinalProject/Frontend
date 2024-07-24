@@ -21,7 +21,7 @@ const App = () => {
     const [user, setUser] = useState<User | null>(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null);
 
     return (
-        <div className="scrollable-container">
+        
             <div style={{ height: "100vh" }}>
        <div className="App">
         <div className="main-content">
@@ -51,7 +51,7 @@ const App = () => {
         <Footer />
         </div>
         </div>
-        </div>
+      
         
     );
 }

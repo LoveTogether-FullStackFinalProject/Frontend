@@ -5,7 +5,6 @@ import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { MdHome } from "react-icons/md";
-import logo from '../assets/logoVeahavtem.png';
 import './Navbar.css';
 import { userID } from './Registration';
 
@@ -66,7 +65,6 @@ export function Navbar() {
             {location.pathname === '/mainPage' && !token && !userID ? (
               <div className='navLinkMainpage'>
                  <BootstrapNavbar.Brand as={Link} to="/mainPage">
-                <img src={logo} alt="Logo" className="logo-image" />
                 </BootstrapNavbar.Brand>    
                 <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
                 <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
@@ -96,8 +94,8 @@ export function Navbar() {
               )
             )}
              <BootstrapNavbar.Brand as={Link} to="/mainPage">
-            <img src={logo} alt="Logo" className="logo" />
-            </BootstrapNavbar.Brand>
+             <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+             </BootstrapNavbar.Brand>
          
             
           </Nav>

@@ -7,6 +7,7 @@ import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
 import person from './../assets/person.png';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import './main-page.css';
 
     function MainPage() {
@@ -83,12 +84,24 @@ import './main-page.css';
         return (
             <>
 <div className='body'>
+  <div className='body_backgroud'>
+ 
+  
+  <div className='image-background-container'>
+  </div>
+
   <div className="centerText-brownText">
     <h2>כמה קל לתרום היום</h2>
-    {/* <h1>"ואהבתם ביחד"</h1> */}
-    {/* <h2 style={{direction:"rtl"}}>פריטים נדרשים כעת:</h2> */} 
+    <button onClick={() => navigate('/uploadproduct')} className="donateButton">
+    לתרומה
+    <i className="bi bi-chevron-left" style={{fontSize:"20px"}}></i> 
+    </button>
+    </div>
+    <div>
+    <img src="src/assets/whiteLogo.png" alt="whitelogo" className='whiteLogo' />
+    </div>
   </div>
-  
+ 
   <div className="borderBox">
     <Carousel 
     nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&gt;</span>} prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&lt;</span>} >
@@ -108,18 +121,9 @@ import './main-page.css';
         </Carousel.Item>
       ))}
     </Carousel>
-    <button onClick={() => navigate('/uploadproduct')} className="donateButton">תרמו כאן</button>
   </div>
-  <div className="categorySection">
-    <h2>הקטגוריות שלנו</h2>
-    <div className="categoryItemsContainer">
-      <span className="categoryItem">הנעלה</span>
-      <span className="categoryItem">ביגוד</span>
-      <span className="categoryItem">אלקטרוניקה</span>
-      <span className="categoryItem">אביזרים</span>
-      <span className="categoryItem">מזון ושתיה</span>
-    </div>
-  </div>
+  
+
   <div className="flexSpaceBetween">
     <div className="squareContainer flexCenterColumn">
       {/* <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה! הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות, {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים</h2> */}
@@ -148,7 +152,8 @@ import './main-page.css';
     </div>
   </div>
 </div>
-            
+
+   
             </>
     
         )

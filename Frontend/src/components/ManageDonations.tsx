@@ -146,6 +146,15 @@ const ManageDonationPage: React.FC = () => {
             <th>בחירה</th>
             <th>
               <TableSortLabel
+                active={orderBy === 'donor'}
+                direction={orderBy === 'donor' ? order : 'asc'}
+                onClick={() => handleRequestSort('donor')}
+              >
+                שם מלא
+              </TableSortLabel>
+            </th>
+            <th>
+              <TableSortLabel
                 active={orderBy === 'category'}
                 direction={orderBy === 'category' ? order : 'asc'}
                 onClick={() => handleRequestSort('category')}
@@ -180,15 +189,6 @@ const ManageDonationPage: React.FC = () => {
                 אושר ע"י מנהל
               </TableSortLabel>
             </th>
-            <th>
-              <TableSortLabel
-                active={orderBy === 'donor'}
-                direction={orderBy === 'donor' ? order : 'asc'}
-                onClick={() => handleRequestSort('donor')}
-              >
-                שם מלא
-              </TableSortLabel>
-            </th>
             <th>פעולות</th>
           </tr>
         </thead>
@@ -202,6 +202,7 @@ const ManageDonationPage: React.FC = () => {
                   onChange={() => setSelectedDonations(prev => prev.includes(donation._id) ? prev.filter(id => id !== donation._id) : [...prev, donation._id])}
                 />
               </td>
+              <td>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</td>
               <td>{donation.category}</td>
               <td>{donation.description}</td>
               <td>
@@ -234,7 +235,6 @@ const ManageDonationPage: React.FC = () => {
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
-              <td>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</td>
               <td>
                 <Button
                   variant="info"

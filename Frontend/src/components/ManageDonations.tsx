@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import dataService, { CanceledError } from '../services/data-service';
-import { Table, Button, Dropdown, Modal } from 'react-bootstrap';
+import {
+  Table,
+  Button,
+  Dropdown,
+  Modal
+} from 'react-bootstrap';
 import { CSVLink } from 'react-csv';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ManageDonations.css';
+import {
+  TextField,
+  InputAdornment,
+  TableSortLabel
+} from '@mui/material';
+import { Search } from '@mui/icons-material';
 
 interface Donation {
   _id: string;
   category: string;
-  productType: string;
-  amount: number;
-  itemCondition: string;
-  expirationDate: Date;
   description: string;
-  pickUpAddress: string;
   status: string;
   approvedByAdmin?: boolean | string;
   donor?: {
@@ -23,13 +29,17 @@ interface Donation {
   image?: string;
 }
 
+type Order = 'asc' | 'desc';
+
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [selectedDonations, setSelectedDonations] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [currentDonation, setCurrentDonation] = useState<Donation | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<keyof Donation>('category');
+  const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
@@ -46,28 +56,30 @@ const ManageDonationPage: React.FC = () => {
     };
   }, []);
 
-  const handleCheckboxChange = (donationId: string) => {
-    setSelectedDonations((prevSelectedDonations) =>
-      prevSelectedDonations.includes(donationId)
-        ? prevSelectedDonations.filter((id) => id !== donationId)
-        : [...prevSelectedDonations, donationId]
-    );
+  const handleRequestSort = (property: keyof Donation) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
-  const handleExport = () => {
-    const csvData = donations.map((d) => ({
-      id: d._id,
-      category: d.category,
-      productType: d.productType,
-      amount: d.amount,
-      itemCondition: d.itemCondition,
-      expirationDate: d.expirationDate ? new Date(d.expirationDate).toLocaleDateString() : 'לא צוין',
-      description: d.description,
-      pickUpAddress: d.pickUpAddress,
-      status: d.status,
-      approvedByAdmin: d.approvedByAdmin === true || d.approvedByAdmin === 'true' ? "כן" : "לא",
-    }));
-    return csvData;
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
+
+  const applySortAndFilter = (data: Donation[]) => {
+    return data
+      .filter(donation => 
+        donation.category.toLowerCase().includes(filter.toLowerCase()) ||
+        donation.description.toLowerCase().includes(filter.toLowerCase()) ||
+        donation.status.toLowerCase().includes(filter.toLowerCase())
+      )
+      .sort((a, b) => {
+        if (orderBy === 'status' || orderBy === 'approvedByAdmin') {
+          return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
+        } else {
+          return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
+        }
+      });
   };
 
   const handleStatusUpdate = (donation: Donation, status: string) => {
@@ -75,15 +87,6 @@ const ManageDonationPage: React.FC = () => {
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
     );
-    setPendingChanges((prevPendingChanges) => {
-      const existingChange = prevPendingChanges.find((d) => d._id === donation._id);
-      if (existingChange) {
-        return prevPendingChanges.map((d) =>
-          d._id === donation._id ? updatedDonation : d
-        );
-      }
-      return [...prevPendingChanges, updatedDonation];
-    });
   };
 
   const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean | string) => {
@@ -91,60 +94,84 @@ const ManageDonationPage: React.FC = () => {
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
     );
-    setPendingChanges((prevPendingChanges) => {
-      const existingChange = prevPendingChanges.find((d) => d._id === donation._id);
-      if (existingChange) {
-        return prevPendingChanges.map((d) =>
-          d._id === donation._id ? updatedDonation : d
-        );
-      }
-      return [...prevPendingChanges, updatedDonation];
-    });
   };
 
-  const saveChanges = async () => {
-    try {
-      const updatePromises = pendingChanges.map((donation) =>
-        dataService.updateDonation(donation._id, donation)
-      );
-      await Promise.all(updatePromises);
-      setPendingChanges([]);
-      alert("השינויים נשמרו בהצלחה!");
-    } catch (error) {
-      console.error('Error saving changes:', error);
-      alert("שמירת השינויים נכשלה.");
-    }
-  };
+  const sortedAndFilteredDonations = applySortAndFilter(donations);
 
   return (
     <div className="container mt-4">
       <h2>ניהול תרומות</h2>
-      <CSVLink data={handleExport()} filename="donations.csv" className="btn btn-success mb-3">
+      <TextField
+        label="חפש תרומה"
+        placeholder="חפש תרומה לפי קטגוריה, תיאור, סטטוס"
+        variant="outlined"
+        style={{ width: '60%' }} 
+        margin="normal"
+        value={filter}
+        onChange={handleFilterChange}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Search />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <CSVLink data={sortedAndFilteredDonations} filename="donations.csv" className="btn btn-success mb-3">
         ייצוא לאקסל
       </CSVLink>
-      <Button className="mb-3" onClick={saveChanges} disabled={pendingChanges.length === 0}>
-        שמור שינויים
-      </Button>
       {error && <p className="text-danger">{error}</p>}
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>בחירה</th>
-            <th>קטגוריה</th>
-            <th>תיאור</th>
-            <th>סטטוס</th>
-            <th>אושר ע"י מנהל</th>
+            <th>
+              <TableSortLabel
+                active={orderBy === 'category'}
+                direction={orderBy === 'category' ? order : 'asc'}
+                onClick={() => handleRequestSort('category')}
+              >
+                קטגוריה
+              </TableSortLabel>
+            </th>
+            <th>
+              <TableSortLabel
+                active={orderBy === 'description'}
+                direction={orderBy === 'description' ? order : 'asc'}
+                onClick={() => handleRequestSort('description')}
+              >
+                תיאור
+              </TableSortLabel>
+            </th>
+            <th>
+              <TableSortLabel
+                active={orderBy === 'status'}
+                direction={orderBy === 'status' ? order : 'asc'}
+                onClick={() => handleRequestSort('status')}
+              >
+                סטטוס
+              </TableSortLabel>
+            </th>
+            <th>
+              <TableSortLabel
+                active={orderBy === 'approvedByAdmin'}
+                direction={orderBy === 'approvedByAdmin' ? order : 'asc'}
+                onClick={() => handleRequestSort('approvedByAdmin')}
+              >
+                אושר ע"י מנהל
+              </TableSortLabel>
+            </th>
             <th>פעולות</th>
           </tr>
         </thead>
         <tbody>
-          {donations.map((donation) => (
+          {sortedAndFilteredDonations.map((donation) => (
             <tr key={donation._id}>
               <td>
                 <input
                   type="checkbox"
                   checked={selectedDonations.includes(donation._id)}
-                  onChange={() => handleCheckboxChange(donation._id)}
+                  onChange={() => setSelectedDonations(prev => prev.includes(donation._id) ? prev.filter(id => id !== donation._id) : [...prev, donation._id])}
                 />
               </td>
               <td>{donation.category}</td>

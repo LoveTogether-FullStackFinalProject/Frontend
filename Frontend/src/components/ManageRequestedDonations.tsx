@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './AdminDashboard.css';
 import dataService, { CanceledError } from "../services/data-service";
-import { DonorData } from './donorData';
 import {requestedDonation} from "../services/upload-requested-product-service";
-import { Donation } from '../components/donation';
+import { Donation } from './donation';
 import {
   Table,
   Button,
@@ -18,7 +17,7 @@ import {
 import { Search } from '@mui/icons-material';
 type Order = 'asc' | 'desc';
 
-const EditMainPage = () => {
+const ManageRequestedDonations = () => {
   const [requests, setRequests] = useState<requestedDonation[]>([])
   const [error, setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
@@ -53,15 +52,9 @@ const EditMainPage = () => {
         return data
           .filter(donation => 
             donation.category.toLowerCase().includes(filter.toLowerCase()) ||
-            donation.description.toLowerCase().includes(filter.toLowerCase())
+            donation.description.toLowerCase().includes(filter.toLowerCase()) ||
+            donation.amount.toString().includes(filter.toLowerCase())
           )
-          .sort((a, b) => {
-            if (orderBy === 'status' || orderBy === 'approvedByAdmin') {
-              return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
-            } else {
-              return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
-            }
-          });
       };
     
       const sortedAndFilteredDonations = applySortAndFilter(requests);
@@ -76,19 +69,17 @@ const EditMainPage = () => {
         console.log(`updating donation with ID: ${donationId}`);
       };
 
-
       const handleDelete = (donationId: string) => {
         dataService.deleteRequestedDonation(donationId);
         console.log(`Deleting donation with ID: ${donationId}`);
       };
-
 
       return (
         <div className="container mt-4">
           <h2>ניהול תרומות שהעמותה מבקשת</h2>
           <TextField
             label="חפש תרומה"
-            placeholder="חפש תרומה לפי קטגוריה, תיאור, סטטוס"
+            placeholder="חפש תרומה לפי קטגוריה, תיאור, כמות"
             variant="outlined"
             style={{ width: '60%' }} 
             margin="normal"
@@ -158,17 +149,14 @@ const EditMainPage = () => {
                 מחיקה
               </Button>
             </td>
-                  <td>
-                  </td>
-                  <td>
-                  </td>
                 </tr>
               ))}
             </tbody>
           </Table> 
         </div>
+
       );
 };
 
 
-export default EditMainPage;
+export default ManageRequestedDonations;

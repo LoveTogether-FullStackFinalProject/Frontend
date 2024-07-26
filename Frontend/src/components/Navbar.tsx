@@ -5,6 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import { MdHome } from "react-icons/md";
 import dataService from '../services/data-service'; // Assuming this is your data fetching service
+import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
 
 export function Navbar() {
@@ -43,6 +44,7 @@ export function Navbar() {
   }, [userId]);
 
   function handleLogout() {
+    logoutServiece.postLogout();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userID");

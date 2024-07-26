@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 import AboutPage from './components/aboutPage';
 import UploadProduct from './components/UploadProduct';
 import  UploadRequestedProduct  from './components/upload-requested-product';
+import EditMainPage from './components/EditMainPage';
 import { Navbar } from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';
@@ -44,7 +45,8 @@ const App = () => {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/uploadproduct" element={<UploadProduct />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
-                <Route path="/manageUsers" element={<ManageUsers />} />                            
+                <Route path="/manageUsers" element={<ManageUsers />} />   
+                <Route path="/editMainPage" element={<EditMainPage />} />                         
             </Routes>
         </Router>
         </div>

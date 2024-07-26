@@ -1,32 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
 import { MdHome } from "react-icons/md";
+import dataService from '../services/data-service'; // Assuming this is your data fetching service
 import './Navbar.css';
-import { userID } from './Registration';
 
 export function Navbar() {
   const [userId, setUserId] = useState(localStorage.getItem("userID"));
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
-  const location = useLocation(); // Hook to get the current location
+  const [isAdmin, setIsAdmin] = useState(false); // State to track admin status
+  const location = useLocation();
 
   useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (userId) {
+        try {
+          const { data } = await dataService.getUser(userId).req;
+          setIsAdmin(data.isAdmin); // Assuming isAdmin is a boolean
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+
+    checkAdminStatus();
+
     const handleAuthChange = () => {
       setUserId(localStorage.getItem("userID"));
       setToken(localStorage.getItem("accessToken"));
+      checkAdminStatus();
     };
 
     window.addEventListener("storage", handleAuthChange);
-    window.addEventListener("authChange", handleAuthChange); // Listen for custom authChange event
+    window.addEventListener("authChange", handleAuthChange);
 
     return () => {
       window.removeEventListener("storage", handleAuthChange);
       window.removeEventListener("authChange", handleAuthChange);
     };
-  }, []);
+  }, [userId]);
 
   function handleLogout() {
     localStorage.removeItem("accessToken");
@@ -34,11 +48,8 @@ export function Navbar() {
     localStorage.removeItem("userID");
     setUserId(null);
     setToken(null);
-    window.dispatchEvent(new Event('authChange')); // Dispatch custom event on logout
-  }
-
-  function isAdmin() {
-    return userID ? true : false;
+    setIsAdmin(false);
+    window.dispatchEvent(new Event('authChange'));
   }
 
   return (
@@ -58,11 +69,10 @@ export function Navbar() {
       expand="md"
     >
       <Container fluid>
-        
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {location.pathname === '/mainPage' && !token && !userID ? (
+            {location.pathname === '/mainPage' && !token && !userId ? (
               <div className='navLinkMainpage'>
                  <BootstrapNavbar.Brand as={Link} to="/mainPage">
                 </BootstrapNavbar.Brand>    
@@ -76,11 +86,8 @@ export function Navbar() {
                     <MdHome size={"2em"} style={{color:"black"}} />
                   </Link>
                   <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-                  {isAdmin() ? (
-                    <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>
-                  ) : (
-                    <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-                  )}
+                  {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
+                  <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
                   <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
                   <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
                 </div>
@@ -96,8 +103,6 @@ export function Navbar() {
              <BootstrapNavbar.Brand as={Link} to="/mainPage">
              <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
              </BootstrapNavbar.Brand>
-         
-            
           </Nav>
         </BootstrapNavbar.Collapse>
       </Container>

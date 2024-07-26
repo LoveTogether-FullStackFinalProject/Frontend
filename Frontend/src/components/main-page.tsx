@@ -80,6 +80,13 @@ import './main-page.css';
             return tempArray;
           };
           const chunkedRequests = chunkArray(requests, 3);
+
+
+          const categories = ['מזון ושתייה', 'ביגוד', 'אלקטרוניקה'];
+
+          const chunkedProducts = categories.map(category => 
+            chunkArray(products.filter(product => product.category === category), 3)
+          ).flat();
     
         return (
             <>
@@ -125,8 +132,7 @@ import './main-page.css';
   
 
   <div className="flexSpaceBetween">
-    <div className="squareContainer flexCenterColumn">
-      {/* <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה! הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות, {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים</h2> */}
+    {/* <div className="squareContainer flexCenterColumn">
       <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>
   עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!<br />
   הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות,<br />
@@ -137,7 +143,42 @@ import './main-page.css';
           <img key={index} src={product.image} alt={`Product ${index + 1}`} className="productImage" />
         ))}
       </div>
+    </div> */}
+
+<div className="squareContainer flexCenterColumn">
+      <h2 style={{ fontSize: '1.5em', textAlign: 'center', marginTop: '10px'}}>
+        עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!<br />
+        הצלחנו לגייס {countProducts('מזון ושתייה')} פרטי מזון ושתייה,<br />
+        {countProducts('ביגוד')} ביגוד, ו- {countProducts('אלקטרוניקה')} מוצרי אלקטרוניקה
+      </h2>
+      <Carousel 
+      style={{ marginTop: '30px' }}
+        nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>} 
+        prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
+      >
+        {chunkedProducts.map((chunk, chunkIndex) => (
+          <Carousel.Item key={chunkIndex}>
+            <Row>
+              {chunk.map((product, index) => (
+                <Col key={index} className="categorySection">
+                  <p className="centerText">
+                    {`${product.itemName}`}
+                  </p>
+                  <img
+                    src={product.image}
+                    alt={`Product ${index + 1}`}
+                    className="productImage"
+                  />
+                </Col>
+              ))}
+            </Row>
+          </Carousel.Item>
+        ))}
+      </Carousel>
     </div>
+
+
+
     <div className="squareContainer flexCenterColumn">
       <h1 className="donorSection">התורמים שלנו</h1>
       <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>

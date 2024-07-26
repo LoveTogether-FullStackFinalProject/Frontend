@@ -10,6 +10,7 @@ export interface DonorData {
   address: string; // Address should be a string
   rating: string;
   isAdmin: boolean;
+  isPublished?: boolean;
   image: string;
 }
 

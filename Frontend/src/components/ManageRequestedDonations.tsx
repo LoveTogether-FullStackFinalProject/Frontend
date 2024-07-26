@@ -55,6 +55,9 @@ const ManageRequestedDonations = () => {
             donation.description.toLowerCase().includes(filter.toLowerCase()) ||
             donation.amount.toString().includes(filter.toLowerCase())
           )
+          .sort((a, b) => {
+            return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
+          });
       };
     
       const sortedAndFilteredDonations = applySortAndFilter(requests);

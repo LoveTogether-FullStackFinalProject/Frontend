@@ -5,6 +5,7 @@ import { DonorData } from './donorData';
 import {
   Table,
   Button,
+  Dropdown,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ManageDonations.css';
@@ -23,6 +24,8 @@ const ManageMainPageUsers = () => {
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
   const [buttonLabels, setButtonLabels] = useState<{ [key: string]: string }>({});
+ 
+
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();
@@ -55,15 +58,20 @@ const ManageMainPageUsers = () => {
             donor.lastName.toLowerCase().includes(filter.toLowerCase()) ||
             donor.rating.toString().includes(filter.toLowerCase())
           )
+          .sort((a, b) => {
+            return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
+          });
       };
     
       const sortedAndFilteredDonors = applySortAndFilter(donors);
 
-      const handleButtonClick = (id: string) => {
-        setButtonLabels((prevLabels) => ({
-          ...prevLabels,
-          [id]: prevLabels[id] === 'אישור' ? 'ביטול' : 'אישור',
-        }));
+      const handleApprovalUpdate = (donor:DonorData, isPublished: boolean ) => {
+        const updatedDonor = { ...donor, isPublished };
+        setDonors((updateddonor) =>
+            updateddonor.map((d) => (d._id === donor._id ? updatedDonor : d))
+        );
+        dataService.updateUser(donor._id, { isPublished: isPublished });
+  
       };
 
       return (
@@ -85,34 +93,33 @@ const ManageMainPageUsers = () => {
               ),
             }}
           />
-          
           {error && <p className="text-danger">{error}</p>}
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>
                   <TableSortLabel
-                    active={orderBy === 'category'}
-                    direction={orderBy === 'category' ? order : 'asc'}
-                    onClick={() => handleRequestSort('category')}
+                    active={orderBy === 'firstName'}
+                    direction={orderBy === 'firstName' ? order : 'asc'}
+                    onClick={() => handleRequestSort('firstName')}
                   >
                     שם פרטי
                   </TableSortLabel>
                 </th>
                 <th>
                   <TableSortLabel
-                    active={orderBy === 'description'}
-                    direction={orderBy === 'description' ? order : 'asc'}
-                    onClick={() => handleRequestSort('description')}
+                    active={orderBy === 'lastName'}
+                    direction={orderBy === 'lastName' ? order : 'asc'}
+                    onClick={() => handleRequestSort('lastName')}
                   >
                     שם משפחה
                   </TableSortLabel>
                 </th>
                 <th>
                   <TableSortLabel
-                    active={orderBy === 'category'}
-                    direction={orderBy === 'category' ? order : 'asc'}
-                    onClick={() => handleRequestSort('category')}
+                    active={orderBy === 'rating'}
+                    direction={orderBy === 'rating' ? order : 'asc'}
+                    onClick={() => handleRequestSort('rating')}
                   >
                     דירוג
                   </TableSortLabel>
@@ -127,9 +134,19 @@ const ManageMainPageUsers = () => {
                   <td>{donor.lastName}</td>
                   <td>{donor.rating}</td>
                   <td>
-                  <Button variant="danger" onClick={() => handleButtonClick(donor._id!)}>
-                  {buttonLabels[donor._id!] || 'אישור'}
-                </Button>
+                  <Dropdown>
+                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    {donor.isPublished === true || donor.isPublished ? "מאושר" : "לא מאושר"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => handleApprovalUpdate(donor, true)}>
+                      כן
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleApprovalUpdate(donor, false)}>
+                      לא
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
             </td>
                 </tr>
               ))}

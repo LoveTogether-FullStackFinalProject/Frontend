@@ -89,8 +89,17 @@ import './main-page.css';
             chunkArray(products.filter(product => product.category === category), 3)
           ).flat();
 
-          const donorChunks = chunkArray(users.filter(user => user.rating === "1" && user.isPublished === true), 3);
-    
+          const donorChunks = chunkArray(users.filter(user => user.rating === "1" && user.isPublished === true), 2);
+
+          const handleButtonClick = () => {
+            const accessToken = localStorage.getItem('accessToken');
+            if (accessToken) {
+              navigate('/uploadproduct');
+            } else {
+              navigate('/login');
+            }
+          };
+          
         return (
             <>
 <div className='body'>
@@ -101,7 +110,7 @@ import './main-page.css';
 
   <div className="centerText-brownText">
     <h2>כמה קל לתרום היום</h2>
-    <button onClick={() => navigate('/uploadproduct')} className="donateButton">
+    <button onClick={handleButtonClick} className="donateButton">
     לתרומה
     <i className="bi bi-chevron-left" style={{fontSize:"20px"}}></i> 
     </button>
@@ -192,7 +201,7 @@ import './main-page.css';
   </div>
 </div>
 
-            </>
+   </>
         )
     }
     

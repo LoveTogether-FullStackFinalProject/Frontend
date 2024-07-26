@@ -67,6 +67,7 @@ const UploadProduct: React.FC = () => {
     const checkLoginStatus = () => {
       const accessToken = localStorage.getItem('accessToken');
       setIsLoggedIn(!!accessToken);
+      console.log("isLoggedIn:",isLoggedIn)
     };
 
     checkLoginStatus();
@@ -175,21 +176,18 @@ const UploadProduct: React.FC = () => {
 
   };
 
- 
-
-  if (!isLoggedIn) {
-    navigate('/login')
-    // return (
-    //   <div className="error-container">
-    //     <div className="error-title">תרומת מוצר - עמותת ואהבתם ביחד</div>
-    //     <div className="error-message">
-    //       על מנת להעלות פריט לתרומה, יש לבצע הרשמה לאתר
-    //     </div>
-    //     <button className="login-button" onClick={() => navigate('/login')}>
-    //       Login
-    //     </button>
-    //   </div>
-    // );
+  if (!isLoggedIn) { 
+    return (
+      <div className="error-container">
+        <div className="error-title">תרומת מוצר - עמותת ואהבתם ביחד</div>
+        <div className="error-message">
+          על מנת להעלות פריט לתרומה, יש לבצע הרשמה לאתר
+        </div>
+        <button className="login-button" onClick={() => navigate('/login')}>
+          Login
+        </button>
+      </div>
+    );
   }
 
   return (

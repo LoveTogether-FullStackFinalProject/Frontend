@@ -3,7 +3,7 @@ import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from "../services/data-service";
 import { DonorData } from './donorData';
-
+import adminImage from '../assets/adminDashboard.png'; 
 const AdminPage = () => {
   const [adminData, setAdminData] = useState<DonorData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -43,8 +43,8 @@ const AdminPage = () => {
 
   return (
     <div className="container">
-      <div className="avatar">
-        <img src="../assets/avatar.jpg" alt="Avatar" />
+       <div className="image-section">
+        <img src={adminImage} alt="Admin" className="admin-image" />
       </div>
       <div className="row">
         <div className="label">שם:</div>

@@ -89,14 +89,13 @@ import './main-page.css';
             chunkArray(products.filter(product => product.category === category), 3)
           ).flat();
 
-        const donorChunks = chunkArray(users.filter(user => user.rating === "1"), 3);
+          const donorChunks = chunkArray(users.filter(user => user.rating === "1" && user.isPublished === true), 3);
     
         return (
             <>
 <div className='body'>
   <div className='body_backgroud'>
  
-  
   <div className='image-background-container'>
   </div>
 
@@ -133,7 +132,6 @@ import './main-page.css';
     </Carousel>
   </div>
   
-
   <div className="flexSpaceBetween">
 <div className="squareContainer flexCenterColumn">
       <h2 style={{ fontSize: '1.5em', textAlign: 'center', marginTop: '10px'}}>
@@ -167,20 +165,6 @@ import './main-page.css';
       </Carousel>
   </div>
 
-    {/* <div className="squareContainer flexCenterColumn">
-      <h1 className="donorSection">התורמים שלנו</h1>
-      <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
-      <div className="donorDisplay">
-        {users.filter(user => user.rating === "1").slice(0, 3).map((user, index) => (
-          <div key={index} className="donorItem">
-            <img src={user.image || person} alt={`${user.firstName} ${user.lastName}`} className="donorImage" />
-            <p className="donorName">{user.firstName} {user.lastName}</p>
-          </div>
-        ))}
-      </div>
-    </div> */}
-
-
     <div className="squareContainer flexCenterColumn">
        <div className="donorHeader">
         <h1 className="donorSection">התורמים שלנו</h1>
@@ -205,15 +189,10 @@ import './main-page.css';
       </Carousel>
     </div>
 
-
-
-
   </div>
 </div>
 
-   
             </>
-    
         )
     }
     

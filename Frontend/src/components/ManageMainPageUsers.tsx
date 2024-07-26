@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
 type Order = 'asc' | 'desc';
+import person from './../assets/person.png';
 
 const ManageMainPageUsers = () => {
   const [donors, setDonors] = useState<DonorData[]>([])
@@ -121,18 +122,22 @@ const ManageMainPageUsers = () => {
                     direction={orderBy === 'rating' ? order : 'asc'}
                     onClick={() => handleRequestSort('rating')}
                   >
-                    דירוג
+                   1 דירוג
                   </TableSortLabel>
                 </th>
+                <th>תמונת פרופיל</th>
                 <th>אישור הצגת התורם בעמוד הראשי</th>
               </tr>
             </thead>
             <tbody>
-              {sortedAndFilteredDonors.map((donor) => (
+              {sortedAndFilteredDonors.filter(donor => donor.rating === "1").map((donor) => (
                 <tr key={donor._id}>
                   <td>{donor.firstName}</td>
                   <td>{donor.lastName}</td>
                   <td>{donor.rating}</td>
+                  <td>
+                    <img src={donor.image || person} alt={donor.firstName} style={{ width: '50px', height: '50px' }} />
+                 </td>
                   <td>
                   <Dropdown>
                   <Dropdown.Toggle variant="secondary" id="dropdown-basic">

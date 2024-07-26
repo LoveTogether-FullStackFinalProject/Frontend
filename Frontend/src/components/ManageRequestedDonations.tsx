@@ -79,7 +79,7 @@ const ManageRequestedDonations = () => {
 
       return (
         <div className="container mt-4">
-          <h2>ניהול תרומות שהעמותה מבקשת</h2>
+          <h2 style={{ marginTop: '80px' }}>ניהול תרומות שהעמותה מבקשת</h2>
           <TextField
             label="חפש תרומה"
             placeholder="חפש תרומה לפי קטגוריה, תיאור, כמות"

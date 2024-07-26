@@ -84,9 +84,12 @@ import './main-page.css';
 
           const categories = ['מזון ושתייה', 'ביגוד', 'אלקטרוניקה'];
 
+
           const chunkedProducts = categories.map(category => 
             chunkArray(products.filter(product => product.category === category), 3)
           ).flat();
+
+        const donorChunks = chunkArray(users.filter(user => user.rating === "1"), 3);
     
         return (
             <>
@@ -132,19 +135,6 @@ import './main-page.css';
   
 
   <div className="flexSpaceBetween">
-    {/* <div className="squareContainer flexCenterColumn">
-      <h2 style={{ fontSize: '1.5em', textAlign: 'center' }}>
-  עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!<br />
-  הצלחנו לגייס {countProducts('מזון ושתיה')} ארוחות חמות,<br />
-  {countProducts('ביגוד')} ביגוד, ו- {countProducts('אביזרים')} אביזרים
-</h2>
-      <div className="flexCenter">
-        {products.slice(0, 3).map((product, index) => (
-          <img key={index} src={product.image} alt={`Product ${index + 1}`} className="productImage" />
-        ))}
-      </div>
-    </div> */}
-
 <div className="squareContainer flexCenterColumn">
       <h2 style={{ fontSize: '1.5em', textAlign: 'center', marginTop: '10px'}}>
         עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!<br />
@@ -175,11 +165,9 @@ import './main-page.css';
           </Carousel.Item>
         ))}
       </Carousel>
-    </div>
+  </div>
 
-
-
-    <div className="squareContainer flexCenterColumn">
+    {/* <div className="squareContainer flexCenterColumn">
       <h1 className="donorSection">התורמים שלנו</h1>
       <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
       <div className="donorDisplay">
@@ -190,7 +178,36 @@ import './main-page.css';
           </div>
         ))}
       </div>
+    </div> */}
+
+
+    <div className="squareContainer flexCenterColumn">
+       <div className="donorHeader">
+        <h1 className="donorSection">התורמים שלנו</h1>
+        <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
+      </div>
+      <Carousel
+      nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>} 
+      prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
+   > 
+        {donorChunks.map((chunk, index) => (
+    <Carousel.Item key={index}>
+      <Row className="donorDisplay">
+        {chunk.map((user, userIndex) => (
+          <Col key={userIndex} className="donorItem" xs={12} sm={4} md={4}>
+            <img src={user.image || person} alt={`${user.firstName} ${user.lastName}`} className="donorImage" />
+            <p className="donorName">{user.firstName} {user.lastName}</p>
+          </Col>
+        ))}
+      </Row>
+    </Carousel.Item>
+  ))}
+      </Carousel>
     </div>
+
+
+
+
   </div>
 </div>
 

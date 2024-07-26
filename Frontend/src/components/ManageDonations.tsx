@@ -72,14 +72,13 @@ const ManageDonationPage: React.FC = () => {
       .filter(donation => 
         donation.category.toLowerCase().includes(filter.toLowerCase()) ||
         donation.description.toLowerCase().includes(filter.toLowerCase()) ||
-        donation.status.toLowerCase().includes(filter.toLowerCase())
+        donation.status.toLowerCase().includes(filter.toLowerCase()) ||
+        (donation.donor && (donation.donor.firstName.toLowerCase() + " " + donation.donor.lastName.toLowerCase()).includes(filter.toLowerCase()))
       )
       .sort((a, b) => {
-        if (orderBy === 'status' || orderBy === 'approvedByAdmin') {
-          return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
-        } else {
-          return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
-        }
+        const valueA = a[orderBy] || '';
+        const valueB = b[orderBy] || '';
+        return (order === 'asc' ? 1 : -1) * (valueA > valueB ? 1 : -1);
       });
   };
 
@@ -120,7 +119,7 @@ const ManageDonationPage: React.FC = () => {
       <h2>ניהול תרומות</h2>
       <TextField
         label="חפש תרומה"
-        placeholder="חפש תרומה לפי קטגוריה, תיאור, סטטוס"
+        placeholder="חפש תרומה לפי קטגוריה, תיאור, סטטוס ושם התורם"
         variant="outlined"
         style={{ width: '60%' }} 
         margin="normal"
@@ -181,6 +180,15 @@ const ManageDonationPage: React.FC = () => {
                 אושר ע"י מנהל
               </TableSortLabel>
             </th>
+            <th>
+              <TableSortLabel
+                active={orderBy === 'donor'}
+                direction={orderBy === 'donor' ? order : 'asc'}
+                onClick={() => handleRequestSort('donor')}
+              >
+                שם מלא
+              </TableSortLabel>
+            </th>
             <th>פעולות</th>
           </tr>
         </thead>
@@ -226,6 +234,7 @@ const ManageDonationPage: React.FC = () => {
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
+              <td>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</td>
               <td>
                 <Button
                   variant="info"
@@ -278,3 +287,4 @@ const ManageDonationPage: React.FC = () => {
 };
 
 export default ManageDonationPage;
+

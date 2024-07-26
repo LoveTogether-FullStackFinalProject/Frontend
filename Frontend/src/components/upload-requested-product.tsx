@@ -101,9 +101,9 @@ function UploadRequestedProduct() {
 
      if (!isAdmin) {
       return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'red' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/adminDashboard')} className="btn btn-primary" style={{ backgroundColor: 'red', marginTop: '20px' }}>התחבר בתור מנהל</button>
+          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+          <button onClick={() => navigate('/adminDashboard')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
         </div>
       );
     }
@@ -144,10 +144,10 @@ function UploadRequestedProduct() {
             >
               <option value="">בחר קטגוריה</option>
               <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="אביזרים">אביזרים</option>
+              <option value="ציוד בית וגן">ציוד בית וגן</option>
               <option value="אלקטרוניקה">אלקטרוניקה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
+              <option value="תקשורת">תקשורת</option>
+              <option value="בגדים ואקססוריז">בגדים ואקססוריז</option>
               <option value="אחר">אחר...</option>
             </select>
             <label htmlFor="floatingCategory" className="floating-label">

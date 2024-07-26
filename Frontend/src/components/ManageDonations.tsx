@@ -40,6 +40,7 @@ const ManageDonationPage: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('category');
   const [filter, setFilter] = useState<string>('');
+  const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
@@ -87,6 +88,7 @@ const ManageDonationPage: React.FC = () => {
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
     );
+    setPendingChanges((prev) => [...prev, updatedDonation]);
   };
 
   const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean | string) => {
@@ -94,6 +96,21 @@ const ManageDonationPage: React.FC = () => {
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
     );
+    setPendingChanges((prev) => [...prev, updatedDonation]);
+  };
+
+  const saveChanges = async () => {
+    try {
+      const updatePromises = pendingChanges.map((donation) =>
+        dataService.updateDonation(donation._id, donation)
+      );
+      await Promise.all(updatePromises);
+      setPendingChanges([]);
+      alert("השינויים נשמרו בהצלחה!");
+    } catch (error) {
+      console.error('Error saving changes:', error);
+      alert("שמירת השינויים נכשלה.");
+    }
   };
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
@@ -120,6 +137,9 @@ const ManageDonationPage: React.FC = () => {
       <CSVLink data={sortedAndFilteredDonations} filename="donations.csv" className="btn btn-success mb-3">
         ייצוא לאקסל
       </CSVLink>
+      <Button className="mb-3" onClick={saveChanges} disabled={pendingChanges.length === 0}>
+        שמור שינויים
+      </Button>
       {error && <p className="text-danger">{error}</p>}
       <Table striped bordered hover>
         <thead>

@@ -144,10 +144,10 @@ function UploadRequestedProduct() {
             >
               <option value="">בחר קטגוריה</option>
               <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="אביזרים">אביזרים</option>
+              <option value="ציוד בית וגן">ציוד בית וגן</option>
               <option value="אלקטרוניקה">אלקטרוניקה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
+              <option value="תקשורת">תקשורת</option>
+              <option value="בגדים ואקססוריז">בגדים ואקססוריז</option>
               <option value="אחר">אחר...</option>
             </select>
             <label htmlFor="floatingCategory" className="floating-label">

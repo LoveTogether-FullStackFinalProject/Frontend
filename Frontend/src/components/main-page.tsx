@@ -134,7 +134,7 @@ function MainPage() {
                                         <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName,request.category)}>
                                             <p className="centerText">
                                                 {`${request.itemName}: ${request.amount}`}
-                                                {request.expirationDate && `תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`}
+                                                {/* {request.expirationDate && `תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`} */}
                                             </p>
                                             <img src={request.image} alt="Product" className="productImage" />
                                         </Col>

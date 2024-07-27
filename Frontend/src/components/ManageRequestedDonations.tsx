@@ -60,7 +60,9 @@ const ManageRequestedDonations = () => {
           .filter(donation => 
             donation.category.toLowerCase().includes(filter.toLowerCase()) ||
             donation.description.toLowerCase().includes(filter.toLowerCase()) ||
-            donation.amount.toString().includes(filter.toLowerCase())
+            donation.amount.toString().includes(filter.toLowerCase()) ||
+            donation.itemName.toLowerCase().includes(filter.toLowerCase()) ||
+             donation.itemCondition.toLowerCase().includes(filter.toLowerCase()) 
           )
           .sort((a, b) => {
             return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
@@ -89,7 +91,7 @@ const ManageRequestedDonations = () => {
           <h2 style={{ marginTop: '80px' }}>ניהול תרומות שהעמותה מבקשת</h2>
           <TextField
             label="חפש תרומה"
-            placeholder="חפש תרומה לפי קטגוריה, תיאור, כמות"
+            placeholder="חפש תרומה לפי קטגוריה, שם מוצר, מצב, תיאור, כמות"
             variant="outlined"
             style={{ width: '60%' }} 
             margin="normal"

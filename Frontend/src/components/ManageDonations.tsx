@@ -69,18 +69,28 @@ const ManageDonationPage: React.FC = () => {
 
   const applySortAndFilter = (data: Donation[]) => {
     return data
-      .filter(donation => 
-        donation.category.toLowerCase().includes(filter.toLowerCase()) ||
-        donation.description.toLowerCase().includes(filter.toLowerCase()) ||
-        donation.status.toLowerCase().includes(filter.toLowerCase()) ||
-        (donation.donor && (donation.donor.firstName.toLowerCase() + " " + donation.donor.lastName.toLowerCase()).includes(filter.toLowerCase()))
-      )
+      .filter(donation => {
+        const category = donation.category?.toLowerCase() || '';
+        const description = donation.description?.toLowerCase() || '';
+        const status = donation.status?.toLowerCase() || '';
+        const donorName = donation.donor 
+          ? (donation.donor.firstName?.toLowerCase() + " " + donation.donor.lastName?.toLowerCase()) 
+          : '';
+  
+        const lowerCaseFilter = filter.toLowerCase();
+  
+        return category.includes(lowerCaseFilter) ||
+               description.includes(lowerCaseFilter) ||
+               status.includes(lowerCaseFilter) ||
+               donorName.includes(lowerCaseFilter);
+      })
       .sort((a, b) => {
         const valueA = a[orderBy] || '';
         const valueB = b[orderBy] || '';
         return (order === 'asc' ? 1 : -1) * (valueA > valueB ? 1 : -1);
       });
   };
+  
 
   const handleStatusUpdate = (donation: Donation, status: string) => {
     const updatedDonation = { ...donation, status };

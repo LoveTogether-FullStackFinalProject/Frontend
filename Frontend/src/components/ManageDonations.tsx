@@ -26,6 +26,8 @@ interface Donation {
     firstName: string;
     lastName: string;
   };
+  pickUpAddress: string;
+  branch: string;
   image?: string;
 }
 
@@ -265,6 +267,7 @@ const ManageDonationPage: React.FC = () => {
               <p><strong>מצב הפריט:</strong> {currentDonation.itemCondition}</p>
               <p><strong>תאריך תפוגה:</strong> {new Date(currentDonation.expirationDate).toLocaleDateString()}</p>
               <p><strong>כתובת לאיסוף:</strong> {currentDonation.pickUpAddress}</p>
+              <p><strong> סניף עמותה:</strong> {currentDonation.branch}</p>
               <p><strong>סטטוס:</strong> {currentDonation.status}</p>
               <p><strong>אושר על ידי מנהל:</strong> {currentDonation.approvedByAdmin === true || currentDonation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
               {currentDonation.image && (

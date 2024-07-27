@@ -144,6 +144,7 @@ const Statistics = () => {
             <MenuItem value="category">קטגוריה</MenuItem>
             <MenuItem value="condition">מצב</MenuItem>
             <MenuItem value="pickupAddress">כתובת איסוף</MenuItem>
+            <MenuItem value="branch">סניף עמותה</MenuItem>
           </Select>
         </FormControl>
       </Box>

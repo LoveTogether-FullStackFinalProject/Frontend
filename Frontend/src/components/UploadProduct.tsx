@@ -330,7 +330,7 @@ const UploadProduct: React.FC = () => {
                   <select
                     {...register('branch')}
                     style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-                    className={`${errors.pickupAddress ? 'is-invalid' : ''}`}
+                    className={`${errors.branch ? 'is-invalid' : ''}`}
                   >
                     <option value="">בחר סניף עמותה</option>
                     <option value="address1">כתובת 1</option>

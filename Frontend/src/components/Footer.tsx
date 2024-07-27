@@ -8,10 +8,10 @@ const Footer: React.FC = () => {
     <footer className="footer">
       {/* <p>חפשנו אותנו</p> */}
       <div className="social-media">
-        <a href="https://www.facebook.com/veahavtem/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
           <img src={facebookLogo} alt="Facebook" />
         </a>
-        <a href="https://www.instagram.com/veahavtem/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/veahavtem_beyahad/" target="_blank" rel="noopener noreferrer">
           <img src={instagramLogo} alt="Instagram" />
         </a>
       </div>

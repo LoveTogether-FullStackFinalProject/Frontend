@@ -13,11 +13,10 @@ const AboutPage = () => {
   return (
     <div className="about-page">
     <div className="background-section">
-      <div className="background-overlay">
+      <div>
         <h1>עמותת ואהבתם ביחד</h1>
-        <p>ע.ר 580776359</p>
-        <p>עמותת ואהבתם ביחד מסייעת לאוכלוסיות נזקקות ומפעילה את המכולת החברתית, המקרר השיתופי, תיק לכל ילד, קיר המעילים ועוד...</p>
-      </div>
+        <p className="about-registration">ע.ר 580776359</p>
+      <p className="about-description">עמותת ואהבתם ביחד מסייעת לאוכלוסיות נזקקות ומפעילה את המכולת החברתית, המקרר השיתופי, תיק לכל ילד, קיר המעילים ועוד...</p>      </div>
     </div>
     <section className="video-section">
         <div className="video-container">
@@ -27,8 +26,9 @@ const AboutPage = () => {
             height="316"
             scrolling="no"
             frameBorder="0"
-            allowFullScreen={true}
+            allowFullScreen
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            title="Introduction Video"
           ></iframe>
         </div>
       </section>

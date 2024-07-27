@@ -1,5 +1,5 @@
 .about-page {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 0;
   padding: 0;
@@ -13,25 +13,70 @@
   justify-content: center;
   text-align: center;
   color: #333;
-  height: 50vh;
+  height: 55vh;
   width: 100vw;
   margin-bottom: 50px;
   padding: 20px;
 }
 
 .background-overlay {
-  background: rgba(255, 255, 255, 0.8); /* Light overlay for readability */
+  background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.background-overlay h1, .background-overlay p {
-  margin: 10px 0;
+.about-title {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.about-subtitle {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.about-registration {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.about-description {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: bold; /* Makes the text bold */
+}
+
+.initiatives-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
   color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;
+  font-weight: 600;
 }
 
-.video-section, .initiatives-section {
-  padding: 40px 20px;
+.video-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff; /* White background */
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
 }
 
 .cards-container {

@@ -8,12 +8,20 @@
   background: rgb(169,169,169);
   background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
   background-attachment: fixed; /* This ensures the background doesn't scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the content horizontally */
+  justify-content: center; /* Centers the content vertically */
 }
+
 .background-section, .video-section, .initiatives-section {
   background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
   margin: 20px;
   padding: 20px;
   border-radius: 10px;
+  width: 80%; /* Ensures the sections don't take the full width */
+  max-width: 800px; /* Limits the maximum width */
+  text-align: center; /* Centers text within these sections */
 }
 
 .background-overlay {
@@ -51,10 +59,6 @@
   font-weight: bold; /* Makes the text bold */
 }
 
-
-
-
-
 .video-container {
   max-width: 560px;
   width: 100%;
@@ -71,7 +75,7 @@
   background-color: rgba(255, 255, 255, 0.9); /* Make cards slightly more opaque */
   padding: 20px;
   border-radius: 10px;
-  width: 22%;
+  width: 40%;
   margin: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: center;

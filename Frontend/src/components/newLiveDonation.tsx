@@ -60,6 +60,7 @@ const NewLiveDonation: React.FC = () => {
     if (userId) {
       dataService.getUser(userId).req.then((res) => {
         setIsAdmin(res.data.isAdmin);
+        console.log("isAdmin:", res.data.isAdmin);
       });
     }
   }, []);
@@ -88,6 +89,11 @@ const NewLiveDonation: React.FC = () => {
       return;
     }
 
+    const userId = localStorage.getItem('userID');
+      if (!userId) {
+        alert('User not logged in');
+        return;
+      }
     try {
       let imageUrl = '';
       if (data.image) {
@@ -96,13 +102,15 @@ const NewLiveDonation: React.FC = () => {
       const productData = {
         ...data,
         image: imageUrl,
+        donor: userId,
         approvedByAdmin: true,
         status: 'הגיע לעמותה',
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
+      console.log('Submitting product data:', productData); // Log data to verify
       await uploadProduct(productData);
       alert('התרומה נוספה בהצלחה');
-      navigate('/admin-dashboard'); // Adjust this route as needed
+      navigate('/adminDashboard'); // Adjust this route as needed
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(
@@ -121,10 +129,11 @@ const NewLiveDonation: React.FC = () => {
   }
 
   return (
-    <div className="new-live-donation-container">
+    <div className="new-live-donation-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h2 className="new-live-donation-title">♥עמותת ואהבתם ביחד - הוספת תרומה חדשה♥</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="donation-form">
-        <div className="form-row">
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', maxWidth: '800px', direction: 'rtl' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+          {/* Existing input fields */}
           <div className="form-group">
             <input
               {...register('itemName')}
@@ -237,38 +246,38 @@ const NewLiveDonation: React.FC = () => {
           <div className="form-group">
             <input
               {...register('donorPhone')}
-              type="tel"
-              placeholder="טלפון של התורם"
+              type="text"
+              placeholder="טלפון התורם"
               className={`form-control ${errors.donorPhone ? 'is-invalid' : ''}`}
             />
             {errors.donorPhone && (
               <div className="invalid-feedback">{errors.donorPhone.message}</div>
             )}
           </div>
-        </div>
 
-        <div className="image-upload-section">
-          <button type="button" onClick={selectImg} className="upload-button">
-            <FontAwesomeIcon icon={faImage} /> העלאת תמונה
-          </button>
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            onChange={imgSelected}
-            className="file-input"
-          />
+          <div className="form-group">
+            <button type="button" className="btn btn-secondary" onClick={selectImg}>
+              <FontAwesomeIcon icon={faImage} />
+              {imgPreview ? 'תמונה נבחרה' : 'בחר תמונה'}
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={imgSelected}
+              style={{ display: 'none' }}
+            />
+          </div>
+
           {imgPreview && (
-            <div className="img-preview">
-              <img src={imgPreview} alt="Preview" />
+            <div className="form-group">
+              <img src={imgPreview} alt="תצוגה מקדימה" className="img-preview" />
             </div>
           )}
-        </div>
 
-        <div className="form-submit">
-          <button type="submit" className="submit-button">
-            שלח
-          </button>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary">שמור תרומה</button>
+          </div>
         </div>
       </form>
     </div>

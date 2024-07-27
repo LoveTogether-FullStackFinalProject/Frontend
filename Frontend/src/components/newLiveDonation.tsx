@@ -110,7 +110,7 @@ const NewLiveDonation: React.FC = () => {
       console.log('Submitting product data:', productData); // Log data to verify
       await uploadProduct(productData);
       alert('התרומה נוספה בהצלחה');
-      navigate('/adminDashboard'); // Adjust this route as needed
+      navigate('/manageDonations'); 
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(

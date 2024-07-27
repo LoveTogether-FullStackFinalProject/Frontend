@@ -2,18 +2,16 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #ffffff;
     width: 100%;
   }
 
   .main-content {
-    background-color: #ffffff;
     width: 100%;
 
   }
-  .body_backgroud{
-    background: rgb(0,0,0);
-    background: linear-gradient(90deg, rgba(0,0,0,1) 5%, rgba(249,218,120,1) 62%, rgba(255,255,255,1) 100%);
+  .body_backgroud {
+    background: rgb(169,169,169);
+    background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
     margin-top: 100px;
     display: flex;
     width: 100%;
@@ -80,7 +78,7 @@ body, html {
 
   .whiteLogo{
     width: 500px;
-    margin-right: 40rem;
+    margin-right: 70rem;
     margin-top: 20px;
   }
   
@@ -133,7 +131,7 @@ body, html {
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
   }
   
   .flexSpaceBetween {

@@ -7,7 +7,7 @@
 }
 
 .background-section {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 30%, rgba(249, 218, 120, 1) 70%);
+  /* background: linear-gradient(90deg, rgba(255, 255, 255, 1) 30%, rgba(249, 218, 120, 1) 70%); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff; /* White background */
   padding: 20px;
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

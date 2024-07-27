@@ -84,7 +84,7 @@ function Login() {
         <div className="main-content">
         <div className="login-page">
             <div className="login-header">
-                <img src={logo} alt="Logo" className="logo" />
+                {/* <img src={logo} alt="Logo" className="logo" /> */}
                 <h1 className="title">התחברות</h1>
             </div>
             

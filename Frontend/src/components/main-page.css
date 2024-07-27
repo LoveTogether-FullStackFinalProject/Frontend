@@ -2,12 +2,10 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #ffffff;
     width: 100%;
   }
 
   .main-content {
-    background-color: #ffffff;
     width: 100%;
 
   }
@@ -133,7 +131,7 @@ body, html {
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
   }
   
   .flexSpaceBetween {

@@ -4,23 +4,19 @@
   margin: 0;
   padding: 0;
   width: 100%;
+  min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+  background: rgb(169,169,169);
+  background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
+  background-attachment: fixed; /* This ensures the background doesn't scroll */
 }
-
-.background-section {
-  /* background: linear-gradient(90deg, rgba(255, 255, 255, 1) 30%, rgba(249, 218, 120, 1) 70%); */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #333;
-  height: 55vh;
-  width: 100vw;
-  margin-bottom: 50px;
+.background-section, .video-section, .initiatives-section {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  margin: 20px;
   padding: 20px;
+  border-radius: 10px;
 }
 
 .background-overlay {
-  background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -55,22 +51,9 @@
   font-weight: bold; /* Makes the text bold */
 }
 
-.initiatives-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;
-  font-weight: 600;
-}
 
-.video-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  width: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+
+
 
 .video-container {
   max-width: 560px;
@@ -85,7 +68,7 @@
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.9); /* Make cards slightly more opaque */
   padding: 20px;
   border-radius: 10px;
   width: 22%;

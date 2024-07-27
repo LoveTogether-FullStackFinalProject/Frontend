@@ -17,15 +17,15 @@ const RequestedProductSchema = z.object({
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
   itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
-  expirationDate: z.string().optional().refine((date) => {
-    if (!date) return true;
-    const selectedDate = new Date(date);
-    const today = new Date();
-    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    return selectedDate > nextWeek;
-}, {
-    message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
-}),
+//   expirationDate: z.string().optional().refine((date) => {
+//     if (!date) return true;
+//     const selectedDate = new Date(date);
+//     const today = new Date();
+//     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+//     return selectedDate > nextWeek;
+// }, {
+//     message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
+// }),
   image: z.string().url({ message: 'חובה לצרף תמונה' }),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
 });
@@ -38,8 +38,8 @@ function UploadRequestedProduct() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
-  const [isExpirationFilled, setisExpirationFilled] = useState(false);
+  // const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
+  // const [isExpirationFilled, setisExpirationFilled] = useState(false);
 
 
   useEffect(() => {
@@ -64,14 +64,14 @@ function UploadRequestedProduct() {
   const addNewProduct = async (data: FormData) => {
     console.log(errors);
 
-    if (category === "מזון ושתייה" && !data.expirationDate) {
-      setisExpirationFilled(true);
-      setErrorMessageexpirationDate('חובה להכניס תאריך תפוגה');
-      return
-    }
-    else{
-      setisExpirationFilled(false);
-    }
+    // if (category === "מזון ושתייה" && !data.expirationDate) {
+    //   setisExpirationFilled(true);
+    //   setErrorMessageexpirationDate('חובה להכניס תאריך תפוגה');
+    //   return
+    // }
+    // else{
+    //   setisExpirationFilled(false);
+    // }
  
     if (!imgSrc) {
       alert("Please select an image");
@@ -161,7 +161,7 @@ function UploadRequestedProduct() {
                 placeholder="הזן קטגוריה"
               />
             )}
-            {category === "מזון ושתייה" && (
+            {/* {category === "מזון ושתייה" && (
               <div className="input-wrapper">
                 <input
                   {...register("expirationDate")}
@@ -179,7 +179,7 @@ function UploadRequestedProduct() {
                 )}
                 {isExpirationFilled && errorMessageexpirationDate && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessageexpirationDate}</div>}
               </div>
-            )}
+            )} */}
             {errors.category && (
               <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>
             )}

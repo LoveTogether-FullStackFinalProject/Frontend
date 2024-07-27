@@ -141,7 +141,7 @@ const ManageRequestedDonations = () => {
                +
               </Button>
               {donation.amount}
-              {donation.amount > 0 && (
+              {donation.amount > 1 && (
                 <Button onClick={() => handleUpdateMinus(donation._id!, donation.amount)}>
                     -
                 </Button>

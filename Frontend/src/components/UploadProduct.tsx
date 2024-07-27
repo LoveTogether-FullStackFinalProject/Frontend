@@ -30,9 +30,8 @@ const schema = z.object({
     }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.')
     .optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
-  pickupAddress: z
-    .string()
-    .optional(),
+  pickupAddress: z.string().optional(),
+  branch: z.string().optional(),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
 });
 
@@ -43,9 +42,11 @@ const UploadProduct: React.FC = () => {
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [status, setStatus] = useState('');
   const [showPickupAddress, setShowPickupAddress] = useState(false);
+  const [showBranch, setShowBranch] = useState(false);
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
   const [showError, setShowError] = useState(false);
   const [showPickUpError, setPickUpShowError] = useState(false);
+  const [showBranchError, setBranchShowError] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -113,6 +114,10 @@ const UploadProduct: React.FC = () => {
       setPickUpShowError(true);
       return;
     }
+    if (showBranch && data.branch === "") {
+      setBranchShowError(true);
+      return;
+    }
 
     if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
       trigger('expirationDate');
@@ -155,10 +160,12 @@ const UploadProduct: React.FC = () => {
     setSelectedDeliveryOption(value);
     if (value === 'ממתין לאיסוף מבית התורם') {
       setShowPickupAddress(true);
+      setShowBranch(false);
       setStatus('ממתין לאיסוף מבית התורם');
       setValue("pickupAddress", "");
     } else {
       setShowPickupAddress(false);
+      setShowBranch(true);
       setStatus('טרם הגיע לעמותה');
       setValue("pickupAddress", "default");
     }
@@ -298,7 +305,7 @@ const UploadProduct: React.FC = () => {
                   onChange={handleDeliveryOptionChange}
                   style={{ marginRight: '8px' }}
                 />
-                ממתין לאיסוף מבית התורם
+                אשמח שיאספו ממני התרומה
               </label>
             </div>
             <div>
@@ -310,13 +317,35 @@ const UploadProduct: React.FC = () => {
                   onChange={handleDeliveryOptionChange}
                   style={{ marginRight: '8px' }}
                 />
-                טרם הגיע לעמותה
+                אמסור את התרומה לעמותה
               </label>
             </div>
             {showError && (
               <div className="error-message">יש לבחור אפשרות איסוף</div>
             )}
           </div>
+
+            {showBranch && (
+                <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+                  <select
+                    {...register('branch')}
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
+                    className={`${errors.branch ? 'is-invalid' : ''}`}
+                  >
+                    <option value="">בחר סניף עמותה</option>
+                    <option value="address1">כתובת 1</option>
+                    <option value="address2">כתובת 2</option>
+                    <option value="address3">כתובת 3</option>
+                    
+                  </select>
+                  {errors.branch && (
+                    <div className="invalid-feedback">{errors.branch.message}</div>
+                  )}
+                  {showBranchError && (
+                    <div className="error-message" style={{  marginRight: '230px' }}>יש לבחור סניף עמותה</div>
+                  )}
+                </div>
+         )}
 
           {showPickupAddress && (
             <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>

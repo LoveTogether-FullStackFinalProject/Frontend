@@ -29,6 +29,11 @@ interface Donation {
   pickUpAddress: string;
   branch: string;
   image?: string;
+  amount?: number;
+  itemCondition?: string;
+  expirationDate?: string;
+  pickUpAddress?: string;
+  createdAt: string;
 }
 
 type Order = 'asc' | 'desc';
@@ -71,12 +76,21 @@ const ManageDonationPage: React.FC = () => {
 
   const applySortAndFilter = (data: Donation[]) => {
     return data
-      .filter(donation => 
-        donation.category.toLowerCase().includes(filter.toLowerCase()) ||
-        donation.description.toLowerCase().includes(filter.toLowerCase()) ||
-        donation.status.toLowerCase().includes(filter.toLowerCase()) ||
-        (donation.donor && (donation.donor.firstName.toLowerCase() + " " + donation.donor.lastName.toLowerCase()).includes(filter.toLowerCase()))
-      )
+      .filter(donation => {
+        const category = donation.category?.toLowerCase() || '';
+        const description = donation.description?.toLowerCase() || '';
+        const status = donation.status?.toLowerCase() || '';
+        const donorName = donation.donor 
+          ? (donation.donor.firstName?.toLowerCase() + " " + donation.donor.lastName?.toLowerCase()) 
+          : '';
+  
+        const lowerCaseFilter = filter.toLowerCase();
+  
+        return category.includes(lowerCaseFilter) ||
+               description.includes(lowerCaseFilter) ||
+               status.includes(lowerCaseFilter) ||
+               donorName.includes(lowerCaseFilter);
+      })
       .sort((a, b) => {
         const valueA = a[orderBy] || '';
         const valueB = b[orderBy] || '';
@@ -114,10 +128,21 @@ const ManageDonationPage: React.FC = () => {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('he-IL', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
   return (
-    <div className="container mt-4">
+    <div className="manage-donations-page">
       <h2>ניהול תרומות</h2>
       <TextField
         label="חפש תרומה"
@@ -142,7 +167,7 @@ const ManageDonationPage: React.FC = () => {
         שמור שינויים
       </Button>
       {error && <p className="text-danger">{error}</p>}
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>בחירה</th>
@@ -191,6 +216,15 @@ const ManageDonationPage: React.FC = () => {
                 אושר ע"י מנהל
               </TableSortLabel>
             </th>
+            <th>
+              <TableSortLabel
+                active={orderBy === 'createdAt'}
+                direction={orderBy === 'createdAt' ? order : 'asc'}
+                onClick={() => handleRequestSort('createdAt')}
+              >
+                תאריך
+              </TableSortLabel>
+            </th>
             <th>פעולות</th>
           </tr>
         </thead>
@@ -219,6 +253,9 @@ const ManageDonationPage: React.FC = () => {
                     <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר')}>
                       נמסר
                     </Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא נמסר')}>
+                      לא נמסר
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
@@ -237,6 +274,7 @@ const ManageDonationPage: React.FC = () => {
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
+              <td>{formatDate(donation.createdAt)}</td>
               <td>
                 <Button
                   variant="info"
@@ -265,7 +303,7 @@ const ManageDonationPage: React.FC = () => {
               <p><strong>תיאור:</strong> {currentDonation.description}</p>
               <p><strong>כמות:</strong> {currentDonation.amount}</p>
               <p><strong>מצב הפריט:</strong> {currentDonation.itemCondition}</p>
-              <p><strong>תאריך תפוגה:</strong> {new Date(currentDonation.expirationDate).toLocaleDateString()}</p>
+              <p><strong>תאריך תפוגה:</strong> {currentDonation.expirationDate ? new Date(currentDonation.expirationDate).toLocaleDateString() : 'לא צוין'}</p>
               <p><strong>כתובת לאיסוף:</strong> {currentDonation.pickUpAddress}</p>
               <p><strong> סניף עמותה:</strong> {currentDonation.branch}</p>
               <p><strong>סטטוס:</strong> {currentDonation.status}</p>
@@ -290,4 +328,3 @@ const ManageDonationPage: React.FC = () => {
 };
 
 export default ManageDonationPage;
-

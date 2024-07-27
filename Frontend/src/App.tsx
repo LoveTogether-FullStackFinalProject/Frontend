@@ -11,6 +11,7 @@ import AboutPage from './components/aboutPage';
 import UploadProduct from './components/UploadProduct';
 import  UploadRequestedProduct  from './components/upload-requested-product';
 import ManageRequestedDonations from './components/ManageRequestedDonations';
+import newLiveDonation from './components/newLiveDonation';
 import ManageMainPageUsers from './components/ManageMainPageUsers';
 import { Navbar } from "./components//Navbar";
 import { useState } from 'react';
@@ -39,6 +40,7 @@ const App = () => {
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/uploadRequestedProduct" element={<UploadRequestedProduct />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
+                <Route path= "/newLiveDonation" element={<newLiveDonation />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
                 <Route path="/profile" element={<Profile />} />

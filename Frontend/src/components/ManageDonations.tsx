@@ -32,7 +32,6 @@ interface Donation {
   amount?: number;
   itemCondition?: string;
   expirationDate?: string;
-  pickUpAddress?: string;
   createdAt: string;
 }
 
@@ -52,7 +51,16 @@ const ManageDonationPage: React.FC = () => {
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
     req.then((res) => {
-      setDonations(res.data);
+      // Assume `res.data` contains all donations
+      // Automatically set status for newLiveDonation
+      const updatedDonations = res.data.map((donation: Donation) => {
+        // Check if donation is from newLiveDonation (replace this condition with actual logic)
+        if (donation.category === 'newLiveDonation') { 
+          return { ...donation, status: 'נמסר בעמותה' };
+        }
+        return donation;
+      });
+      setDonations(updatedDonations);
     }).catch((err) => {
       console.log(err);
       if (err instanceof CanceledError) return;

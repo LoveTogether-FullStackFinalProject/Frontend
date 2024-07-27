@@ -37,6 +37,7 @@ function UploadRequestedProduct() {
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
+  const [amountError, setamountError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   // const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
   // const [isExpirationFilled, setisExpirationFilled] = useState(false);
@@ -63,6 +64,13 @@ function UploadRequestedProduct() {
 
   const addNewProduct = async (data: FormData) => {
     console.log(errors);
+    if(data.amount < 1){    
+        setamountError('כמות חייבת להיות גדולה מ-0');
+        return;
+    }
+    else{
+        setamountError('');
+    }
 
     // if (category === "מזון ושתייה" && !data.expirationDate) {
     //   setisExpirationFilled(true);
@@ -202,6 +210,9 @@ function UploadRequestedProduct() {
             </label>
             {errors.amount && (
               <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>
+            )}
+               {amountError && (
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>
             )}
           </div>
           <div className="input-wrapper">

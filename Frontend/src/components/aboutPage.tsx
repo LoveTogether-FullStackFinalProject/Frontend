@@ -12,12 +12,14 @@ import bagForAll from '../assets/bagForAlll.png';
 const AboutPage = () => {
   return (
     <div className="about-page">
- 
-
-      
-        <h2 className='about-header'>קצת עלינו</h2>
-        <p className='aboutUsP'>עמותת ואהבתם ביחד מסייעת לאוכלוסיות נזקקות ומפעילה בין היתר את המכולת החברתית , המקרר השיתופי, תיק לכל ילד, קיר המעילים ועוד...</p>
-        <section className="description-section">
+    <div className="background-section">
+      <div className="background-overlay">
+        <h1>עמותת ואהבתם ביחד</h1>
+        <p>ע.ר 580776359</p>
+        <p>עמותת ואהבתם ביחד מסייעת לאוכלוסיות נזקקות ומפעילה את המכולת החברתית, המקרר השיתופי, תיק לכל ילד, קיר המעילים ועוד...</p>
+      </div>
+    </div>
+    <section className="video-section">
         <div className="video-container">
           <iframe
             src="https://www.facebook.com/plugins/video.php?height=316&href=https%3A%2F%2Fwww.facebook.com%2Fveahavtembeyahad%2Fvideos%2F907666304163438%2F&show_text=false&width=560&t=0"

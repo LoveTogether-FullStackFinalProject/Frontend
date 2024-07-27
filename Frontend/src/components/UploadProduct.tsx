@@ -43,6 +43,7 @@ const UploadProduct: React.FC = () => {
   const [status, setStatus] = useState('');
   const [showPickupAddress, setShowPickupAddress] = useState(false);
   const [showBranch, setShowBranch] = useState(false);
+  const [amountError, setamountError] = useState('');
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
   const [showError, setShowError] = useState(false);
   const [showPickUpError, setPickUpShowError] = useState(false);
@@ -118,6 +119,14 @@ const UploadProduct: React.FC = () => {
       setBranchShowError(true);
       return;
     }
+    if(data.quantity < 1){    
+      setamountError('כמות חייבת להיות גדולה מ-0');
+      return;
+  }
+  else{
+      setamountError('');
+  }
+
 
     if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
       trigger('expirationDate');
@@ -212,7 +221,10 @@ const UploadProduct: React.FC = () => {
               className={`${errors.quantity ? 'is-invalid' : ''}`}
             />
             {errors.quantity && (
-              <div className="invalid-feedback">{errors.quantity.message}</div>
+              <div className="invalid-feedback">חובה להכניס כמות</div>
+            )}
+            {amountError && (
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>
             )}
           </div>
 

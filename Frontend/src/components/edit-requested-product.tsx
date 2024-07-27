@@ -27,6 +27,7 @@ function EditRequestedProduct() {
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
+  const [amountError, setamountError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
   const { donation } = location.state || {}; 
@@ -64,6 +65,13 @@ function EditRequestedProduct() {
 
   const editProduct = async (data: FormData) => {
     console.log(errors);
+    if(data.amount < 1){    
+        setamountError('כמות חייבת להיות גדולה מ-0');
+        return;
+    }
+    else{
+        setamountError('');
+    }
 
     // if (!imgSrc) {
     //   alert("Please select an image");
@@ -175,12 +183,16 @@ function EditRequestedProduct() {
               className="form-control"
               id="floatingAmount"
               placeholder=""
+              //min="1" 
             />
             <label htmlFor="floatingAmount" className="floating-label">
               כמות
             </label>
             {errors.amount && (
               <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>
+            )}
+            {amountError && (
+              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>
             )}
           </div>
           <div className="input-wrapper">

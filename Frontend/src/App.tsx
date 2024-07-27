@@ -10,6 +10,10 @@ import Profile from './components/Profile';
 import AboutPage from './components/aboutPage';
 import UploadProduct from './components/UploadProduct';
 import  UploadRequestedProduct  from './components/upload-requested-product';
+import ManageRequestedDonations from './components/ManageRequestedDonations';
+import NewLiveDonation from './components/newLiveDonation';
+import ManageMainPageUsers from './components/ManageMainPageUsers';
+import EditRequestedProduct from './components/edit-requested-product';
 import { Navbar } from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';
@@ -37,6 +41,7 @@ const App = () => {
                 <Route path="/statistics" element={<Statistics />} />
                 <Route path="/uploadRequestedProduct" element={<UploadRequestedProduct />} />
                 <Route path="/manageUsers" element={<ManageUsers />} />
+                <Route path= "/newLiveDonation" element={<NewLiveDonation />} />
                 <Route path="/adminDashboard" element={<AdminDashboard />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
                 <Route path="/profile" element={<Profile />} />
@@ -44,7 +49,10 @@ const App = () => {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/uploadproduct" element={<UploadProduct />} />
                 <Route path="/manageDonations" element={<ManageDonationPage />} />
-                <Route path="/manageUsers" element={<ManageUsers />} />                            
+                <Route path="/manageUsers" element={<ManageUsers />} />   
+                <Route path="/manageRequestedDonations" element={<ManageRequestedDonations />} />
+                <Route path="/manageMainPageUsers" element={<ManageMainPageUsers />} /> 
+                <Route path="/editRequestedProduct" element={<EditRequestedProduct />} />                          
             </Routes>
         </Router>
         </div>

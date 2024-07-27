@@ -1,6 +1,6 @@
 import  { ChangeEvent, useEffect, useState, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
  import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,6 @@ import { faImage } from '@fortawesome/free-solid-svg-icons';
 import  dataService from "../services/data-service.ts";
 import {requestedDonation} from "../services/upload-requested-product-service";
 import  requestedProduectService,{ CanceledError } from "../services/upload-requested-product-service";
-import context from 'react-bootstrap/esm/AccordionContext';
  import './upload-requested-product.css';
 
 const RequestedProductSchema = z.object({
@@ -17,21 +16,12 @@ const RequestedProductSchema = z.object({
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
   itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
-//   expirationDate: z.string().optional().refine((date) => {
-//     if (!date) return true;
-//     const selectedDate = new Date(date);
-//     const today = new Date();
-//     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-//     return selectedDate > nextWeek;
-// }, {
-//     message: "תאריך התפוגה צריך להיות לפחות שבוע מהיום",
-// }),
-  image: z.string().url({ message: 'חובה לצרף תמונה' }),
+  image: z.string().url({ message: 'חובה לצרף תמונה' }).optional(),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
 });
 type FormData = z.infer<typeof RequestedProductSchema>;
 
-function UploadRequestedProduct() {
+function EditRequestedProduct() {
   const { register,clearErrors, handleSubmit, formState: { errors }, setValue , trigger,} = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState<File>();
@@ -39,9 +29,20 @@ function UploadRequestedProduct() {
   const [category, setCategory] = useState('');
   const [amountError, setamountError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  // const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
-  // const [isExpirationFilled, setisExpirationFilled] = useState(false);
+  const location = useLocation();
+  const { donation } = location.state || {}; 
 
+  useEffect(() => {
+    if (donation) {
+      setValue('category', donation.category);
+      setValue('itemName', donation.itemName);
+      setValue('amount', donation.amount.toString());
+      setValue('itemCondition', donation.itemCondition);
+      setValue('description', donation.description);
+      setValue('image', donation.image);
+      setCategory(donation.category);
+    }
+  }, [donation, setValue]);
 
   useEffect(() => {
     if (imgSrc) {
@@ -62,7 +63,7 @@ function UploadRequestedProduct() {
 
   console.log(errors);
 
-  const addNewProduct = async (data: FormData) => {
+  const editProduct = async (data: FormData) => {
     console.log(errors);
     if(data.amount < 1){    
         setamountError('כמות חייבת להיות גדולה מ-0');
@@ -72,26 +73,24 @@ function UploadRequestedProduct() {
         setamountError('');
     }
 
-    // if (category === "מזון ושתייה" && !data.expirationDate) {
-    //   setisExpirationFilled(true);
-    //   setErrorMessageexpirationDate('חובה להכניס תאריך תפוגה');
-    //   return
+    // if (!imgSrc) {
+    //   alert("Please select an image");
+    //   return;
     // }
-    // else{
-    //   setisExpirationFilled(false);
-    // }
- 
-    if (!imgSrc) {
-      alert("Please select an image");
-      return;
+    let url;
+    if(imgSrc){
+     url = await requestedProduectService.uploadPhoto(imgSrc!);
     }
-    const url = await requestedProduectService.uploadPhoto(imgSrc!);
+    else{
+     url = donation.image;
+    }
     const product: requestedDonation = {
       ...data,
       image: url
     };
-    const res=await requestedProduectService.addRequestedProduct(product);
-    console.log(res);
+
+    const res=await requestedProduectService.editRequestedProduct(donation._id,product);
+    console.log("editRequestedProduct",res);
     navigate('/mainPage'); 
   };
 
@@ -116,13 +115,12 @@ function UploadRequestedProduct() {
       );
     }
 
-
   return (
     <>
 <div className="container">
-  <h1 className="form-title">העלאת מוצר המבוקש לתרומה</h1>
+  <h1 className="form-title">עריכת מוצר המבוקש לתרומה</h1>
   <div className="form-wrapper">  
-    <form onSubmit={handleSubmit(addNewProduct)}>
+    <form onSubmit={handleSubmit(editProduct)}>
       <div className="form-group">
         <div className="input-row">
           <div className="input-wrapper">
@@ -172,25 +170,6 @@ function UploadRequestedProduct() {
                 placeholder="הזן קטגוריה"
               />
             )}
-            {/* {category === "מזון ושתייה" && (
-              <div className="input-wrapper">
-                <input
-                  {...register("expirationDate")}
-                  type="date"
-                  className="form-control"
-                  id="expirationDate"
-                  placeholder="תאריך תפוגה"
-                  min={new Date().toISOString().split('T')[0]} 
-                />
-                <label htmlFor="expirationDate" className="floating-label">
-                  תאריך תפוגה
-                </label>
-                {errors.expirationDate && (
-                  <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.expirationDate.message}</p>
-                )}
-                {isExpirationFilled && errorMessageexpirationDate && <div style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errorMessageexpirationDate}</div>}
-              </div>
-            )} */}
             {errors.category && (
               <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.category.message}</p>
             )}
@@ -204,6 +183,7 @@ function UploadRequestedProduct() {
               className="form-control"
               id="floatingAmount"
               placeholder=""
+              //min="1" 
             />
             <label htmlFor="floatingAmount" className="floating-label">
               כמות
@@ -211,7 +191,7 @@ function UploadRequestedProduct() {
             {errors.amount && (
               <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{errors.amount.message}</p>
             )}
-               {amountError && (
+            {amountError && (
               <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>
             )}
           </div>
@@ -254,13 +234,31 @@ function UploadRequestedProduct() {
             className="img-thumbnail mb-2"
           />
         )}
+            <div className="d-flex justify-content-center">
+            <p className="img-upload-text" style={{ marginLeft: '50px' }}>
+                תמונת המוצר
+            </p>
+            <img 
+                src={donation.image} 
+                alt="Donation" 
+                className="img-fluid" 
+                style={{
+                maxWidth: '200px',
+                border: '2px solid #ccc', 
+                borderRadius: '8px',
+                padding: '5px', 
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)'
+                }} 
+            />
+            </div>
+   
         <button
           type="button"
           className="btn btn-upload mt-2"
           onClick={selectImg}
         >
           <FontAwesomeIcon icon={faImage} className="me-2" />
-          העלאת תמונה
+          עריכת התמונה
         </button>
         <input
           style={{ display: "none" }}
@@ -276,7 +274,7 @@ function UploadRequestedProduct() {
       </div>
       <div className="d-flex justify-content-center">
         <button type="submit" className="btn btn-submit mt-3">
-          העלאה
+          שמור שינויים
         </button>
       </div>
     </form>
@@ -288,4 +286,4 @@ function UploadRequestedProduct() {
   );
 }
 
-export default UploadRequestedProduct;
+export default EditRequestedProduct;

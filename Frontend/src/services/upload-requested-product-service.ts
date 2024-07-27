@@ -152,5 +152,22 @@ const addRequestedProduct = async (donation: requestedDonation) => {
 
 };
 
+const editRequestedProduct = async (donationId: string,donation: requestedDonation) => {
+  console.log("donationId",donationId);
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+  const request = () => {
+    return apiClient.put<Donation>(`/requestedDonation/rdonation/update/${donationId}`, donation, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+  };
+  return makeRequest(request);
 
-  export default {uploadPhoto, addRequestedProduct};
+};
+
+
+  export default {uploadPhoto, addRequestedProduct,editRequestedProduct};

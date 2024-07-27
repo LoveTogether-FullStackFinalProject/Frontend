@@ -163,21 +163,27 @@ body, html {
     font-size: 1em;
     text-align: center;
   }
+
+  .donorHeader {
+    margin-top: -40px; 
+    text-align: center;
+}
   
   .donorDisplay {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 20px;
   }
   
   .donorItem {
-    margin: 10px;
+    margin: 40px;
+    padding: 40px;
   }
   
   .donorImage {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
   }
   
   .donorName {
@@ -185,12 +191,79 @@ body, html {
     text-align: center;
   }
 
-  .squareContainer {
+
+
+   .squareContainer {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 5px;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 650px; /* Adjust based on your needs */
-    height: 300px; /* Adjust based on your needs */
-    border: 2px solid black; /* Black border around the box */
+    width: 750px; 
+    height: 550px; 
+    border: 2px solid black; 
+    margin-left: 100px;
+    margin-right: 100px;
   }
+
+  .flexCenterColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+
+
+  .carouselItem {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+  }
+
+  .flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .productImage {
+    max-width: 70%;
+    height: auto;
+  }
+  
+  .carouselControlNextIcon,
+  .carouselControlPrevIcon {
+    font-size: 2em;
+    color: #000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .carouselControlNextIcon {
+    right: 10px;
+  }
+  
+  .carouselControlPrevIcon {
+    left: 10px;
+  }
+  
+  .categorySection {
+    text-align: center;
+  }
+  
+  .centerText {
+    margin-bottom: 10px;
+  }
+
+
+
+ 

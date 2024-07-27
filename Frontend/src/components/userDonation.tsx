@@ -7,6 +7,7 @@ export interface userDonation {
   expirationDate: Date;
   description: string;
   pickupAddress: string;
+  branch: string;
   donor: {
     _id: string;
     firstName: string;

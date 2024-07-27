@@ -163,4 +163,37 @@ export const getAdmin = () => {
   return getUser(AdminID);
 }
 
-export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, getAdmin };
+
+const updateRequestedDonation = async (donationId: string,data: Partial<requestedDonation> ) => {
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+  const request = () => {
+    return apiClient.put(`/requestedDonation/rdonation/update/${donationId}`, data,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+  };
+  return makeRequest(request);
+};
+
+const deleteRequestedDonation = async (donationId: string) => {
+  const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+  const request = () => {
+    return apiClient.delete(`/requestedDonation/rdonation/delete/${donationId}`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      },
+    });
+  };
+  return makeRequest(request);
+};
+
+export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, getAdmin, updateRequestedDonation, deleteRequestedDonation };

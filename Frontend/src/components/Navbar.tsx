@@ -19,7 +19,7 @@ export function Navbar() {
       if (userId) {
         try {
           const { data } = await dataService.getUser(userId).req;
-          setIsAdmin(data.isAdmin); // Assuming isAdmin is a boolean
+          setIsAdmin(data.isAdmin); 
         } catch (error) {
           console.error("Error fetching user data:", error);
         }

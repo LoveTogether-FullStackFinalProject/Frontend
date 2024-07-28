@@ -119,7 +119,7 @@ function MainPage() {
                         </button>
                     </div>
                     <div>
-                        <img src={logo} alt="whitelogo" className='whiteLogo' />
+                        <img src={"/src/assets/whiteLogo.png"} alt="whitelogo" className='whiteLogo' />
                     </div>
                 </div>
 

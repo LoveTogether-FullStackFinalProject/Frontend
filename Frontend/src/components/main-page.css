@@ -4,38 +4,39 @@ body, html {
     overflow: hidden;
     background-color: #ffffff;
     width: 100vw;
-    height: auto; /* Adjust height automatically */
-    padding: 0 10px; /* Add padding for better responsiveness */
+    height: auto; 
+    padding: 0 10px; 
   }
   .body_backgroud {
-    background: linear-gradient(90deg, rgba(0,0,0,1) 5%, rgba(249,218,120,1) 62%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(90deg, rgb(237, 237, 237) 5%, rgba(249, 219, 120, 0.94) 62%, rgba(255,255,255,1) 100%);
     margin-top: 100px;
     display: flex;
-    width: 100%;
-    height: auto; /* Adjust height automatically */
-    padding: 0 10px; /* Add padding for better responsiveness */
+    width: 100vw;
+    height: auto; 
+    padding: 0 10px; 
 }
 
 .squareContainer {
     width: 90%;
-    max-width: 1200px; /* Limit the maximum width */
-    height: auto; /* Let height adjust according to content */
-    margin: 20px auto; /* Center container and add vertical spacing */
+    max-width: 1200px; 
+    height: auto; 
+    margin: 20px auto; 
     border: 2px solid black;
+    display: flex;
 }
 
 .productImage {
-    max-width: 100%; /* Ensure images fit within their container */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; 
+    height: auto; 
 }
 
 .carouselControlNextIcon, .carouselControlPrevIcon {
-    font-size: 2em; /* Adjust size as needed */
+    font-size: 2em; 
 }
 
 .categorySection {
     text-align: center;
-    margin: 10px; /* Add margin for spacing */
+    margin: 10px; 
 }
  
   .main-content {
@@ -76,7 +77,7 @@ body, html {
   }
   
   .brownText h1 {
-    color: #F9DA78;
+    color: #000000;
   }
   
   .borderBox {
@@ -96,15 +97,19 @@ body, html {
     margin-top: 57px;
   }
   .productImage {
-    max-width: 100%; /* Ensure images fit within their container */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; 
+    height: auto; 
   }
 
-  .whiteLogo{
-    width: 500px;
-    margin-right: 70rem;
-    margin-top: 20px;
+  .whiteLogo {
+    width: 100%; 
+    max-width: 400px; 
+    height: auto; 
+    margin-right: 700px; 
+    margin-top: 50px; 
   }
+  
+
   
   .carouselControlNextIcon, .carouselControlPrevIcon {
     color: black; 

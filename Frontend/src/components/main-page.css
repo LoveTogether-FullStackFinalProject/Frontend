@@ -8,10 +8,12 @@ body, html {
     padding: 0 10px; 
   }
   .body_backgroud {
-    background: linear-gradient(90deg, rgb(237, 237, 237) 5%, rgba(249, 219, 120, 0.94) 62%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%);
     margin-top: 100px;
     display: flex;
     width: 100vw;
+    max-width: 100%;
+    margin-top: 200px;
     height: auto; 
     padding: 0 10px; 
 }
@@ -30,13 +32,22 @@ body, html {
     height: auto; 
 }
 
+.carousel-div{
+  margin-top: 100px;}
+
 .carouselControlNextIcon, .carouselControlPrevIcon {
     font-size: 2em; 
 }
 
 .categorySection {
+  background-color: rgba(255, 255, 255, 0.202);
+  border-radius: 15px;
+  box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     margin: 10px; 
+}
+.categorySection col{
+  width: 50px;
 }
  
   .main-content {

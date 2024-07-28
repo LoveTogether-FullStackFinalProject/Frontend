@@ -1,6 +1,6 @@
-.footer {
-  position: fixed;
+/* .footer {
   bottom: 0;
+  position:sticky;
   left: 0;
   right: 0;
   width: 100%;
@@ -26,4 +26,4 @@
 .social-media img {
   width: 24px;
   height: 24px;
-}
+} */

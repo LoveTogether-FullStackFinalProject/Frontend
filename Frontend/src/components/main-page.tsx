@@ -124,18 +124,19 @@ function MainPage() {
                 </div>
 
                 <div className="borderBox">
+                    
                     <Carousel
                         nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>}
                         prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
                     >
                         {chunkedRequests.map((chunk, chunkIndex) => (
                             <Carousel.Item key={chunkIndex}>
-                                <Row>
+                                <Row className='carousel-div'>
+                                <h2 className="centerText">מוצרים שאנחנו צריכים</h2>
                                     {chunk.map((request, index) => (
                                         <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName, request.category)}>
                                             <p className="centerText">
                                                 {`${request.itemName}: ${request.amount}`}
-                                                {/* {request.expirationDate && `תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`} */}
                                             </p>
                                             <img src={request.image} alt="Product" className="productImage" />
                                         </Col>

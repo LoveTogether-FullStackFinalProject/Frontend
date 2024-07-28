@@ -16,9 +16,15 @@ body, html {
     margin-top: 200px;
     height: auto; 
     padding: 0 10px; 
+    font-family: 'Assistant', sans-serif;
+}
+
+.row{
+  background-color: #ffffff;
 }
 
 .squareContainer {
+  font-family: 'Assistant', sans-serif;
     width: 90%;
     max-width: 1200px; 
     height: auto; 
@@ -33,18 +39,21 @@ body, html {
 }
 
 .carousel-div{
-  margin-top: 100px;}
+  margin-top: 100px;
+
+}
 
 .carouselControlNextIcon, .carouselControlPrevIcon {
     font-size: 2em; 
 }
 
 .categorySection {
-  background-color: rgba(255, 255, 255, 0.202);
+  background-color: #ffffff;
   border-radius: 15px;
   box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     margin: 10px; 
+    font-family: 'Assistant', sans-serif;
 }
 .categorySection col{
   width: 50px;
@@ -55,6 +64,13 @@ body, html {
     width: 100vw;
 
   }
+
+  .headerText{
+    font-family: 'Assistant', sans-serif;
+    text-align: center;
+  }
+ 
+
  
 
   .centerText-brownText{
@@ -63,7 +79,7 @@ body, html {
     text-align: right;
     margin-bottom: 90px;
     color: rgba(0, 0, 0, 0.918);
-    font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
+    font-family: 'Assistant', sans-serif;
     font-size: 1.2rem;
   }
 
@@ -73,7 +89,7 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-   
+    font-family: 'Assistant', sans-serif;
   }
   
   body > .container {
@@ -85,6 +101,7 @@ body, html {
     text-align: center;
     padding-top: 10px;
     margin-bottom: 20px;
+    font-family: 'Assistant', sans-serif;
   }
   
   .brownText h1 {
@@ -124,7 +141,7 @@ body, html {
   
   .carouselControlNextIcon, .carouselControlPrevIcon {
     color: black; 
-    background-color: white; 
+    background-color: #ffffff; 
     font-size: 70px; 
     padding: 10px;
     border-radius: 50%; 
@@ -167,15 +184,6 @@ body, html {
 }
   
 
-
-  
-  .categoryItem {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    /* background-color: #ffffff; */
-  }
   
   .flexSpaceBetween {
     display: flex;
@@ -196,7 +204,7 @@ body, html {
   
   .donorSection {
     font-size: 2em;
-    color: #F9DA78;
+    color: #000000;
     text-align: center;
   }
   

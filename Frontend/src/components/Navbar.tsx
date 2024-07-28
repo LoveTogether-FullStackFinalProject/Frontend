@@ -76,8 +76,9 @@ export function Navbar() {
           <Nav className="ms-auto">
             {location.pathname === '/mainPage' && !token && !userId ? (
               <div className='navLinkMainpage'>
-                 <BootstrapNavbar.Brand as={Link} to="/mainPage">
-                </BootstrapNavbar.Brand>    
+              <BootstrapNavbar.Brand as={Link} to="/mainPage">
+             <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+             </BootstrapNavbar.Brand>    
                 <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
                 <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
               </div>
@@ -85,8 +86,8 @@ export function Navbar() {
               (userId || token) ? (
                 <div className='navLink'>
                   <BootstrapNavbar.Brand as={Link} to="/mainPage">
-             <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
-             </BootstrapNavbar.Brand>
+                  <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+                  </BootstrapNavbar.Brand>
                   <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
                   {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
                   <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
@@ -95,6 +96,9 @@ export function Navbar() {
                 </div>
               ) : (
                 <div className='navLink'>
+                  <BootstrapNavbar.Brand as={Link} to="/mainPage">
+                  <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+                  </BootstrapNavbar.Brand>  
                   <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
                   <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
                   <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>

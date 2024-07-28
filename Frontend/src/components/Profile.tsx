@@ -21,7 +21,6 @@ const Profile: React.FC = () => {
     const [selectedDonation, setSelectedDonation] = useState<userDonation | null>(null); // Selected donation state
     const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
-
     const fetchData = useCallback(async () => {
         try {
             const { req: userReq } = dataService.getUser(userId!);
@@ -231,7 +230,7 @@ const Profile: React.FC = () => {
                 </div>
                 {filteredDonations.length > itemsToShow && (
                     <button className="show-more" onClick={handleShowMoreClick}>
-                        Show More
+                        הצג עוד
                     </button>
                 )}
             </main>

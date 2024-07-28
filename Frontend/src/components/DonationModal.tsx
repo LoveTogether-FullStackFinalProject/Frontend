@@ -65,11 +65,14 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         <Form.Label>קטגוריה</Form.Label>
                                         <Form.Control as="select" name="category" value={editData.category} onChange={handleChange}>
                                             <option value="">בחר קטגוריה</option>
-                                            <option value="מזון ושתייה">מזון ושתייה</option>
-                                            <option value="אביזרים">אביזרים</option>
-                                            <option value="אלקטרוניקה">אלקטרוניקה</option>
                                             <option value="ביגוד">ביגוד</option>
                                             <option value="הנעלה">הנעלה</option>
+                                            <option value="ציוד לתינוקות">ציוד לתינוקות</option>
+                                            <option value="כלי בית">כלי בית</option>
+                                            <option value="ריהוט">ריהוט</option>
+                                            <option value="מזון ושתייה">מזון ושתייה</option>
+                                            <option value="ספרים">ספרים</option>
+                                            <option value="צעצועים">צעצועים</option>
                                             <option value="אחר">אחר</option>
                                         </Form.Control>
                                     </Form.Group>
@@ -122,6 +125,17 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                             />
                                         </Form.Group>
                                     )}
+                                    {editData.status === 'טרם הגיע לעמותה' && (
+                                        <Form.Group>
+                                            <Form.Label>סניף עמותה</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="branch"
+                                                value={editData.branch}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                    )}
                                 </Form>
                             ) : (
                                 <>
@@ -134,6 +148,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                     )}
                                     {editData.status === 'ממתין לאיסוף מבית התורם' && editData.pickupAddress && (
                                         <p><strong>כתובת לאיסוף:</strong> {editData.pickupAddress}</p>
+                                    )}
+                                    {editData.status === 'טרם הגיע לעמותה' && editData.branch && (
+                                        <p><strong>סניף עמותה:</strong> {editData.branch}</p>
                                     )}
                                 </>
                             )}

@@ -1,186 +1,105 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+.about-page {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
   margin: 0;
   padding: 0;
   width: 100%;
-}
-
-
-
-.header {
+  min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+  background: rgb(169,169,169);
+  background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
+  background-attachment: fixed; /* This ensures the background doesn't scroll */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #000000;
-  color: #fff;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
+  flex-direction: column;
+  align-items: center; /* Centers the content horizontally */
+  justify-content: center; /* Centers the content vertically */
 }
 
-
-.about-header{
-  margin-top: 140px;
-  align-items: center;
-  justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
-  font-weight: 600;
+.background-section, .video-section, .initiatives-section {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%; /* Ensures the sections don't take the full width */
+  max-width: 800px; /* Limits the maximum width */
+  text-align: center; /* Centers text within these sections */
 }
 
-.aboutUsP{
-  margin-top: 25px;
-  font-size: 1.2rem;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
-  font-weight: 600;
+.background-overlay {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.video-container{
-  align-items: right;
-  
-}
-
-.logo {
-  width: 150px;
-}
-
-nav a {
-  margin: 0 15px;
-  color: #fff;
-  text-decoration: none;
-}
-
-.hero-section {
-  border: 1px solid red;
-  background: url('../assets/bgImage.jpg') no-repeat center center;
-  background-size: cover;
-  height: 40vh; /* Adjusted height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
-  width: 100%;
-  position: relative;
-}
-
-.hero-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Slightly darken the background */
-  backdrop-filter: blur(2px); /* Apply blur effect */
-}
-
-.hero-text {
-  position: relative;
-  z-index: 1;
+.about-title {
   font-size: 2.5em;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+  color: #444;
 }
 
-.description-section, .initiatives-section {
-  width: 100%;
-  padding: 50px 20px;
-  background-color: #fff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  direction: rtl; /* Right to left for Hebrew text */
-  text-align: center;
-}
-
-.description-section h2, .initiatives-section h2 {
-  text-align: center;
+.about-subtitle {
+  font-size: 1.2em;
+  color: #666;
   margin-bottom: 20px;
-  color: black;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
-  font-weight: 600;
 }
 
-.description-section p {
-  border: 1px solid blue;
-  font-size: 1.2em; /* Increase font size */
-  line-height: 1.6; /* Increase line height for better readability */
-  margin: 0 auto; /* Center the paragraph */
-  max-width: 800px; /* Limit the width of the paragraph */
+.about-registration {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.about-description {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: bold; /* Makes the text bold */
 }
 
 .video-container {
-  margin: 20px auto;
   max-width: 560px;
+  width: 100%;
+  text-align: center;
 }
 
 .cards-container {
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap; /* Wrap the cards to the next line if they don't fit */
+  flex-wrap: wrap;
 }
 
 .card {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.9); /* Make cards slightly more opaque */
   padding: 20px;
   border-radius: 10px;
-  width: 22%; /* Adjusted card size */
+  width: 40%;
   margin: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0; /* Prevent cards from shrinking */
-  transition: transform 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
-  transform: scale(1.05); /* Scale up the card slightly */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Increase shadow */
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
-  width: 100%; /* Ensure all images take up full width of the card */
-  height: 150px; /* Fixed height for uniformity */
-  object-fit: cover; /* Ensure images cover the area without distortion */
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
-.card-content {
-  text-align: center;
-  margin-top: 10px;
+.card-content h3, .card-content p, .card-content a {
+  margin: 10px 0;
 }
 
 .card-content a {
   color: #000000;
   text-decoration: none;
   font-weight: bold;
-}
-
-
-
-.social-media {
-  margin-top: 10px;
-}
-
-.social-media a img {
-  width: 30px;
-  margin: 0 10px;
-}
-
-.footer .social-media {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.footer .social-media a {
-  margin: 0 10px;
-}
-
-.footer .social-media a img {
-  width: 30px;
-  height: 30px;
 }

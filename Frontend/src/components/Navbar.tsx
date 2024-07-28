@@ -84,9 +84,9 @@ export function Navbar() {
             ) : (
               (userId || token) ? (
                 <div className='navLink'>
-                  <Link to='/mainPage' className="nav-link home-icon">
-                    <MdHome size={"2em"} style={{color:"black"}} />
-                  </Link>
+                  <BootstrapNavbar.Brand as={Link} to="/mainPage">
+             <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+             </BootstrapNavbar.Brand>
                   <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
                   {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
                   <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
@@ -102,9 +102,7 @@ export function Navbar() {
                 </div>
               )
             )}
-             <BootstrapNavbar.Brand as={Link} to="/mainPage">
-             <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
-             </BootstrapNavbar.Brand>
+            
           </Nav>
         </BootstrapNavbar.Collapse>
       </Container>

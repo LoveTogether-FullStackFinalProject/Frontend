@@ -6,7 +6,6 @@ import './Footer.css';
 const Footer: React.FC = () => {
   return (
     <footer className="footer">
-      {/* <p>חפשנו אותנו</p> */}
       <div className="social-media">
         <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
           <img src={facebookLogo} alt="Facebook" />

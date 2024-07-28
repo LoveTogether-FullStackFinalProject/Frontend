@@ -112,30 +112,31 @@ function MainPage() {
                 <div className='body_backgroud'>
                     <div className='image-background-container'></div>
                     <div className="centerText-brownText">
-                        <h2>כמה קל לתרום היום</h2>
+                        <h2 style={{fontFamily:"'Assistant', sans-serif" , fontWeight:"500"}}>כמה קל לתרום היום</h2>
                         <button onClick={handleButtonClick} className="donateButton">
                             לתרומה
                             <i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>
                         </button>
                     </div>
                     <div>
-                        <img src={logo} alt="whitelogo" className='whiteLogo' />
+                        <img src={"/src/assets/whiteLogo.png"} alt="whitelogo" className='whiteLogo' />
                     </div>
                 </div>
 
                 <div className="borderBox">
+                    
                     <Carousel
                         nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>}
                         prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
                     >
                         {chunkedRequests.map((chunk, chunkIndex) => (
                             <Carousel.Item key={chunkIndex}>
-                                <Row>
+                                <Row className='carousel-div'>
+                                <h2 className="headerText">מוצרים שאנחנו צריכים</h2>
                                     {chunk.map((request, index) => (
                                         <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName, request.category)}>
                                             <p className="centerText">
                                                 {`${request.itemName}: ${request.amount}`}
-                                                {/* {request.expirationDate && `תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`} */}
                                             </p>
                                             <img src={request.image} alt="Product" className="productImage" />
                                         </Col>
@@ -181,7 +182,7 @@ function MainPage() {
 
                     <div className="squareContainer flexCenterColumn">
                         <div className="donorHeader">
-                            <h1 className="donorSection">התורמים שלנו</h1>
+                            <h1 className="donorSection">תורמים מובילים</h1>
                             <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
                         </div>
                         <Carousel

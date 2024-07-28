@@ -4,38 +4,59 @@ body, html {
     overflow: hidden;
     background-color: #ffffff;
     width: 100vw;
-    height: auto; /* Adjust height automatically */
-    padding: 0 10px; /* Add padding for better responsiveness */
+    height: auto; 
+    padding: 0 10px; 
   }
   .body_backgroud {
-    background: linear-gradient(90deg, rgba(0,0,0,1) 5%, rgba(249,218,120,1) 62%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%);
     margin-top: 100px;
     display: flex;
-    width: 100%;
-    height: auto; /* Adjust height automatically */
-    padding: 0 10px; /* Add padding for better responsiveness */
+    width: 100vw;
+    max-width: 100%;
+    margin-top: 200px;
+    height: auto; 
+    padding: 0 10px; 
+    font-family: 'Assistant', sans-serif;
+}
+
+.row{
+  background-color: #ffffff;
 }
 
 .squareContainer {
+  font-family: 'Assistant', sans-serif;
     width: 90%;
-    max-width: 1200px; /* Limit the maximum width */
-    height: auto; /* Let height adjust according to content */
-    margin: 20px auto; /* Center container and add vertical spacing */
+    max-width: 1200px; 
+    height: auto; 
+    margin: 20px auto; 
     border: 2px solid black;
+    display: flex;
 }
 
 .productImage {
-    max-width: 100%; /* Ensure images fit within their container */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; 
+    height: auto; 
+}
+
+.carousel-div{
+  margin-top: 100px;
+
 }
 
 .carouselControlNextIcon, .carouselControlPrevIcon {
-    font-size: 2em; /* Adjust size as needed */
+    font-size: 2em; 
 }
 
 .categorySection {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
-    margin: 10px; /* Add margin for spacing */
+    margin: 10px; 
+    font-family: 'Assistant', sans-serif;
+}
+.categorySection col{
+  width: 50px;
 }
  
   .main-content {
@@ -43,6 +64,13 @@ body, html {
     width: 100vw;
 
   }
+
+  .headerText{
+    font-family: 'Assistant', sans-serif;
+    text-align: center;
+  }
+ 
+
  
 
   .centerText-brownText{
@@ -51,7 +79,7 @@ body, html {
     text-align: right;
     margin-bottom: 90px;
     color: rgba(0, 0, 0, 0.918);
-    font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;;
+    font-family: 'Assistant', sans-serif;
     font-size: 1.2rem;
   }
 
@@ -61,7 +89,7 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-   
+    font-family: 'Assistant', sans-serif;
   }
   
   body > .container {
@@ -73,10 +101,11 @@ body, html {
     text-align: center;
     padding-top: 10px;
     margin-bottom: 20px;
+    font-family: 'Assistant', sans-serif;
   }
   
   .brownText h1 {
-    color: #F9DA78;
+    color: #000000;
   }
   
   .borderBox {
@@ -96,19 +125,23 @@ body, html {
     margin-top: 57px;
   }
   .productImage {
-    max-width: 100%; /* Ensure images fit within their container */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; 
+    height: auto; 
   }
 
-  .whiteLogo{
-    width: 500px;
-    margin-right: 70rem;
-    margin-top: 20px;
+  .whiteLogo {
+    width: 100%; 
+    max-width: 400px; 
+    height: auto; 
+    margin-right: 700px; 
+    margin-top: 50px; 
   }
+  
+
   
   .carouselControlNextIcon, .carouselControlPrevIcon {
     color: black; 
-    background-color: white; 
+    background-color: #ffffff; 
     font-size: 70px; 
     padding: 10px;
     border-radius: 50%; 
@@ -151,15 +184,6 @@ body, html {
 }
   
 
-
-  
-  .categoryItem {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    /* background-color: #ffffff; */
-  }
   
   .flexSpaceBetween {
     display: flex;
@@ -180,7 +204,7 @@ body, html {
   
   .donorSection {
     font-size: 2em;
-    color: #F9DA78;
+    color: #000000;
     text-align: center;
   }
   

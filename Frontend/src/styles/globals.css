@@ -6,8 +6,6 @@ html, body, #root {
 
 body {
   font-family: Arial, sans-serif;
-  background: rgb(169,169,169);
-  background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
   background-attachment: fixed; /* This ensures the background doesn't scroll */
   overflow-y: auto;
 }
@@ -27,7 +25,7 @@ body {
 .main-content {
   flex: 1;
   padding: 20px;
-  padding-bottom: 100px; /* Increase this value to ensure content doesn't hide behind the footer */
+  padding-bottom: 100px; Increase this value to ensure content doesn't hide behind the footer
 }
 
 .container {

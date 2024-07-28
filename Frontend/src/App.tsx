@@ -30,7 +30,7 @@ const App = () => {
        <div className="App">
         <div className="main-content">
         <Router>
-             <Footer />
+            
             <Navbar user={user} setUser={setUser} googleSignIn={false} />
             
             <Routes>

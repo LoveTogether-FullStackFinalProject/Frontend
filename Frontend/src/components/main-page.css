@@ -2,26 +2,51 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    width: 100%;
-  }
-
-  .main-content {
-    width: 100%;
-
+    background-color: #ffffff;
+    width: 100vw;
+    height: auto; /* Adjust height automatically */
+    padding: 0 10px; /* Add padding for better responsiveness */
   }
   .body_backgroud {
-    background: rgb(169,169,169);
-    background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 5%, rgba(249,218,120,1) 62%, rgba(255,255,255,1) 100%);
     margin-top: 100px;
     display: flex;
     width: 100%;
+    height: auto; /* Adjust height automatically */
+    padding: 0 10px; /* Add padding for better responsiveness */
+}
+
+.squareContainer {
+    width: 90%;
+    max-width: 1200px; /* Limit the maximum width */
+    height: auto; /* Let height adjust according to content */
+    margin: 20px auto; /* Center container and add vertical spacing */
+    border: 2px solid black;
+}
+
+.productImage {
+    max-width: 100%; /* Ensure images fit within their container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.carouselControlNextIcon, .carouselControlPrevIcon {
+    font-size: 2em; /* Adjust size as needed */
+}
+
+.categorySection {
+    text-align: center;
+    margin: 10px; /* Add margin for spacing */
+}
+ 
+  .main-content {
+    background-color: #ffffff;
     width: 100vw;
-    margin-bottom: 300px;
-    height: 50vh;
+
   }
+ 
 
   .centerText-brownText{
-    margin-right: 100px;
+    margin-right: 300px;
     margin-top: 100px;
     text-align: right;
     margin-bottom: 90px;
@@ -71,9 +96,8 @@ body, html {
     margin-top: 57px;
   }
   .productImage {
-    width: 200px;
-    height: 200px;
-    background-image: none;
+    max-width: 100%; /* Ensure images fit within their container */
+    height: auto; /* Maintain aspect ratio */
   }
 
   .whiteLogo{
@@ -95,6 +119,9 @@ body, html {
     width: 50px; 
     height: 50px;
 }
+
+
+
 .donateButton {
   width: auto;
   padding: 15px 30px; 
@@ -192,7 +219,7 @@ body, html {
 
 
    .squareContainer {
-    width: 100%;
+    width: 100vw;
     padding: 20px;
     margin-bottom: 5px;
     margin-top: 10px;
@@ -217,7 +244,7 @@ body, html {
 
 
   .carouselItem {
-    width: 100%;
+    width: 100vw;
     height: 100%;
     display: flex;
     justify-content: center;

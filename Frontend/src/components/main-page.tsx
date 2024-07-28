@@ -7,6 +7,7 @@ import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
 import person from './../assets/person.png';
+import logo from './../assets/logoWithoutBackground.png';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './main-page.css';
 
@@ -118,7 +119,7 @@ function MainPage() {
                         </button>
                     </div>
                     <div>
-                        <img src="src/assets/whiteLogo.png" alt="whitelogo" className='whiteLogo' />
+                        <img src={logo} alt="whitelogo" className='whiteLogo' />
                     </div>
                 </div>
 
@@ -131,10 +132,10 @@ function MainPage() {
                             <Carousel.Item key={chunkIndex}>
                                 <Row>
                                     {chunk.map((request, index) => (
-                                        <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName,request.category)}>
+                                        <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName, request.category)}>
                                             <p className="centerText">
                                                 {`${request.itemName}: ${request.amount}`}
-                                                {request.expirationDate && `תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`}
+                                                {/* {request.expirationDate && `תאריך תפוגה: ${new Date(request.expirationDate).toLocaleDateString('he-IL')}`} */}
                                             </p>
                                             <img src={request.image} alt="Product" className="productImage" />
                                         </Col>

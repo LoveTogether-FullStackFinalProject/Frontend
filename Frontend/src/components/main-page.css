@@ -13,7 +13,7 @@ body, html {
   background: linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%);
   margin-top: 100px;
   display: flex;
-  width: 100vw;
+  width: 100%;
   max-width: 100%;
   margin-top: 200px;
   height: auto; 

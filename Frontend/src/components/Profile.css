@@ -6,6 +6,37 @@ body {
   overflow: hidden; 
 }
 
+.Avatar-profile{
+  margin-left: 20px;
+}
+
+.search-bar{
+  margin-top: 50px;
+  font-family: 'Assistant', sans-serif;
+
+}
+
+.search-input{
+  border-radius: 15px  #000000;
+  font-family: 'Assistant', sans-serif;
+
+}
+
+.profile-header{
+  font-family: 'Assistant', sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.profile-page{
+  margin-top: 150px;
+}
+
+
+.rating-status{
+  margin-top: 60px;
+}
+
 .profile-content{
   margin-bottom: 300px;
 }
@@ -34,6 +65,7 @@ nav a {
 
 
 .tabs {
+  margin-top: 50px;
   border: 8px;
   box-shadow: black;
   color: black;
@@ -43,51 +75,56 @@ nav a {
   width: 100%;
   direction: rtl;
   text-align: right;
+  font-family: 'Assistant', sans-serif;
 }
 
 .tabs button {
   margin-top: 1opx;
   padding: 10px 20px;
   border: none;
-  background-color: #F9DA78;
+  background-color: #f9db78c9;
   cursor: pointer;
   transition: background-color 0.3s;
   direction: rtl;
   text-align: right;
-  -webkit-text-stroke-width: 0.5px;
+  font-family: 'Assistant', sans-serif;
+  -webkit-text-stroke-width: 0.4px;
 }
 
 .tabs button.active, .tabs button:hover {
-  background-color: #F9DA78;
+  background-color: #f9db78c9;
   color: black;
   text-shadow: black;
-  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-width: 0.4px;
   direction: rtl;
   text-align: right;
+  font-family: 'Assistant', sans-serif;
 }
 
 .donations-list {
-  margin-top: 30px;
+  margin-top: 70px;
   display: flex;
   gap: 20px;
   justify-content: right;
-  min-height: auto;/* Adjust this value as needed */
+  min-height: auto;
   direction: rtl;
   text-align: right;
 }
 
 .donation-card {
-  background-color: #eee9e8;
+  background-color: #ffffff;
   padding: 15px; /* Adjust padding as needed */
   border-radius: 10px;
   width: calc(33.33% - 16px); /* Slightly wider card */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
   overflow: hidden;
+  font-family: 'Assistant', sans-serif;
+
 }
 
 .donation-card img {
@@ -198,6 +235,7 @@ nav a {
 
 .rating-status {
   font-weight: bold;
+  font-family: 'Assistant', sans-serif;
   color: rgb(0, 0, 0);
   font-size: 1.5em;
 }
@@ -206,10 +244,9 @@ nav a {
 .no-donations-container {
   text-align: center; 
   padding: 20px;
-  background-color: #fff3cd; 
-  border: 1px solid #ffeeba; 
+  background-color: #ffffff; 
   border-radius: 8px; 
-  color: #856404; 
+  color: #ffffff; 
   width: 80%; 
   margin-left: auto; 
   margin-right: auto; 

@@ -123,15 +123,15 @@ function MainPage() {
                     </div>
                 </div>
 
-                <div className="borderBox">
+                
                     
-                    <Carousel
+                    <Carousel className='carousel'
                         nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>}
                         prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
                     >
                         {chunkedRequests.map((chunk, chunkIndex) => (
                             <Carousel.Item key={chunkIndex}>
-                                <Row className='carousel-div'>
+                                <Row style={{backgroundColor:"#ffffff"}}>
                                 <h2 className="headerText">מוצרים שאנחנו צריכים</h2>
                                     {chunk.map((request, index) => (
                                         <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName, request.category)}>
@@ -145,7 +145,7 @@ function MainPage() {
                             </Carousel.Item>
                         ))}
                     </Carousel>
-                </div>
+             
 
                 <div className="flexSpaceBetween">
                     <div className="squareContainer flexCenterColumn">

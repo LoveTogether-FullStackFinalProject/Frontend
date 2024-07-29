@@ -57,6 +57,7 @@ export function Navbar() {
   return (
     <BootstrapNavbar 
       style={{
+        fontFamily: "Rubik, sans-serif",
         backgroundColor: 'white',
         boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
         position: "fixed",

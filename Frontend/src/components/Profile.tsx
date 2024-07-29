@@ -21,6 +21,7 @@ const Profile: React.FC = () => {
     const [showModal, setShowModal] = useState(false); // Modal state
     const [selectedDonation, setSelectedDonation] = useState<userDonation | null>(null); // Selected donation state
     const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
+    const [sortOption, setSortOption] = useState('newest'); // Add state for sort option
     const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
 
@@ -166,6 +167,10 @@ const Profile: React.FC = () => {
         setShowModal(true);
     };
 
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOption(e.target.value);
+    };
+
     function updateRating(donations: number) {
         if (donations >= 20) {
           return "⭐⭐⭐⭐⭐";
@@ -221,6 +226,10 @@ const Profile: React.FC = () => {
                         value={searchQuery} 
                         onChange={(e) => setSearchQuery(e.target.value)} 
                     />
+                     <select value={sortOption} onChange={handleSortChange}>
+                        <option value="newest">החדשות ביותר</option>
+                        <option value="oldest">הישנות ביותר</option>
+                    </select>
                 </div>
 
                 <div className="donations-list">

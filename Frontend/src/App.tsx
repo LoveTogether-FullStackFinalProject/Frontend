@@ -14,7 +14,7 @@ import ManageRequestedDonations from './components/ManageRequestedDonations';
 import NewLiveDonation from './components/newLiveDonation';
 import ManageMainPageUsers from './components/ManageMainPageUsers';
 import EditRequestedProduct from './components/edit-requested-product';
-import { Navbar } from "./components//Navbar";
+import {Navbar} from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';
 import Footer from './components/Footer'

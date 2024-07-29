@@ -1,56 +1,229 @@
 body, html {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #ffffff;
-    width: 100vw;
-    height: auto; 
-    padding: 0 10px; 
-  }
-  .body_backgroud {
-    background: linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%);
-    margin-top: 100px;
-    display: flex;
-    width: 100vw;
-    max-width: 100%;
-    margin-top: 200px;
-    height: auto; 
-    padding: 0 10px; 
-    font-family: 'Assistant', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  width: 100%;
+  height: auto; 
+  padding: 0 10px; 
+  font-family: 'Assistant', sans-serif;
 }
 
-.row{
-  background-color: #ffffff;
+.body_backgroud {
+  background: linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%);
+  margin-top: 100px;
+  display: flex;
+  width: 100vw;
+  max-width: 100%;
+  margin-top: 200px;
+  height: auto; 
+  padding: 0 10px; 
 }
 
 .squareContainer {
-  font-family: 'Assistant', sans-serif;
-    width: 90%;
-    max-width: 1200px; 
-    height: auto; 
-    margin: 20px auto; 
-    border: 2px solid black;
-    display: flex;
+  width: 90%;
+  max-width: 1200px; 
+  height: auto; 
+  margin: 20px auto; 
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 5px;
+  margin-top: 100px;
+  width: 750px; 
+  height: 550px; 
+  border: none; 
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
 }
 
 .productImage {
-    max-width: 100%; 
-    height: auto; 
+  max-width: 100%; 
+  height: auto; 
 }
 
-.carousel-div{
+.carousel-div {
   margin-top: 100px;
-
+  width: 100%;
 }
 
 .carouselControlNextIcon, .carouselControlPrevIcon {
-    font-size: 2em; 
+  font-size: 2em; 
 }
 
 .categorySection {
   background-color: #ffffff;
   border-radius: 15px;
-  box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  margin: 10px; 
+  margin-top: 57px;
+}
+
+.main-content {
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.headerText {
+  text-align: center;
+}
+
+.centerText-brownText {
+  margin-right: 300px;
+  margin-top: 100px;
+  text-align: right;
+  margin-bottom: 90px;
+  color: rgba(0, 0, 0, 0.918);
+  font-size: 1.2rem;
+}
+
+.centerText {
+  text-align: center;
+  padding-top: 10px;
+  margin-bottom: 20px;
+}
+
+.carousel {
+  margin-top: 100px;
+  background-color: #ffffff;
+}
+
+.whiteLogo {
+  width: 100%; 
+  max-width: 400px; 
+  height: auto; 
+  margin-right: 700px; 
+  margin-top: 50px; 
+}
+
+.donateButton {
+  width: auto;
+  padding: 15px 30px; 
+  display: inline-flex;
+  align-items: right;
+  border-radius: 15px;
+  color: #000000; 
+  font-weight: bold;
+  margin-top: 80px;
+  float: right;
+  text-align: center; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+  cursor: pointer; 
+  transition: transform 0.3s, box-shadow 0.3s; 
+}
+
+.donorDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.donorItem {
+  margin: 40px;
+  padding: 40px;
+}
+
+.donorImage {
+  width: 140px;
+  height: 140px;
+}
+
+.carouselItem {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 1024px) {
+  .squareContainer {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .whiteLogo {
+      margin-right: auto;
+      margin-left: auto;
+  }
+
+  .centerText-brownText {
+      margin-right: 0;
+      text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .squareContainer {
+      width: 95%;
+      height: auto;
+  }
+
+  .donorItem {
+      margin: 20px;
+      padding: 20px;
+  }
+
+  .donorImage {
+      width: 120px;
+      height: 120px;
+  }
+
+  .whiteLogo {
+      max-width: 300px;
+  }
+
+  .donateButton {
+      float: none;
+      margin: 80px auto 0;
+      display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body, html {
+      font-size: 14px;
+  }
+
+  .squareContainer {
+      width: 100%;
+      padding: 10px;
+      margin-left: 0;
+      margin-right: 0;
+  }
+
+  .donorItem {
+      margin: 10px;
+      padding: 10px;
+  }
+
+  .donorImage {
+      width: 100px;
+      height: 100px;
+  }
+
+  .whiteLogo {
+      max-width: 200px;
+  }
+
+  .carouselControlNextIcon,
+  .carouselControlPrevIcon {
+      font-size: 1.5em;
+  }
+}
+
+.categorySection {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow:  0 0 10px rgba(0, 0, 0, 0.4);
     text-align: center;
     margin: 10px; 
     font-family: 'Assistant', sans-serif;
@@ -107,18 +280,24 @@ body, html {
   .brownText h1 {
     color: #000000;
   }
+  .carousel{
+    margin-top: 100px;
+    background-color: #ffffff;
+  }
+
+  
   
   .borderBox {
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    background-color: #ffffff;
+    background-color: #723333;
     margin-bottom: 20px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0);
   }
   
   .categorySection{
@@ -137,6 +316,7 @@ body, html {
     margin-top: 50px; 
   }
   
+
 
   
   .carouselControlNextIcon, .carouselControlPrevIcon {
@@ -246,14 +426,16 @@ body, html {
     width: 100vw;
     padding: 20px;
     margin-bottom: 5px;
-    margin-top: 10px;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 750px; 
     height: 550px; 
-    border: 2px solid black; 
+    border: none; 
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
     margin-left: 100px;
     margin-right: 100px;
   }

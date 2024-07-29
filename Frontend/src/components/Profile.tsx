@@ -6,6 +6,7 @@ import './Profile.css';
 import { userDonation } from './userDonation';
 import { DonorData } from './donorData';
 import DonationModal from './DonationModal'; // Import the new modal component
+import { Avatar } from '@mui/material';
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<DonorData | null>(null);
@@ -19,8 +20,10 @@ const Profile: React.FC = () => {
     const [editableDonation, setEditableDonation] = useState<Partial<userDonation>>({});
     const [showModal, setShowModal] = useState(false); // Modal state
     const [selectedDonation, setSelectedDonation] = useState<userDonation | null>(null); // Selected donation state
+    const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
     const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
+
     const fetchData = useCallback(async () => {
         try {
             const { req: userReq } = dataService.getUser(userId!);
@@ -64,7 +67,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         filterDonations();
-    }, [donations, activeTab, itemsToShow]);
+    }, [donations, activeTab, itemsToShow, searchQuery]); // Include searchQuery in dependencies
 
     useEffect(() => {
         if (user) {
@@ -76,16 +79,17 @@ const Profile: React.FC = () => {
     const filterDonations = () => {
         console.log('Filtering donations with activeTab:', activeTab);
         const filtered = donations.filter((donation) => {
+            const matchesSearchQuery = donation.itemName.toLowerCase().includes(searchQuery.toLowerCase());
             switch (activeTab) {
                 case 'אושר':
-                    return donation.approvedByAdmin === 'true';
+                    return donation.approvedByAdmin === 'true' && matchesSearchQuery;
                 case 'ממתין לאישור':
-                    return donation.approvedByAdmin === 'false';
+                    return donation.approvedByAdmin === 'false' && matchesSearchQuery;
                 case 'טרם נמסר':
-                    return donation.status !== 'הגיע לעמותה' && donation.status !== 'נמסר';
+                    return donation.status !== 'הגיע לעמותה' && donation.status !== 'נמסר' && matchesSearchQuery;
                 case 'all':
                 default:
-                    return true;
+                    return matchesSearchQuery;
             }
         });
         console.log('Filtered donations:', filtered);
@@ -183,14 +187,15 @@ const Profile: React.FC = () => {
     return (
         <div className="profile-page">        
             <div className="user-info">
-                    <img src="../assets/person1.png" alt="User Avatar" className="avatar" />
-                    <span>שלום, {user.firstName} {user.lastName}</span>
-                </div> 
+                <Avatar className='Avatar-profile' alt="Remy Sharp" src={user.image} />
+                <span className='profile-header'>שלום, {user.firstName} {user.lastName}</span>
+            </div>
 
             <main className="profile-content">
-                <div className="rating-status" style={{direction:"rtl"}}>
-                     דירוג: {user.rating ?? 0}
+                <div className="rating-status" style={{ direction: "rtl" }}>
+                    דירוג משתמש: {user.rating ?? 0}
                 </div>
+
                 
 
                 <div className="tabs">
@@ -206,6 +211,16 @@ const Profile: React.FC = () => {
                             {tab === 'all' && 'כל התרומות'}
                         </button>
                     ))}
+                </div>
+
+                <div className="search-bar">
+                    <input 
+                        className='search-input'
+                        type="text" 
+                        placeholder="חפש תרומה..." 
+                        value={searchQuery} 
+                        onChange={(e) => setSearchQuery(e.target.value)} 
+                    />
                 </div>
 
                 <div className="donations-list">

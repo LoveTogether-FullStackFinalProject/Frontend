@@ -1,14 +1,17 @@
 .modal-dialog {
     margin: 1.75rem auto;
     max-width: 400px;
+
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 8px;
     border: 1px solid #909188;
     overflow: hidden;
 }
+
+
 
 .modal-header {
     background-color: #909188;
@@ -42,7 +45,7 @@
 .modal-footer {
     background-color: #f8f9fa;
     padding: 0.75rem 1rem;
-    border-top: 1px solid #dee2e6;
+    border-top: 1px solid #5595d5;
 }
 
 .modal-footer button {

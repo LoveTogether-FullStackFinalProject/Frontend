@@ -206,6 +206,7 @@ const ManageDonationPage: React.FC = () => {
                 תיאור
               </TableSortLabel>
             </th>
+
             <th>
               <TableSortLabel
                 active={orderBy === 'status'}
@@ -214,7 +215,10 @@ const ManageDonationPage: React.FC = () => {
               >
                 סטטוס
               </TableSortLabel>
-            </th>
+            
+              
+              
+            </th>            
             <th>
               <TableSortLabel
                 active={orderBy === 'approvedByAdmin'}
@@ -224,6 +228,7 @@ const ManageDonationPage: React.FC = () => {
                 אושר ע"י מנהל
               </TableSortLabel>
             </th>
+            
             <th>
               <TableSortLabel
                 active={orderBy === 'createdAt'}

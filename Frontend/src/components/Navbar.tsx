@@ -3,15 +3,14 @@ import { useLocation, Link } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
-import { MdHome } from "react-icons/md";
-import dataService from '../services/data-service'; // Assuming this is your data fetching service
+import dataService from '../services/data-service';
 import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
 
 export function Navbar() {
   const [userId, setUserId] = useState(localStorage.getItem("userID"));
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
-  const [isAdmin, setIsAdmin] = useState(false); // State to track admin status
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -54,6 +53,8 @@ export function Navbar() {
     window.dispatchEvent(new Event('authChange'));
   }
 
+  const isLoggedIn = userId && token;
+
   return (
     <BootstrapNavbar 
       style={{
@@ -75,39 +76,23 @@ export function Navbar() {
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {location.pathname === '/mainPage' && !token && !userId ? (
-              <div className='navLinkMainpage'>
-              <BootstrapNavbar.Brand as={Link} to="/mainPage">
-             <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
-             </BootstrapNavbar.Brand>    
-                <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
-                <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
+            <BootstrapNavbar.Brand as={Link} to="/mainPage">
+              <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+            </BootstrapNavbar.Brand>
+            {isLoggedIn ? (
+              <div className='navLink'>
+                <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
+                <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
+                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
+                {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
               </div>
             ) : (
-              (userId || token) ? (
-                <div className='navLink'>
-                  <BootstrapNavbar.Brand as={Link} to="/mainPage">
-                  <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
-                  </BootstrapNavbar.Brand>
-                  <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-                  {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
-                  <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-                  <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-                  <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-                </div>
-              ) : (
-                <div className='navLink'>
-                  <BootstrapNavbar.Brand as={Link} to="/mainPage">
-                  <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
-                  </BootstrapNavbar.Brand>  
-                  <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
-                  <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
-                  <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-                  <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-                </div>
-              )
+              <div className='navLink'>
+                <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
+                <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
+              </div>
             )}
-            
           </Nav>
         </BootstrapNavbar.Collapse>
       </Container>

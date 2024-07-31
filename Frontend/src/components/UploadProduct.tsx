@@ -181,17 +181,7 @@ const UploadProduct: React.FC = () => {
   };
 
   if (!isLoggedIn) {
-    return (
-      <div className="error-container">
-        <div className="error-title">תרומת מוצר - עמותת ואהבתם ביחד</div>
-        <div className="error-message">
-          על מנת להעלות פריט לתרומה, יש לבצע הרשמה לאתר
-        </div>
-        <button className="login-button" onClick={() => navigate('/login')}>
-          Login
-        </button>
-      </div>
-    );
+    navigate('/login');
   }
 
   return (

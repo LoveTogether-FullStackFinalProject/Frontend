@@ -385,7 +385,7 @@ const UploadProduct: React.FC = () => {
             </div>
           )}
           {errors.image && (
-            <div className="invalid-feedback">{errors.image.message}</div>
+            <div className="error-message" style={{ marginRight: '600px' }}>יש להעלות תמונה</div>
           )}
         </div>
 

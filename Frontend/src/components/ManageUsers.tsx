@@ -23,6 +23,7 @@ import {
 import { Edit, Delete, Search } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   _id: string;
@@ -47,6 +48,7 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof User>('firstName');
   const [filter, setFilter] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();
@@ -151,6 +153,27 @@ const ManageUsers: React.FC = () => {
   };
 
   const sortedAndFilteredUsers = applySortAndFilter(users);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+     useEffect(() => {
+       const userId = localStorage.getItem('userID');
+       if (userId) {
+         dataService.getUser(userId).req.then((res) => {
+           setIsAdmin(res.data.isAdmin);
+           console.log("isAdmin:", res.data.isAdmin);
+         });
+       }
+     }, []);
+
+
+     if (!isAdmin) {
+      return (
+          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+        </div>
+      );
+    }
 
   return (
     <div className="container">

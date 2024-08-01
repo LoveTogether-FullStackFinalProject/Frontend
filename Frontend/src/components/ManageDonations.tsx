@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from '../services/data-service';
 import {
   Table,
@@ -47,6 +48,7 @@ const ManageDonationPage: React.FC = () => {
   const [orderBy, setOrderBy] = useState<keyof Donation>('category');
   const [filter, setFilter] = useState<string>('');
   const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
@@ -148,6 +150,27 @@ const ManageDonationPage: React.FC = () => {
   };
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
+
+  const [isAdmin, setIsAdmin] = useState(false);
+     useEffect(() => {
+       const userId = localStorage.getItem('userID');
+       if (userId) {
+         dataService.getUser(userId).req.then((res) => {
+           setIsAdmin(res.data.isAdmin);
+           console.log("isAdmin:", res.data.isAdmin);
+         });
+       }
+     }, []);
+
+
+     if (!isAdmin) {
+      return (
+          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+        </div>
+      );
+    }
 
   return (
     <div className="manage-donations-page">
@@ -260,15 +283,21 @@ const ManageDonationPage: React.FC = () => {
                     {donation.status}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'ממתין לאיסוף מבית התורם')}>
+                      ממתין לאיסוף מבית התורם 
+                    </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'הגיע לעמותה')}>
                       הגיע לעמותה
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר')}>
+                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא הגיע לעמותה')}>
+                      לא הגיע לעמותה
+                    </Dropdown.Item>
+                    {/* <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר')}>
                       נמסר
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא נמסר')}>
                       לא נמסר
-                    </Dropdown.Item>
+                    </Dropdown.Item> */}
                   </Dropdown.Menu>
                 </Dropdown>
               </td>

@@ -19,6 +19,7 @@ export interface userDonation {
   status: string;
   approvedByAdmin?: boolean | string;
   image?: string;
+  createdAt: string;
 }
 
 export default userDonation;

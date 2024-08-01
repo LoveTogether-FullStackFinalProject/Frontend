@@ -169,6 +169,16 @@ const Profile: React.FC = () => {
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortOption(e.target.value);
+        const sortedDonations = [...donations].sort((a, b) => {
+            if (sortOption === 'newest') {
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            } else if (sortOption === 'oldest') {
+                return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            }
+            return 0;
+        });
+    
+        setDonations(sortedDonations);
     };
 
     function updateRating(donations: number) {
@@ -212,7 +222,7 @@ const Profile: React.FC = () => {
                         >
                             {tab === 'אושר' && 'תרומות שאושרו'}
                             {tab === 'ממתין לאישור' && 'תרומות שלא אושרו'}
-                            {tab === 'טרם נמסר' && 'תרומות שטרם הגיעו'}
+                            {tab === 'טרם נמסר' && ' תרומות שטרם הגיעו לעמותה'}
                             {tab === 'all' && 'כל התרומות'}
                         </button>
                     ))}

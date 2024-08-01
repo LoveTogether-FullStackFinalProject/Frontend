@@ -118,7 +118,28 @@ const NewLiveDonation: React.FC = () => {
       );
     }
   };
+ 
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+        console.log("isAdmin:", res.data.isAdmin);
+      });
+    }
+  }, []);
 
+
+  if (!isAdmin) {
+   return (
+       <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+       <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+       <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+     </div>
+   );
+ }
+ 
+//לא מציג את השגיאה
   if (!isAdmin) {
     return (
       <div className="error-container">
@@ -127,6 +148,7 @@ const NewLiveDonation: React.FC = () => {
       </div>
     );
   }
+  
 
   return (
     <div className="new-live-donation-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

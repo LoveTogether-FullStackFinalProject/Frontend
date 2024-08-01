@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './AdminDashboard.css';
 import dataService, { CanceledError } from "../services/data-service";
 import { DonorData } from './donorData';
+import { useNavigate } from 'react-router-dom';
 import {
   Table,
   Button,
@@ -25,7 +26,7 @@ const ManageMainPageUsers = () => {
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
   const [buttonLabels, setButtonLabels] = useState<{ [key: string]: string }>({});
- 
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -74,6 +75,28 @@ const ManageMainPageUsers = () => {
         dataService.updateUser(donor._id, { isPublished: isPublished });
   
       };
+
+      const [isAdmin, setIsAdmin] = useState(false);
+     useEffect(() => {
+       const userId = localStorage.getItem('userID');
+       if (userId) {
+         dataService.getUser(userId).req.then((res) => {
+           setIsAdmin(res.data.isAdmin);
+           console.log("isAdmin:", res.data.isAdmin);
+         });
+       }
+     }, []);
+
+
+     if (!isAdmin) {
+      return (
+          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+        </div>
+      );
+    }
+
 
       return (
         <div className="container mt-4">
@@ -130,7 +153,7 @@ const ManageMainPageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedAndFilteredDonors.filter(donor => donor.rating === "1").map((donor) => (
+              {sortedAndFilteredDonors.filter(donor => donor.rating === "⭐⭐⭐⭐⭐").map((donor) => (
                 <tr key={donor._id}>
                   <td>{donor.firstName}</td>
                   <td>{donor.lastName}</td>

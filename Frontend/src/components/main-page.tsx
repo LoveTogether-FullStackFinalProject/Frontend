@@ -104,7 +104,7 @@ function MainPage() {
     ).flat();
 
     const chunkedRequests = chunkArray(requests, 3);
-    const donorChunks = chunkArray(users.filter(user => user.rating === "1" && user.isPublished), 2);
+    const donorChunks = chunkArray(users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished), 2);
 
     return (
         <>

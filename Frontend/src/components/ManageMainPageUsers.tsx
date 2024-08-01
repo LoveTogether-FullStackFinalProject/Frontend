@@ -26,7 +26,6 @@ const ManageMainPageUsers = () => {
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
   const [buttonLabels, setButtonLabels] = useState<{ [key: string]: string }>({});
-  const [pendingChanges, setPendingChanges] = useState<DonorData[]>([]);
   const navigate = useNavigate();
 
 

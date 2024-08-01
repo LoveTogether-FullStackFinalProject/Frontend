@@ -260,15 +260,21 @@ const ManageDonationPage: React.FC = () => {
                     {donation.status}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'ממתין לאיסוף מבית התורם')}>
+                      ממתין לאיסוף מבית התורם 
+                    </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'הגיע לעמותה')}>
                       הגיע לעמותה
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר')}>
+                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא הגיע לעמותה')}>
+                      לא הגיע לעמותה
+                    </Dropdown.Item>
+                    {/* <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר')}>
                       נמסר
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא נמסר')}>
                       לא נמסר
-                    </Dropdown.Item>
+                    </Dropdown.Item> */}
                   </Dropdown.Menu>
                 </Dropdown>
               </td>

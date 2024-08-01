@@ -23,6 +23,7 @@ import {
 import { Edit, Delete, Search } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   _id: string;
@@ -47,6 +48,7 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof User>('firstName');
   const [filter, setFilter] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();

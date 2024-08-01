@@ -26,6 +26,7 @@ const ManageMainPageUsers = () => {
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
   const [buttonLabels, setButtonLabels] = useState<{ [key: string]: string }>({});
+  const [pendingChanges, setPendingChanges] = useState<DonorData[]>([]);
   const navigate = useNavigate();
 
 
@@ -153,7 +154,7 @@ const ManageMainPageUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedAndFilteredDonors.filter(donor => donor.rating === "1").map((donor) => (
+              {sortedAndFilteredDonors.filter(donor => donor.rating === "⭐⭐⭐⭐⭐").map((donor) => (
                 <tr key={donor._id}>
                   <td>{donor.firstName}</td>
                   <td>{donor.lastName}</td>

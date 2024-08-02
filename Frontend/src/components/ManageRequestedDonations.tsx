@@ -3,6 +3,8 @@ import './AdminDashboard.css';
 import dataService, { CanceledError } from "../services/data-service";
 import {requestedDonation} from "../services/upload-requested-product-service";
 import { Donation } from './donation';
+import {Delete} from '@mui/icons-material';
+import { IconButton,} from '@mui/material';
 import {
   Table,
   Button,
@@ -190,20 +192,15 @@ const ManageRequestedDonations = () => {
                   <td>{donation.itemCondition}</td>
                   <td>{donation.description}</td>
                   <td>
-                  {/* <Button onClick={() => handleUpdatePlus(donation._id!, donation.amount)}>
-               +
-              </Button> */}
-              {donation.amount}
-              {/* {donation.amount > 1 && (
-                <Button onClick={() => handleUpdateMinus(donation._id!, donation.amount)}>
-                    -
-                </Button>
-                )} */}
+                  {donation.amount}
                   </td>
                   <td>
-              <Button variant="danger" onClick={() => handleDelete(donation._id!)}>
+                  <IconButton color="secondary"  sx={{ color: 'red' }} onClick={() =>handleDelete(donation._id!)}>
+                    <Delete />
+                  </IconButton>
+              {/* <Button variant="danger" onClick={() => handleDelete(donation._id!)}>
                 מחיקה
-              </Button>
+              </Button> */}
             </td>
             <td>
                 <Button

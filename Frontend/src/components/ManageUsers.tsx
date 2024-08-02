@@ -23,6 +23,7 @@ import {
 import { Edit, Delete, Search } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
+
 import { useNavigate } from 'react-router-dom';
 
 interface User {
@@ -30,7 +31,7 @@ interface User {
   firstName: string;
   lastName: string;
   email: string;
-  address: string;
+  mainAddress: string;
   phoneNumber: string;
   rating: string;
 }
@@ -125,7 +126,7 @@ const ManageUsers: React.FC = () => {
         user.firstName.toLowerCase().includes(filter.toLowerCase()) ||
         user.lastName.toLowerCase().includes(filter.toLowerCase()) ||
         user.email.toLowerCase().includes(filter.toLowerCase()) ||
-        (user.address && user.address.toLowerCase().includes(filter.toLowerCase())) ||
+        (user.mainAddress && user.mainAddress.toLowerCase().includes(filter.toLowerCase())) ||
         user.phoneNumber.includes(filter)
       )
       .sort((a, b) => {
@@ -145,7 +146,7 @@ const ManageUsers: React.FC = () => {
       firstName: u.firstName,
       lastName: u.lastName,
       email: u.email,
-      address: u.address,
+      address: u.mainAddress,
       phoneNumber: u.phoneNumber,
       rating: u.rating,
     }));
@@ -183,6 +184,7 @@ const ManageUsers: React.FC = () => {
       <Toolbar>
         <TextField
           label="חפש משתמש"
+           placeholder="חפש תורם לפי פרטיו"
           variant="outlined"
           fullWidth
           margin="normal"
@@ -206,11 +208,11 @@ const ManageUsers: React.FC = () => {
       </Toolbar>
       {error && <Typography color="error" align="center">{error}</Typography>}
       <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
+        <Table className="table-bordered">
+          <TableHead className="table-bordered">
             <TableRow>
               {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
-                <TableCell key={column}>
+                <TableCell key={column} className="rtl-table-col">
                   <TableSortLabel
                     active={orderBy === column}
                     direction={orderBy === column ? order : 'asc'}
@@ -225,26 +227,26 @@ const ManageUsers: React.FC = () => {
                   </TableSortLabel>
                 </TableCell>
               ))}
-              <TableCell>עריכה</TableCell>
-              <TableCell>מחיקת משתמש</TableCell>
+              <TableCell className="rtl-table-col">עריכה</TableCell>
+              <TableCell className="rtl-table-col">מחיקת משתמש</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sortedAndFilteredUsers.map((user) => (
               <TableRow key={user._id}>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.firstName}</TableCell>
-                <TableCell>{user.lastName}</TableCell>
-                <TableCell>{user.address}</TableCell>
-                <TableCell>{user.phoneNumber}</TableCell>
-                <TableCell>{user.rating}</TableCell>
-                <TableCell>
+                <TableCell className="rtl-table">{user.email}</TableCell>
+                <TableCell className="rtl-table">{user.firstName}</TableCell>
+                <TableCell className="rtl-table">{user.lastName}</TableCell>
+                <TableCell className="rtl-table">{user.mainAddress}</TableCell>
+                <TableCell className="rtl-table">{user.phoneNumber}</TableCell>
+                <TableCell className="rtl-table">{user.rating}</TableCell>
+                <TableCell className="rtl-table">
                   <IconButton color="primary" onClick={() => editUser(user)}>
                     <Edit />
                   </IconButton>
                 </TableCell>
-                <TableCell>
-                  <IconButton color="secondary" onClick={() => deleteUser(user._id)}>
+                <TableCell className="rtl-table">
+                  <IconButton color="secondary"  sx={{ color: 'red' }} onClick={() => deleteUser(user._id)}>
                     <Delete />
                   </IconButton>
                 </TableCell>
@@ -288,8 +290,8 @@ const ManageUsers: React.FC = () => {
             fullWidth
             margin="normal"
             label="כתובת"
-            value={updatedUser.address || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, address: e.target.value })}
+            value={updatedUser.mainAddress || ''}
+            onChange={(e) => setUpdatedUser({ ...updatedUser, mainAddress: e.target.value })}
           />
           <TextField
             fullWidth

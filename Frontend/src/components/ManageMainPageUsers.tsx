@@ -145,7 +145,7 @@ const ManageMainPageUsers = () => {
                     direction={orderBy === 'rating' ? order : 'asc'}
                     onClick={() => handleRequestSort('rating')}
                   >
-                   1 דירוג
+                    דירוג 1
                   </TableSortLabel>
                 </th>
                 <th>תמונת פרופיל</th>

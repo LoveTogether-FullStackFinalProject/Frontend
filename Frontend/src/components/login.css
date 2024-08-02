@@ -13,14 +13,12 @@
 }
 
 
-
 .form-label{
   direction: ltr;
 }
 
 .login-page{
   height: 50%;
-  background-color: #000000;
 }
 
 
@@ -50,8 +48,8 @@
 }
 
 .title {
-  color: #010100ed;
-  font-size: 1.8rem;
+  color: #F9DA78;
+  font-size: 2rem;
   font-weight: bold;
   margin: 0;
 }
@@ -97,7 +95,6 @@
 .login-button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #010100ed;
   color: white;
   border: none;
   border-radius: 4px;
@@ -120,7 +117,12 @@
   margin-right: 100px;
   left: 50px;
   position: relative;
+  background-color: rgb(252, 236, 184);
 
+}
+.register-link:hover {
+  background-color: hsl(50, 64%, 74%);
+  border: 2px solid white;
 }
 
 .google-login {
@@ -158,6 +160,18 @@
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.btn-primary-login-button{
+  background-color: #F9DA78;
+  margin-right: 155px;
+  left: 50px;
+  position: relative;
+
+}
+.btn-primary-login-button:hover {
+  background-color: hsl(50, 64%, 74%);
+  border: 2px solid white;
 }
 
 @media (max-width: 480px) {

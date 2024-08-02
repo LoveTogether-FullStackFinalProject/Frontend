@@ -259,8 +259,8 @@ function UploadRequestedProduct() {
           className="btn btn-upload mt-2"
           onClick={selectImg}
         >
-          <FontAwesomeIcon icon={faImage} className="me-2" />
           העלאת תמונה
+          <FontAwesomeIcon icon={faImage} className="me-2" />
         </button>
         <input
           style={{ display: "none" }}

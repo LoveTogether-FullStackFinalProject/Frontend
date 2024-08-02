@@ -13,7 +13,6 @@
 }
 
 
-
 .form-label{
   direction: ltr;
 }
@@ -121,6 +120,10 @@
   background-color: rgb(252, 236, 184);
 
 }
+.register-link:hover {
+  background-color: hsl(50, 64%, 74%);
+  border: 2px solid white;
+}
 
 .google-login {
   margin-top: 20px;
@@ -161,10 +164,14 @@
 
 .btn-primary-login-button{
   background-color: #F9DA78;
-  margin-right: 150px;
+  margin-right: 155px;
   left: 50px;
   position: relative;
 
+}
+.btn-primary-login-button:hover {
+  background-color: hsl(50, 64%, 74%);
+  border: 2px solid white;
 }
 
 @media (max-width: 480px) {

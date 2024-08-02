@@ -98,12 +98,14 @@
    .form-title {
     color: #F9DA78;
     font-size: 2.5rem;
-    margin-top: 0;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 80px;
     text-align: center;
     z-index: 10;
     position: relative;
     padding-left: 40px;
+    margin-right: 120px;
+    font-weight: bold;
   }
   
   .container {
@@ -189,10 +191,13 @@
   }
   
   .btn-upload {
-    background-color: #F9DA78;
+    background-color:rgb(236, 216, 147);
     color: white;
     width: 200px;
     font-size: 1.2rem;
+  }
+  .btn-upload:hover {
+    background-color:hsl(50, 64%, 74%);
   }
   
   .btn-submit {
@@ -200,5 +205,8 @@
     background-color: #F9DA78;
     padding: 10px 20px;
     font-size: 1.2rem;
+  }
+  .btn-submit:hover {
+    background-color: hsl(50, 64%, 74%);
   }
   

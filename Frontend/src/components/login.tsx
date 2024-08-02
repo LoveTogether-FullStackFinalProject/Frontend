@@ -13,8 +13,10 @@ function Login() {
     const [loginError, setLoginError] = useState<string | null>(null);
     const emailInputRef = useRef<HTMLInputElement>(null);
     const passwordInputRef = useRef<HTMLInputElement>(null);
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const login = async () => {
+        console.log("password:",passwordInputRef.current?.value)
         if (emailInputRef.current?.value && passwordInputRef.current?.value) {
             try {
                 const res = await postLogIn(emailInputRef.current?.value, passwordInputRef.current?.value);
@@ -70,6 +72,10 @@ function Login() {
         navigate('/registration');
     };
 
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
         return (
@@ -98,18 +104,33 @@ function Login() {
                     </div>
                 </div>
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="floatingPassword" className="form-label">:סיסמה</label>
                     <div className="form-input-group">
                         <input ref={passwordInputRef} type="password" className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
                         <img src={passwordIcon} className="icon" alt="Password icon" />
                     </div>
-                    {/* {loginError && <p className="error-message">{loginError}</p>} */}
                     {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
-                </div>
+                </div> */}
 
-                
-                
+
+                <div className="form-group">
+                    <label htmlFor="floatingPassword" className="form-label">:סיסמה</label>
+                    <div className="form-input-group">
+                        <input ref={passwordInputRef} type={passwordVisible ? 'text' : 'password'} className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
+                        <img src={passwordIcon} className="icon" alt="Password icon" />
+                        <i
+                        className={`bi ${passwordVisible ?'bi-eye' :'bi-eye-slash'} icon`}
+                        onClick={togglePasswordVisibility}
+                        style={{ cursor: 'pointer', position: 'absolute', right: '230px', top: '60%', transform: 'translateY(-50%)',fontSize: '1.5em' }}
+                    ></i>
+                    </div>
+                    
+                </div>
+                {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
+
+
+
                 <button type="button" className="btn-primary-login-button" onClick={login}>התחבר/י</button>
 
                 <div>

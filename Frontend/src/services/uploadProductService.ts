@@ -54,10 +54,11 @@ export const uploadPhoto = async (photo: File) => {
 
 
 const makeRequest = async (request: () => Promise<AxiosResponse>) => {
+  console.log("request is:",request);
   console.log(1);
   try {
     const response = await request();
-    console.log("makeRequest",response);
+    console.log("response is:",response);
     return response;
   } catch (axiosError: unknown) {
     if (axiosError instanceof AxiosError && axiosError.response) {
@@ -70,6 +71,7 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
        if (!refreshToken) {
         throw new Error("No refresh token found");
        }
+       console.log("going to refreshToken:");
         const refreshResponse = await apiClient.get('auth/refreshToken', { 
           headers: {
             'Authorization': `Bearer ${refreshToken}`
@@ -79,6 +81,9 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
         if (refreshResponse.status === 200) {
           localStorage.setItem('accessToken',refreshResponse.data.accessToken);
           localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+          console.log("new access token:",refreshResponse.data.accessToken);
+          console.log("new refresh token:",refreshResponse.data.refreshToken);
+          console.log("going to request");
           return request();
         }
       }
@@ -87,12 +92,11 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
 };
   
    export const uploadProduct = async (productData: any) => {
-    const accessToken = localStorage.getItem("accessToken");
+    const request = () => {
+      const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
-    const request = () => {
       return apiClient.post(`/donation/upload`, productData,{
         headers: {
           'Authorization': `Bearer ${accessToken}`

@@ -4,6 +4,7 @@ import apiClient from "./api-client"
 
 
 export const postLogout = async () => {
+    console.log("Logging out...");
   const abortController = new AbortController()
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {

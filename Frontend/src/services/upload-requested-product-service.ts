@@ -102,9 +102,11 @@ const uploadPhoto = async (photo: File) => {
 
 
 const makeRequest = async (request: () => Promise<AxiosResponse>) => {
+  console.log("request is:",request);
   console.log(1);
   try {
     const response = await request();
+    console.log("response is:",response);
     return response;
   } catch (axiosError: unknown) {
     if (axiosError instanceof AxiosError && axiosError.response) {
@@ -117,6 +119,7 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
        if (!refreshToken) {
         throw new Error("No refresh token found");
        }
+       console.log("going to refreshToken:");
         const refreshResponse = await apiClient.get('auth/refreshToken', { 
           headers: {
             'Authorization': `Bearer ${refreshToken}`
@@ -126,6 +129,9 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
         if (refreshResponse.status === 200) {
           localStorage.setItem('accessToken',refreshResponse.data.accessToken);
           localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+          console.log("new access token:",refreshResponse.data.accessToken);
+          console.log("new refresh token:",refreshResponse.data.refreshToken);
+          console.log("going to request");
           return request();
         }
       }
@@ -133,15 +139,12 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
   }
 };
 
-
 const addRequestedProduct = async (donation: requestedDonation) => {
-  const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
-
   const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
     return  apiClient.post<Donation>("/requestedDonation/rdonation", donation,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -153,12 +156,12 @@ const addRequestedProduct = async (donation: requestedDonation) => {
 };
 
 const editRequestedProduct = async (donationId: string,donation: requestedDonation) => {
-  console.log("donationId",donationId);
-  const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
   const request = () => {
+    console.log("donationId",donationId);
+    const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          throw new Error("No access token found");
+        }
     return apiClient.put<Donation>(`/requestedDonation/rdonation/update/${donationId}`, donation, {
       headers: {
         'Authorization': `Bearer ${accessToken}`

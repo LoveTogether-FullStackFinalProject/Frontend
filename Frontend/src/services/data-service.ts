@@ -6,14 +6,16 @@ import { userDonation } from '../components/userDonation';
 import logoutServiece from './logout-serviece';
 import { AxiosError, AxiosResponse } from "axios";
 
-const AdminID = "668567c7bd9e16d610a11718";
+// const AdminID = "668567c7bd9e16d610a11718";
 
 export { CanceledError };
 
 const makeRequest = async (request: () => Promise<AxiosResponse>) => {
+  console.log("request is:",request);
   console.log(1);
   try {
     const response = await request();
+    console.log("response is:",response);
     return response;
   } catch (axiosError: unknown) {
     if (axiosError instanceof AxiosError && axiosError.response) {
@@ -26,6 +28,7 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
        if (!refreshToken) {
         throw new Error("No refresh token found");
        }
+       console.log("going to refreshToken:");
         const refreshResponse = await apiClient.get('auth/refreshToken', { 
           headers: {
             'Authorization': `Bearer ${refreshToken}`
@@ -35,6 +38,9 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
         if (refreshResponse.status === 200) {
           localStorage.setItem('accessToken',refreshResponse.data.accessToken);
           localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
+          console.log("new access token:",refreshResponse.data.accessToken);
+          console.log("new refresh token:",refreshResponse.data.refreshToken);
+          console.log("going to request");
           return request();
         }
       }
@@ -67,12 +73,12 @@ const getUser = (userId: string) => {
 };
 
 const updateUser = (userId: string, data: Partial<DonorData>) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
-  const request = () => {
+      console.log("accessToken in request:",accessToken);
     return apiClient.put(`/donor/${userId}`,data,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -83,12 +89,11 @@ const updateUser = (userId: string, data: Partial<DonorData>) => {
 };
 
 const deleteUser = (userId: string) => {
-  const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
   const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
     return apiClient.delete(`/donor/${userId}`,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -99,12 +104,12 @@ const deleteUser = (userId: string) => {
 };
 
 const updateDonation = async (donationId: string, data: Partial<userDonation>) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
         throw new Error("No access token found");
       }
 
-  const request = () => {
     return apiClient.put(`/donation/update/${donationId}`, data,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -115,12 +120,11 @@ const updateDonation = async (donationId: string, data: Partial<userDonation>) =
 };
 
 const deleteDonation = async (donationId: string) => {
-  const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
   const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
     return apiClient.delete(`/donation/delete/${donationId}`,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -137,12 +141,13 @@ const getDonationsByUser = (userId: string) => {
 };
 
 const updateUserData = async (userId: string, data: Partial<DonorData>) => {
-  const accessToken = localStorage.getItem("accessToken");
+  console.log("updateUserData");
+  const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
         throw new Error("No access token found");
       }
-
-  const request = () => {
+      console.log("accessToken in request:",accessToken);
     return apiClient.put(`/donor/${userId}`, data,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -159,18 +164,17 @@ export const logout = () => {
   localStorage.removeItem('userID');
 };
 
-export const getAdmin = () => {
-  return getUser(AdminID);
-}
+// export const getAdmin = () => {
+//   return getUser(AdminID);
+// }
 
 
 const updateRequestedDonation = async (donationId: string,data: Partial<requestedDonation> ) => {
-  const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
   const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
     return apiClient.put(`/requestedDonation/rdonation/update/${donationId}`, data,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -181,12 +185,11 @@ const updateRequestedDonation = async (donationId: string,data: Partial<requeste
 };
 
 const deleteRequestedDonation = async (donationId: string) => {
-  const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-
   const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
     return apiClient.delete(`/requestedDonation/rdonation/delete/${donationId}`,{
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -196,4 +199,4 @@ const deleteRequestedDonation = async (donationId: string) => {
   return makeRequest(request);
 };
 
-export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, getAdmin, updateRequestedDonation, deleteRequestedDonation };
+export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, updateRequestedDonation, deleteRequestedDonation };

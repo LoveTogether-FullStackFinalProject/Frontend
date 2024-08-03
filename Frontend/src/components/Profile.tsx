@@ -14,13 +14,14 @@ const Profile: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | undefined>(undefined);
     const [activeTab, setActiveTab] = useState('all');
-    const [itemsToShow, setItemsToShow] = useState(8);
+    const [itemsToShow, setItemsToShow] = useState(5); // Change initial value to 5
     const [editDonationId, setEditDonationId] = useState<string | null>(null);
     const [editableDonation, setEditableDonation] = useState<Partial<userDonation>>({});
     const [showModal, setShowModal] = useState(false); // Modal state
     const [selectedDonation, setSelectedDonation] = useState<userDonation | null>(null); // Selected donation state
     const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
+
     const fetchData = useCallback(async () => {
         try {
             const { req: userReq } = dataService.getUser(userId!);
@@ -30,11 +31,6 @@ const Profile: React.FC = () => {
             const { req: donationsReq } = dataService.getDonationsByUser(userId!);
             const donationsResponse = await donationsReq;
             setDonations(donationsResponse.data);
-
-            // Log all statuses to understand what values they have
-            donationsResponse.data.forEach(donation => {
-                console.log('Donation status:', donation.status);
-            });
         } catch (error) {
             if (error instanceof CanceledError) return;
             console.error('Error fetching data:', error);
@@ -93,12 +89,12 @@ const Profile: React.FC = () => {
     };
 
     const handleShowMoreClick = () => {
-        setItemsToShow(itemsToShow + 8);
+        setItemsToShow(itemsToShow + 5); // Change increment value to 5
     };
 
     const handleTabClick = (tab: string) => {
         setActiveTab(tab);
-        setItemsToShow(8);
+        setItemsToShow(5); // Reset to 5 when tab changes
     };
 
     const handleDeleteClick = async (donationId: string) => {
@@ -228,10 +224,12 @@ const Profile: React.FC = () => {
                         </div>
                     )}
                 </div>
-                {filteredDonations.length > itemsToShow && (
-                    <button className="show-more" onClick={handleShowMoreClick}>
-                        הצג עוד
-                    </button>
+                {filteredDonations.length < donations.length && (
+                    <div className="show-more-container">
+                        <button className="show-more" onClick={handleShowMoreClick}>
+                            הצג עוד
+                        </button>
+                    </div>
                 )}
             </main>
            

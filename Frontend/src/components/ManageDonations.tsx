@@ -26,9 +26,11 @@ interface Donation {
   donor?: {
     firstName: string;
     lastName: string;
+    phone: string;
   };
   pickUpAddress: string;
-  branch: string;
+  userAddress?: string;
+  branch?: string;
   image?: string;
   amount?: number;
   itemCondition?: string;
@@ -53,10 +55,7 @@ const ManageDonationPage: React.FC = () => {
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
     req.then((res) => {
-      // Assume `res.data` contains all donations
-      // Automatically set status for newLiveDonation
       const updatedDonations = res.data.map((donation: Donation) => {
-        // Check if donation is from newLiveDonation (replace this condition with actual logic)
         if (donation.category === 'newLiveDonation') { 
           return { ...donation, status: 'נמסר בעמותה' };
         }
@@ -152,25 +151,24 @@ const ManageDonationPage: React.FC = () => {
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
   const [isAdmin, setIsAdmin] = useState(false);
-     useEffect(() => {
-       const userId = localStorage.getItem('userID');
-       if (userId) {
-         dataService.getUser(userId).req.then((res) => {
-           setIsAdmin(res.data.isAdmin);
-           console.log("isAdmin:", res.data.isAdmin);
-         });
-       }
-     }, []);
-
-
-     if (!isAdmin) {
-      return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
-        </div>
-      );
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+        console.log("isAdmin:", res.data.isAdmin);
+      });
     }
+  }, []);
+
+  if (!isAdmin) {
+    return (
+      <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+        <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+        <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+      </div>
+    );
+  }
 
   return (
     <div className="manage-donations-page">
@@ -191,26 +189,12 @@ const ManageDonationPage: React.FC = () => {
           ),
         }}
       />
-      <CSVLink data={sortedAndFilteredDonations} filename="donations.csv" className="btn btn-success mb-3">
-        ייצוא לאקסל
+      <CSVLink data={sortedAndFilteredDonations} filename={"donations.csv"} className="btn btn-primary">
+        ייצא ל-CSV
       </CSVLink>
-      <Button className="mb-3" onClick={saveChanges} disabled={pendingChanges.length === 0}>
-        שמור שינויים
-      </Button>
-      {error && <p className="text-danger">{error}</p>}
       <Table striped bordered hover responsive>
         <thead>
           <tr>
-            <th>בחירה</th>
-            <th>
-              <TableSortLabel
-                active={orderBy === 'donor'}
-                direction={orderBy === 'donor' ? order : 'asc'}
-                onClick={() => handleRequestSort('donor')}
-              >
-                שם מלא
-              </TableSortLabel>
-            </th>
             <th>
               <TableSortLabel
                 active={orderBy === 'category'}
@@ -220,148 +204,115 @@ const ManageDonationPage: React.FC = () => {
                 קטגוריה
               </TableSortLabel>
             </th>
-            <th>
-              <TableSortLabel
-                active={orderBy === 'description'}
-                direction={orderBy === 'description' ? order : 'asc'}
-                onClick={() => handleRequestSort('description')}
-              >
-                תיאור
-              </TableSortLabel>
-            </th>
-
-            <th>
-              <TableSortLabel
-                active={orderBy === 'status'}
-                direction={orderBy === 'status' ? order : 'asc'}
-                onClick={() => handleRequestSort('status')}
-              >
-                סטטוס
-              </TableSortLabel>
-            
-              
-              
-            </th>            
-            <th>
-              <TableSortLabel
-                active={orderBy === 'approvedByAdmin'}
-                direction={orderBy === 'approvedByAdmin' ? order : 'asc'}
-                onClick={() => handleRequestSort('approvedByAdmin')}
-              >
-                אושר ע"י מנהל
-              </TableSortLabel>
-            </th>
-            
-            <th>
-              <TableSortLabel
-                active={orderBy === 'createdAt'}
-                direction={orderBy === 'createdAt' ? order : 'asc'}
-                onClick={() => handleRequestSort('createdAt')}
-              >
-                תאריך
-              </TableSortLabel>
-            </th>
+            <th>תיאור</th>
+            <th>סטטוס</th>
+            <th>אישור מנהל</th>
+            <th>שם התורם</th>
+            <th>טלפון התורם</th>
+            <th>כתובת לאיסוף</th>
+            <th>תאריך</th>
+            <th>סניף</th>
             <th>פעולות</th>
           </tr>
         </thead>
         <tbody>
           {sortedAndFilteredDonations.map((donation) => (
             <tr key={donation._id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedDonations.includes(donation._id)}
-                  onChange={() => setSelectedDonations(prev => prev.includes(donation._id) ? prev.filter(id => id !== donation._id) : [...prev, donation._id])}
-                />
-              </td>
-              <td>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</td>
               <td>{donation.category}</td>
               <td>{donation.description}</td>
               <td>
                 <Dropdown>
-                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                    {donation.status}
+                  <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                    {donation.status || 'Select Status'}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'ממתין לאיסוף מבית התורם')}>
-                      ממתין לאיסוף מבית התורם 
+                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר בעמותה')}>
+                      נמסר בעמותה
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'הגיע לעמותה')}>
-                      הגיע לעמותה
+                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'ממתין לאיסוף')}>
+                      ממתין לאיסוף
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא הגיע לעמותה')}>
-                      לא הגיע לעמותה
+                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נאסף')}>
+                      נאסף
                     </Dropdown.Item>
-                    {/* <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'נמסר')}>
-                      נמסר
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleStatusUpdate(donation, 'לא נמסר')}>
-                      לא נמסר
-                    </Dropdown.Item> */}
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
               <td>
                 <Dropdown>
-                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                    {donation.approvedByAdmin === true || donation.approvedByAdmin === 'true' ? "כן" : "לא"}
+                  <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                    {donation.approvedByAdmin ? 'מאושר' : 'לא מאושר'}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={() => handleApprovalUpdate(donation, true)}>
-                      כן
+                      מאושר
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => handleApprovalUpdate(donation, false)}>
-                      לא
+                      לא מאושר
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
+              <td>
+                {donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'Unknown'}
+              </td>
+              <td>
+                {donation.donor ? donation.donor.phone : 'Unknown'}
+              </td>
+              <td>{donation.pickUpAddress === 'pickup' ? donation.userAddress : donation.pickUpAddress}</td>
               <td>{formatDate(donation.createdAt)}</td>
+              <td>{donation.branch}</td>
               <td>
                 <Button
-                  variant="info"
-                  className="ms-2"
+                  variant="danger"
                   onClick={() => {
                     setCurrentDonation(donation);
                     setShowModal(true);
                   }}
                 >
-                  הצגת פרטים
+                  מחק
                 </Button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
-
+      <Button
+        variant="primary"
+        onClick={saveChanges}
+        disabled={pendingChanges.length === 0}
+      >
+        שמור שינויים
+      </Button>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>פרטי תרומה</Modal.Title>
+          <Modal.Title>אשר מחיקת תרומה</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {currentDonation && (
-            <div>
-              <p><strong>קטגוריה:</strong> {currentDonation.category}</p>
-              <p><strong>תיאור:</strong> {currentDonation.description}</p>
-              <p><strong>כמות:</strong> {currentDonation.amount}</p>
-              <p><strong>מצב הפריט:</strong> {currentDonation.itemCondition}</p>
-              <p><strong>תאריך תפוגה:</strong> {currentDonation.expirationDate ? new Date(currentDonation.expirationDate).toLocaleDateString() : 'לא צוין'}</p>
-              <p><strong>כתובת לאיסוף:</strong> {currentDonation.pickUpAddress}</p>
-              <p><strong> סניף עמותה:</strong> {currentDonation.branch}</p>
-              <p><strong>סטטוס:</strong> {currentDonation.status}</p>
-              <p><strong>אושר על ידי מנהל:</strong> {currentDonation.approvedByAdmin === true || currentDonation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
-              {currentDonation.image && (
-                <div>
-                  <p><strong>תמונה:</strong></p>
-                  <img src={currentDonation.image} alt="Donation" className="img-fluid" />
-                </div>
-              )}
-            </div>
-          )}
-        </Modal.Body>
+        <Modal.Body>האם אתה בטוח שברצונך למחוק תרומה זו?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            סגור
+            ביטול
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              if (currentDonation) {
+                dataService
+                  .deleteDonation(currentDonation._id)
+                  .then(() => {
+                    setDonations((prevDonations) =>
+                      prevDonations.filter((d) => d._id !== currentDonation._id)
+                    );
+                    setShowModal(false);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                    alert("מחיקת התרומה נכשלה.");
+                  });
+              }
+            }}
+          >
+            מחק
           </Button>
         </Modal.Footer>
       </Modal>

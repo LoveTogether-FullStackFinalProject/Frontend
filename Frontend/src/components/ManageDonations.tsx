@@ -48,8 +48,10 @@ const ManageDonationPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('category');
-  const [filter, setFilter] = useState<string>('');
+  const [filterText, setFilterText] = useState<string>('');
   const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [uniqueBranches, setUniqueBranches] = useState<string[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,6 +64,10 @@ const ManageDonationPage: React.FC = () => {
         return donation;
       });
       setDonations(updatedDonations);
+
+      const branches = Array.from(new Set(updatedDonations.map(donation => donation.branch).filter(branch => branch)));
+      setUniqueBranches(branches);
+
     }).catch((err) => {
       console.log(err);
       if (err instanceof CanceledError) return;
@@ -79,11 +85,12 @@ const ManageDonationPage: React.FC = () => {
     setOrderBy(property);
   };
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterText(event.target.value);
   };
 
   const applySortAndFilter = (data: Donation[]) => {
+    const lowerCaseFilterText = filterText.toLowerCase();
     return data
       .filter(donation => {
         const category = donation.category?.toLowerCase() || '';
@@ -92,13 +99,13 @@ const ManageDonationPage: React.FC = () => {
         const donorName = donation.donor 
           ? (donation.donor.firstName?.toLowerCase() + " " + donation.donor.lastName?.toLowerCase()) 
           : '';
-  
-        const lowerCaseFilter = filter.toLowerCase();
-  
-        return category.includes(lowerCaseFilter) ||
-               description.includes(lowerCaseFilter) ||
-               status.includes(lowerCaseFilter) ||
-               donorName.includes(lowerCaseFilter);
+        const branch = donation.branch?.toLowerCase() || '';
+
+        return (category.includes(lowerCaseFilterText) ||
+                description.includes(lowerCaseFilterText) ||
+                status.includes(lowerCaseFilterText) ||
+                donorName.includes(lowerCaseFilterText) ||
+                branch.includes(lowerCaseFilterText));
       })
       .sort((a, b) => {
         const valueA = a[orderBy] || '';
@@ -150,7 +157,6 @@ const ManageDonationPage: React.FC = () => {
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
-  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -175,12 +181,12 @@ const ManageDonationPage: React.FC = () => {
       <h2>ניהול תרומות</h2>
       <TextField
         label="חפש תרומה"
-        placeholder="חפש תרומה לפי קטגוריה, תיאור, סטטוס ושם התורם"
+        placeholder="חפש תרומה לפי קטגוריה, תיאור, סטטוס, שם התורם או סניף"
         variant="outlined"
         style={{ width: '60%' }} 
         margin="normal"
-        value={filter}
-        onChange={handleFilterChange}
+        value={filterText}
+        onChange={handleInputChange}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -189,7 +195,7 @@ const ManageDonationPage: React.FC = () => {
           ),
         }}
       />
-      <CSVLink data={sortedAndFilteredDonations} filename={"donations.csv"} className="btn btn-primary">
+      <CSVLink data={donations} filename={"donations.csv"} className="btn btn-primary">
         ייצא ל-CSV
       </CSVLink>
       <Table striped bordered hover responsive>
@@ -208,8 +214,7 @@ const ManageDonationPage: React.FC = () => {
             <th>סטטוס</th>
             <th>אישור מנהל</th>
             <th>שם התורם</th>
-            <th>טלפון התורם</th>
-            <th>כתובת לאיסוף</th>
+            {/* <th>כתובת לאיסוף</th> */}
             <th>תאריך</th>
             <th>סניף</th>
             <th>פעולות</th>
@@ -256,10 +261,9 @@ const ManageDonationPage: React.FC = () => {
               <td>
                 {donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'Unknown'}
               </td>
-              <td>
-                {donation.donor ? donation.donor.phone : 'Unknown'}
-              </td>
-              <td>{donation.pickUpAddress === 'pickup' ? donation.userAddress : donation.pickUpAddress}</td>
+              {/* <td>
+                {donation.pickUpAddress || donation.userAddress}
+              </td> */}
               <td>{formatDate(donation.createdAt)}</td>
               <td>{donation.branch}</td>
               <td>

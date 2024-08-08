@@ -1,220 +1,110 @@
-
-.main-content{
-    background-color: #fff;
-    width: 100%;
-    height: 100%;
-}
-
-.h3-header{
-    text-align: center;
-    font-size: 40px;
-    color: #000;
-    margin-top: 20px;
-
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f0f2f5;
+    direction: rtl;
 }
 
 .registration-container {
-    width: 100%;
-    direction: rtl;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #fff;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-y: auto;
+    max-width: 900px;
+    margin: 80px auto 20px;
+    padding: 40px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.registration-card {
-    background-color: #fff;
-    width: 50%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.registration-body {
-    background-color: #fff;
-    width: 100%;
-    margin-top: 80px;
-    padding: 20px;
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.image-upload-button {
-    background-color: #000000;
-    color: #fff; /* Assuming you want the icon to be visible on a black background */
-    border: none; /* Remove any default border */
-    padding: 10px; /* Add some padding for better appearance */
-    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
-  }
-
-  .image-upload-button:focus {
-    outline: none; /* Remove the blue outline */
-    background-color: #333; /* Optional: change background color on focus */
-  }
-
-  .image-upload-button:hover {
-    background-color: #333; /* Optional: change background color on hover */
-  }
-
-.profile-image-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: -80px;
-    margin-right: -45px;
-}
-
-.profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #070707;
-}
-
-.horizontal-form {
-    margin-top: -90px;
-    margin-bottom: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.horizontal-form .form-group {
-    width: calc(50% - 10px); /* This will create 2 columns */
-    margin-bottom: 15px;
-}
-
-.submit-button {
-    width: 100%;
-    margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-    .horizontal-form .form-group {
-        width: 100%; /* Full width on smaller screens */
-    }
-}
-.image-upload-button {
-    color: #fff;
-    
-        
-}
-
-.image-upload-button:hover{
-    background-color: #000000;
-    color: #000000;
-    box-shadow: 0 0 5px 0 #000000;
+.registration-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    font-family: 'Google Font Name', sans-serif; /* Update with the preferred Google font */
 }
 
 .form-group {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.form-group input {
-    direction: rtl;
+.form-control {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #000000;
-    border-radius: 5px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 16px;
+    transition: border-color 0.3s ease;
+    background-color: #f7f7f7;
+    font-family: 'Google Font Name', sans-serif; /* Update with the preferred Google font */
 }
 
-.form-group input.error {
-    border-color: #cd5c5c;
+.form-control:focus {
+    border-color: #F9DA78;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
+    outline: none;
 }
 
-.error-message {
-    color: #cd5c5c;
+.invalid-feedback {
+    color: #e74c3c;
     font-size: 14px;
     margin-top: 5px;
-    display: block;
-    position: absolute;
+    font-weight: bold;
+}
+
+.img-preview-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.img-preview {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.upload-image-button {
+    background-color:#F9DA78;
+    color: #333;
+    border: 2px solid #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.upload-image-button:hover {
+    background-color: #ffda66;
 }
 
 .submit-button {
-    padding: 12px;
-    background-color: #0b98e4;
-    color: #fff;
+    width: 100%;
+    background-color: #ffcc00;
+    color: #333;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    padding: 12px;
+    border-radius: 8px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-    background-color: #000;
-    color: #0b98e4;
-    box-shadow: 0 0 5px 0 #000000;
+    background-color: #ffda66;
 }
 
-
-.google-login {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.login-link {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    color: #010100ed;
-    text-decoration: none;
-    font-size: 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.login-link:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .registration-body {
-        padding: 15px;
-    }
-
-    .profile-image-container {
-        width: 120px;
-        height: 120px;
-       
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group input {
-        font-size: 14px;
-    }
-
-    .submit-button {
-        font-size: 16px;
-    }
-}
-
-@media (max-height: 600px) {
-    .profile-image-container {
-        width: 100px;
-        height: 100px;
-    }
-
-    .form-group {
-        margin-bottom: 10px;
-    }
-
-
+.error-message {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 5px;
 }

@@ -12,23 +12,15 @@ const schema = z.object({
   itemName: z.string().min(2, 'שם הפריט חייב להכיל לפחות 2 תווים'),
   quantity: z.number().gt(0, 'כמות הפריט חייבת להיות יותר מ-0'),
   category: z.string().min(1, 'יש לבחור קטגוריה'),
-  customCategory: z
-    .string()
-    .min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים')
-    .optional(),
+  customCategory: z.string().min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים').optional(),
   condition: z.string().min(2, 'מצב הפריט חייב להכיל לפחות 2 תווים'),
-  expirationDate: z
-    .string()
-    .refine((dateString) => {
-      const selectedDate = new Date(dateString);
-      const currentDate = new Date();
-      const nextWeek = new Date();
-      nextWeek.setDate(currentDate.getDate() + 7);
-      return (
-        selectedDate > currentDate && selectedDate > nextWeek
-      );
-    }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.')
-    .optional(),
+  expirationDate: z.string().refine((dateString) => {
+    const selectedDate = new Date(dateString);
+    const currentDate = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(currentDate.getDate() + 7);
+    return selectedDate > currentDate && selectedDate > nextWeek;
+  }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.').optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
   pickupAddress: z.string().optional(),
   branch: z.string().optional(),
@@ -119,14 +111,12 @@ const UploadProduct: React.FC = () => {
       setBranchShowError(true);
       return;
     }
-    if(data.quantity < 1){    
+    if (data.quantity < 1) {
       setamountError('כמות חייבת להיות גדולה מ-0');
       return;
-  }
-  else{
+    } else {
       setamountError('');
-  }
-
+    }
 
     if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
       trigger('expirationDate');
@@ -155,9 +145,7 @@ const UploadProduct: React.FC = () => {
       navigate('/profile');
     } catch (error) {
       console.error('Error uploading product:', error);
-      alert(
-        `Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`
-      );
+      alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
     }
   };
 
@@ -171,12 +159,12 @@ const UploadProduct: React.FC = () => {
       setShowPickupAddress(true);
       setShowBranch(false);
       setStatus('ממתין לאיסוף מבית התורם');
-      setValue("pickupAddress", "");
+      setValue('pickupAddress', '');
     } else {
       setShowPickupAddress(false);
       setShowBranch(true);
       setStatus('טרם הגיע לעמותה');
-      setValue("pickupAddress", "default");
+      setValue('pickupAddress', 'default');
     }
   };
 
@@ -185,8 +173,7 @@ const UploadProduct: React.FC = () => {
   }
 
   return (
-    <div className="upload-product-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <h2 className="upload-product-title">♥עמותת ואהבתם ביחד - אני מעוניינ/ת לתרום♥</h2>
+    <div className="upload-product-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%)' }}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', maxWidth: '800px', direction: 'rtl' }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
@@ -197,9 +184,7 @@ const UploadProduct: React.FC = () => {
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
               className={`${errors.itemName ? 'is-invalid' : ''}`}
             />
-            {errors.itemName && (
-              <div className="invalid-feedback">{errors.itemName.message}</div>
-            )}
+            {errors.itemName && <div className="invalid-feedback">{errors.itemName.message}</div>}
           </div>
 
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
@@ -210,36 +195,21 @@ const UploadProduct: React.FC = () => {
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
               className={`${errors.quantity ? 'is-invalid' : ''}`}
             />
-            {errors.quantity && (
-              <div className="invalid-feedback">חובה להכניס כמות</div>
-            )}
-            {amountError && (
-              <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>
-            )}
+            {errors.quantity && <div className="invalid-feedback">חובה להכניס כמות</div>}
+            {amountError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>}
           </div>
 
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
-            <select
-              {...register('category')}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-             
-
-              className={`${errors.category ? 'is-invalid' : ''}`}
-            >
+            <select {...register('category')} style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}>
               <option value="">בחר קטגוריה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
-              <option value="ציוד לתינוקות">ציוד לתינוקות</option>
-              <option value="כלי בית">כלי בית</option>
-              <option value="ריהוט">ריהוט</option>
               <option value="מזון ושתייה">מזון ושתייה</option>
+              <option value="ביגוד והנעלה">ביגוד והנעלה</option>
+              <option value="ריהוט">ריהוט</option>
+              <option value="מכשירי חשמל">מכשירי חשמל</option>
               <option value="ספרים">ספרים</option>
-              <option value="צעצועים">צעצועים</option>
               <option value="אחר">אחר</option>
             </select>
-            {errors.category && (
-              <div className="invalid-feedback">{errors.category.message}</div>
-            )}
+            {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
           </div>
 
           {selectedCategory === 'אחר' && (
@@ -251,9 +221,7 @@ const UploadProduct: React.FC = () => {
                 style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
                 className={`${errors.customCategory ? 'is-invalid' : ''}`}
               />
-              {errors.customCategory && (
-                <div className="invalid-feedback">{errors.customCategory.message}</div>
-              )}
+              {errors.customCategory && <div className="invalid-feedback">{errors.customCategory.message}</div>}
             </div>
           )}
 
@@ -265,9 +233,7 @@ const UploadProduct: React.FC = () => {
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
               className={`${errors.condition ? 'is-invalid' : ''}`}
             />
-            {errors.condition && (
-              <div className="invalid-feedback">{errors.condition.message}</div>
-            )}
+            {errors.condition && <div className="invalid-feedback">{errors.condition.message}</div>}
           </div>
 
           {selectedCategory === 'מזון ושתייה' && (
@@ -279,75 +245,34 @@ const UploadProduct: React.FC = () => {
                 style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
                 className={`${errors.expirationDate ? 'is-invalid' : ''}`}
               />
-              {errors.expirationDate && (
-                <div className="invalid-feedback">{errors.expirationDate.message}</div>
-              )}
+              {errors.expirationDate && <div className="invalid-feedback">{errors.expirationDate.message}</div>}
             </div>
           )}
 
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
             <textarea
               {...register('description')}
-              placeholder="תיאור הפריט"
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.description ? 'is-invalid' : ''}`}
+              placeholder="תיאור"
+              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px', height: '100px' }}
             />
-            {errors.description && (
-              <div className="invalid-feedback">{errors.description.message}</div>
-            )}
+            {errors.description && <div className="invalid-feedback">{errors.description.message}</div>}
           </div>
 
           <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  value="ממתין לאיסוף מבית התורם"
-                  checked={selectedDeliveryOption === 'ממתין לאיסוף מבית התורם'}
-                  onChange={handleDeliveryOptionChange}
-                  style={{ marginRight: '8px' }}
-                />
-                אשמח שיאספו ממני התרומה
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  value="טרם הגיע לעמותה"
-                  checked={selectedDeliveryOption === 'טרם הגיע לעמותה'}
-                  onChange={handleDeliveryOptionChange}
-                  style={{ marginRight: '8px' }}
-                />
-                אמסור את התרומה לעמותה
-              </label>
-            </div>
-            {showError && (
-              <div className="error-message">יש לבחור אפשרות איסוף</div>
-            )}
+            <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={selectImg}>
+              <FontAwesomeIcon icon={faImage} style={{ fontSize: '24px', color: '#333' }} />
+              <span>בחר תמונה</span>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={imgSelected}
+                style={{ display: 'none' }}
+              />
+            </label>
+            {imgPreview && <img src={imgPreview} alt="Preview" style={{ marginTop: '10px', maxWidth: '100%', height: 'auto' }} />}
+            {errors.image && <div className="invalid-feedback">{errors.image.message}</div>}
           </div>
-
-            {showBranch && (
-                <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
-                  <select
-                    {...register('branch')}
-                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-                    className={`${errors.branch ? 'is-invalid' : ''}`}
-                  >
-                    <option value="">בחר סניף עמותה</option>
-                    <option value="address1">כתובת 1</option>
-                    <option value="address2">כתובת 2</option>
-                    <option value="address3">כתובת 3</option>
-                    
-                  </select>
-                  {errors.branch && (
-                    <div className="invalid-feedback">{errors.branch.message}</div>
-                  )}
-                  {showBranchError && (
-                    <div className="error-message" style={{  marginRight: '230px' }}>יש לבחור סניף עמותה</div>
-                  )}
-                </div>
-         )}
 
           {showPickupAddress && (
             <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
@@ -356,40 +281,46 @@ const UploadProduct: React.FC = () => {
                 type="text"
                 placeholder="כתובת לאיסוף"
                 style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-                className={`${errors.pickupAddress ? 'is-invalid' : ''}`}
+                className={`${showPickUpError ? 'is-invalid' : ''}`}
               />
-              {errors.pickupAddress && (
-                <div className="invalid-feedback">{errors.pickupAddress.message}</div>
-              )}
-              {showPickUpError && (
-                <div className="error-message">יש למלא כתובת לאיסוף</div>
-              )}
+              {showPickUpError && <p style={{ color: 'red', fontSize: '0.8rem' }}>יש להכניס כתובת לאיסוף</p>}
             </div>
           )}
-        </div>
 
-        <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={imgSelected}
-          />
-          <button type="button" onClick={selectImg} className="upload-image-button">
-            <FontAwesomeIcon icon={faImage} /> העלאת תמונה
-          </button>
-          {imgPreview && (
-            <div className="img-preview-container">
-              <img src={imgPreview} alt="Preview" className="img-preview" />
+          {showBranch && (
+            <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+              <select {...register('branch')} style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}>
+                <option value="">בחר סניף</option>
+                <option value="סניף 1">סניף 1</option>
+                <option value="סניף 2">סניף 2</option>
+                <option value="סניף 3">סניף 3</option>
+              </select>
+              {showBranchError && <p style={{ color: 'red', fontSize: '0.8rem' }}>יש לבחור סניף</p>}
             </div>
           )}
-          {errors.image && (
-            <div className="error-message" style={{ marginRight: '600px' }}>יש להעלות תמונה</div>
-          )}
-        </div>
 
-        <button type="submit" className="submit-button">
+          <div style={{ flex: '1', minWidth: '200px', margin: '10px', textAlign: 'right' }}>
+            <label>
+              <input
+                type="radio"
+                value="ממתין לאיסוף מבית התורם"
+                checked={selectedDeliveryOption === 'ממתין לאיסוף מבית התורם'}
+                onChange={handleDeliveryOptionChange}
+              />
+              ממתין לאיסוף מבית התורם
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="טרם הגיע לעמותה"
+                checked={selectedDeliveryOption === 'טרם הגיע לעמותה'}
+                onChange={handleDeliveryOptionChange}
+              />
+              טרם הגיע לעמותה
+            </label>
+          </div>
+        </div>
+        <button type="submit" style={{ padding: '10px 20px', borderRadius: '4px', backgroundColor: '#f8c00a', border: 'none', color: '#fff', cursor: 'pointer', fontSize: '16px' }}>
           שלח
         </button>
       </form>

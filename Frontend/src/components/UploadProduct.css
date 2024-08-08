@@ -7,38 +7,44 @@ body, html {
 }
 
 .upload-product-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 80px auto 20px;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .upload-product-title {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 700;
     color: #333;
+    font-family: 'Google Font Name', sans-serif; /* Update with the preferred Google font */
 }
 
 .form-group {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-control {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
+    background-color: #f7f7f7;
+    font-family: 'Google Font Name', sans-serif; /* Update with the preferred Google font */
 }
 
 .form-control:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
     outline: none;
 }
 
@@ -46,36 +52,37 @@ body, html {
     color: #e74c3c;
     font-size: 14px;
     margin-top: 5px;
+    font-weight: bold;
 }
 
-select.form-control {
+.select-form-control {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: left 12px center;
     padding-left: 30px;
+    border-radius: 8px;
 }
 
-.profile-image-container {
+.img-preview-container {
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.profile-image {
+.img-preview {
     max-width: 150px;
     max-height: 150px;
-    margin-bottom: 10px;
-    border-radius: 50%;
+    border-radius: 12px;
     object-fit: cover;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.image-upload-button {
-    background-color: #4a90e2;
-    color: #fff;
-    border: none;
+.upload-image-button {
+    background-color: #ffcc00;
+    color: #333;
+    border: 2px solid #333;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     display: inline-block;
@@ -83,77 +90,30 @@ select.form-control {
     transition: background-color 0.3s ease;
 }
 
-.image-upload-button:hover {
-    background-color: #3a7bc8;
-}
-
-.image-upload-button svg {
-    margin-left: 5px;
+.upload-image-button:hover {
+    background-color: #ffda66;
 }
 
 .submit-button {
     width: 100%;
-    background-color: #27ae60;
-    color: #fff;
+    background-color: #ffcc00;
+    color: #333;
     border: none;
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 18px;
-    margin-top: 20px;
+    font-weight: bold;
+    margin-top: 30px;
     transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-    background-color: #219653;
+    background-color: #ffda66;
 }
 
-.form-group {
-    position: relative;
-}
-
-.pickup-address-error {
-    color: #e74c3c;
-    font-size: 14px;
-    margin-top: 5px;
-    position: absolute;
-    top: 100%;
-    right: 0;
-}
 .error-message {
     color: #e74c3c;
-    font-size: 14px;
+    font-weight: bold;
     margin-top: 5px;
-}
-
-.form-check {
-    margin-bottom: 10px;
-}
-
-.form-check-input {
-    margin-right: 10px;
-}
-
-.form-check-label {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-@media (max-width: 768px) {
-    .upload-product-container {
-        padding: 20px;
-        margin: 60px 15px 20px;
-    }
-
-    .upload-product-title {
-        font-size: 24px;
-    }
-
-    .form-control {
-        font-size: 14px;
-    }
-
-    .submit-button {
-        font-size: 16px;
-    }
 }

@@ -65,7 +65,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <section className="background-section text-center">
+      <section className="background-section text-center initiatives-section">
         <h2 className="text-center mb-5">היוזמות שלנו</h2>
         <div className="row">
           <div className="col-md-3">

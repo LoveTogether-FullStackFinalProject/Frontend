@@ -66,53 +66,33 @@ const AboutPage = () => {
       </section>
 
       <section className="background-section text-center initiatives-section">
-        <h2 className="text-center mb-5">היוזמות שלנו</h2>
-        <div className="row">
-          <div className="col-md-3">
-            <div className="card">
-              <img src={socialMarket} alt="המכולת החברתית" className="card-img-top"/>
-              <div className="card-body">
-                <h3 className="card-title">המכולת החברתית</h3>
-                <p className="card-text">
-                  מדהים: מכולת חברתית חדשה באשדוד תחלק למעוטי יכולת מצרכים ללא תשלום...
-                  <a href="https://ashdodnet.com/%D7%97%D7%93%D7%A9%D7%95%D7%AA-%D7%90%D7%A9%D7%93%D7%95%D7%93/%D7%9E%D7%93%D7%94%D7%99%D7%9D-%D7%9E%D7%9B%D7%9C%D7%95%D7%AA-%D7%97%D7%91%D7%A8%D7%AA%D7%99%D7%AA-%D7%97%D7%93%D7%A9%D7%94-%D7%91%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%AA%D7%90%D7%A4%D7%A9%D7%A8-%D7%9C%D7%9E%D7%A2%D7%95%D7%98%D7%99-%D7%99%D7%9B%D7%95%D7%9C%D7%AA-%D7%9C%D7%A7%D7%91%D7%9C-%D7%9E%D7%A6%D7%A8%D7%9B%D7%99%D7%9D-%D7%9C%D7%9C%D7%90-%D7%AA%D7%A9%D7%9C%D7%95%D7%9D" target="_blank" rel="noopener noreferrer">קרא עוד</a>
-                </p>
-              </div>
+        <h2>היוזמות שלנו</h2>
+        <div className="cards-container">
+          <div className="card">
+            <img src={socialMarket} alt="המכולת החברתית" />
+            <div className="card-content">
+              <h3>המכולת החברתית</h3>
+              <p>מדהים: מכולת חברתית חדשה באשדוד תחלק למעוטי יכולת מצרכים ללא תשלום...
+                <a href="https://ashdodnet.com/%D7%97%D7%93%D7%A9%D7%95%D7%AA-%D7%90%D7%A9%D7%93%D7%95%D7%93/%D7%9E%D7%93%D7%94%D7%99%D7%9D-%D7%9E%D7%9B%D7%9C%D7%95%D7%AA-%D7%97%D7%91%D7%A8%D7%AA%D7%99%D7%AA-%D7%97%D7%93%D7%A9%D7%94-%D7%91%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%AA%D7%90%D7%A4%D7%A9%D7%A8-%D7%9C%D7%9E%D7%A2%D7%95%D7%98%D7%99-%D7%99%D7%9B%D7%95%D7%9C%D7%AA-%D7%9C%D7%A7%D7%91%D7%9C-%D7%9E%D7%A6%D7%A8%D7%9B%D7%99%D7%9D-%D7%9C%D7%9C%D7%90-%D7%AA%D7%A9%D7%9C%D7%95%D7%9D" target="_blank" rel="noopener noreferrer">קרא עוד</a>
+              </p>
             </div>
           </div>
-          <div className="col-md-3">
-            <div className="card">
-              <img src={socialFrezzer} alt="המקרר השיתופי" className="card-img-top"/>
-              <div className="card-body">
-                <h3 className="card-title">המקרר השיתופי</h3>
-                <p className="card-text">
-                  המקרר החברתי הראשון באשדוד: תורמים מוצרי מזון ומי שזקוק להם פשוט מגיע ולוקח...
-                  <a href="https://ashdodnet.com/%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%91%D7%A7%D7%94%D7%99%D7%9C%D7%94/%D7%94%D7%9E%D7%A7%D7%A8%D7%A8-%D7%94%D7%97%D7%91%D7%A8%D7%AA%D7%99-%D7%94%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%91%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%AA%D7%95%D7%A8%D7%9E%D7%99%D7%9D-%D7%9E%D7%95%D7%A6%D7%A8%D7%99-%D7%9E%D7%96%D7%95%D7%9F-%D7%95%D7%9E%D7%99-%D7%A9%D7%96%D7%A7%D7%95%D7%A7-%D7%9C%D7%94%D7%9D-%D7%A4%D7%A9%D7%95%D7%98-%D7%9E%D7%92%D7%99%D7%A2-%D7%95%D7%9C%D7%95%D7%A7%D7%97-469588" target="_blank" rel="noopener noreferrer">קרא עוד</a>
-                </p>
-              </div>
+          <div className="card">
+            <img src={socialFrezzer} alt="המקרר השיתופי" />
+            <div className="card-content">
+              <h3>המקרר השיתופי</h3>
+              <p>המקרר החברתי הראשון באשדוד: תורמים מוצרי מזון ומי שזקוק להם פשוט מגיע ולוקח...
+                <a href="https://ashdodnet.com/%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%91%D7%A7%D7%94%D7%99%D7%9C%D7%94/%D7%94%D7%9E%D7%A7%D7%A8%D7%A8-%D7%94%D7%97%D7%91%D7%A8%D7%AA%D7%99-%D7%94%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%91%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%AA%D7%95%D7%A8%D7%9E%D7%99%D7%9D-%D7%9E%D7%95%D7%A6%D7%A8%D7%99-%D7%9E%D7%96%D7%95%D7%9F-%D7%95%D7%9E%D7%99-%D7%A9%D7%96%D7%A7%D7%95%D7%A7-%D7%9C%D7%94%D7%9D-%D7%A4%D7%A9%D7%95%D7%98-%D7%9E%D7%92%D7%99%D7%A2-%D7%95%D7%9C%D7%95%D7%A7%D7%97-469588" target="_blank" rel="noopener noreferrer">קרא עוד</a>
+              </p>
             </div>
           </div>
-          <div className="col-md-3">
-            <div className="card">
-              <img src={socialCoats} alt="קיר המעילים" className="card-img-top"/>
-              <div className="card-body">
-                <h3 className="card-title">קיר המעילים</h3>
-                <p className="card-text">
-                  קיר המעילים החברתי שמזמין את התושבים לתרום מעילים שאינם משתמשים בהם עבור אלו שצריכים...
-                  <a href="https://ashdodnet.com/%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%91%D7%A7%D7%94%D7%99%D7%9C%D7%94/%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%94%D7%99%D7%A4%D7%94-%D7%A7%D7%99%D7%A8-%D7%94%D7%9E%D7%A2%D7%99%D7%9C%D7%99%D7%9D-%D7%94%D7%AA%D7%9E%D7%9C%D7%90-%D7%A2%D7%93-%D7%90%D7%A4%D7%A1-%D7%9E%D7%A7%D7%95%D7%9D-%D7%95%D7%9E%D7%99-%D7%A9%D7%A6%D7%A8%D7%99%D7%9A-%D7%9E%D7%95%D7%96%D7%9E%D7%9F-%D7%9C%D7%91%D7%95%D7%90-%D7%9C%D7%A7%D7%97%D7%AA-501040" target="_blank" rel="noopener noreferrer">קרא עוד</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="card">
-              <img src={bagForAll} alt="תיק לכל תלמיד" className="card-img-top"/>
-              <div className="card-body">
-                <h3 className="card-title">תיק לכל תלמיד</h3>
-                <p className="card-text">
-                  תיאור של תיק לכל תלמיד...
-                </p>
-              </div>
+          <div className="card">
+            <img src={socialCoats} alt="קיר המעילים" />
+            <div className="card-content">
+              <h3>קיר המעילים</h3>
+              <p>קיר המעילים החברתי שמזמין את התושבים לתרום מעילים שאינם משתמשים בהם עבור אלו שצריכים...
+                <a href="https://ashdodnet.com/%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%91%D7%A7%D7%94%D7%99%D7%9C%D7%94/%D7%90%D7%A9%D7%93%D7%95%D7%93-%D7%94%D7%99%D7%A4%D7%94-%D7%A7%D7%99%D7%A8-%D7%94%D7%9E%D7%A2%D7%99%D7%9C%D7%99%D7%9D-%D7%94%D7%AA%D7%9E%D7%9C%D7%90-%D7%A2%D7%93-%D7%90%D7%A4%D7%A1-%D7%9E%D7%A7%D7%95%D7%9D-%D7%95%D7%9E%D7%99-%D7%A9%D7%A6%D7%A8%D7%99%D7%9A-%D7%9E%D7%95%D7%96%D7%9E%D7%9F-%D7%9C%D7%91%D7%95%D7%90-%D7%9C%D7%A7%D7%97%D7%AA-501040" target="_blank" rel="noopener noreferrer">קרא עוד</a>
+              </p>
             </div>
           </div>
         </div>

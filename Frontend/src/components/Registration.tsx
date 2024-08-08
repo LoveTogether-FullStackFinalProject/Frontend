@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { uploadPhoto } from '../services/uploadProductService';
@@ -10,7 +10,6 @@ import z from "zod";
 import { useNavigate } from 'react-router-dom';
 import './Registration.css';
 
-
 export let userID: string;
 
 const schema = z.object({
@@ -19,7 +18,8 @@ const schema = z.object({
     email: z.string().email("כתובת דואר אלקטרוני לא חוקית"),
     password: z.string().min(8, "הסיסמה חייבת להכיל לפחות 8 תווים"),
     phoneNumber: z.string().length(10, "מספר הטלפון חייב להכיל 10 ספרות"),
-    mainAddress: z.string().min(5, "כתובת ראשית חייבת להכיל לפחות 5 תווים")
+    mainAddress: z.string().min(5, "כתובת ראשית חייבת להכיל לפחות 5 תווים"),
+    image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה').optional()
 });
 
 type FormData = z.infer<typeof schema>;
@@ -31,16 +31,10 @@ const Registration = () => {
     const { register, handleSubmit, formState: { errors }, setValue, trigger } = useForm<FormData>({ resolver: zodResolver(schema) });
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        if (imgSrc) {
-            setValue("image", URL.createObjectURL(imgSrc));
-        }
-    }, [imgSrc, setValue]);
-
     const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setImgSrc(e.target.files[0]);
-            setValue("image", URL.createObjectURL(e.target.files[0]));
+            setValue("image", e.target.files[0]); // Set the file itself, not the URL
             trigger("image");
         }
     };
@@ -71,7 +65,6 @@ const Registration = () => {
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
-
 
             navigate('/mainPage');
         } catch (err: any) {
@@ -117,117 +110,114 @@ const Registration = () => {
     if (accessToken) {
         return (
             <div className="registration-container">
-                <div className="registration-card">
-                    <div className="registration-body">
-                        <p className="error-message">שגיאה: כבר מחוברים למערכת.</p>
-                        <button className="submit-button" onClick={() => navigate('/mainPage')}>חזור לדף הבית</button>
-                    </div>
+                <div className="registration-body">
+                    <p className="error-message">שגיאה: כבר מחוברים למערכת.</p>
+                    <button className="submit-button" onClick={() => navigate('/mainPage')}>חזור לדף הבית</button>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="registration-container">
-            <div className="registration-card">
-                <div className="registration-body">
-                    <h3 className='h3-header'>הרשמה</h3>
-                    <div className="profile-image-container">
-                        {imgSrc && (
+        <div className="registration-container" style={{ background: 'linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%)' }}>
+            <h3 className='registration-title'>הרשמה</h3>
+            <form onSubmit={handleSubmit(registerUserHandler)} style={{ width: '100%' }}>
+                <div className="form-group">
+                    <input
+                        {...register("firstName")}
+                        type="text"
+                        placeholder="שם פרטי"
+                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                    />
+                    {errors.firstName && <div className="invalid-feedback">{errors.firstName.message}</div>}
+                </div>
+                <div className="form-group">
+                    <input
+                        {...register("lastName")}
+                        type="text"
+                        placeholder="שם משפחה"
+                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
+                    />
+                    {errors.lastName && <div className="invalid-feedback">{errors.lastName.message}</div>}
+                </div>
+                <div className="form-group">
+                    <input
+                        {...register("email")}
+                        type="email"
+                        placeholder="כתובת דואר אלקטרוני"
+                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                    />
+                    {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
+                </div>
+                <div className="form-group">
+                    <input
+                        {...register("password")}
+                        type="password"
+                        placeholder="סיסמה"
+                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                    />
+                    {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
+                </div>
+                <div className="form-group">
+                    <input
+                        {...register("phoneNumber")}
+                        type="tel"
+                        placeholder="מספר טלפון"
+                        className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
+                    />
+                    {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber.message}</div>}
+                </div>
+                <div className="form-group">
+                    <input
+                        {...register("mainAddress")}
+                        type="text"
+                        placeholder="כתובת ראשית"
+                        className={`form-control ${errors.mainAddress ? 'is-invalid' : ''}`}
+                    />
+                    {errors.mainAddress && <div className="invalid-feedback">{errors.mainAddress.message}</div>}
+                </div>
+                <div className="form-group">
+                    <button type="button" onClick={selectImg} className="upload-image-button" style={{ backgroundColor: '#F9DA78' }}>
+                        <FontAwesomeIcon icon={faImage} />
+                        {imgSrc ? 'החלפת תמונה' : 'העלאת תמונה'}
+                    </button>
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={imgSelected}
+                        style={{ display: 'none' }}
+                    />
+                    {imgSrc && (
+                        <div className="img-preview-container">
                             <img
                                 src={URL.createObjectURL(imgSrc)}
-                                alt="Profile"
-                                className="profile-image"
+                                alt="תמונה נבחרת"
+                                className="img-preview"
                             />
-                        )}
-                        <button className="image-upload-button" onClick={selectImg}>
-                            <FontAwesomeIcon icon={faImage} />
-                        </button>
-                        <input
-                            type="file"
-                            ref={fileInputRef}
-                            style={{ display: 'none' }}
-                            onChange={imgSelected}
-                            accept="image/*"
-                        />
-                    </div>
-                    <form onSubmit={handleSubmit(registerUserHandler)} className="horizontal-form">
-
-                        <div className="form-group">
-                            <input
-                                {...register("firstName")}
-                                type="text"
-                                placeholder="שם פרטי"
-                                className={errors.firstName ? 'error' : ''}
-                            />
-                            {errors.firstName && <span style={{ color: 'red', fontSize: '14px', marginLeft: '140px' }}>{errors.firstName.message}</span>}
                         </div>
-                        <div className="form-group">
-                            <input
-                                {...register("lastName")}
-                                type="text"
-                                placeholder="שם משפחה"
-                                className={errors.lastName ? 'error' : ''}
-                            />
-                            {errors.lastName && <span style={{ color: 'red', fontSize: '14px', marginLeft: '120px' }}>{errors.lastName.message}</span>}
-                        </div>
-                        <div className="form-group">
-                            <input
-                                {...register("email")}
-                                type="email"
-                                placeholder="כתובת דואר אלקטרוני"
-                                className={errors.email ? 'error' : ''}
-                            />
-                            {errors.email && <span style={{ color: 'red', fontSize: '14px', marginLeft: '140px' }}>{errors.email.message}</span>}
-                        </div>
-                        <div className="form-group">
-                            <input
-                                {...register("password")}
-                                type="password"
-                                placeholder="סיסמה"
-                                className={errors.password ? 'error' : ''}
-                            />
-                            {errors.password && <span style={{ color: 'red', fontSize: '14px', marginLeft: '12px' }}>{errors.password.message}</span>}
-                        </div>
-                        <div className="form-group">
-                            <input
-                                {...register("phoneNumber")}
-                                type="tel"
-                                placeholder="מספר טלפון"
-                                className={errors.phoneNumber ? 'error' : ''}
-                            />
-                            {errors.phoneNumber && <span style={{ color: 'red', fontSize: '14px', marginLeft: '140px' }}>{errors.phoneNumber.message}</span>}
-                        </div>
-                        <div className="form-group">
-                            <input
-                                {...register("mainAddress")}
-                                type="text"
-                                placeholder="כתובת ראשית"
-                                className={errors.mainAddress ? 'error' : ''}
-                            />
-                            {errors.mainAddress && <span style={{ color: 'red', fontSize: '14px', marginLeft: '120px' }}>{errors.mainAddress.message}</span>}
-                        </div>
-                        <button type="submit" className="submit-button">
-                            הרשמה
-                        </button>
-                    </form>
-                    {registerError && (
-                        <p className="error-message">{registerError}</p>
                     )}
-                    <div className="google-login">
-                        <GoogleLogin
-                            onSuccess={onGoogleLoginSuccess}
-                            onError={onGoogleLoginFailure}
-                        />
-                    </div>
-                    <button
-                        className="login-link"
-                        onClick={() => navigate('/login')}
-                    >
-                        כבר רשום? התחבר כאן
-                    </button>
+                    {errors.image && <div className="invalid-feedback">{errors.image.message}</div>}
                 </div>
+                <button type="submit" className="submit-button">
+                    הרשמה
+                </button>
+            </form>
+            {registerError && (
+                <p className="error-message">{registerError}</p>
+            )}
+            <div className="google-login">
+                <GoogleLogin
+                    onSuccess={onGoogleLoginSuccess}
+                    onError={onGoogleLoginFailure}
+                />
             </div>
+            <button
+                className="login-link"
+                onClick={() => navigate('/login')}
+            >
+                כבר רשום? התחבר כאן
+            </button>
         </div>
     );
 }

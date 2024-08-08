@@ -66,6 +66,9 @@ const Registration = () => {
             }
             localStorage.setItem('userID', userID);
 
+            // Notify other components about the authentication change
+            window.dispatchEvent(new Event('authChange'));
+
             navigate('/mainPage');
         } catch (err: any) {
             console.log("err: ", err);
@@ -96,6 +99,10 @@ const Registration = () => {
                 localStorage.setItem('refreshToken', res.refreshToken);
             }
             localStorage.setItem('userID', userID);
+
+            // Notify other components about the authentication change
+            window.dispatchEvent(new Event('authChange'));
+
             navigate('/mainPage');
         } catch (e) {
             console.log(e);
@@ -120,106 +127,53 @@ const Registration = () => {
 
     return (
         <div className="registration-container" style={{ background: 'linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%)' }}>
-            <h3 className='registration-title'>הרשמה</h3>
-            <form onSubmit={handleSubmit(registerUserHandler)} style={{ width: '100%' }}>
-                <div className="form-group">
-                    <input
-                        {...register("firstName")}
-                        type="text"
-                        placeholder="שם פרטי"
-                        className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+            <div className="registration-body">
+                <form onSubmit={handleSubmit(registerUserHandler)}>
+                    <div>
+                        <input type="text" placeholder="שם פרטי" {...register('firstName')} />
+                        {errors.firstName && <p className="error-message">{errors.firstName.message}</p>}
+                    </div>
+                    <div>
+                        <input type="text" placeholder="שם משפחה" {...register('lastName')} />
+                        {errors.lastName && <p className="error-message">{errors.lastName.message}</p>}
+                    </div>
+                    <div>
+                        <input type="email" placeholder="דואר אלקטרוני" {...register('email')} />
+                        {errors.email && <p className="error-message">{errors.email.message}</p>}
+                    </div>
+                    <div>
+                        <input type="password" placeholder="סיסמה" {...register('password')} />
+                        {errors.password && <p className="error-message">{errors.password.message}</p>}
+                    </div>
+                    <div>
+                        <input type="text" placeholder="מספר טלפון" {...register('phoneNumber')} />
+                        {errors.phoneNumber && <p className="error-message">{errors.phoneNumber.message}</p>}
+                    </div>
+                    <div>
+                        <input type="text" placeholder="כתובת ראשית" {...register('mainAddress')} />
+                        {errors.mainAddress && <p className="error-message">{errors.mainAddress.message}</p>}
+                    </div>
+                    <div>
+                        <input type="file" ref={fileInputRef} onChange={imgSelected} style={{ display: 'none' }} />
+                        <button type="button" className="upload-button" onClick={selectImg}>
+                            <FontAwesomeIcon icon={faImage} /> בחר תמונה
+                        </button>
+                        {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Selected" className="preview-image" />}
+                        {errors.image && <p className="error-message">{errors.image.message}</p>}
+                    </div>
+                    <button type="submit" className="submit-button">הרשם</button>
+                </form>
+                {registerError && <p className="error-message">{registerError}</p>}
+                <div className="google-login">
+                    <GoogleLogin
+                        onSuccess={onGoogleLoginSuccess}
+                        onFailure={onGoogleLoginFailure}
+                        text="continue_with"
                     />
-                    {errors.firstName && <div className="invalid-feedback">{errors.firstName.message}</div>}
                 </div>
-                <div className="form-group">
-                    <input
-                        {...register("lastName")}
-                        type="text"
-                        placeholder="שם משפחה"
-                        className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                    />
-                    {errors.lastName && <div className="invalid-feedback">{errors.lastName.message}</div>}
-                </div>
-                <div className="form-group">
-                    <input
-                        {...register("email")}
-                        type="email"
-                        placeholder="כתובת דואר אלקטרוני"
-                        className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-                    />
-                    {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
-                </div>
-                <div className="form-group">
-                    <input
-                        {...register("password")}
-                        type="password"
-                        placeholder="סיסמה"
-                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                    />
-                    {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
-                </div>
-                <div className="form-group">
-                    <input
-                        {...register("phoneNumber")}
-                        type="tel"
-                        placeholder="מספר טלפון"
-                        className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
-                    />
-                    {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber.message}</div>}
-                </div>
-                <div className="form-group">
-                    <input
-                        {...register("mainAddress")}
-                        type="text"
-                        placeholder="כתובת ראשית"
-                        className={`form-control ${errors.mainAddress ? 'is-invalid' : ''}`}
-                    />
-                    {errors.mainAddress && <div className="invalid-feedback">{errors.mainAddress.message}</div>}
-                </div>
-                <div className="form-group">
-                    <button type="button" onClick={selectImg} className="upload-image-button" style={{ backgroundColor: '#F9DA78' }}>
-                        <FontAwesomeIcon icon={faImage} />
-                        {imgSrc ? 'החלפת תמונה' : 'העלאת תמונה'}
-                    </button>
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={imgSelected}
-                        style={{ display: 'none' }}
-                    />
-                    {imgSrc && (
-                        <div className="img-preview-container">
-                            <img
-                                src={URL.createObjectURL(imgSrc)}
-                                alt="תמונה נבחרת"
-                                className="img-preview"
-                            />
-                        </div>
-                    )}
-                    {errors.image && <div className="invalid-feedback">{errors.image.message}</div>}
-                </div>
-                <button type="submit" className="submit-button">
-                    הרשמה
-                </button>
-            </form>
-            {registerError && (
-                <p className="error-message">{registerError}</p>
-            )}
-            <div className="google-login">
-                <GoogleLogin
-                    onSuccess={onGoogleLoginSuccess}
-                    onError={onGoogleLoginFailure}
-                />
             </div>
-            <button
-                className="login-link"
-                onClick={() => navigate('/login')}
-            >
-                כבר רשום? התחבר כאן
-            </button>
         </div>
     );
-}
+};
 
 export default Registration;

@@ -4,78 +4,104 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+  min-height: 100vh;
   background: rgb(169,169,169);
   background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
-  background-attachment: fixed; /* This ensures the background doesn't scroll */
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centers the content horizontally */
-  justify-content: center; /* Centers the content vertically */
+  align-items: center;
 }
 
-.background-section, .video-section, .initiatives-section {
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%; /* Ensures the sections don't take the full width */
-  max-width: 800px; /* Limits the maximum width */
-  text-align: center; /* Centers text within these sections */
+.background-section {
+  padding: 200px 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Ensure text is centered */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.background-overlay {
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.about-title, .about-registration, .about-description {
+  margin: 0 auto; /* Center horizontally */
+  max-width: 800px; /* Optional max width for better readability */
+  padding: 0 20px; /* Add padding for better spacing */
 }
 
 .about-title {
-  font-size: 2.5em;
+  font-size: 3em;
   font-weight: bold;
   margin-bottom: 10px;
   color: #444;
 }
 
-.about-subtitle {
-  font-size: 1.2em;
-  color: #666;
-  margin-bottom: 20px;
-}
-
 .about-registration {
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: #666;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .about-description {
-  font-size: 1.1em;
+  font-size: 1.9em;
   line-height: 1.6;
   color: #555;
-  max-width: 600px;
   margin: 0 auto;
-  font-weight: bold; /* Makes the text bold */
+}
+
+.sections-container {
+  padding: 40px 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1000px;
+}
+
+.section {
+  padding: 20px 0;
+}
+
+.section h2 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.section p {
+  font-size: 1.5em;
+  color: #555;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.video-section {
+  padding: 40px 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .video-container {
   max-width: 560px;
   width: 100%;
-  text-align: center;
+  margin: 0 auto;
 }
 
-.cards-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+.initiatives-section {
+  padding: 40px 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .card {
-  background-color: rgba(255, 255, 255, 0.9); /* Make cards slightly more opaque */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
-  width: 40%;
   margin: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -94,12 +120,18 @@
   border-radius: 10px;
 }
 
-.card-content h3, .card-content p, .card-content a {
+.card-body h3 {
+  margin-top: 15px;
+  font-size: 1.6em; /* Increase the font size for card titles */
+}
+
+.card-body p {
+  font-size: 1.2em; /* Increase the font size for card text */
   margin: 10px 0;
 }
 
-.card-content a {
-  color: #000000;
+.card-body a {
+  color: #000;
   text-decoration: none;
   font-weight: bold;
 }

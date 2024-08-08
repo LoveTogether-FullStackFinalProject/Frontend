@@ -3,7 +3,7 @@ import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from "../services/data-service";
 import { DonorData } from './donorData';
-import adminImage from '../assets/adminDashboard.png'; 
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const AdminPage = () => {
   const [adminData, setAdminData] = useState<DonorData | null>(null);
@@ -35,25 +35,24 @@ const AdminPage = () => {
   };
 
   const [isAdmin, setIsAdmin] = useState(false);
-     useEffect(() => {
-       const userId = localStorage.getItem('userID');
-       if (userId) {
-         dataService.getUser(userId).req.then((res) => {
-           setIsAdmin(res.data.isAdmin);
-           console.log("isAdmin:", res.data.isAdmin);
-         });
-       }
-     }, []);
-
-
-     if (!isAdmin) {
-      return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
-        </div>
-      );
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+        console.log("isAdmin:", res.data.isAdmin);
+      });
     }
+  }, []);
+
+  if (!isAdmin) {
+    return (
+      <div className="error-container">
+        <p>שגיאה: אינך מחובר בתור מנהל</p>
+        <button onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button>
+      </div>
+    );
+  }
 
   if (error) {
     return <div className="error">Error: {error}</div>;
@@ -62,31 +61,45 @@ const AdminPage = () => {
   if (!adminData) {
     return <div className="loading">Loading...</div>;
   }
-  
 
   return (
-    <div className="container">
-       <div className="image-section">
-        <img src={adminImage} alt="Admin" className="admin-image" />
+    <div className="admin-page">
+      <div className="background-section text-center">
+        <h1 className="admin-title">ניהול ובקרה</h1>
       </div>
-      <div className="row">
-        <div className="label">שם:</div>
-        <div className="value">{adminData.firstName}</div>
-      </div>
-      <div className="row">
-        <div className="label">אימייל:</div>
-        <div className="value">{adminData.email}</div>
-      </div>
-      <div className="button-row">
-        <button className="admin-button" onClick={() => handleButtonClick('/')}>עמוד הבית</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/manageDonations')}>נהל תרומות</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/statistics')}>דוחות נתונים</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/manageUsers')}>נהל יוזרים</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/uploadRequestedProduct')}>העלאת בקשת פריט</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/manageRequestedDonations')}> נהל תרומות שהעמותה מבקשת</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/manageMainPageUsers')}>נהל הצגת תורמים בעמוד הראשי</button>
-        <button className="admin-button" onClick={() => handleButtonClick('/newLiveDonation')}>תרומה חדשה</button>
-
+      <div className="cards-container">
+        <div className="card" onClick={() => handleButtonClick('/')}>
+          <i className="fas fa-home card-icon"></i>
+          <p>עמוד הבית</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/manageDonations')}>
+          <i className="fas fa-hand-holding-heart card-icon"></i>
+          <p>נהל תרומות</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/statistics')}>
+          <i className="fas fa-chart-line card-icon"></i>
+          <p>דוחות נתונים</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/manageUsers')}>
+          <i className="fas fa-users card-icon"></i>
+          <p>נהל יוזרים</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/uploadRequestedProduct')}>
+          <i className="fas fa-upload card-icon"></i>
+          <p>העלאת בקשת פריט</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/manageRequestedDonations')}>
+          <i className="fas fa-clipboard-list card-icon"></i>
+          <p>נהל תרומות שהעמותה מבקשת</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/manageMainPageUsers')}>
+          <i className="fas fa-users-cog card-icon"></i>
+          <p>נהל הצגת תורמים בעמוד הראשי</p>
+        </div>
+        <div className="card" onClick={() => handleButtonClick('/newLiveDonation')}>
+          <i className="fas fa-donate card-icon"></i>
+          <p>תרומה חדשה</p>
+        </div>
       </div>
     </div>
   );

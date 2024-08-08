@@ -126,31 +126,31 @@ const Registration = () => {
     }
 
     return (
-        <div className="registration-container" style={{ background: 'linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%)' }}>
+        <div className="registration-container">
             <div className="registration-body">
                 <form onSubmit={handleSubmit(registerUserHandler)}>
                     <div>
-                        <input type="text" placeholder="שם פרטי" {...register('firstName')} />
+                        <input type="text" placeholder="שם פרטי" {...register('firstName')} className="form-control" />
                         {errors.firstName && <p className="error-message">{errors.firstName.message}</p>}
                     </div>
                     <div>
-                        <input type="text" placeholder="שם משפחה" {...register('lastName')} />
+                        <input type="text" placeholder="שם משפחה" {...register('lastName')} className="form-control" />
                         {errors.lastName && <p className="error-message">{errors.lastName.message}</p>}
                     </div>
                     <div>
-                        <input type="email" placeholder="דואר אלקטרוני" {...register('email')} />
+                        <input type="email" placeholder="דואר אלקטרוני" {...register('email')} className="form-control" />
                         {errors.email && <p className="error-message">{errors.email.message}</p>}
                     </div>
                     <div>
-                        <input type="password" placeholder="סיסמה" {...register('password')} />
+                        <input type="password" placeholder="סיסמה" {...register('password')} className="form-control" />
                         {errors.password && <p className="error-message">{errors.password.message}</p>}
                     </div>
                     <div>
-                        <input type="text" placeholder="מספר טלפון" {...register('phoneNumber')} />
+                        <input type="text" placeholder="מספר טלפון" {...register('phoneNumber')} className="form-control" />
                         {errors.phoneNumber && <p className="error-message">{errors.phoneNumber.message}</p>}
                     </div>
                     <div>
-                        <input type="text" placeholder="כתובת ראשית" {...register('mainAddress')} />
+                        <input type="text" placeholder="כתובת ראשית" {...register('mainAddress')} className="form-control" />
                         {errors.mainAddress && <p className="error-message">{errors.mainAddress.message}</p>}
                     </div>
                     <div>

@@ -1,97 +1,118 @@
 /* Container for the whole form */
 .new-live-donation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Title styling */
-  .new-live-donation-title {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-  }
-  
-  /* Form styling */
-  .donation-form {
-    width: 100%;
-    max-width: 800px;
-    direction: rtl;
-  }
-  
-  /* Flexbox for form rows */
-  .form-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  /* Individual form group */
-  .form-group {
-    flex: 1;
-    min-width: 200px;
-    margin: 10px;
-    text-align: right;
-  }
-  
-  /* Styling for inputs and selects */
-  .form-control {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-  
-  /* Invalid feedback styling */
-  .invalid-feedback {
-    color: red;
-    font-size: 14px;
-  }
-  
-  /* Image upload section styling */
-  .image-upload-section {
-    text-align: center;
-    margin: 10px 0;
-  }
-  
-  /* Button styling */
-  .upload-button {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .file-input {
-    display: none;
-  }
-  
-  .img-preview {
-    margin-top: 10px;
-  }
-  
-  .img-preview img {
-    max-width: 100%;
-    max-height: 200px;
-    object-fit: contain;
-  }
-  
-  /* Submit button styling */
-  .submit-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1200px;
+  margin: 50px auto;
+}
+
+/* Title styling */
+.new-live-donation-title {
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+  font-weight: 700;
+}
+
+/* Form styling */
+.donation-form {
+  width: 100%;
+  direction: rtl;
+}
+
+/* Flexbox for form rows */
+.form-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Individual form group */
+.form-group {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+/* Styling for inputs and selects */
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #f5f5f5;
+}
+
+/* Invalid feedback styling */
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Image upload section styling */
+.image-upload-section {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Button styling */
+.btn {
+  background-color: #F9DA78;
+  border: none;
+  color: #333;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+
+.file-input {
+  display: none;
+}
+
+.img-preview {
+  max-width: 300px;
+  margin-top: 10px;
+}
+
+/* Error container styling */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.error-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  font-size: 18px;
+  color: #dc3545;
+}

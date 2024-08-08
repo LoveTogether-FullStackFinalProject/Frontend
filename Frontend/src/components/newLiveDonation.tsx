@@ -84,16 +84,6 @@ const NewLiveDonation: React.FC = () => {
   };
 
   const onSubmit = async (data: FormData) => {
-    if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
-      trigger('expirationDate');
-      return;
-    }
-
-    const userId = localStorage.getItem('userID');
-      if (!userId) {
-        alert('User not logged in');
-        return;
-      }
     try {
       let imageUrl = '';
       if (data.image) {
@@ -102,7 +92,7 @@ const NewLiveDonation: React.FC = () => {
       const productData = {
         ...data,
         image: imageUrl,
-        donor: userId,
+        donor: localStorage.getItem('userID') || '',
         approvedByAdmin: true,
         status: 'הגיע לעמותה',
         category: data.category === 'אחר' ? data.customCategory : data.category,
@@ -110,7 +100,7 @@ const NewLiveDonation: React.FC = () => {
       console.log('Submitting product data:', productData); // Log data to verify
       await uploadProduct(productData);
       alert('התרומה נוספה בהצלחה');
-      navigate('/manageDonations'); 
+      navigate('/manageDonations');
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(
@@ -118,7 +108,7 @@ const NewLiveDonation: React.FC = () => {
       );
     }
   };
- 
+
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -129,17 +119,6 @@ const NewLiveDonation: React.FC = () => {
     }
   }, []);
 
-
-  if (!isAdmin) {
-   return (
-       <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
-       <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-       <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
-     </div>
-   );
- }
- 
-//לא מציג את השגיאה
   if (!isAdmin) {
     return (
       <div className="error-container">
@@ -148,158 +127,153 @@ const NewLiveDonation: React.FC = () => {
       </div>
     );
   }
-  
 
   return (
-    <div className="new-live-donation-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <h2 className="new-live-donation-title">♥עמותת ואהבתם ביחד - הוספת תרומה חדשה♥</h2>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', maxWidth: '800px', direction: 'rtl' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-          {/* Existing input fields */}
-          <div className="form-group">
-            <input
-              {...register('itemName')}
-              type="text"
-              placeholder="שם הפריט"
-              className={`form-control ${errors.itemName ? 'is-invalid' : ''}`}
-            />
-            {errors.itemName && (
-              <div className="invalid-feedback">{errors.itemName.message}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('quantity', { valueAsNumber: true })}
-              type="number"
-              placeholder="כמות"
-              className={`form-control ${errors.quantity ? 'is-invalid' : ''}`}
-            />
-            {errors.quantity && (
-              <div className="invalid-feedback">{errors.quantity.message}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <select
-              {...register('category')}
-              className={`form-control ${errors.category ? 'is-invalid' : ''}`}
-            >
-              <option value="">בחר קטגוריה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
-              <option value="ציוד לתינוקות">ציוד לתינוקות</option>
-              <option value="כלי בית">כלי בית</option>
-              <option value="ריהוט">ריהוט</option>
-              <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="ספרים">ספרים</option>
-              <option value="צעצועים">צעצועים</option>
-              <option value="אחר">אחר</option>
-            </select>
-            {errors.category && (
-              <div className="invalid-feedback">{errors.category.message}</div>
-            )}
-          </div>
-
-          {selectedCategory === 'אחר' && (
-            <div className="form-group">
-              <input
-                {...register('customCategory')}
-                type="text"
-                placeholder="קטגוריה מותאמת אישית"
-                className={`form-control ${errors.customCategory ? 'is-invalid' : ''}`}
-              />
-              {errors.customCategory && (
-                <div className="invalid-feedback">{errors.customCategory.message}</div>
-              )}
-            </div>
+    <div className="new-live-donation-container">
+      <form onSubmit={handleSubmit(onSubmit)} className="donation-form">
+        <div className="form-group">
+          <input
+            {...register('itemName')}
+            type="text"
+            placeholder="שם הפריט"
+            className={`form-control ${errors.itemName ? 'is-invalid' : ''}`}
+          />
+          {errors.itemName && (
+            <div className="invalid-feedback">{errors.itemName.message}</div>
           )}
+        </div>
 
-          <div className="form-group">
-            <input
-              {...register('condition')}
-              type="text"
-              placeholder="מצב הפריט"
-              className={`form-control ${errors.condition ? 'is-invalid' : ''}`}
-            />
-            {errors.condition && (
-              <div className="invalid-feedback">{errors.condition.message}</div>
-            )}
-          </div>
-
-          {selectedCategory === 'מזון ושתייה' && (
-            <div className="form-group">
-              <input
-                {...register('expirationDate')}
-                type="date"
-                placeholder="תאריך תפוגה"
-                className={`form-control ${errors.expirationDate ? 'is-invalid' : ''}`}
-              />
-              {errors.expirationDate && (
-                <div className="invalid-feedback">{errors.expirationDate.message}</div>
-              )}
-            </div>
+        <div className="form-group">
+          <input
+            {...register('quantity', { valueAsNumber: true })}
+            type="number"
+            placeholder="כמות"
+            className={`form-control ${errors.quantity ? 'is-invalid' : ''}`}
+          />
+          {errors.quantity && (
+            <div className="invalid-feedback">{errors.quantity.message}</div>
           )}
+        </div>
 
-          <div className="form-group">
-            <textarea
-              {...register('description')}
-              placeholder="תיאור"
-              rows={4}
-              className={`form-control ${errors.description ? 'is-invalid' : ''}`}
-            />
-            {errors.description && (
-              <div className="invalid-feedback">{errors.description.message}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('donorName')}
-              type="text"
-              placeholder="שם התורם"
-              className={`form-control ${errors.donorName ? 'is-invalid' : ''}`}
-            />
-            {errors.donorName && (
-              <div className="invalid-feedback">{errors.donorName.message}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <input
-              {...register('donorPhone')}
-              type="text"
-              placeholder="טלפון התורם"
-              className={`form-control ${errors.donorPhone ? 'is-invalid' : ''}`}
-            />
-            {errors.donorPhone && (
-              <div className="invalid-feedback">{errors.donorPhone.message}</div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <button type="button" className="btn btn-secondary" onClick={selectImg}>
-              <FontAwesomeIcon icon={faImage} />
-              {imgPreview ? 'תמונה נבחרה' : 'בחר תמונה'}
-            </button>
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={imgSelected}
-              style={{ display: 'none' }}
-            />
-          </div>
-
-          {imgPreview && (
-            <div className="form-group">
-              <img src={imgPreview} alt="תצוגה מקדימה" className="img-preview" />
-            </div>
+        <div className="form-group">
+          <select
+            {...register('category')}
+            className={`form-control ${errors.category ? 'is-invalid' : ''}`}
+          >
+            <option value="">בחר קטגוריה</option>
+            <option value="ביגוד">ביגוד</option>
+            <option value="הנעלה">הנעלה</option>
+            <option value="ציוד לתינוקות">ציוד לתינוקות</option>
+            <option value="כלי בית">כלי בית</option>
+            <option value="ריהוט">ריהוט</option>
+            <option value="מזון ושתייה">מזון ושתייה</option>
+            <option value="ספרים">ספרים</option>
+            <option value="צעצועים">צעצועים</option>
+            <option value="אחר">אחר</option>
+          </select>
+          {errors.category && (
+            <div className="invalid-feedback">{errors.category.message}</div>
           )}
+        </div>
 
+        {selectedCategory === 'אחר' && (
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">שמור תרומה</button>
+            <input
+              {...register('customCategory')}
+              type="text"
+              placeholder="קטגוריה מותאמת אישית"
+              className={`form-control ${errors.customCategory ? 'is-invalid' : ''}`}
+            />
+            {errors.customCategory && (
+              <div className="invalid-feedback">{errors.customCategory.message}</div>
+            )}
           </div>
+        )}
+
+        <div className="form-group">
+          <input
+            {...register('condition')}
+            type="text"
+            placeholder="מצב הפריט"
+            className={`form-control ${errors.condition ? 'is-invalid' : ''}`}
+          />
+          {errors.condition && (
+            <div className="invalid-feedback">{errors.condition.message}</div>
+          )}
+        </div>
+
+        {selectedCategory === 'מזון ושתייה' && (
+          <div className="form-group">
+            <input
+              {...register('expirationDate')}
+              type="date"
+              placeholder="תאריך תפוגה"
+              className={`form-control ${errors.expirationDate ? 'is-invalid' : ''}`}
+            />
+            {errors.expirationDate && (
+              <div className="invalid-feedback">{errors.expirationDate.message}</div>
+            )}
+          </div>
+        )}
+
+        <div className="form-group">
+          <textarea
+            {...register('description')}
+            placeholder="תיאור"
+            rows={4}
+            className={`form-control ${errors.description ? 'is-invalid' : ''}`}
+          />
+          {errors.description && (
+            <div className="invalid-feedback">{errors.description.message}</div>
+          )}
+        </div>
+
+        <div className="form-group">
+          <input
+            {...register('donorName')}
+            type="text"
+            placeholder="שם התורם"
+            className={`form-control ${errors.donorName ? 'is-invalid' : ''}`}
+          />
+          {errors.donorName && (
+            <div className="invalid-feedback">{errors.donorName.message}</div>
+          )}
+        </div>
+
+        <div className="form-group">
+          <input
+            {...register('donorPhone')}
+            type="text"
+            placeholder="טלפון התורם"
+            className={`form-control ${errors.donorPhone ? 'is-invalid' : ''}`}
+          />
+          {errors.donorPhone && (
+            <div className="invalid-feedback">{errors.donorPhone.message}</div>
+          )}
+        </div>
+
+        <div className="form-group">
+          <button type="button" className="btn" onClick={selectImg}>
+            <FontAwesomeIcon icon={faImage} />
+            {imgPreview ? 'תמונה נבחרה' : 'בחר תמונה'}
+          </button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={imgSelected}
+            className="file-input"
+          />
+        </div>
+
+        {imgPreview && (
+          <div className="form-group">
+            <img src={imgPreview} alt="תצוגה מקדימה" className="img-preview" />
+          </div>
+        )}
+
+        <div className="form-group">
+          <button type="submit" className="btn">שמור תרומה</button>
         </div>
       </form>
     </div>

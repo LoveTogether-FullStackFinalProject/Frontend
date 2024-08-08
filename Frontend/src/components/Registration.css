@@ -50,7 +50,7 @@ body, html {
 
 .submit-button {
     width: 100%;
-    background-color: #ffcc00;
+    background-color: #F9DA78;
     color: #333;
     border: none;
     padding: 18px;
@@ -63,7 +63,7 @@ body, html {
 }
 
 .submit-button:hover {
-    background-color: #ffdd33;
+    background-color:#F9DA78;
 }
 
 .error-message {
@@ -85,7 +85,7 @@ body, html {
 }
 
 .upload-button {
-    background-color: #ffcc00;
+    background-color:#F9DA78;
     color: #333;
     border: none;
     padding: 10px 15px;

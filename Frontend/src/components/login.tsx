@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import emailIcon from './../assets/email.png';
 import passwordIcon from './../assets/password.png';
-import logo from './../assets/logo.png'; 
+//import logo from './../assets/logo.png'; 
 import './login.css';
 import dataService from "../services/data-service.ts";
 

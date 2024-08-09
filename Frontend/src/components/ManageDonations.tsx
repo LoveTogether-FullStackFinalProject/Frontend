@@ -16,42 +16,44 @@ import {
   TableSortLabel
 } from '@mui/material';
 import { Search } from '@mui/icons-material';
+import { Donation } from './donation';
 
-interface Donation {
-  _id: string;
-  category: string;
-  description: string;
-  status: string;
-  approvedByAdmin?: boolean | string;
-  donor?: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-  };
-  pickUpAddress: string;
-  userAddress?: string;
-  branch?: string;
-  image?: string;
-  amount?: number;
-  itemCondition?: string;
-  expirationDate?: string;
-  createdAt: string;
-}
+//  export interface Donation {
+//   _id: string;
+//   category: string;
+//   description: string;
+//   status: string;
+//   approvedByAdmin?: boolean | string;
+//   donor?: {
+//     firstName: string;
+//     lastName: string;
+//     phone?: string;
+//   };
+//   pickUpAddress: string;
+//   userAddress?: string;
+//   branch?: string;
+//   image?: string;
+//   amount?: number;
+//   itemCondition?: string;
+//   expirationDate?: Date | string;
+//   createdAt: string;
+  
+// }
 
 type Order = 'asc' | 'desc';
 
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
-  const [selectedDonations, setSelectedDonations] = useState<string[]>([]);
+  //const [selectedDonations, setSelectedDonations] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [currentDonation, setCurrentDonation] = useState<Donation | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  //const [ setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('category');
   const [filterText, setFilterText] = useState<string>('');
   const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [uniqueBranches, setUniqueBranches] = useState<string[]>([]);
+  //const [ uniqueBranches,setUniqueBranches] = useState<string[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,13 +67,13 @@ const ManageDonationPage: React.FC = () => {
       });
       setDonations(updatedDonations);
 
-      const branches = Array.from(new Set(updatedDonations.map(donation => donation.branch).filter(branch => branch)));
-      setUniqueBranches(branches);
+      //const branches = Array.from(new Set(updatedDonations.map(donation => donation.branch).filter(branch => branch)));
+      //setUniqueBranches(branches);
 
     }).catch((err) => {
       console.log(err);
       if (err instanceof CanceledError) return;
-      setError(err.message);
+      //setError(err.message);
     });
 
     return () => {
@@ -100,7 +102,6 @@ const ManageDonationPage: React.FC = () => {
           ? (donation.donor.firstName?.toLowerCase() + " " + donation.donor.lastName?.toLowerCase()) 
           : '';
         const branch = donation.branch?.toLowerCase() || '';
-
         return (category.includes(lowerCaseFilterText) ||
                 description.includes(lowerCaseFilterText) ||
                 status.includes(lowerCaseFilterText) ||
@@ -122,7 +123,7 @@ const ManageDonationPage: React.FC = () => {
     setPendingChanges((prev) => [...prev, updatedDonation]);
   };
 
-  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean | string) => {
+  const handleApprovalUpdate = (donation: Donation, approvedByAdmin:string) => {
     const updatedDonation = { ...donation, approvedByAdmin };
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
@@ -249,10 +250,10 @@ const ManageDonationPage: React.FC = () => {
                     {donation.approvedByAdmin ? 'מאושר' : 'לא מאושר'}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, true)}>
+                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, 'true')}>
                       מאושר
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, false)}>
+                    <Dropdown.Item onClick={() => handleApprovalUpdate(donation, 'false')}>
                       לא מאושר
                     </Dropdown.Item>
                   </Dropdown.Menu>

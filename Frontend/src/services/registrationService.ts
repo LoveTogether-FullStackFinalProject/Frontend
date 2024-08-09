@@ -1,4 +1,4 @@
-import apiClient, { CanceledError } from './api-client';
+import apiClient from './api-client';
 
 export const registerUser = async (user: any) => {
     try {

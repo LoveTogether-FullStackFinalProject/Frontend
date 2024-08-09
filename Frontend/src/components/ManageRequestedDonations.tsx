@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './AdminDashboard.css';
 import dataService, { CanceledError } from "../services/data-service";
 import {requestedDonation} from "../services/upload-requested-product-service";
-import { Donation } from './donation';
+//import { Donation } from './donation';
 import {Delete} from '@mui/icons-material';
 import { IconButton,} from '@mui/material';
 import {
@@ -23,13 +23,13 @@ import { useNavigate } from 'react-router-dom';
 
 const ManageRequestedDonations = () => {
   const [requests, setRequests] = useState<requestedDonation[]>([])
-  const [error, setError] = useState<string | null>(null);
+  //const [error, setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Donation>('category');
+  const [orderBy, setOrderBy] = useState<keyof requestedDonation>('category');
   const [filter, setFilter] = useState<string>('');
   const [currentDonation, setCurrentDonation] = useState<requestedDonation | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
+  //const [showEditModal, setShowEditModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -47,7 +47,7 @@ const ManageRequestedDonations = () => {
     };
     }, [requests]);
 
-    const handleRequestSort = (property: keyof Donation) => {
+    const handleRequestSort = (property: keyof requestedDonation) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -67,21 +67,27 @@ const ManageRequestedDonations = () => {
              donation.itemCondition.toLowerCase().includes(filter.toLowerCase()) 
           )
           .sort((a, b) => {
-            return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
+            if (a[orderBy] === undefined || b[orderBy] === undefined) return 0;
+          
+            return (order === 'asc' ? 1 : -1) * (
+              (a[orderBy] ?? '') > (b[orderBy] ?? '') ? 1 : 
+              (a[orderBy] ?? '') < (b[orderBy] ?? '') ? -1 : 
+              0
+            );
           });
       };
     
       const sortedAndFilteredDonations = applySortAndFilter(requests);
 
-      const handleUpdatePlus = (donationId: string, amount: number) => {
-        dataService.updateRequestedDonation(donationId, { amount: amount+1 });
-        console.log(`updating donation with ID: ${donationId}`);
-      };
+      // const handleUpdatePlus = (donationId: string, amount: number) => {
+      //   dataService.updateRequestedDonation(donationId, { amount: amount+1 });
+      //   console.log(`updating donation with ID: ${donationId}`);
+      // };
 
-      const handleUpdateMinus = (donationId: string, amount: number) => {
-        dataService.updateRequestedDonation(donationId, { amount: amount-1 });
-        console.log(`updating donation with ID: ${donationId}`);
-      };
+      // const handleUpdateMinus = (donationId: string, amount: number) => {
+      //   dataService.updateRequestedDonation(donationId, { amount: amount-1 });
+      //   console.log(`updating donation with ID: ${donationId}`);
+      // };
 
       const handleDelete = (donationId: string) => {
         dataService.deleteRequestedDonation(donationId);
@@ -129,7 +135,7 @@ const ManageRequestedDonations = () => {
             }}
           />
           
-          {error && <p className="text-danger">{error}</p>}
+          {/* {error && <p className="text-danger">{error}</p>} */}
           <Table striped bordered hover>
             <thead>
               <tr>

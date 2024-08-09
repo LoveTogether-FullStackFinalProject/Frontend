@@ -1,4 +1,4 @@
-import axios from 'axios';
+//import axios from 'axios';
 import apiClient from "./api-client";
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -19,9 +19,9 @@ import { AxiosError, AxiosResponse } from "axios";
 //     }
 // };
 
-interface IUpoloadResponse {
-    url: string;
-}
+// interface IUpoloadResponse {
+//     url: string;
+// }
 
 export const uploadPhoto = async (photo: File) => {
     return new Promise<string>((resolve, reject) => {

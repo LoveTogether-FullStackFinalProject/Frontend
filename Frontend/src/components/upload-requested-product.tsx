@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import  dataService from "../services/data-service.ts";
 import {requestedDonation} from "../services/upload-requested-product-service";
-import  requestedProduectService,{ CanceledError } from "../services/upload-requested-product-service";
-import context from 'react-bootstrap/esm/AccordionContext';
+import  requestedProduectService from "../services/upload-requested-product-service";
+//import context from 'react-bootstrap/esm/AccordionContext';
  import './upload-requested-product.css';
 
 const RequestedProductSchema = z.object({
@@ -32,13 +32,13 @@ const RequestedProductSchema = z.object({
 type FormData = z.infer<typeof RequestedProductSchema>;
 
 function UploadRequestedProduct() {
-  const { register,clearErrors, handleSubmit, formState: { errors }, setValue , trigger,} = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
+  const { register,clearErrors, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
   const [amountError, setamountError] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  //const [errorMessage, setErrorMessage] = useState('');
   // const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
   // const [isExpirationFilled, setisExpirationFilled] = useState(false);
 

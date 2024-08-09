@@ -70,6 +70,7 @@ const Registration = () => {
             window.dispatchEvent(new Event('authChange'));
 
             navigate('/mainPage');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.log("err: ", err);
             const errorMessage = err.response?.data;
@@ -109,9 +110,9 @@ const Registration = () => {
         }
     };
 
-    const onGoogleLoginFailure = () => {
-        console.log("ההתחברות דרך חשבון Google נכשלה");
-    };
+    // const onGoogleLoginFailure = () => {
+    //     console.log("ההתחברות דרך חשבון Google נכשלה");
+    // };
 
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
@@ -159,7 +160,8 @@ const Registration = () => {
                             <FontAwesomeIcon icon={faImage} /> בחר תמונה
                         </button>
                         {imgSrc && <img src={URL.createObjectURL(imgSrc)} alt="Selected" className="preview-image" />}
-                        {errors.image && <p className="error-message">{errors.image.message}</p>}
+                        {/* {errors.image && <p className="error-message">{errors.image.message}</p>} */}
+                        {errors.image && typeof errors.image.message === 'string' && <p className="error-message">{errors.image.message}</p>}
                     </div>
                     <button type="submit" className="submit-button">הרשם</button>
                 </form>
@@ -167,7 +169,6 @@ const Registration = () => {
                 <div className="google-login">
                     <GoogleLogin
                         onSuccess={onGoogleLoginSuccess}
-                        onFailure={onGoogleLoginFailure}
                         text="continue_with"
                     />
                 </div>

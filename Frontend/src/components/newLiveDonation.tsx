@@ -47,7 +47,7 @@ const NewLiveDonation: React.FC = () => {
     formState: { errors },
     watch,
     setValue,
-    trigger,
+    //trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
@@ -94,7 +94,7 @@ const NewLiveDonation: React.FC = () => {
         image: imageUrl,
         donor: localStorage.getItem('userID') || '',
         approvedByAdmin: true,
-        status: 'הגיע לעמותה',
+        status: 'נמסר בעמותה',
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
       console.log('Submitting product data:', productData); // Log data to verify

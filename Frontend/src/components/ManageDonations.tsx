@@ -7,6 +7,7 @@ import {
   Dropdown,
   Modal
 } from 'react-bootstrap';
+import { IconButton } from '@mui/material';
 import { CSVLink } from 'react-csv';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ManageDonations.css';
@@ -15,7 +16,7 @@ import {
   InputAdornment,
   TableSortLabel
 } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Search ,Delete } from '@mui/icons-material';
 import { Donation } from './donation';
 
 //  export interface Donation {
@@ -268,7 +269,14 @@ const ManageDonationPage: React.FC = () => {
               <td>{formatDate(donation.createdAt)}</td>
               <td>{donation.branch}</td>
               <td>
-                <Button
+              <IconButton color="secondary"  sx={{ color: 'red' }} 
+                  onClick={() => {
+                    setCurrentDonation(donation);
+                    setShowModal(true);
+                  }}>
+              <Delete />
+              </IconButton>
+                {/* <Button
                   variant="danger"
                   onClick={() => {
                     setCurrentDonation(donation);
@@ -276,7 +284,7 @@ const ManageDonationPage: React.FC = () => {
                   }}
                 >
                   מחק
-                </Button>
+                </Button> */}
               </td>
             </tr>
           ))}

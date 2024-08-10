@@ -27,6 +27,8 @@ import './ManageUsers.css';
 
 import { useNavigate } from 'react-router-dom';
 
+
+
 // interface User {
 //   _id: string;
 //   firstName: string;
@@ -171,7 +173,7 @@ const ManageUsers: React.FC = () => {
      }, []);
 
 
-     if (!isAdmin) {
+     if (isAdmin) {
       return (
           <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
           <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
@@ -182,9 +184,15 @@ const ManageUsers: React.FC = () => {
 
   return (
     <div className="container">
-      <Typography variant="h4" align="center" gutterBottom>
-        ניהול יוזרים
-      </Typography>
+     <Typography
+      variant="h4"
+      align="center"
+      gutterBottom
+      className="typography-title"
+      style={{ fontFamily: 'Assistant', fontWeight: 'bold', paddingTop: '20px' }}
+    >
+      ניהול יוזרים
+    </Typography>
       <Toolbar>
         <TextField
           label="חפש משתמש"
@@ -205,7 +213,8 @@ const ManageUsers: React.FC = () => {
            <CSVLink
           data={handleExport()}
           filename="users.csv"
-          className="btn btn-success mb-3"
+          // className="btn btn-success mb-3"
+          className="csv-link"
         >
           ייצוא לאקסל
         </CSVLink>
@@ -216,7 +225,11 @@ const ManageUsers: React.FC = () => {
           <TableHead className="table-bordered">
             <TableRow>
               {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
-                <TableCell key={column} className="rtl-table-col">
+                <TableCell
+                key={column}
+                className="rtl-table-col"
+                style={{ fontWeight: 'bold', fontFamily: 'Assistant' }}
+              >
                   <TableSortLabel
                     active={orderBy === column}
                     direction={orderBy === column ? order : 'asc'}
@@ -231,8 +244,8 @@ const ManageUsers: React.FC = () => {
                   </TableSortLabel>
                 </TableCell>
               ))}
-              <TableCell className="rtl-table-col">עריכה</TableCell>
-              <TableCell className="rtl-table-col">מחיקת משתמש</TableCell>
+              <TableCell className="rtl-table-col" style={{ fontWeight: 'bold', fontFamily: 'Assistant', direction: 'rtl' }}>עריכה</TableCell>
+              <TableCell className="rtl-table-col" style={{ fontWeight: 'bold', fontFamily: 'Assistant' ,direction: 'rtl'}}>מחיקת משתמש</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

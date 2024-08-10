@@ -48,8 +48,8 @@ const AdminPage = () => {
   if (!isAdmin) {
     return (
       <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-        <button onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button>
+        <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+        <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button>
       </div>
     );
   }

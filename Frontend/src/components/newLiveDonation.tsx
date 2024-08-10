@@ -121,9 +121,9 @@ const NewLiveDonation: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <div className="error-container">
-        <div className="error-title">הוספת תרומה חדשה - עמותת ואהבתם ביחד</div>
-        <div className="error-message">גישה למנהלים בלבד</div>
+        <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
+        <p style={{ color: 'black', fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
+        <button onClick={() => navigate('/adminDashboard')} style={{ backgroundColor: '#F9DA78', marginTop: '20px', fontFamily: 'Assistant' }}>התחבר בתור מנהל</button>
       </div>
     );
   }

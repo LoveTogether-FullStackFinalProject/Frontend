@@ -1,145 +1,54 @@
-/* .form-title {
-    color: brown;
-    font-size: 2.5rem;
-    margin-top: 0; 
-    margin-bottom: 20px;
-    text-align: center;
-    z-index: 10; 
-    position: relative;
-    padding-left: 40px; 
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; 
-    min-height: 100vh;
-    padding: 20px;
-  }
-  
-  .form-wrapper {
-    width: 100%;
-    max-width: 600px;
-    border: 1px solid lightgray;
-    padding: 40px 20px 20px; 
-    background-color: #f9f9f9;
-  }
-  
-  .input-wrapper {
-    position: relative;
-    margin-bottom: 50px;
-  }
-  
-  .form-control {
-    direction: rtl;
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2rem;
-  }
-  
-  .floating-label {
-    font-size: 0.75rem;
-    font-weight: bold;
-    position: absolute;
-    top: -10px; 
-    right: 10px;
-    background-color: #f9f9f9;
-    padding: 0 5px;
-    z-index: 1;
-  }
-  
-  .error-message {
-    position: absolute;
-    right: 0;
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 1px;
-  }
-
-  .error-message1 {
-    position: absolute;
-    right: 0;
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 15px;
-  }
-  
-  
-  .img-upload-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .img-thumbnail {
-    max-width: 150px;
-    max-height: 150px;
-  }
-  
-  .btn-upload {
-    background-color: brown;
-    color: white;
-    width: 200px;
-    font-size: 1.2rem;
-  }
-  
-  .btn-submit {
-    color: white;
-    background-color: brown;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-  }
-   */
-
 
    .form-title {
-    color: #F9DA78;
+    color: black;
     font-size: 2.5rem;
-    margin-top: 10px;
-    margin-bottom: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px; 
     text-align: center;
     z-index: 10;
     position: relative;
     padding-left: 40px;
-    margin-right: 120px;
+    margin-right: 0; 
     font-weight: bold;
+    font-family: 'Assistant', sans-serif;
   }
   
   .container {
     display: flex;
+    flex-direction: column; 
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; 
     min-height: 100vh;
-    padding: 20px;
+    padding: 50px;
+    box-shadow: 0 8px 16px rgba(6, 5, 5, 0.2);
   }
   
   .form-wrapper {
     width: 100%;
-    max-width: 1000px; /* Increased width */
+    max-width: 1000px;
     border: 1px solid lightgray;
-    padding: 20px 20px 10px; /* Reduced padding */
+    padding: 20px 20px 10px; 
     background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(6, 5, 5, 0.2);
+    
   }
   
   .input-row {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    margin-bottom: 20px; /* Reduced margin-bottom */
+    margin-bottom: 20px; 
   }
   
   .input-wrapper {
     position: relative;
     flex: 1;
-    margin-bottom: 20px; /* Reduced margin-bottom for individual inputs */
+    margin-bottom: 20px; 
   }
   
   .form-control {
     direction: rtl;
-    width: 100%; /* Make form controls take full width */
+    width: 100%;
     padding: 10px;
     font-size: 1.2rem;
   }
@@ -158,6 +67,7 @@
     background-color: #ffffff;
     padding: 0 5px;
     z-index: 1;
+    font-family: 'Assistant', sans-serif;
   }
   
   .error-message {
@@ -166,6 +76,7 @@
     color: red;
     font-size: 0.8rem;
     margin-top: 1px;
+    font-family: 'Assistant', sans-serif;
   }
   
   .error-message1 {
@@ -174,6 +85,7 @@
     color: red;
     font-size: 0.8rem;
     margin-top: 15px;
+    font-family: 'Assistant', sans-serif;
   }
   
   .img-upload-wrapper {
@@ -195,6 +107,8 @@
     color: white;
     width: 200px;
     font-size: 1.2rem;
+    font-family: 'Assistant', sans-serif;
+    font-weight: bold;
   }
   .btn-upload:hover {
     background-color:hsl(50, 64%, 74%);
@@ -205,6 +119,8 @@
     background-color: #F9DA78;
     padding: 10px 20px;
     font-size: 1.2rem;
+    font-family: 'Assistant', sans-serif;
+    font-weight: bold;
   }
   .btn-submit:hover {
     background-color: hsl(50, 64%, 74%);

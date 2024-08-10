@@ -10,14 +10,13 @@ body, html {
 }
 
 .body_backgroud {
-  background: linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%);
-  margin-top: 100px;
+  background: linear-gradient(90deg, rgba(243, 242, 242, 0.753) 5%, rgba(249, 219, 120, 0.615) 62%, rgba(249, 219, 120, 0.695) 100%);
+  margin-top: 200px;
   display: flex;
   width: 100%;
   max-width: 100%;
-  margin-top: 200px;
-  height: auto; 
-  padding: 0 10px; 
+  height: auto;
+  padding: 0 10px;
 }
 
 .squareContainer {
@@ -25,7 +24,6 @@ body, html {
   max-width: 1200px; 
   height: auto; 
   margin: 20px auto; 
-  border: 2px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,8 +31,6 @@ body, html {
   padding: 20px;
   margin-bottom: 5px;
   margin-top: 100px;
-  width: 750px; 
-  height: 550px; 
   border: none; 
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
@@ -145,356 +141,179 @@ body, html {
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 1024px) {
   .squareContainer {
-      width: 90%;
-      margin-left: auto;
-      margin-right: auto;
+    width: 90%;
+    margin-left: 5px;
+    margin-right: auto;
   }
 
-  .whiteLogo {
-      margin-right: auto;
-      margin-left: auto;
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    width: 100%;
+    height: auto; 
+    padding: 0 10px; 
+    font-family: 'Assistant', sans-serif;
   }
 
-  .centerText-brownText {
-      margin-right: 0;
-      text-align: center;
+  .body_backgroud {
+    background: linear-gradient(90deg, rgba(243, 242, 242, 0.753) 5%, rgba(249, 219, 120, 0.615) 62%, rgba(249, 219, 120, 0.695) 100%);
+    margin-top: 200px;
+    display: flex;
+    width: 100%;
+    max-width: 100vmax;
+    height: auto;
+    padding: 0 10px;
   }
+ 
+
+
 }
 
 @media screen and (max-width: 768px) {
   .squareContainer {
-      width: 95%;
-      height: auto;
+    width: 95%;
+    height: auto;
+  }
+  .body_backgroud {
+    background: linear-gradient(90deg, rgba(243, 242, 242, 0.753) 5%, rgba(249, 219, 120, 0.615) 62%, rgba(249, 219, 120, 0.695) 100%);
+    margin-top: 200px;
+    display: flex;
+    width: 100%;
+    max-width: 100vmax;
+    height: auto;
+    padding: 0 10px;
   }
 
   .donorItem {
-      margin: 20px;
-      padding: 20px;
+    margin: 20px;
+    padding: 20px;
   }
 
   .donorImage {
-      width: 120px;
-      height: 120px;
+    width: 120px;
+    height: 120px;
   }
 
   .whiteLogo {
-      max-width: 300px;
+    max-width: 300px;
+    margin-right: 150px;
   }
 
   .donateButton {
-      float: none;
-      margin: 80px auto 0;
-      display: block;
+    float: none;
+    margin: 80px auto 0;
+    display: block;
+  }
+
+  .centerText-brownText {
+    text-align: center;
+    margin-right: 0;
   }
 }
 
 @media screen and (max-width: 480px) {
   body, html {
-      font-size: 14px;
+    font-size: 14px;
   }
 
   .squareContainer {
-      width: 100%;
-      padding: 10px;
-      margin-left: 0;
-      margin-right: 0;
+    width: 100%;
+    padding: 10px;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .donorItem {
-      margin: 10px;
-      padding: 10px;
+    margin: 10px;
+    padding: 10px;
   }
 
   .donorImage {
-      width: 100px;
-      height: 100px;
+    width: 100px;
+    height: 100px;
   }
 
   .whiteLogo {
-      max-width: 200px;
+    max-width: 200px;
   }
 
   .carouselControlNextIcon,
   .carouselControlPrevIcon {
-      font-size: 1.5em;
-  }
-}
-
-.categorySection {
-  background-color: #ffffff;
-  border-radius: 15px;
-  box-shadow:  0 0 10px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    margin: 10px; 
-    font-family: 'Assistant', sans-serif;
-}
-.categorySection col{
-  width: 50px;
-}
- 
-  .main-content {
-    background-color: #ffffff;
-    width: 100vw;
-
+    font-size: 1.5em;
   }
 
-  .headerText{
-    font-family: 'Assistant', sans-serif;
-    text-align: center;
+  .donateButton {
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1rem;
   }
- 
-
- 
-
-  .centerText-brownText{
-    margin-right: 300px;
-    margin-top: 100px;
-    text-align: right;
-    margin-bottom: 90px;
-    color: rgba(0, 0, 0, 0.918);
-    font-family: 'Assistant', sans-serif;
-    font-size: 1.2rem;
-  }
-
- 
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Assistant', sans-serif;
-  }
-  
-  body > .container {
-    flex: 1;
-    overflow-y: auto;
-  }
-  
-  .centerText {
-    text-align: center;
-    padding-top: 10px;
-    margin-bottom: 20px;
-    font-family: 'Assistant', sans-serif;
-  }
-  
-  .brownText h1 {
-    color: #000000;
-  }
-  .carousel{
-    margin-top: 100px;
-    background-color: #ffffff;
-  }
-
-  
-  
-  .borderBox {
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    background-color: #723333;
-    margin-bottom: 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0);
-  }
-  
-  .categorySection{
-    margin-top: 57px;
-  }
-  .productImage {
-    max-width: 100%; 
-    height: auto; 
-  }
-
-  .whiteLogo {
-    width: 100%; 
-    max-width: 400px; 
-    height: auto; 
-    margin-right: 700px; 
-    margin-top: 50px; 
-  }
-  
-
-
-  
-  .carouselControlNextIcon, .carouselControlPrevIcon {
-    color: black; 
-    background-color: #ffffff; 
-    font-size: 70px; 
-    padding: 10px;
-    border-radius: 50%; 
-    cursor: pointer; 
-    display: inline-flex;
-    align-items: center; 
-    justify-content: center;
-    width: 50px; 
-    height: 50px;
-}
-
-
-
-.donateButton {
-  width: auto;
-  padding: 15px 30px; 
-  display: inline-flex;
-  align-items: right;
-  border-radius: 15px;
-  color: #000000; 
-  font-weight: bold;
-  margin-top: 80px;
-  float: right;
-  text-align: center; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
-  cursor: pointer; 
-  transition: transform 0.3s, box-shadow 0.3s; 
-}
-
-
-.donateButton i {
-  font-size: 1.5rem; /* Adjust the size of the icon */
-  margin-right: 10px; /* Add space between the icon and the text */
-  color: #000; /* Color of the icon */
-}
-
-.donateButton:hover {
-  transform: scale(1.05); /* Slightly increase size on hover */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
-}
-  
-
-  
-  .flexSpaceBetween {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .flexCenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .flexCenterColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .donorSection {
-    font-size: 2em;
-    color: #000000;
-    text-align: center;
-  }
-  
-  .donorInfo {
-    font-size: 1em;
-    text-align: center;
-  }
-
-  .donorHeader {
-    margin-top: -40px; 
-    text-align: center;
-}
-  
-  .donorDisplay {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .donorItem {
-    margin: 40px;
-    padding: 40px;
-  }
-  
-  .donorImage {
-    width: 140px;
-    height: 140px;
-  }
-  
-  .donorName {
-    font-size: 20px;
-    text-align: center;
-  }
-
-
-
-   .squareContainer {
-    width: 100vw;
-    padding: 20px;
-    margin-bottom: 5px;
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 750px; 
-    height: 550px; 
-    border: none; 
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    margin-left: 100px;
-    margin-right: 100px;
-  }
-
-  .flexCenterColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-
-
 
   .carouselItem {
-    width: 100vw;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5px;
+    padding: 10px;
   }
 
-  .flexCenter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .productImage {
-    max-width: 70%;
-    height: auto;
-  }
-  
-  .carouselControlNextIcon,
-  .carouselControlPrevIcon {
-    font-size: 2em;
-    color: #000;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-  }
-  
-  .carouselControlNextIcon {
-    right: 10px;
-  }
-  
-  .carouselControlPrevIcon {
-    left: 10px;
-  }
-  
-  .categorySection {
+  .centerText-brownText {
+    margin-right: 0;
     text-align: center;
+    margin-top: 50px;
   }
-  
-  .centerText {
-    margin-bottom: 10px;
-  }
+}
 
+.flexSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
 
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
- 
+.flexCenterColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.donorSection {
+  font-size: 2em;
+  color: #000000;
+  text-align: center;
+}
+
+.donorInfo {
+  font-size: 1em;
+  text-align: center;
+}
+
+.donorHeader {
+  margin-top: -40px; 
+  text-align: center;
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselControlNextIcon,
+.carouselControlPrevIcon {
+  font-size: 2em;
+  color: #000;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.carouselControlNextIcon {
+  right: 10px;
+}
+
+.carouselControlPrevIcon {
+  left: 10px;
+}

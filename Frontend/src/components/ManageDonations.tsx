@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from '../services/data-service';
 import {
+  IconButton,
   Table,
   Button,
   Dropdown,
@@ -15,7 +16,7 @@ import {
   InputAdornment,
   TableSortLabel
 } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Search ,Delete } from '@mui/icons-material';
 import { Donation } from './donation';
 
 //  export interface Donation {
@@ -168,7 +169,7 @@ const ManageDonationPage: React.FC = () => {
     }
   }, []);
 
-  if (!isAdmin) {
+  if (isAdmin) {
     return (
       <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
         <p style={{ color: 'black' ,fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
@@ -268,7 +269,14 @@ const ManageDonationPage: React.FC = () => {
               <td>{formatDate(donation.createdAt)}</td>
               <td>{donation.branch}</td>
               <td>
-                <Button
+              <IconButton color="secondary"  sx={{ color: 'red' }} 
+                  onClick={() => {
+                    setCurrentDonation(donation);
+                    setShowModal(true);
+                  }}>
+              <Delete />
+              </IconButton>
+                {/* <Button
                   variant="danger"
                   onClick={() => {
                     setCurrentDonation(donation);
@@ -276,7 +284,7 @@ const ManageDonationPage: React.FC = () => {
                   }}
                 >
                   מחק
-                </Button>
+                </Button> */}
               </td>
             </tr>
           ))}

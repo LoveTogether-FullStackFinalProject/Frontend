@@ -1,17 +1,11 @@
 
 .App {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   min-height: 100vh;
   background: transparent;
-} */
+} 
 
-.main-content {
-  height: 100%;
-  width: 100%;
-  flex: 1;
-  background: transparent;
-}
 
 .app-container {
   display: flex;
@@ -24,7 +18,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
-} */
+} 
 
 #root {
   width: 100%;

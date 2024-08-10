@@ -7,7 +7,6 @@ import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
 import person from './../assets/person.png';
-//import logo from './../assets/logoWithoutBackground.png';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './main-page.css';
 import whitelogo from '../assets/whiteLogo.png';
@@ -64,9 +63,6 @@ function MainPage() {
         };
     }, []);
 
-    // const handleProfileClick = () => {
-    //     navigate('/profile');
-    // };
 
     const handleProductClick = (productName: string, category: string) => {
       const accessToken = localStorage.getItem('accessToken');

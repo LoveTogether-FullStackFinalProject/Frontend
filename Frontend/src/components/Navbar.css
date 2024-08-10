@@ -12,15 +12,43 @@
   gap: 20px; 
   white-space: nowrap;
   font-size: 1.2rem;
-  font-family: 'Assistant', sans-serif;;
+  font-family: 'Assistant', sans-serif;
 }
 
-.logo-image{
+.logo-image {
   width: 130px;
   margin-top: 10px;
   margin-bottom: 10px;
-  left: 0 !important;
-  float: left !important;
+}
+
+/* Navbar container adjustments */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .navLink {
+    flex-direction: column;
+    align-items: flex-start; /* Align links to the left */
+  }
+  
+  .navbar-container {
+    justify-content: space-between;
+    margin-bottom: 35px;
+  }
+
+  .logo-image {
+    width: 100px;
+    margin-left: 10px; /* Ensure the logo is in the left corner */
+  }
+
+  .navbar-toggler {
+    margin-right: 10px; /* Ensure the toggle button is on the right */
+  }
 }
 
 .logo{
@@ -58,11 +86,7 @@
   margin-right: 20px;
 }
 
-@media (max-width: 768px) {
-  .navLink {
-      flex-direction: column;
-      align-items: flex-end;
-  }
+
   
   .logo {
       width: 150px;
@@ -72,4 +96,3 @@
       margin-right: 0;
       margin-top: 10px;
   }
-}

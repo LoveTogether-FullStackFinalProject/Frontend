@@ -10,6 +10,7 @@ import person from './../assets/person.png';
 //import logo from './../assets/logoWithoutBackground.png';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './main-page.css';
+import whitelogo from '../assets/whiteLogo.png';
 
 function MainPage() {
     const navigate = useNavigate();
@@ -119,7 +120,7 @@ function MainPage() {
                         </button>
                     </div>
                     <div>
-                        <img src={"/src/assets/whiteLogo.png"} alt="whitelogo" className='whiteLogo' />
+                        <img src={whitelogo} alt="whitelogo" className='whiteLogo' />
                     </div>
                 </div>
 

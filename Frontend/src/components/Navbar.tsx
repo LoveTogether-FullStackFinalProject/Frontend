@@ -111,6 +111,7 @@ import dataService from '../services/data-service';
 import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
 import { User } from '../services/types';
+import logo from '../assets/logoWithoutBackground.png';
 
 interface NavbarProps {
   user: User | null;
@@ -189,7 +190,7 @@ export function Navbar({  setUser }: NavbarProps) {
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <BootstrapNavbar.Brand as={Link} to="/mainPage">
-              <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+            <img src={logo} alt="Logo" className="logo-image" />
             </BootstrapNavbar.Brand>
             {isLoggedIn ? (
               <div className='navLink'>

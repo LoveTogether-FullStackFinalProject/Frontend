@@ -5,6 +5,8 @@
   min-height: 50%;
   width: 100%;
   padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .body{
@@ -15,6 +17,7 @@
 
 .form-label{
   direction: ltr;
+
 }
 
 .login-page{
@@ -48,10 +51,11 @@
 }
 
 .title {
-  color: #F9DA78;
+  color: black;
   font-size: 2rem;
   font-weight: bold;
   margin: 0;
+  font-family: 'Assistant', sans-serif;
 }
 
 .login-form {
@@ -60,6 +64,7 @@
 
 .form-group {
   margin-bottom: 1.5rem;
+
 }
 
 .form-label {
@@ -68,6 +73,7 @@
   margin-bottom: 0.5rem;
   font-weight: bold;
   color: #000000;
+  font-family: 'Assistant', sans-serif;
 }
 
 .form-input-group {
@@ -76,6 +82,7 @@
   background-color: #ffffff;
   border-radius: 5px;
   padding: 0.5rem;
+  border-radius: 15px;
 }
 
 .form-input {
@@ -84,6 +91,7 @@
   background: transparent;
   padding: 5px;
   direction: rtl;
+  border-radius: 15px;
 }
 
 .icon {
@@ -101,6 +109,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: 'Assistant', sans-serif;
 }
 
 .login-button:hover {
@@ -115,9 +124,14 @@
   text-decoration: none;
   font-size: 0.9rem;
   margin-right: 100px;
-  left: 50px;
+  margin-right: 155px;
+  left: 150px;
   position: relative;
   background-color: rgb(252, 236, 184);
+  font-family: 'Assistant', sans-serif;
+  font-weight: bold;
+  border-radius: 15px;
+  width: 90%;
 
 }
 .register-link:hover {
@@ -165,8 +179,12 @@
 .btn-primary-login-button{
   background-color: #F9DA78;
   margin-right: 155px;
-  left: 50px;
+  left: 150px;
   position: relative;
+  font-family: 'Assistant', sans-serif;
+  font-weight: bold;
+  border-radius: 15px;
+  width: 90%;
 
 }
 .btn-primary-login-button:hover {
@@ -185,6 +203,7 @@
 
   .form-input-group {
     flex-direction: row-reverse;
+    border-radius: 15px;
   }
 
   .icon {
@@ -199,3 +218,24 @@
 
   
 }
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: 'Assistant', sans-serif;
+  font-weight: bold;
+}
+
+.separator hr {
+  flex: 1;
+  border: none;
+  border-top: 1px solid #000;
+  margin: 0 10px;
+}
+
+.separator p {
+  margin: 0;
+}
+

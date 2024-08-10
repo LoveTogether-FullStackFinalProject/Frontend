@@ -1,6 +1,6 @@
 
 .container {
-  margin-top:70px;
+  margin-top:10px;
   padding: 0px;
 }
 
@@ -24,15 +24,17 @@
 }
 
 .rtl-table-col {
+  font-weight: bold;
   direction: rtl;
   text-align: right;
-  font-weight: bold;
   padding: 30px;
-  background-color:#f0e0ad
+  background-color:#d2d0cb;
+  font-family: 'Assistant', sans-serif;
 } 
 .rtl-table {
   direction: rtl;
   text-align: right;
+  font-family: 'Assistant', sans-serif;
 }
 
 .table-head {
@@ -44,3 +46,29 @@
   border: 1px solid rgb(130, 128, 128);
 }
 
+.typography-title {
+  color: black;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Assistant', sans-serif;
+}
+
+.csv-link {
+  background-color: #28a745; 
+  color: white;
+  padding: 10px 10px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-family: 'Assistant', sans-serif;
+  text-align: center;
+  margin-right: 650px;
+  white-space: nowrap;
+}
+
+.csv-link:hover {
+  background-color: hsl(110, 62%, 44%);
+  color: white;
+}

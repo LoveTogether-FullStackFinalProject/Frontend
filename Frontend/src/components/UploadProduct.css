@@ -2,27 +2,26 @@ body, html {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #ffffff;
     direction: rtl;
 }
 
 .upload-product-container {
-    max-width: 900px;
-    margin: 80px auto 20px;
+    max-width: 1200px;
+    margin: 40px auto 20px;
     padding: 40px;
-    background-color: #f7f7f7;
+    background-color: #ffffff;
     border-radius: 12px;
     border: 1px solid #ddd;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
-
 .upload-product-title {
     text-align: center;
     margin-bottom: 30px;
     font-size: 32px;
     font-weight: 700;
     color: #333;
-    font-family: 'Google Font Name', sans-serif; /* Update with the preferred Google font */
+    font-family: 'Google Font Name', sans-serif;
 }
 
 .form-group {
@@ -38,14 +37,20 @@ body, html {
     border-radius: 8px;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    background-color: #f7f7f7;
-    font-family: 'Google Font Name', sans-serif; /* Update with the preferred Google font */
+    background-color: #ffffff;
+    font-family: 'Google Font Name', sans-serif;
 }
 
 .form-control:focus {
     border-color: #ffcc00;
     box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
     outline: none;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .invalid-feedback {
@@ -85,11 +90,14 @@ body, html {
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     margin-top: 10px;
     transition: background-color 0.3s ease;
 }
-
+.upload-image-button svg {
+    margin-left: 10px;
+}
 .upload-image-button:hover {
     background-color: #ffda66;
 }

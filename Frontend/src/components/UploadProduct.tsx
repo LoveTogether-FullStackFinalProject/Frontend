@@ -155,15 +155,15 @@ const UploadProduct: React.FC = () => {
     if (showError) setShowError(false);
 
     setSelectedDeliveryOption(value);
-    if (value === 'אשמח שיאספו ממני את התרומה') {
+    if (value === 'ממתין לאיסוף') {
       setShowPickupAddress(true);
       setShowBranch(false);
-      setStatus('אשמח שיאספו ממני את התרומה');
+      setStatus('ממתין לאיסוף');
       setValue('pickupAddress', '');
     } else {
       setShowPickupAddress(false);
       setShowBranch(true);
-      setStatus('אמסור את התרומה לעמותה');
+      setStatus('לא נמסר לעמותה');
       setValue('pickupAddress', 'default');
     }
   };
@@ -173,9 +173,10 @@ const UploadProduct: React.FC = () => {
   }
 
   return (
-    <div className="upload-product-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'linear-gradient(90deg, rgba(241, 241, 241, 0.753) 5%, rgba(249, 219, 120, 0.728) 62%, rgba(249, 219, 120, 0.695) 100%)' }}>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', maxWidth: '800px', direction: 'rtl' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div className="upload-product-container">
+      <h1 className="upload-product-title">תרמו כאן: שי</h1>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', maxWidth: '1000px', direction: 'rtl' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           
           <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
             <input
@@ -265,20 +266,20 @@ const UploadProduct: React.FC = () => {
               <label>
                 <input
                   type="radio"
-                  value="אשמח שיאספו ממני את התרומה"
-                  checked={selectedDeliveryOption === 'אשמח שיאספו ממני את התרומה'}
+                  value="ממתין לאיסוף"
+                  checked={selectedDeliveryOption === 'ממתין לאיסוף'}
                   onChange={handleDeliveryOptionChange}
                 />
-                אשמח שיאספו ממני את התרומה
+                ממתין לאיסוף
               </label>
               <label>
                 <input
                   type="radio"
-                  value="אמסור את התרומה לעמותה"
-                  checked={selectedDeliveryOption === 'אמסור את התרומה לעמותה'}
+                  value="לא נמסר לעמותה"
+                  checked={selectedDeliveryOption === 'לא נמסר לעמותה'}
                   onChange={handleDeliveryOptionChange}
                 />
-                אמסור את התרומה לעמותה
+                לא נמסר לעמותה
               </label>
             </div>
             {showError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>יש לבחור אפשרות מסירה</p>}
@@ -313,10 +314,10 @@ const UploadProduct: React.FC = () => {
             </div>
           )}
 
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <button type="button" onClick={selectImg} style={{ background: '#f9da78', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer' }}>
-              <FontAwesomeIcon icon={faImage} />
+<div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
+            <button type="button" onClick={selectImg} className="upload-image-button">
               {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
+              <FontAwesomeIcon icon={faImage} />
             </button>
             <input
               ref={fileInputRef}

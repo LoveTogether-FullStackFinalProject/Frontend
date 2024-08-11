@@ -4,7 +4,7 @@ export { CanceledError }
 
 const baseURL =
   process.env.NODE_ENV === 'production'
-    ? (window.location.hostname === "node12.cs.colman.ac.il" ? "https://node12.cs.colman.ac.il" : "https://193.106.55.172")
+    ? (window.location.hostname === "ve-be.cs.colman.ac.il" ? "https://ve-be.cs.colman.ac.il" : "https://193.106.55.120")
     : window.location.hostname !== "localhost"
       ? `https://${window.location.hostname}`
       : "http://localhost:3000";

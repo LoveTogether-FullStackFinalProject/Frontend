@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import emailIcon from './../assets/email.png';
 import passwordIcon from './../assets/password.png';
-import logo from './../assets/logo.png'; 
+//import logo from './../assets/logo.png'; 
 import './login.css';
 import dataService from "../services/data-service.ts";
 
@@ -91,42 +91,49 @@ function Login() {
         <div className="login-page">
             <div className="login-header">
                 {/* <img src={logo} alt="Logo" className="logo" /> */}
-                <h1 className="title">התחברות</h1>
+                <h1 className="title">התחברות לתורמים</h1>
             </div>
             
 
             <div className="login-form">
+            <div className="form-group">
+            <label htmlFor="floatingInput" className="form-label">:אימייל</label>
+            <div className="form-input-group">
+            <input
+                ref={emailInputRef}
+                type="text"
+                className="form-control form-input"
+                id="floatingInput"
+                placeholder="הקלד/י אימייל..."
+                style={{ borderRadius: '15px' }} /* Added border-radius for rounded corners */
+            />
+            <img src={emailIcon} className="icon" alt="Email icon" />
+            </div>
+        </div>
+
+
+
                 <div className="form-group">
-                    <label htmlFor="floatingInput" className="form-label">:אימייל</label>
-                    <div className="form-input-group">
-                        <input ref={emailInputRef} type="text" className="form-control form-input" id="floatingInput" placeholder="הקלד/י אימייל..." />
-                        <img src={emailIcon} className="icon" alt="Email icon" />
-                    </div>
-                </div>
-
-                {/* <div className="form-group">
-                    <label htmlFor="floatingPassword" className="form-label">:סיסמה</label>
-                    <div className="form-input-group">
-                        <input ref={passwordInputRef} type="password" className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
-                        <img src={passwordIcon} className="icon" alt="Password icon" />
-                    </div>
-                    {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
-                </div> */}
-
-
-                <div className="form-group">
-                    <label htmlFor="floatingPassword" className="form-label">:סיסמה</label>
-                    <div className="form-input-group">
-                        <input ref={passwordInputRef} type={passwordVisible ? 'text' : 'password'} className="form-control form-input" id="floatingPassword" placeholder="הקלד/י סיסמה..." />
-                        <img src={passwordIcon} className="icon" alt="Password icon" />
-                        <i
-                        className={`bi ${passwordVisible ?'bi-eye' :'bi-eye-slash'} icon`}
-                        onClick={togglePasswordVisibility}
-                        style={{ cursor: 'pointer', position: 'absolute', right: '230px', top: '60%', transform: 'translateY(-50%)',fontSize: '1.5em' }}
+                <label htmlFor="floatingPassword" className="form-label">:סיסמה</label>
+                <div className="form-input-group" style={{ position: 'relative' }}>
+                    <input
+                    ref={passwordInputRef}
+                    type={passwordVisible ? 'text' : 'password'}
+                    className="form-control form-input"
+                    id="floatingPassword"
+                    placeholder="הקלד/י סיסמה..."
+                    style={{ borderRadius: '15px' }} /* Added border-radius for rounded corners */
+                    />
+                    <img src={passwordIcon} className="icon" alt="Password icon" />
+                    <i
+                    className={`bi ${passwordVisible ? 'bi-eye' : 'bi-eye-slash'} icon`}
+                    onClick={togglePasswordVisibility}
+                    style={{ cursor: 'pointer', position: 'absolute', right: '250px', top: '40%', transform: 'translateY(-50%)', fontSize: '1.5em' }}
                     ></i>
-                    </div>
-                    
                 </div>
+                </div>
+
+
                 {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
 
 
@@ -137,6 +144,11 @@ function Login() {
                 <button onClick={handleButtonClick} className="btn-secondary register-link">
                     עדיין לא יצרת משתמש? לחצ/י כאן
                 </button>
+                </div>
+                <div className="separator">
+                    <hr />
+                    <p>או</p>
+                    <hr />
                 </div>
                 <div className="google-login">
                     <GoogleLogin

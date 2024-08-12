@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 export interface DonorData {
   _id: string;
@@ -12,6 +12,9 @@ export interface DonorData {
   isAdmin: boolean;
   isPublished?: boolean;
   image: string;
+
+  
+
 }
 
 interface DonorProps {

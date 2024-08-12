@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import dataService from '../services/data-service';
 import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
+import { User } from '../services/types';
+import logo from '../assets/logoWithoutBackground.png';
 
-export function Navbar() {
+interface NavbarProps {
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  googleSignIn: boolean;
+}
+
+export function Navbar({  setUser }: NavbarProps) {
   const [userId, setUserId] = useState(localStorage.getItem("userID"));
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
   const [isAdmin, setIsAdmin] = useState(false);
-  const location = useLocation();
+  //const location = useLocation();
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -50,6 +58,7 @@ export function Navbar() {
     setUserId(null);
     setToken(null);
     setIsAdmin(false);
+    setUser(null); // Update the user state on logout
     window.dispatchEvent(new Event('authChange'));
   }
 

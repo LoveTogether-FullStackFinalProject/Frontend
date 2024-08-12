@@ -7,16 +7,16 @@ import dataService, { CanceledError } from "../services/data-service";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel, Row, Col } from 'react-bootstrap';
 import person from './../assets/person.png';
-import logo from './../assets/logoWithoutBackground.png';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './main-page.css';
+import whitelogo from '../assets/whiteLogo.png';
 
 function MainPage() {
     const navigate = useNavigate();
     const [products, setProducts] = useState<Donation[]>([]);
     const [users, setUsers] = useState<DonorData[]>([]);
     const [requests, setRequests] = useState<requestedDonation[]>([]);
-    const [error, setError] = useState<string | null>(null);
+    //const [ setError] = useState<string | null>(null);
 
     useEffect(() => {
         const { req, abort } = dataService.getDonations();
@@ -25,7 +25,7 @@ function MainPage() {
         }).catch((err) => {
             console.log(err);
             if (err instanceof CanceledError) return;
-            setError(err.message);
+            //setError(err.message);
         });
 
         return () => {
@@ -40,7 +40,7 @@ function MainPage() {
         }).catch((err) => {
             console.log(err);
             if (err instanceof CanceledError) return;
-            setError(err.message);
+            //setError(err.message);
         });
 
         return () => {
@@ -55,7 +55,7 @@ function MainPage() {
         }).catch((err) => {
             console.log(err);
             if (err instanceof CanceledError) return;
-            setError(err.message);
+            //setError(err.message);
         });
 
         return () => {
@@ -63,9 +63,6 @@ function MainPage() {
         };
     }, []);
 
-    const handleProfileClick = () => {
-        navigate('/profile');
-    };
 
     const handleProductClick = (productName: string, category: string) => {
       const accessToken = localStorage.getItem('accessToken');
@@ -119,7 +116,7 @@ function MainPage() {
                         </button>
                     </div>
                     <div>
-                        <img src={"/src/assets/whiteLogo.png"} alt="whitelogo" className='whiteLogo' />
+                        <img src={whitelogo} alt="whitelogo" className='whiteLogo' />
                     </div>
                 </div>
 

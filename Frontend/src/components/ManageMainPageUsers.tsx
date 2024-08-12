@@ -5,7 +5,7 @@ import { DonorData } from './donorData';
 import { useNavigate } from 'react-router-dom';
 import {
   Table,
-  Button,
+  //Button,
   Dropdown,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,11 +21,11 @@ import person from './../assets/person.png';
 
 const ManageMainPageUsers = () => {
   const [donors, setDonors] = useState<DonorData[]>([])
-  const [error, setError] = useState<string | null>(null);
+  //const [error, setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  const [buttonLabels, setButtonLabels] = useState<{ [key: string]: string }>({});
+  //const [buttonLabels, setButtonLabels] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
 
@@ -61,7 +61,13 @@ const ManageMainPageUsers = () => {
             donor.rating.toString().includes(filter.toLowerCase())
           )
           .sort((a, b) => {
-            return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
+            if (a[orderBy] === undefined || b[orderBy] === undefined) return 0;
+          
+            return (order === 'asc' ? 1 : -1) * (
+              (a[orderBy] ?? '') > (b[orderBy] ?? '') ? 1 : 
+              (a[orderBy] ?? '') < (b[orderBy] ?? '') ? -1 : 
+              0
+            );
           });
       };
     
@@ -117,7 +123,7 @@ const ManageMainPageUsers = () => {
               ),
             }}
           />
-          {error && <p className="text-danger">{error}</p>}
+          {/* {error && <p className="text-danger">{error}</p>} */}
           <Table striped bordered hover>
             <thead>
               <tr>

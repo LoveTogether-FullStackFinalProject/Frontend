@@ -1,10 +1,10 @@
-import React from 'react';
+
 import './aboutPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
-import bagForAll from '../assets/bagForAlll.png';
+
 
 const AboutPage = () => {
   return (

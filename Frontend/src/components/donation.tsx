@@ -22,7 +22,11 @@ export interface Donation{
   status: string; 
   approvedByAdmin?: string; 
   image: string;
+  createdAt: string;
+
 }
+
+
 
 interface DonationProps {
     donation: Donation

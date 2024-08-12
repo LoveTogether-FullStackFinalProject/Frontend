@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import  dataService from "../services/data-service.ts";
 import {requestedDonation} from "../services/upload-requested-product-service";
-import  requestedProduectService,{ CanceledError } from "../services/upload-requested-product-service";
-import context from 'react-bootstrap/esm/AccordionContext';
+import  requestedProduectService from "../services/upload-requested-product-service";
+//import context from 'react-bootstrap/esm/AccordionContext';
  import './upload-requested-product.css';
 
 const RequestedProductSchema = z.object({
@@ -32,13 +32,13 @@ const RequestedProductSchema = z.object({
 type FormData = z.infer<typeof RequestedProductSchema>;
 
 function UploadRequestedProduct() {
-  const { register,clearErrors, handleSubmit, formState: { errors }, setValue , trigger,} = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
+  const { register,clearErrors, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({ resolver: zodResolver(RequestedProductSchema) });
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState('');
   const [amountError, setamountError] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  //const [errorMessage, setErrorMessage] = useState('');
   // const [errorMessageexpirationDate, setErrorMessageexpirationDate] = useState('');
   // const [isExpirationFilled, setisExpirationFilled] = useState(false);
 
@@ -110,8 +110,8 @@ function UploadRequestedProduct() {
      if (!isAdmin) {
       return (
           <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+          <p style={{ color: 'black', fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
+          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px', fontFamily: 'Assistant' }}>התחבר בתור מנהל</button>
         </div>
       );
     }

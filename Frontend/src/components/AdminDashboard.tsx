@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from "../services/data-service";
@@ -14,7 +14,7 @@ const AdminPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { req, abort } = dataService.getUser(userId!);
+        const { req } = dataService.getUser(userId!);
         const userResponse = await req;
         if (userResponse.data.isAdmin) {
           setAdminData(userResponse.data);
@@ -48,8 +48,8 @@ const AdminPage = () => {
   if (!isAdmin) {
     return (
       <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-        <button onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button>
+        <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+        <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button>
       </div>
     );
   }

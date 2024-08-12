@@ -2,7 +2,7 @@ import apiClient, { CanceledError } from './api-client';
 import { Donation } from '../components/donation';
 import { DonorData } from '../components/donorData'
 import { requestedDonation } from "../services/upload-requested-product-service";
-import { userDonation } from '../components/userDonation';
+//import { Donation } from '../components/userDonation';
 import logoutServiece from './logout-serviece';
 import { AxiosError, AxiosResponse } from "axios";
 
@@ -103,7 +103,7 @@ const deleteUser = (userId: string) => {
   return makeRequest(request);
 };
 
-const updateDonation = async (donationId: string, data: Partial<userDonation>) => {
+const updateDonation = async (donationId: string, data: Donation) => {
   const request = () => {
     const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
@@ -136,7 +136,7 @@ const deleteDonation = async (donationId: string) => {
 
 const getDonationsByUser = (userId: string) => {
   const abortController = new AbortController();
-  const req = apiClient.get<userDonation[]>(`/donation/user/${userId}`, { signal: abortController.signal });
+  const req = apiClient.get<Donation[]>(`/donation/user/${userId}`, { signal: abortController.signal });
   return { req, abort: () => abortController.abort() };
 };
 

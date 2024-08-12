@@ -22,7 +22,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  //Paper
 } from '@mui/material';
 import {
   BarChart,
@@ -52,7 +52,7 @@ const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
   },
 }));
 
-const statistics = () => {
+const Statistics = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Donation[]>([]);
   const [requests, setRequests] = useState<requestedDonation[]>([]);
@@ -107,18 +107,22 @@ useEffect(() => {
     };
 }, []);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleXAxisFieldChange = (event: any) => {
   setXAxisField(event.target.value);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleYAxisFieldChange = (event: any) => {
   setYAxisField(event.target.value);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleChartChange = (event: any) => {
   setSelectedChart(event.target.value);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const aggregateData = (data: any[], field: string, isObject = false) => {
   if (!data || data.length === 0) return {};
   return data.reduce((acc, item) => {
@@ -193,7 +197,7 @@ return (
           <CardContent>
             <Typography variant="h6" gutterBottom>
             </Typography>
-            <StyledTableContainer component={Paper}>
+            <StyledTableContainer >
               <Table>
                 <TableHead>
                   <TableRow>
@@ -305,4 +309,4 @@ return (
 );
 };
 
-export default statistics;
+export default Statistics;

@@ -15,6 +15,7 @@ import {
   Modal,
   Button,
   TableSortLabel,
+
   TextField,
   InputAdornment,
   Toolbar,
@@ -50,28 +51,32 @@ interface Donation {
   createdAt: string;
 }
 
+
 type Order = 'asc' | 'desc';
 
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
+
   const [showModal, setShowModal] = useState(false);
   const [currentDonation, setCurrentDonation] = useState<Donation | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  //const [ setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('itemName');
   const [filterText, setFilterText] = useState<string>('');
   const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
     req.then((res) => {
       setDonations(res.data);
+
     }).catch((err) => {
       if (err instanceof CanceledError) return;
-      setError(err.message);
+      //setError(err.message);
     });
 
     return () => {
@@ -110,6 +115,7 @@ const ManageDonationPage: React.FC = () => {
           donorName.includes(lowerCaseFilterText) ||
           branch.includes(lowerCaseFilterText)
         );
+
       })
       .sort((a, b) => {
         const valueA = a[orderBy] || '';
@@ -126,7 +132,7 @@ const ManageDonationPage: React.FC = () => {
     setPendingChanges((prev) => [...prev, updatedDonation]);
   };
 
-  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean | string) => {
+  const handleApprovalUpdate = (donation: Donation, approvedByAdmin:string) => {
     const updatedDonation = { ...donation, approvedByAdmin };
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
@@ -333,6 +339,7 @@ const ManageDonationPage: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
       <Button
         variant="contained"
         color="primary"

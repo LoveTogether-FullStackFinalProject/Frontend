@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dataService, { CanceledError } from '../services/data-service';
+import { DonorData } from './donorData';
 import {
   IconButton,
   Table,
@@ -27,28 +28,30 @@ import './ManageUsers.css';
 
 import { useNavigate } from 'react-router-dom';
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  mainAddress: string;
-  phoneNumber: string;
-  rating: string;
-}
+
+
+// interface User {
+//   _id: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   mainAddress: string;
+//   phoneNumber: string;
+//   rating: string;
+// }
 
 type Order = 'asc' | 'desc';
 
 const ManageUsers: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<DonorData[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [updatedUser, setUpdatedUser] = useState<Partial<User>>({});
+  const [currentUser, setCurrentUser] = useState<DonorData | null>(null);
+  const [updatedUser, setUpdatedUser] = useState<Partial<DonorData>>({});
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof User>('firstName');
+  const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
   const navigate = useNavigate();
 
@@ -78,7 +81,7 @@ const ManageUsers: React.FC = () => {
       });
   };
 
-  const editUser = (user: User) => {
+  const editUser = (user: DonorData) => {
     setCurrentUser(user);
     setUpdatedUser(user);
     setEditModalOpen(true);
@@ -111,7 +114,7 @@ const ManageUsers: React.FC = () => {
     setUpdatedUser({});
   };
 
-  const handleRequestSort = (property: keyof User) => {
+  const handleRequestSort = (property: keyof DonorData) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -121,21 +124,24 @@ const ManageUsers: React.FC = () => {
     setFilter(event.target.value);
   };
 
-  const applySortAndFilter = (data: User[]) => {
+  const applySortAndFilter = (data: DonorData[]) => {
     return data
       .filter(user => 
         user.firstName.toLowerCase().includes(filter.toLowerCase()) ||
         user.lastName.toLowerCase().includes(filter.toLowerCase()) ||
         user.email.toLowerCase().includes(filter.toLowerCase()) ||
-        (user.mainAddress && user.mainAddress.toLowerCase().includes(filter.toLowerCase())) ||
+        (user.address && user.address.toLowerCase().includes(filter.toLowerCase())) ||
         user.phoneNumber.includes(filter)
       )
       .sort((a, b) => {
         if (orderBy === 'rating') {
           return (order === 'asc' ? 1 : -1) * (parseInt(a[orderBy]) - parseInt(b[orderBy]));
         } else {
-          if (a[orderBy] < b[orderBy]) return order === 'asc' ? -1 : 1;
-          if (a[orderBy] > b[orderBy]) return order === 'asc' ? 1 : -1;
+          const aValue = a[orderBy];
+          const bValue = b[orderBy];
+      
+          if (aValue && bValue && aValue < bValue) return order === 'asc' ? -1 : 1;
+          if (aValue && bValue && aValue > bValue) return order === 'asc' ? 1 : -1;
           return 0;
         }
       });
@@ -147,7 +153,7 @@ const ManageUsers: React.FC = () => {
       firstName: u.firstName,
       lastName: u.lastName,
       email: u.email,
-      address: u.mainAddress,
+      address: u.address,
       phoneNumber: u.phoneNumber,
       rating: u.rating,
     }));
@@ -180,6 +186,7 @@ const ManageUsers: React.FC = () => {
       <Typography variant="h4" align="center" gutterBottom>
         ניהול יוזרים
       </Typography>
+
       <Toolbar>
         <TextField
           label="חפש משתמש"
@@ -212,11 +219,15 @@ const ManageUsers: React.FC = () => {
           <TableHead style={{ backgroundColor: '#f0e0ad' }}>
             <TableRow>
               {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
-                <TableCell key={column} className="rtl-table-col">
+                <TableCell
+                key={column}
+                className="rtl-table-col"
+                style={{ fontWeight: 'bold', fontFamily: 'Assistant' }}
+              >
                   <TableSortLabel
                     active={orderBy === column}
                     direction={orderBy === column ? order : 'asc'}
-                    onClick={() => handleRequestSort(column as keyof User)}
+                    onClick={() => handleRequestSort(column as keyof DonorData)}
                   >
                     {column === 'email' && 'אימייל'}
                     {column === 'firstName' && 'שם פרטי'}
@@ -229,6 +240,7 @@ const ManageUsers: React.FC = () => {
               ))}
               <TableCell className="rtl-table-col">עריכה</TableCell>
               <TableCell className="rtl-table-col">מחיקה</TableCell>
+           
             </TableRow>
           </TableHead>
           <TableBody>
@@ -237,7 +249,7 @@ const ManageUsers: React.FC = () => {
                 <TableCell className="rtl-table">{user.email}</TableCell>
                 <TableCell className="rtl-table">{user.firstName}</TableCell>
                 <TableCell className="rtl-table">{user.lastName}</TableCell>
-                <TableCell className="rtl-table">{user.mainAddress}</TableCell>
+                <TableCell className="rtl-table">{user.address}</TableCell>
                 <TableCell className="rtl-table">{user.phoneNumber}</TableCell>
                 <TableCell className="rtl-table">{user.rating}</TableCell>
                 <TableCell className="rtl-table">
@@ -301,8 +313,8 @@ const ManageUsers: React.FC = () => {
             fullWidth
             margin="normal"
             label="כתובת"
-            value={updatedUser.mainAddress || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, mainAddress: e.target.value })}
+            value={updatedUser.address || ''}
+            onChange={(e) => setUpdatedUser({ ...updatedUser, address: e.target.value })}
           />
           <TextField
             fullWidth
@@ -328,7 +340,7 @@ const ManageUsers: React.FC = () => {
 };
 
 const modalStyle = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' ,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

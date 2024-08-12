@@ -1,220 +1,98 @@
-
-.main-content{
-    background-color: #fff;
-    width: 100%;
-    height: 100%;
-}
-
-.h3-header{
-    text-align: center;
-    font-size: 40px;
-    color: #000;
-    margin-top: 20px;
-
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #f0f2f5;
+    direction: rtl;
 }
 
 .registration-container {
-    width: 100%;
-    direction: rtl;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #fff;
-    padding: 0;
-    box-sizing: border-box;
-    overflow-y: auto;
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 80px;
+    background-color: #f7f7f7;
+    border-radius: 16px;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
 }
 
-.registration-card {
-    background-color: #fff;
-    width: 50%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    overflow-y: auto;
+.registration-title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 40px;
+    font-weight: 700;
+    color: #333;
+    font-family: 'Google Font Name', sans-serif;
+}
+
+.form-group {
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
 }
 
-.registration-body {
-    background-color: #fff;
+.form-control {
     width: 100%;
-    margin-top: 80px;
-    padding: 20px;
-    flex-grow: 1;
-    overflow-y: auto;
+    padding: 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 20px;
+    transition: border-color 0.3s ease;
+    background-color: #f7f7f7;
+    font-family: 'Google Font Name', sans-serif;
 }
 
-.image-upload-button {
-    background-color: #000000;
-    color: #fff; /* Assuming you want the icon to be visible on a black background */
-    border: none; /* Remove any default border */
-    padding: 10px; /* Add some padding for better appearance */
-    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
-  }
-
-  .image-upload-button:focus {
-    outline: none; /* Remove the blue outline */
-    background-color: #333; /* Optional: change background color on focus */
-  }
-
-  .image-upload-button:hover {
-    background-color: #333; /* Optional: change background color on hover */
-  }
-
-.profile-image-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-    margin-top: 20px;
-    margin-bottom: -80px;
-    margin-right: -45px;
-}
-
-.profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #070707;
-}
-
-.horizontal-form {
-    margin-top: -90px;
-    margin-bottom: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.horizontal-form .form-group {
-    width: calc(50% - 10px); /* This will create 2 columns */
-    margin-bottom: 15px;
+.form-control:focus {
+    border-color: #F9DA78;
+    box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.3);
+    outline: none;
 }
 
 .submit-button {
     width: 100%;
-    margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-    .horizontal-form .form-group {
-        width: 100%; /* Full width on smaller screens */
-    }
-}
-.image-upload-button {
-    color: #fff;
-    
-        
-}
-
-.image-upload-button:hover{
-    background-color: #000000;
-    color: #000000;
-    box-shadow: 0 0 5px 0 #000000;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group input {
-    direction: rtl;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.form-group input.error {
-    border-color: #cd5c5c;
-}
-
-.error-message {
-    color: #cd5c5c;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
-    position: absolute;
-}
-
-.submit-button {
-    padding: 12px;
-    background-color: #0b98e4;
-    color: #fff;
+    background-color: #F9DA78;
+    color: #333;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    padding: 18px;
+    border-radius: 10px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 40px;
+    transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-    background-color: #000;
-    color: #0b98e4;
-    box-shadow: 0 0 5px 0 #000000;
+    background-color:#F9DA78;
 }
 
+.error-message {
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 20px;
+    color: #ff0000;
+}
 
 .google-login {
-    margin-top: 20px;
+    margin-top: 40px;
     display: flex;
     justify-content: center;
 }
 
-.login-link {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    color: #010100ed;
-    text-decoration: none;
-    font-size: 16px;
-    background: none;
+.preview-image {
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+.upload-button {
+    background-color:#F9DA78;
+    color: #333;
     border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.login-link:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .registration-body {
-        padding: 15px;
-    }
-
-    .profile-image-container {
-        width: 120px;
-        height: 120px;
-       
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group input {
-        font-size: 14px;
-    }
-
-    .submit-button {
-        font-size: 16px;
-    }
-}
-
-@media (max-height: 600px) {
-    .profile-image-container {
-        width: 100px;
-        height: 100px;
-    }
-
-    .form-group {
-        margin-bottom: 10px;
-    }
-
-
-}

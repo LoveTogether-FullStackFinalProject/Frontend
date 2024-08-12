@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import './UploadProduct.css';
 
 const schema = z.object({
@@ -173,173 +174,192 @@ const UploadProduct: React.FC = () => {
   }
 
   return (
-    <div className="upload-product-container">
-      <h1 className="upload-product-title">תרמו כאן: שי</h1>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%', maxWidth: '1000px', direction: 'rtl' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-          
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <input
-              {...register('itemName')}
-              type="text"
-              placeholder="שם הפריט"
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.itemName ? 'is-invalid' : ''}`}
-            />
-            {errors.itemName && <div className="invalid-feedback">{errors.itemName.message}</div>}
-          </div>
-
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <input
-              {...register('quantity', { valueAsNumber: true })}
-              type="number"
-              placeholder="כמות"
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.quantity ? 'is-invalid' : ''}`}
-            />
-            {errors.quantity && <div className="invalid-feedback">חובה להכניס כמות</div>}
-            {amountError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>{amountError}</p>}
-          </div>
-
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <select {...register('category')} style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}>
-              <option value="">בחר קטגוריה</option>
-              <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="ביגוד והנעלה">ביגוד והנעלה</option>
-              <option value="ריהוט">ריהוט</option>
-              <option value="מכשירי חשמל">מכשירי חשמל</option>
-              <option value="צעצועים">צעצועים</option>
-              <option value="אחר">אחר</option>
-            </select>
-            {errors.category && <div className="invalid-feedback">{errors.category.message}</div>}
-          </div>
-
-          {watch('category') === 'אחר' && (
-            <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-              <input
-                {...register('customCategory')}
+    <Container className="upload-product-container">
+      <h1 className="upload-product-title">תרמו כאן:</h1>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Control
+                {...register('itemName')}
                 type="text"
-                placeholder="קטגוריה מותאמת אישית"
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-                className={`${errors.customCategory ? 'is-invalid' : ''}`}
+                placeholder="שם הפריט"
+                isInvalid={!!errors.itemName}
               />
-              {errors.customCategory && <div className="invalid-feedback">{errors.customCategory.message}</div>}
-            </div>
-          )}
-
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <input
-              {...register('condition')}
-              type="text"
-              placeholder="מצב הפריט"
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.condition ? 'is-invalid' : ''}`}
-            />
-            {errors.condition && <div className="invalid-feedback">{errors.condition.message}</div>}
-          </div>
-
-          {watch('category') === 'מזון ושתייה' && (
-            <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-              <input
-                {...register('expirationDate')}
-                type="date"
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-                className={`${errors.expirationDate ? 'is-invalid' : ''}`}
+              <Form.Control.Feedback type="invalid">
+                {errors.itemName?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Control
+                {...register('quantity', { valueAsNumber: true })}
+                type="number"
+                placeholder="כמות"
+                isInvalid={!!errors.quantity || !!amountError}
               />
-              {errors.expirationDate && <div className="invalid-feedback">{errors.expirationDate.message}</div>}
-            </div>
-          )}
+              <Form.Control.Feedback type="invalid">
+                {errors.quantity?.message || amountError}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
 
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <textarea
-              {...register('description')}
-              placeholder="תיאור"
-              rows={4}
-              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              className={`${errors.description ? 'is-invalid' : ''}`}
-            />
-            {errors.description && <div className="invalid-feedback">{errors.description.message}</div>}
-          </div>
-
-          <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <div className="radio-group">
-              <label>
-                <input
-                  type="radio"
-                  value="ממתין לאיסוף"
-                  checked={selectedDeliveryOption === 'ממתין לאיסוף'}
-                  onChange={handleDeliveryOptionChange}
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Select {...register('category')} isInvalid={!!errors.category}>
+                <option value="">בחר קטגוריה</option>
+                <option value="מזון ושתייה">מזון ושתייה</option>
+                <option value="ביגוד והנעלה">ביגוד והנעלה</option>
+                <option value="ריהוט">ריהוט</option>
+                <option value="מכשירי חשמל">מכשירי חשמל</option>
+                <option value="צעצועים">צעצועים</option>
+                <option value="אחר">אחר</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                {errors.category?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            {watch('category') === 'אחר' && (
+              <Form.Group className="mb-3">
+                <Form.Control
+                  {...register('customCategory')}
+                  type="text"
+                  placeholder="קטגוריה מותאמת אישית"
+                  isInvalid={!!errors.customCategory}
                 />
-                ממתין לאיסוף
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  value="לא נמסר לעמותה"
-                  checked={selectedDeliveryOption === 'לא נמסר לעמותה'}
-                  onChange={handleDeliveryOptionChange}
-                />
-                לא נמסר לעמותה
-              </label>
-            </div>
-            {showError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>יש לבחור אפשרות מסירה</p>}
-          </div>
+                <Form.Control.Feedback type="invalid">
+                  {errors.customCategory?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+          </Col>
+        </Row>
 
-          {showPickupAddress && (
-            <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-              <input
-                {...register('pickupAddress')}
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Control
+                {...register('condition')}
                 type="text"
-                placeholder="כתובת לאיסוף"
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-                className={`${errors.pickupAddress ? 'is-invalid' : ''}`}
+                placeholder="מצב הפריט"
+                isInvalid={!!errors.condition}
               />
-              {errors.pickupAddress && <div className="invalid-feedback">{errors.pickupAddress.message}</div>}
-              {showPickUpError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>יש למלא את כתובת האיסוף</p>}
-            </div>
-          )}
+              <Form.Control.Feedback type="invalid">
+                {errors.condition?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            {watch('category') === 'מזון ושתייה' && (
+              <Form.Group className="mb-3">
+                <Form.Control
+                  {...register('expirationDate')}
+                  type="date"
+                  isInvalid={!!errors.expirationDate}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.expirationDate?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            )}
+          </Col>
+        </Row>
 
-          {showBranch && (
-            <div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-              <select
-                {...register('branch')}
-                style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid black', fontSize: '16px' }}
-              >
-                <option value="">בחר סניף</option>
-                <option value="סניף 1">סניף 1</option>
-                <option value="סניף 2">סניף 2</option>
-                <option value="סניף 3">סניף 3</option>
-              </select>
-              {showBranchError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '1px' }}>יש לבחור סניף</p>}
-            </div>
-          )}
+        <Form.Group className="mb-3">
+          <Form.Control
+            as="textarea"
+            rows={4}
+            {...register('description')}
+            placeholder="תיאור"
+            isInvalid={!!errors.description}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.description?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-<div style={{ width: '100%', margin: '10px', textAlign: 'right' }}>
-            <button type="button" onClick={selectImg} className="upload-image-button">
-              {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
-              <FontAwesomeIcon icon={faImage} />
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={imgSelected}
-              style={{ display: 'none' }}
-            />
-            {imgPreview && <img src={imgPreview} alt="תמונה נבחרת" style={{ width: '100px', height: '100px', objectFit: 'cover', marginTop: '10px' }} />}
-          </div>
-
-          <div style={{ width: '100%', margin: '10px', textAlign: 'center' }}>
-            <button
-              type="submit"
-              style={{ background: '#f9da78', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-            >
-              שלח
-            </button>
-          </div>
+        <Form.Group className="mb-3">
+        <Form.Label>אפשרות מסירה</Form.Label>
+        <div>
+          <Form.Check
+            type="radio"
+            id="pickup"
+            label="ממתין לאיסוף"
+            name="deliveryOption"
+            value="ממתין לאיסוף"
+            checked={selectedDeliveryOption === 'ממתין לאיסוף'}
+            onChange={handleDeliveryOptionChange}
+            className="mb-2"
+          />
+          <Form.Check
+            type="radio"
+            id="notDelivered"
+            label="לא נמסר לעמותה"
+            name="deliveryOption"
+            value="לא נמסר לעמותה"
+            checked={selectedDeliveryOption === 'לא נמסר לעמותה'}
+            onChange={handleDeliveryOptionChange}
+          />
         </div>
-      </form>
-    </div>
+        {showError && <Alert variant="danger" className="mt-2">יש לבחור אפשרות מסירה</Alert>}
+      </Form.Group>
+
+      {showPickupAddress && (
+        <Form.Group className="mb-3">
+          <Form.Control
+            {...register('pickupAddress')}
+            type="text"
+            placeholder="כתובת לאיסוף"
+            isInvalid={!!errors.pickupAddress || showPickUpError}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.pickupAddress?.message || (showPickUpError && 'יש למלא את כתובת האיסוף')}
+          </Form.Control.Feedback>
+        </Form.Group>
+      )}
+
+      {showBranch && (
+        <Form.Group className="mb-3">
+          <Form.Select
+            {...register('branch')}
+            isInvalid={showBranchError}
+          >
+            <option value="">בחר סניף</option>
+            <option value="סניף 1">סניף 1</option>
+            <option value="סניף 2">סניף 2</option>
+            <option value="סניף 3">סניף 3</option>
+          </Form.Select>
+          {showBranchError && <Form.Control.Feedback type="invalid">יש לבחור סניף</Form.Control.Feedback>}
+        </Form.Group>
+      )}
+
+        <Form.Group className="mb-3">
+          <Button variant="secondary" onClick={selectImg}>
+            {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
+            <FontAwesomeIcon icon={faImage} className="ms-2" />
+          </Button>
+          <Form.Control
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={imgSelected}
+            style={{ display: 'none' }}
+          />
+          {imgPreview && <img src={imgPreview} alt="תמונה נבחרת" className="img-preview" />}
+        </Form.Group>
+
+        <div className="text-center">
+          <Button type="submit" variant="primary">
+            שלח
+          </Button>
+        </div>
+      </Form>
+    </Container>
   );
 };
 

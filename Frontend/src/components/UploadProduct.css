@@ -1,129 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', Arial, sans-serif;
-    background-color: #ffffff;
+    font-family: 'Rubik', Arial, sans-serif;
+    background-color: #f8f9fa;
     direction: rtl;
+    height: 100%;
 }
 
 .upload-product-container {
-    max-width: 1200px;
-    margin: 40px auto 20px;
-    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
     background-color: #ffffff;
     border-radius: 12px;
-    border: 1px solid #ddd;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    overflow-y: auto;
 }
-@import url('https://fonts.googleapis.com/css2?family=YourGoogleFontName:wght@700&display=swap');
 
 .upload-product-title {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
     color: #333;
-    font-family: 'YourGoogleFontName', sans-serif;
+    font-family: 'Rubik', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 15px;
 }
 
-.form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+.upload-product-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: #F9DA78;
+    border-radius: 2px;
 }
 
-.form-control {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+.form-control, .form-select {
+    border: 1px solid #ced4da;
     border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-    background-color: #ffffff;
-    font-family: 'Google Font Name', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-control:focus {
-    border-color: #ffcc00;
-    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.3);
-    outline: none;
+.form-control:focus, .form-select:focus {
+    border-color: #F9DA78;
+    box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
 }
-
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.invalid-feedback {
-    color: #e74c3c;
-    font-size: 14px;
-    margin-top: 5px;
-    font-weight: bold;
-}
-
-.select-form-control {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+.form-check-input {
+    width: 1.5em;
+    height: 1.5em;
+    margin-top: 0.25em;
+    vertical-align: top;
+    background-color: #fff;
     background-repeat: no-repeat;
-    background-position: left 12px center;
-    padding-left: 30px;
-    border-radius: 8px;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    appearance: none;
+    color-adjust: exact;
+    transition: background-color 0.15s ease-in-out, background-position 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    print-color-adjust: exact;
+  }
+  
+  .form-check-input:checked {
+    background-color: #F9DA78;
+    border-color: #F9DA78;
+  }
+  
+  .form-check-input:focus {
+    border-color: #F9DA78;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
+  }
+  
+  .form-check-label {
+    padding-right: 0.5em;
+    font-size: 1.1em;
+  }
+  
+  .form-check {
+    padding-right: 1.8em;
+  }
+
+.btn-primary {
+    background-color: #F9DA78;
+    border-color: #F9DA78;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.img-preview-container {
-    text-align: center;
-    margin-top: 20px;
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #f0c854;
+    border-color: #f0c854;
+    color: #333;
+    transform: translateY(-2px);
 }
 
 .img-preview {
-    max-width: 150px;
-    max-height: 150px;
-    border-radius: 12px;
+    max-width: 100px;
+    max-height: 100px;
     object-fit: cover;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.upload-image-button {
-    background-color: #F9DA78; /* The color of 'שלח' */
-    color: #333;
-    border: 2px solid #333;
-    padding: 10px 20px;
     border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    display: inline-flex;
-    align-items: center;
     margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-.upload-image-button svg {
-    margin-left: 10px;
-}
-.upload-image-button:hover {
-    background-color: #ffda66;
-}
-
-.submit-button {
-    width: 100%;
-    background-color: #F9DA78;
-    color: #333;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 30px;
-    transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-    background-color: #ffda66;
-}
-
-.error-message {
-    color: #e74c3c;
-    font-weight: bold;
-    margin-top: 5px;
 }

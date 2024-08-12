@@ -10,14 +10,28 @@ body, html {
 }
 
 .upload-product-container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: none;
+    width: 100%;
+    margin: 0;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     height: 100vh;
-    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+}
+.upload-product-form {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+.form-section {
+    flex: 0 0 auto;
+    width: 300px;
+    padding: 0 10px;
 }
 
 .upload-product-title {
@@ -55,41 +69,40 @@ body, html {
     border-color: #F9DA78;
     box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
 }
-.form-check-input {
-    width: 1.5em;
-    height: 1.5em;
-    margin-top: 0.25em;
-    vertical-align: top;
+.form-check {
+    padding-right: 1.8em;
+    padding-left: 0;
+    margin-bottom: 0.5em;
+    position: relative;
+}
+
+.form-check-input[type="radio"] {
+    width: 1.2em;
+    height: 1.2em;
+    border: 2px solid #333;
     background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    appearance: none;
-    color-adjust: exact;
-    transition: background-color 0.15s ease-in-out, background-position 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    print-color-adjust: exact;
-  }
-  
-  .form-check-input:checked {
+    margin-top: 0.2em;
+}
+
+.form-check-input[type="radio"]:not(:checked) {
+    background-color: transparent;
+}
+
+.form-check-input[type="radio"]:checked {
     background-color: #F9DA78;
     border-color: #F9DA78;
-  }
-  
-  .form-check-input:focus {
-    border-color: #F9DA78;
-    outline: 0;
+}
+
+.form-check-input[type="radio"]:focus {
     box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
-  }
+    border-color: #F9DA78;
+}
+
+.form-check-label {
+    margin-right: 1.5em;
+    display: block;
+}
   
-  .form-check-label {
-    padding-right: 0.5em;
-    font-size: 1.1em;
-  }
-  
-  .form-check {
-    padding-right: 1.8em;
-  }
 
 .btn-primary {
     background-color: #F9DA78;

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Profile.css';
 import { Donation } from './donation';
 import { DonorData } from './donorData';
-//import DonationModal from './DonationModal'; // Import the new modal component
+import DonationModal from './DonationModal';
 import { Avatar } from '@mui/material';
 
 const Profile: React.FC = () => {
@@ -13,16 +13,19 @@ const Profile: React.FC = () => {
     const [donations, setDonations] = useState<Donation[]>([]);
     const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
     const [loading, setLoading] = useState(true);
-    //const [error, setError] = useState<string | undefined>(undefined);
-    const [activeTab, setActiveTab] = useState('all');
-    const [itemsToShow, setItemsToShow] = useState(8);
-    //const [editDonationId, setEditDonationId] = useState<string | null>(null);
-    //const [editableDonation, setEditableDonation] = useState<Partial<Donation>>({});
-    //const [showModal, setShowModal] = useState(false); // Modal state
-    //const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null); // Selected donation state
-    const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
-    const [sortOption, setSortOption] = useState('newest'); // Add state for sort option
-    //const navigate = useNavigate();
+    const [error, setError] = useState<string | undefined>(undefined);
+    const [itemsToShow, setItemsToShow] = useState(4);
+    const [editMode, setEditMode] = useState(false); // To toggle edit mode
+    const [editableUser, setEditableUser] = useState<Partial<DonorData>>({}); // To store the editable user data
+    const [showSuccessBanner, setShowSuccessBanner] = useState(false); // To show the success banner
+    const [editDonationId, setEditDonationId] = useState<string | null>(null);
+    const [editableDonation, setEditableDonation] = useState<Partial<userDonation>>({});
+    const [showModal, setShowModal] = useState(false);
+    const [selectedDonation, setSelectedDonation] = useState<userDonation | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedFilters, setSelectedFilters] = useState<{ status: string[]; approved: string[] }>({ status: [], approved: [] });
+    const [sortOption, setSortOption] = useState('newest');
+    const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
 
     const fetchData = useCallback(async () => {
@@ -34,11 +37,7 @@ const Profile: React.FC = () => {
             const { req: donationsReq } = dataService.getDonationsByUser(userId!);
             const donationsResponse = await donationsReq;
             setDonations(donationsResponse.data);
-
-            // Log all statuses to understand what values they have
-            donationsResponse.data.forEach(donation => {
-                console.log('Donation status:', donation.status);
-            });
+            setFilteredDonations(donationsResponse.data); // Initialize with all donations
         } catch (error) {
             if (error instanceof CanceledError) return;
             console.error('Error fetching data:', error);
@@ -69,43 +68,55 @@ const Profile: React.FC = () => {
     }, [fetchData]);
 
     useEffect(() => {
-        filterDonations();
-    }, [donations, activeTab, itemsToShow, searchQuery]); // Include searchQuery in dependencies
+        applyFilters();
+    }, [donations, searchQuery, selectedFilters, itemsToShow]);
 
-    useEffect(() => {
-        if (user) {
-          const newRating = updateRating(donations.length);
-          dataService.updateUserData(user._id, { rating: newRating });
-        }
-      }, [donations]);
+   const applyFilters = () => {
+    let filtered = donations;
 
-    const filterDonations = () => {
-        console.log('Filtering donations with activeTab:', activeTab);
-        const filtered = donations.filter((donation) => {
-            const matchesSearchQuery = donation.itemName.toLowerCase().includes(searchQuery.toLowerCase());
-            switch (activeTab) {
-                case 'אושר':
-                    return donation.approvedByAdmin === 'true' && matchesSearchQuery;
-                case 'ממתין לאישור':
-                    return donation.approvedByAdmin === 'false' && matchesSearchQuery;
-                case 'טרם נמסר':
-                    return donation.status !== 'הגיע לעמותה' && donation.status !== 'נמסר' && matchesSearchQuery;
-                case 'all':
-                default:
-                    return matchesSearchQuery;
-            }
-        });
-        console.log('Filtered donations:', filtered);
-        setFilteredDonations(filtered.slice(0, itemsToShow));
-    };
+    if (searchQuery) {
+        filtered = filtered.filter(donation =>
+            donation.itemName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }
+
+    if (selectedFilters.status.length > 0) {
+        filtered = filtered.filter(donation =>
+            selectedFilters.status.includes(donation.status)
+        );
+    }
+
+    if (selectedFilters.approved.length > 0) {
+        filtered = filtered.filter(donation =>
+            selectedFilters.approved.includes(String(donation.approvedByAdmin))
+        );
+    }
+
+    setFilteredDonations(filtered.slice(0, itemsToShow));
+};
 
     const handleShowMoreClick = () => {
-        setItemsToShow(itemsToShow + 8);
+        setItemsToShow(itemsToShow + 4);
     };
 
-    const handleTabClick = (tab: string) => {
-        setActiveTab(tab);
-        setItemsToShow(8);
+    const toggleFilter = (type: 'status' | 'approved', value: string) => {
+        setSelectedFilters(prevFilters => {
+            const newFilters = { ...prevFilters };
+            if (newFilters[type].includes(value)) {
+                newFilters[type] = newFilters[type].filter(f => f !== value);
+            } else {
+                newFilters[type].push(value);
+            }
+            return newFilters;
+        });
+    };
+
+    const removeFilter = (type: 'status' | 'approved', value: string) => {
+        setSelectedFilters(prevFilters => {
+            const newFilters = { ...prevFilters };
+            newFilters[type] = newFilters[type].filter(f => f !== value);
+            return newFilters;
+        });
     };
 
     // const handleDeleteClick = async (donationId: string) => {
@@ -153,12 +164,14 @@ const Profile: React.FC = () => {
 
     const getStatusClass = (status: string) => {
         switch (status) {
-            case 'הגיע לעמותה':
-                return 'status-approved';
+            case 'ממתין לאיסוף מבית התורם':
+                return 'status-awaiting-pickup';
+            case 'נמסר בעמותה':
+                return 'status-delivered-to-charity';
+            case 'ממתין לאיסוף':
+                return 'status-awaiting-collection';
             case 'נמסר':
-                return 'status-pending';
-            case 'טרם נמסר':
-                return 'status-not-approved';
+                return 'status-delivered';
             default:
                 return '';
         }
@@ -168,6 +181,20 @@ const Profile: React.FC = () => {
     //     setSelectedDonation(donation);
     //     setShowModal(true);
     // };
+
+    const handleSaveChanges = async () => {
+        try {
+            if (user && editableUser) {
+                await dataService.updateUserData(user._id, editableUser);
+                setUser({ ...user, ...editableUser }); // Update user state with new details
+                setEditMode(false);
+                setShowSuccessBanner(true);
+                setTimeout(() => setShowSuccessBanner(false), 3000); // Hide banner after 3 seconds
+            }
+        } catch (error) {
+            console.error('Error saving user details:', error);
+        }
+    };
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortOption(e.target.value);
@@ -179,56 +206,27 @@ const Profile: React.FC = () => {
             }
             return 0;
         });
-    
+
         setDonations(sortedDonations);
     };
-
-    function updateRating(donations: number) {
-        if (donations >= 20) {
-          return "⭐⭐⭐⭐⭐";
-        } else if (donations >= 15) {
-          return "⭐⭐⭐⭐";
-        } else if (donations >= 10) {
-          return "⭐⭐⭐";
-        } else if (donations >= 5) {
-          return "⭐⭐";
-        } else {
-          return "⭐";
-        }
-      }
 
     if (loading) return <div className="loading">Loading...</div>;
     //if (error) return <div className="loading">{error}</div>;
     if (!user) return <div className="loading">User not found</div>;
 
     return (
-        <div className="profile-page">        
+        <div className="profile-page"> 
             <div className="user-info">
                 <Avatar className='Avatar-profile' alt="Remy Sharp" src={user.image} />
                 <span className='profile-header'>שלום, {user.firstName} {user.lastName}</span>
             </div>
-
             <main className="profile-content">
                 <div className="rating-status" style={{ direction: "rtl" }}>
                     דירוג משתמש: {user.rating ?? 0}
                 </div>
-
-                
-
-                <div className="tabs">
-                    {['אושר', 'ממתין לאישור', 'טרם נמסר', 'all'].map((tab) => (
-                        <button
-                            key={tab}
-                            className={activeTab === tab ? 'active' : ''}
-                            onClick={() => handleTabClick(tab)}
-                        >
-                            {tab === 'אושר' && 'תרומות שאושרו'}
-                            {tab === 'ממתין לאישור' && 'תרומות שלא אושרו'}
-                            {tab === 'טרם נמסר' && ' תרומות שטרם הגיעו לעמותה'}
-                            {tab === 'all' && 'כל התרומות'}
-                        </button>
-                    ))}
-                </div>
+                <div className="my-donations-title">
+                      התרומות שלי
+                 </div>
 
                 <div className="search-bar">
                     <input 
@@ -238,10 +236,46 @@ const Profile: React.FC = () => {
                         value={searchQuery} 
                         onChange={(e) => setSearchQuery(e.target.value)} 
                     />
-                     <select value={sortOption} onChange={handleSortChange}>
-                        <option value="newest">החדשות ביותר</option>
-                        <option value="oldest">הישנות ביותר</option>
-                    </select>
+                </div>
+                <div className="filter-section">
+                <h4>בחר מסננים:</h4>
+                <div className="filter-buttons">
+                    {['ממתין לאיסוף מבית התורם', 'נמסר בעמותה', 'ממתין לאיסוף', 'נמסר'].map(status => (
+                        <button
+                            key={status}
+                            onClick={() => toggleFilter('status', status)}
+                            className={selectedFilters.status.includes(status) ? 'active' : ''}
+                        >
+                            {status}
+                        </button>
+                    ))}
+                    <button
+                        onClick={() => toggleFilter('approved', 'true')}
+                        className={selectedFilters.approved.includes('true') ? 'active' : ''}
+                    >
+                        מאושר
+                    </button>
+                    <button
+                        onClick={() => toggleFilter('approved', 'false')}
+                        className={selectedFilters.approved.includes('false') ? 'active' : ''}
+                    >
+                        לא מאושר
+                    </button>
+                </div>
+                </div>
+
+
+                <div className="selected-filters">
+                    {selectedFilters.status.map(filter => (
+                        <span key={filter} onClick={() => removeFilter('status', filter)}>
+                            {filter} ✖
+                        </span>
+                    ))}
+                    {selectedFilters.approved.map(filter => (
+                        <span key={filter} onClick={() => removeFilter('approved', filter)}>
+                            {filter === 'true' ? 'מאושר' : 'לא מאושר'} ✖
+                        </span>
+                    ))}
                 </div>
 
                 <div className="donations-list">
@@ -260,20 +294,21 @@ const Profile: React.FC = () => {
                         ))
                     ) : (
                         <div className="no-donations-container">
-                             <p>לא נמצאו תרומות</p>
+                            <p>לא נמצאו תרומות</p>
                         </div>
                     )}
                 </div>
-                {filteredDonations.length > itemsToShow && (
-                    <button className="show-more" onClick={handleShowMoreClick}>
-                        הצג עוד
-                    </button>
-                )}
+                {donations.length > itemsToShow && (
+    <button className="show-more" onClick={handleShowMoreClick}>
+        הצג עוד
+    </button>
+)}
             </main>
-           
-            {/* <DonationModal
+
+            <DonationModal
+
                 show={showModal}
-                onHide={handleCancelClick} // Use handleCancelClick to close modal
+                onHide={handleCancelClick}
                 donation={selectedDonation}
                 onEditClick={handleEditClick}
                 onDeleteClick={handleDeleteClick}

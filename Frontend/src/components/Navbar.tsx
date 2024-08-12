@@ -66,49 +66,45 @@ export function Navbar({  setUser }: NavbarProps) {
 
   return (
     <BootstrapNavbar 
-  style={{
-    fontFamily: "Rubik, sans-serif",
-    backgroundColor: 'white',
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    width: "100%",
-    zIndex: 1000,
-    minHeight: "80px",
-    padding: "0",
-  }}
-  expand="md"
->
-  <Container fluid className="navbar-container">
-    {/* Toggle button for side menu */}
-    <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-{/* Logo */}
-<BootstrapNavbar.Brand as={Link} to="/mainPage">
-      <img src={logo} alt="Logo" className="logo-image" />
-    </BootstrapNavbar.Brand>
-    <BootstrapNavbar.Collapse id="basic-navbar-nav">
-      <Nav className="ms-auto">
-        {isLoggedIn ? (
-          <div className='navLink'>
-            <Nav.Link as={Link} to="/profile">פרופיל</Nav.Link>
-            <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-            <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-            <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-            {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
-          </div>
-        ) : (
-          <div className='navLink'>
-            <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
-            <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
-          </div>
-          
-        )}
-        
-      </Nav>
-    </BootstrapNavbar.Collapse>
-  </Container>
-</BootstrapNavbar>
+      style={{
+        fontFamily: "Rubik, sans-serif",
+        backgroundColor: 'white',
+        boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        width: "100%",
+        zIndex: 1000,
+        minHeight: "80px",
+        padding: "0",
+      }}
+      expand="md"
+    >
+      <Container fluid>
+        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+        <BootstrapNavbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <BootstrapNavbar.Brand as={Link} to="/mainPage">
+              <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+            </BootstrapNavbar.Brand>
+            {isLoggedIn ? (
+              <div className='navLink'>
+                <Nav.Link as={Link} to="/profile">החשבון שלי</Nav.Link>
+                <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
+                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
+                <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
+                {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
+              </div>
+            ) : (
+              <div className='navLink'>
+                <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
+                <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
+              </div>
+            )}
+          </Nav>
+        </BootstrapNavbar.Collapse>
+      </Container>
+    </BootstrapNavbar>
   );
 }

@@ -7,24 +7,34 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import DonationModal from './DonationModal';
 import { Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<DonorData | null>(null);
     const [donations, setDonations] = useState<Donation[]>([]);
     const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
     const [loading, setLoading] = useState(true);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [error, setError] = useState<string | undefined>(undefined);
     const [itemsToShow, setItemsToShow] = useState(4);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [editMode, setEditMode] = useState(false); // To toggle edit mode
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [editableUser, setEditableUser] = useState<Partial<DonorData>>({}); // To store the editable user data
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [showSuccessBanner, setShowSuccessBanner] = useState(false); // To show the success banner
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [editDonationId, setEditDonationId] = useState<string | null>(null);
-    const [editableDonation, setEditableDonation] = useState<Partial<userDonation>>({});
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [editableDonation, setEditableDonation] = useState<Partial<Donation>>({});
     const [showModal, setShowModal] = useState(false);
-    const [selectedDonation, setSelectedDonation] = useState<userDonation | null>(null);
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFilters, setSelectedFilters] = useState<{ status: string[]; approved: string[] }>({ status: [], approved: [] });
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [sortOption, setSortOption] = useState('newest');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const navigate = useNavigate();
     const userId = localStorage.getItem('userID');
 
@@ -119,21 +129,21 @@ const Profile: React.FC = () => {
         });
     };
 
-    // const handleDeleteClick = async (donationId: string) => {
-    //     try {
-    //         await dataService.deleteDonation(donationId);
-    //         setDonations(donations.filter((donation) => donation._id !== donationId));
-    //     } catch (error) {
-    //         console.error('Error deleting donation:', error);
-    //         setError('Error deleting donation');
-    //     }
-    // };
+    const handleDeleteClick = async (donationId: string) => {
+        try {
+            await dataService.deleteDonation(donationId);
+            setDonations(donations.filter((donation) => donation._id !== donationId));
+        } catch (error) {
+            console.error('Error deleting donation:', error);
+            setError('Error deleting donation');
+        }
+    };
 
-    // const handleEditClick = (donation: Donation) => {
-    //     setEditDonationId(donation._id);
-    //     setEditableDonation(donation);
-    //     setShowModal(true);
-    // };
+    const handleEditClick = (donation: Donation) => {
+        setEditDonationId(donation._id);
+        setEditableDonation(donation);
+        setShowModal(true);
+    };
 
     // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     //     const { name, value } = e.target;
@@ -156,11 +166,11 @@ const Profile: React.FC = () => {
     //     }
     // };
 
-    // const handleCancelClick = () => {
-    //     setEditDonationId(null);
-    //     setEditableDonation({});
-    //     setShowModal(false);
-    // };
+    const handleCancelClick = () => {
+        setEditDonationId(null);
+        setEditableDonation({});
+        setShowModal(false);
+    };
 
     const getStatusClass = (status: string) => {
         switch (status) {
@@ -182,33 +192,33 @@ const Profile: React.FC = () => {
     //     setShowModal(true);
     // };
 
-    const handleSaveChanges = async () => {
-        try {
-            if (user && editableUser) {
-                await dataService.updateUserData(user._id, editableUser);
-                setUser({ ...user, ...editableUser }); // Update user state with new details
-                setEditMode(false);
-                setShowSuccessBanner(true);
-                setTimeout(() => setShowSuccessBanner(false), 3000); // Hide banner after 3 seconds
-            }
-        } catch (error) {
-            console.error('Error saving user details:', error);
-        }
-    };
+    // const handleSaveChanges = async () => {
+    //     try {
+    //         if (user && editableUser) {
+    //             await dataService.updateUserData(user._id, editableUser);
+    //             setUser({ ...user, ...editableUser }); // Update user state with new details
+    //             setEditMode(false);
+    //             setShowSuccessBanner(true);
+    //             setTimeout(() => setShowSuccessBanner(false), 3000); // Hide banner after 3 seconds
+    //         }
+    //     } catch (error) {
+    //         console.error('Error saving user details:', error);
+    //     }
+    // };
 
-    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSortOption(e.target.value);
-        const sortedDonations = [...donations].sort((a, b) => {
-            if (sortOption === 'newest') {
-                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-            } else if (sortOption === 'oldest') {
-                return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-            }
-            return 0;
-        });
+    // const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setSortOption(e.target.value);
+    //     const sortedDonations = [...donations].sort((a, b) => {
+    //         if (sortOption === 'newest') {
+    //             return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    //         } else if (sortOption === 'oldest') {
+    //             return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    //         }
+    //         return 0;
+    //     });
 
-        setDonations(sortedDonations);
-    };
+    //     setDonations(sortedDonations);
+    // };
 
     if (loading) return <div className="loading">Loading...</div>;
     //if (error) return <div className="loading">{error}</div>;
@@ -312,7 +322,7 @@ const Profile: React.FC = () => {
                 donation={selectedDonation}
                 onEditClick={handleEditClick}
                 onDeleteClick={handleDeleteClick}
-            /> */}
+            /> 
         </div>
     );
 };

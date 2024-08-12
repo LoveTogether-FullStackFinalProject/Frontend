@@ -7,7 +7,7 @@ import dataService from '../services/data-service';
 import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
 import { User } from '../services/types';
-import logo from '../assets/logoWithoutBackground.png';
+//import logo from '../assets/logoWithoutBackground.png';
 
 interface NavbarProps {
   user: User | null;

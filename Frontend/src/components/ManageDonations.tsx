@@ -26,30 +26,32 @@ import {
   Tooltip,
 } from '@mui/material';
 import { CSVLink } from 'react-csv';
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Edit, Delete, Search } from '@mui/icons-material';
 import './ManageDonations.css';
+import {Donation} from './donation';
 
-interface Donation {
-  _id: string;
-  itemName: string;
-  category: string;
-  description: string;
-  status: string;
-  approvedByAdmin?: boolean | string;
-  donor?: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-  };
-  pickUpAddress: string;
-  userAddress?: string;
-  branch?: string;
-  image?: string;
-  amount?: number;
-  itemCondition?: string;
-  expirationDate?: string;
-  createdAt: string;
-}
+// interface Donation {
+//   _id: string;
+//   itemName: string;
+//   category: string;
+//   description: string;
+//   status: string;
+//   approvedByAdmin?: boolean | string;
+//   donor?: {
+//     firstName: string;
+//     lastName: string;
+//     phone: string;
+//   };
+//   pickUpAddress: string;
+//   userAddress?: string;
+//   branch?: string;
+//   image?: string;
+//   quantity?: number;
+//   itemCondition?: string;
+//   expirationDate?: string;
+//   createdAt: string;
+// }
 
 
 type Order = 'asc' | 'desc';
@@ -66,13 +68,16 @@ const ManageDonationPage: React.FC = () => {
   const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
     req.then((res) => {
-      setDonations(res.data);
+      if(res.data){
+        setDonations(res.data);
+      }
+      
 
     }).catch((err) => {
       if (err instanceof CanceledError) return;
@@ -200,7 +205,7 @@ const ManageDonationPage: React.FC = () => {
           ייצוא ל-CSV
         </CSVLink>
       </Toolbar>
-      {error && <Typography color="error" align="center">{error}</Typography>}
+      {/* {error && <Typography color="error" align="center">{error}</Typography>} */}
       <TableContainer component={Paper} style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
         <Table style={{ minWidth: 650 }}>
           <TableHead style={{ backgroundColor: '#f0e0ad' }}>
@@ -251,13 +256,13 @@ const ManageDonationPage: React.FC = () => {
                 </TableSortLabel>
               </TableCell>
               <TableCell>
-                <TableSortLabel
+                {/* <TableSortLabel
                   active={orderBy === 'donor.firstName'}
                   direction={orderBy === 'donor.firstName' ? order : 'asc'}
                   onClick={() => handleRequestSort('donor.firstName')}
                 >
                   שם התורם
-                </TableSortLabel>
+                </TableSortLabel> */}
               </TableCell>
               <TableCell>
                 <TableSortLabel
@@ -295,7 +300,7 @@ const ManageDonationPage: React.FC = () => {
                 <TableCell>
                   <Select
                     value={String(donation.approvedByAdmin)}
-                    onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true')}
+                    onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true' ? 'false' : 'true')}
                     fullWidth
                     variant="outlined"
                     sx={{ backgroundColor: '#f9f9f9' }}
@@ -371,7 +376,7 @@ const ManageDonationPage: React.FC = () => {
               <Typography variant="body1"><strong>שם המוצר:</strong> {currentDonation.itemName}</Typography>
               <Typography variant="body1"><strong>תיאור:</strong> {currentDonation.description}</Typography>
               <Typography variant="body1"><strong>מצב:</strong> {currentDonation.itemCondition}</Typography>
-              <Typography variant="body1"><strong>כמות:</strong> {currentDonation.amount}</Typography>
+              <Typography variant="body1"><strong>כמות:</strong> {currentDonation.quantity}</Typography>
               {currentDonation.image && (
                 <div style={{ textAlign: 'center' }}>
                   <img src={currentDonation.image} alt="Donation" className="img-fluid" />
@@ -389,7 +394,7 @@ const ManageDonationPage: React.FC = () => {
 };
 
 const modalStyle = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' ,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

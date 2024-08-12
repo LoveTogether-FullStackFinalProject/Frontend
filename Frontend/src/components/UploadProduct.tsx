@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 import './UploadProduct.css';
 
 const schema = z.object({

@@ -1,33 +1,53 @@
+.manage-donations-page {
+  padding: 20px;
+  direction: rtl;
+  text-align: right;
+}
 
 .table-responsive {
-    max-height: 70vh;
-    overflow-y: auto;
-    direction: rtl;
-  }
-  
-  .table-responsive table {
-    min-width: 1000px; 
-  }
-  
-  thead th {
-    position: sticky;
-    top: 0;
-    background-color: #f8f9fa;
-    z-index: 1;
-  }
+  max-height: 70vh;
+  overflow-y: auto;
+  direction: rtl;
+}
 
-  .container {
-    direction: rtl;
-    text-align: right;
-  }
-  
-  .table th, .table td {
-    text-align: right;
-  }
-  
-  .modal-body {
-    direction: rtl;
-    text-align: right;
-  }
-  
-  
+.table-responsive table {
+  min-width: 1000px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+  z-index: 1;
+}
+
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+}
+
+button {
+  background-color: #f9db78 !important; /* Site's color */
+  color: black;
+}
+
+.modal-container h2 {
+  margin-bottom: 20px;
+}
+
+.modal-container p {
+  margin-bottom: 20px;
+}
+
+.snackbar {
+  bottom: 20px;
+  left: 20px;
+}

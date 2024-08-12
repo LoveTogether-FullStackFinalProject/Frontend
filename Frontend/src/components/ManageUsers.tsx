@@ -19,7 +19,8 @@ import {
   Button,
   TableSortLabel,
   Toolbar,
-  InputAdornment
+  InputAdornment,
+  Tooltip,
 } from '@mui/material';
 import { Edit, Delete, Search } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
@@ -162,41 +163,34 @@ const ManageUsers: React.FC = () => {
   const sortedAndFilteredUsers = applySortAndFilter(users);
 
   const [isAdmin, setIsAdmin] = useState(false);
-     useEffect(() => {
-       const userId = localStorage.getItem('userID');
-       if (userId) {
-         dataService.getUser(userId).req.then((res) => {
-           setIsAdmin(res.data.isAdmin);
-           console.log("isAdmin:", res.data.isAdmin);
-         });
-       }
-     }, []);
-
-
-     if (!isAdmin) {
-      return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
-        </div>
-      );
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+      });
     }
+  }, []);
+
+  if (!isAdmin) {
+    return (
+      <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px', padding: '20px', border: '1px solid black' }}>
+        <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+        <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+      </div>
+    );
+  }
 
   return (
-    <div className="container">
-     <Typography
-      variant="h4"
-      align="center"
-      gutterBottom
-      className="typography-title"
-      style={{ fontFamily: 'Assistant', fontWeight: 'bold', paddingTop: '20px' }}
-    >
-      ניהול יוזרים
-    </Typography>
+    <div className="manage-users-page" style={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        ניהול יוזרים
+      </Typography>
+
       <Toolbar>
         <TextField
           label="חפש משתמש"
-           placeholder="חפש תורם לפי פרטיו"
+          placeholder="חפש תורם לפי פרטיו"
           variant="outlined"
           fullWidth
           margin="normal"
@@ -210,19 +204,19 @@ const ManageUsers: React.FC = () => {
             ),
           }}
         />
-           <CSVLink
+        <CSVLink
           data={handleExport()}
           filename="users.csv"
-          // className="btn btn-success mb-3"
-          className="csv-link"
+          className="btn btn-primary"
+          style={{ marginLeft: '20px', padding: '10px 20px', backgroundColor: '#f9db78', color: '#000', borderRadius: '5px', textDecoration: 'none' }}
         >
           ייצוא לאקסל
         </CSVLink>
       </Toolbar>
       {error && <Typography color="error" align="center">{error}</Typography>}
-      <TableContainer component={Paper}>
-        <Table className="table-bordered">
-          <TableHead className="table-bordered">
+      <TableContainer component={Paper} style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+        <Table style={{ minWidth: 650 }}>
+          <TableHead style={{ backgroundColor: '#f0e0ad' }}>
             <TableRow>
               {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
                 <TableCell
@@ -244,8 +238,9 @@ const ManageUsers: React.FC = () => {
                   </TableSortLabel>
                 </TableCell>
               ))}
-              <TableCell className="rtl-table-col" style={{ fontWeight: 'bold', fontFamily: 'Assistant', direction: 'rtl' }}>עריכה</TableCell>
-              <TableCell className="rtl-table-col" style={{ fontWeight: 'bold', fontFamily: 'Assistant' ,direction: 'rtl'}}>מחיקת משתמש</TableCell>
+              <TableCell className="rtl-table-col">עריכה</TableCell>
+              <TableCell className="rtl-table-col">מחיקה</TableCell>
+           
             </TableRow>
           </TableHead>
           <TableBody>
@@ -258,28 +253,39 @@ const ManageUsers: React.FC = () => {
                 <TableCell className="rtl-table">{user.phoneNumber}</TableCell>
                 <TableCell className="rtl-table">{user.rating}</TableCell>
                 <TableCell className="rtl-table">
-                  <IconButton color="primary" onClick={() => editUser(user)}>
-                    <Edit />
-                  </IconButton>
+                  <Tooltip title="ערוך משתמש">
+                    <IconButton color="primary" onClick={() => editUser(user)}>
+                      <Edit />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
                 <TableCell className="rtl-table">
-                  <IconButton color="secondary"  sx={{ color: 'red' }} onClick={() => deleteUser(user._id)}>
-                    <Delete />
-                  </IconButton>
+                  <Tooltip title="מחק משתמש">
+                    <IconButton color="secondary" sx={{ color: 'red' }} onClick={() => deleteUser(user._id)}>
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
         <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>
-      <Modal open={editModalOpen} onClose={handleCloseEditModal}>
-        <Box sx={{ ...modalStyle, width: 400 }}>
-          <Typography variant="h6" component="h2" gutterBottom>
+      <Modal
+        open={editModalOpen}
+        onClose={handleCloseEditModal}
+      >
+        <Box sx={modalStyle}>
+          <Typography variant="h6" gutterBottom>
             עריכת משתמש
           </Typography>
           <TextField
@@ -327,7 +333,7 @@ const ManageUsers: React.FC = () => {
           <Button onClick={handleUpdateUser} color="primary" variant="contained" sx={{ mt: 2 }}>
             שמור
           </Button>
-          </Box>
+        </Box>
       </Modal>
     </div>
   );

@@ -26,7 +26,6 @@ const App = () => {
 
     return (
         
-            <div style={{ height: "100vh" }}>
        <div className="App">
         <div className="main-content">
         <Router>
@@ -57,7 +56,6 @@ const App = () => {
         </Router>
         </div>
         <Footer />
-        </div>
         </div>
       
         

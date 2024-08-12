@@ -176,188 +176,181 @@ const UploadProduct: React.FC = () => {
   return (
     <Container className="upload-product-container">
       <h1 className="upload-product-title">תרמו כאן:</h1>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Row>
-          <Col md={6}>
+      <Form onSubmit={handleSubmit(onSubmit)} className="upload-product-form">
+        <div className="form-section">
+          <Form.Group className="mb-3">
+            <Form.Control
+              {...register('itemName')}
+              type="text"
+              placeholder="שם הפריט"
+              isInvalid={!!errors.itemName}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.itemName?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+  
+          <Form.Group className="mb-3">
+            <Form.Control
+              {...register('quantity', { valueAsNumber: true })}
+              type="number"
+              placeholder="כמות"
+              isInvalid={!!errors.quantity || !!amountError}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.quantity?.message || amountError}
+            </Form.Control.Feedback>
+          </Form.Group>
+  
+          <Form.Group className="mb-3">
+            <Form.Select {...register('category')} isInvalid={!!errors.category}>
+              <option value="">בחר קטגוריה</option>
+              <option value="מזון ושתייה">מזון ושתייה</option>
+              <option value="ביגוד והנעלה">ביגוד והנעלה</option>
+              <option value="ריהוט">ריהוט</option>
+              <option value="מכשירי חשמל">מכשירי חשמל</option>
+              <option value="צעצועים">צעצועים</option>
+              <option value="אחר">אחר</option>
+            </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              {errors.category?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+        </div>
+  
+        <div className="form-section">
+          {watch('category') === 'אחר' && (
             <Form.Group className="mb-3">
               <Form.Control
-                {...register('itemName')}
+                {...register('customCategory')}
                 type="text"
-                placeholder="שם הפריט"
-                isInvalid={!!errors.itemName}
+                placeholder="קטגוריה מותאמת אישית"
+                isInvalid={!!errors.customCategory}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.itemName?.message}
+                {errors.customCategory?.message}
               </Form.Control.Feedback>
             </Form.Group>
-          </Col>
-          <Col md={6}>
+          )}
+  
+          <Form.Group className="mb-3">
+            <Form.Control
+              {...register('condition')}
+              type="text"
+              placeholder="מצב הפריט"
+              isInvalid={!!errors.condition}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.condition?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+  
+          {watch('category') === 'מזון ושתייה' && (
             <Form.Group className="mb-3">
               <Form.Control
-                {...register('quantity', { valueAsNumber: true })}
-                type="number"
-                placeholder="כמות"
-                isInvalid={!!errors.quantity || !!amountError}
+                {...register('expirationDate')}
+                type="date"
+                isInvalid={!!errors.expirationDate}
               />
               <Form.Control.Feedback type="invalid">
-                {errors.quantity?.message || amountError}
+                {errors.expirationDate?.message}
               </Form.Control.Feedback>
             </Form.Group>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col md={6}>
+          )}
+        </div>
+  
+        <div className="form-section">
+          <Form.Group className="mb-3">
+            <Form.Control
+              as="textarea"
+              rows={4}
+              {...register('description')}
+              placeholder="תיאור"
+              isInvalid={!!errors.description}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.description?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+  
+          <Form.Group className="mb-3">
+            <Form.Label>אפשרות מסירה</Form.Label>
+            <div>
+              <Form.Check
+                type="radio"
+                id="pickup"
+                label="ממתין לאיסוף"
+                name="deliveryOption"
+                value="ממתין לאיסוף"
+                checked={selectedDeliveryOption === 'ממתין לאיסוף'}
+                onChange={handleDeliveryOptionChange}
+                className="mb-2"
+              />
+              <Form.Check
+                type="radio"
+                id="notDelivered"
+                label="לא נמסר לעמותה"
+                name="deliveryOption"
+                value="לא נמסר לעמותה"
+                checked={selectedDeliveryOption === 'לא נמסר לעמותה'}
+                onChange={handleDeliveryOptionChange}
+              />
+            </div>
+            {showError && <Alert variant="danger" className="mt-2">יש לבחור אפשרות מסירה</Alert>}
+          </Form.Group>
+        </div>
+  
+        <div className="form-section">
+          {showPickupAddress && (
             <Form.Group className="mb-3">
-              <Form.Select {...register('category')} isInvalid={!!errors.category}>
-                <option value="">בחר קטגוריה</option>
-                <option value="מזון ושתייה">מזון ושתייה</option>
-                <option value="ביגוד והנעלה">ביגוד והנעלה</option>
-                <option value="ריהוט">ריהוט</option>
-                <option value="מכשירי חשמל">מכשירי חשמל</option>
-                <option value="צעצועים">צעצועים</option>
-                <option value="אחר">אחר</option>
+              <Form.Control
+                {...register('pickupAddress')}
+                type="text"
+                placeholder="כתובת לאיסוף"
+                isInvalid={!!errors.pickupAddress || showPickUpError}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.pickupAddress?.message || (showPickUpError && 'יש למלא את כתובת האיסוף')}
+              </Form.Control.Feedback>
+            </Form.Group>
+          )}
+  
+          {showBranch && (
+            <Form.Group className="mb-3">
+              <Form.Select
+                {...register('branch')}
+                isInvalid={showBranchError}
+              >
+                <option value="">בחר סניף</option>
+                <option value="סניף 1">סניף 1</option>
+                <option value="סניף 2">סניף 2</option>
+                <option value="סניף 3">סניף 3</option>
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                {errors.category?.message}
-              </Form.Control.Feedback>
+              {showBranchError && <Form.Control.Feedback type="invalid">יש לבחור סניף</Form.Control.Feedback>}
             </Form.Group>
-          </Col>
-          <Col md={6}>
-            {watch('category') === 'אחר' && (
-              <Form.Group className="mb-3">
-                <Form.Control
-                  {...register('customCategory')}
-                  type="text"
-                  placeholder="קטגוריה מותאמת אישית"
-                  isInvalid={!!errors.customCategory}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.customCategory?.message}
-                </Form.Control.Feedback>
-              </Form.Group>
-            )}
-          </Col>
-        </Row>
+          )}
+  
+  <Form.Group className="mb-3">
+    <Button variant="secondary" onClick={selectImg} className="w-100 mb-2">
+      {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
+      <FontAwesomeIcon icon={faImage} className="ms-2" />
+    </Button>
+    <Form.Control
+      ref={fileInputRef}
+      type="file"
+      accept="image/*"
+      onChange={imgSelected}
+      style={{ display: 'none' }}
+    />
+    {imgPreview && <img src={imgPreview} alt="תמונה נבחרת" className="img-preview" />}
+  </Form.Group>
 
-        <Row>
-          <Col md={6}>
-            <Form.Group className="mb-3">
-              <Form.Control
-                {...register('condition')}
-                type="text"
-                placeholder="מצב הפריט"
-                isInvalid={!!errors.condition}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.condition?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            {watch('category') === 'מזון ושתייה' && (
-              <Form.Group className="mb-3">
-                <Form.Control
-                  {...register('expirationDate')}
-                  type="date"
-                  isInvalid={!!errors.expirationDate}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.expirationDate?.message}
-                </Form.Control.Feedback>
-              </Form.Group>
-            )}
-          </Col>
-        </Row>
-
-        <Form.Group className="mb-3">
-          <Form.Control
-            as="textarea"
-            rows={4}
-            {...register('description')}
-            placeholder="תיאור"
-            isInvalid={!!errors.description}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.description?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-        <Form.Label>אפשרות מסירה</Form.Label>
-        <div>
-          <Form.Check
-            type="radio"
-            id="pickup"
-            label="ממתין לאיסוף"
-            name="deliveryOption"
-            value="ממתין לאיסוף"
-            checked={selectedDeliveryOption === 'ממתין לאיסוף'}
-            onChange={handleDeliveryOptionChange}
-            className="mb-2"
-          />
-          <Form.Check
-            type="radio"
-            id="notDelivered"
-            label="לא נמסר לעמותה"
-            name="deliveryOption"
-            value="לא נמסר לעמותה"
-            checked={selectedDeliveryOption === 'לא נמסר לעמותה'}
-            onChange={handleDeliveryOptionChange}
-          />
-        </div>
-        {showError && <Alert variant="danger" className="mt-2">יש לבחור אפשרות מסירה</Alert>}
-      </Form.Group>
-
-      {showPickupAddress && (
-        <Form.Group className="mb-3">
-          <Form.Control
-            {...register('pickupAddress')}
-            type="text"
-            placeholder="כתובת לאיסוף"
-            isInvalid={!!errors.pickupAddress || showPickUpError}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.pickupAddress?.message || (showPickUpError && 'יש למלא את כתובת האיסוף')}
-          </Form.Control.Feedback>
-        </Form.Group>
-      )}
-
-      {showBranch && (
-        <Form.Group className="mb-3">
-          <Form.Select
-            {...register('branch')}
-            isInvalid={showBranchError}
-          >
-            <option value="">בחר סניף</option>
-            <option value="סניף 1">סניף 1</option>
-            <option value="סניף 2">סניף 2</option>
-            <option value="סניף 3">סניף 3</option>
-          </Form.Select>
-          {showBranchError && <Form.Control.Feedback type="invalid">יש לבחור סניף</Form.Control.Feedback>}
-        </Form.Group>
-      )}
-
-        <Form.Group className="mb-3">
-          <Button variant="secondary" onClick={selectImg}>
-            {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
-            <FontAwesomeIcon icon={faImage} className="ms-2" />
-          </Button>
-          <Form.Control
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={imgSelected}
-            style={{ display: 'none' }}
-          />
-          {imgPreview && <img src={imgPreview} alt="תמונה נבחרת" className="img-preview" />}
-        </Form.Group>
-
-        <div className="text-center">
-          <Button type="submit" variant="primary">
-            שלח
-          </Button>
-        </div>
+  <div className="text-center">
+    <Button type="submit" variant="primary" className="w-100">
+      שלח
+    </Button>
+  </div>
+</div>
       </Form>
     </Container>
   );

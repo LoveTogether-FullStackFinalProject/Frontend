@@ -332,8 +332,9 @@ const UploadProduct: React.FC = () => {
   
   <Form.Group className="mb-3">
     <Button variant="secondary" onClick={selectImg} className="w-100 mb-2">
+    <FontAwesomeIcon icon={faImage} className="ms-2" />
       {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
-      <FontAwesomeIcon icon={faImage} className="ms-2" />
+      
     </Button>
     <Form.Control
       ref={fileInputRef}

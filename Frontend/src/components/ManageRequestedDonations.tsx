@@ -1,270 +1,277 @@
 import React, { useState, useEffect } from 'react';
-import './AdminDashboard.css';
 import dataService, { CanceledError } from "../services/data-service";
-import {requestedDonation} from "../services/upload-requested-product-service";
-import { Donation } from './donation';
-import {Delete} from '@mui/icons-material';
-import { IconButton,} from '@mui/material';
+import { requestedDonation } from "../services/upload-requested-product-service";
 import {
   Table,
-  Button,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Snackbar,
+  Alert,
   Modal,
-} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './ManageDonations.css';
-import {
+  Button,
+  TableSortLabel,
   TextField,
   InputAdornment,
-  TableSortLabel
+  Toolbar,
+  IconButton,
+  Box,
+  Tooltip,
 } from '@mui/material';
-import { Search } from '@mui/icons-material';
-type Order = 'asc' | 'desc';
+import { Search, Delete } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import './ManageRequestedDonations.css';
 
-const ManageRequestedDonations = () => {
-  const [requests, setRequests] = useState<requestedDonation[]>([])
+type Order = 'asc' | 'desc';
+
+const ManageRequestedDonations: React.FC = () => {
+  const [requests, setRequests] = useState<requestedDonation[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Donation>('category');
+  const [orderBy, setOrderBy] = useState<keyof requestedDonation>('itemName');
   const [filter, setFilter] = useState<string>('');
   const [currentDonation, setCurrentDonation] = useState<requestedDonation | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getRequestedProducts();
     req.then((res) => {
-        setRequests(res.data);
+      setRequests(res.data);
     }).catch((err) => {
-        console.log(err);
-        if (err instanceof CanceledError) return;
+      if (err instanceof CanceledError) return;
+      setError(err.message);
     });
 
     return () => {
-        abort();
+      abort();
     };
-    }, [requests]);
+  }, []);
 
-    const handleRequestSort = (property: keyof Donation) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
-        setOrderBy(property);
-      };
-    
-      const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFilter(event.target.value);
-      };
-    
-      const applySortAndFilter = (data: requestedDonation[]) => {
-        return data
-          .filter(donation => 
-            donation.category.toLowerCase().includes(filter.toLowerCase()) ||
-            donation.description.toLowerCase().includes(filter.toLowerCase()) ||
-            donation.amount.toString().includes(filter.toLowerCase()) ||
-            donation.itemName.toLowerCase().includes(filter.toLowerCase()) ||
-             donation.itemCondition.toLowerCase().includes(filter.toLowerCase()) 
-          )
-          .sort((a, b) => {
-            return (order === 'asc' ? 1 : -1) * (a[orderBy] > b[orderBy] ? 1 : -1);
-          });
-      };
-    
-      const sortedAndFilteredDonations = applySortAndFilter(requests);
+  const handleRequestSort = (property: keyof requestedDonation) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
-      const handleUpdatePlus = (donationId: string, amount: number) => {
-        dataService.updateRequestedDonation(donationId, { amount: amount+1 });
-        console.log(`updating donation with ID: ${donationId}`);
-      };
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
 
-      const handleUpdateMinus = (donationId: string, amount: number) => {
-        dataService.updateRequestedDonation(donationId, { amount: amount-1 });
-        console.log(`updating donation with ID: ${donationId}`);
-      };
+  const applySortAndFilter = (data: requestedDonation[]) => {
+    return data
+      .filter(donation =>
+        donation.category.toLowerCase().includes(filter.toLowerCase()) ||
+        donation.itemName.toLowerCase().includes(filter.toLowerCase()) ||
+        donation.itemCondition.toLowerCase().includes(filter.toLowerCase()) ||
+        donation.description.toLowerCase().includes(filter.toLowerCase()) ||
+        donation.amount.toString().includes(filter.toLowerCase())
+      )
+      .sort((a, b) => {
+        const valueA = a[orderBy] || '';
+        const valueB = b[orderBy] || '';
+        return (order === 'asc' ? 1 : -1) * (valueA > valueB ? 1 : -1);
+      });
+  };
 
-      const handleDelete = (donationId: string) => {
-        dataService.deleteRequestedDonation(donationId);
-        console.log(`Deleting donation with ID: ${donationId}`);
-      };
+  const sortedAndFilteredDonations = applySortAndFilter(requests);
 
-      const [isAdmin, setIsAdmin] = useState(false);
-     useEffect(() => {
-       const userId = localStorage.getItem('userID');
-       if (userId) {
-         dataService.getUser(userId).req.then((res) => {
-           setIsAdmin(res.data.isAdmin);
-           console.log("isAdmin:", res.data.isAdmin);
-         });
-       }
-     }, []);
+  const handleDelete = (donationId: string) => {
+    dataService.deleteRequestedDonation(donationId)
+      .then(() => {
+        setRequests(prevRequests => prevRequests.filter(request => request._id !== donationId));
+        setSnackbarMessage('התרומה נמחקה בהצלחה!');
+        setSnackbarOpen(true);
+      })
+      .catch(err => {
+        console.error(err);
+        setSnackbarMessage('מחיקת התרומה נכשלה.');
+        setSnackbarOpen(true);
+      });
+  };
 
-
-     if (!isAdmin) {
-      return (
-          <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
-          <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
-        </div>
-      );
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+      });
     }
-     
-      return (
-        <div className="container mt-4">
-          <h2 style={{ marginTop: '80px' }}>ניהול תרומות שהעמותה מבקשת</h2>
-          <TextField
-            label="חפש תרומה"
-            placeholder="חפש תרומה לפי קטגוריה, שם מוצר, מצב, תיאור, כמות"
-            variant="outlined"
-            style={{ width: '60%' }} 
-            margin="normal"
-            value={filter}
-            onChange={handleFilterChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-          
-          {error && <p className="text-danger">{error}</p>}
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>
-                  <TableSortLabel
-                    active={orderBy === 'category'}
-                    direction={orderBy === 'category' ? order : 'asc'}
-                    onClick={() => handleRequestSort('category')}
-                  >
-                    קטגוריה
-                  </TableSortLabel>
-                </th>
-                <th>
-                  <TableSortLabel
-                    active={orderBy === 'itemName'}
-                    direction={orderBy === 'itemName' ? order : 'asc'}
-                    onClick={() => handleRequestSort('itemName')}
-                  >
-                    שם המוצר
-                  </TableSortLabel>
-                </th>
-                <th>
-                  <TableSortLabel
-                    active={orderBy === 'itemCondition'}
-                    direction={orderBy === 'itemCondition' ? order : 'asc'}
-                    onClick={() => handleRequestSort('itemCondition')}
-                  >
-                    מצב המוצר
-                  </TableSortLabel>
-                </th>
-                
-                <th>
-                  <TableSortLabel
-                    active={orderBy === 'description'}
-                    direction={orderBy === 'description' ? order : 'asc'}
-                    onClick={() => handleRequestSort('description')}
-                  >
-                    תיאור
-                  </TableSortLabel>
-                </th>
-                <th>
-                  <TableSortLabel
-                    active={orderBy === 'category'}
-                    direction={orderBy === 'category' ? order : 'asc'}
-                    onClick={() => handleRequestSort('category')}
-                  >
-                    כמות
-                  </TableSortLabel>
-                </th>
-                <th>מחיקת פריט מהעמוד הראשי</th>
-                <th>פרטי התרומות</th>
-                <th>פעולות </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedAndFilteredDonations.map((donation) => (
-                <tr key={donation._id}>
-                  <td>{donation.category}</td>
-                  <td>{donation.itemName}</td>
-                  <td>{donation.itemCondition}</td>
-                  <td>{donation.description}</td>
-                  <td>
-                  {donation.amount}
-                  </td>
-                  <td>
-                  <IconButton color="secondary"  sx={{ color: 'red' }} onClick={() =>handleDelete(donation._id!)}>
-                    <Delete />
-                  </IconButton>
-              {/* <Button variant="danger" onClick={() => handleDelete(donation._id!)}>
-                מחיקה
-              </Button> */}
-            </td>
-            <td>
-                <Button
-                  variant="info"
-                  className="ms-2"
-                  onClick={() => {
-                    setCurrentDonation(donation);
-                    setShowModal(true);
-                  }}
-                >
-                    פרטי התרומה
-                </Button>
-              </td>
-              <td>
-                <Button
-                  variant="info"
-                  className="ms-2"
-                  onClick={() => {
-                    navigate('/editRequestedProduct', { state: { donation } });
-                  }}
-                >
-                    עריכת פרטי התרומה
-                </Button>
-              </td>
-          
-                </tr>
-              ))}
-            </tbody>
-          </Table> 
+  }, []);
 
-          <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>פרטי תרומה</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+  if (!isAdmin) {
+    return (
+      <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px', padding: '20px', border: '1px solid black' }}>
+        <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
+        <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="manage-donations-page">
+      <Typography variant="h4" align="center" gutterBottom>
+        ניהול תרומות שהעמותה מבקשת
+      </Typography>
+      <Toolbar>
+        <TextField
+          label="חפש תרומה"
+          placeholder="חפש תרומה לפי קטגוריה, שם מוצר, מצב, תיאור, כמות"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={filter}
+          onChange={handleFilterChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Toolbar>
+      {error && <Typography color="error" align="center">{error}</Typography>}
+      <TableContainer component={Paper} className="table-container">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'category'}
+                  direction={orderBy === 'category' ? order : 'asc'}
+                  onClick={() => handleRequestSort('category')}
+                >
+                  קטגוריה
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'itemName'}
+                  direction={orderBy === 'itemName' ? order : 'asc'}
+                  onClick={() => handleRequestSort('itemName')}
+                >
+                  שם המוצר
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'itemCondition'}
+                  direction={orderBy === 'itemCondition' ? order : 'asc'}
+                  onClick={() => handleRequestSort('itemCondition')}
+                >
+                  מצב המוצר
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'description'}
+                  direction={orderBy === 'description' ? order : 'asc'}
+                  onClick={() => handleRequestSort('description')}
+                >
+                  תיאור
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'amount'}
+                  direction={orderBy === 'amount' ? order : 'asc'}
+                  onClick={() => handleRequestSort('amount')}
+                >
+                  כמות
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>פרטי התרומות</TableCell>
+              <TableCell>פעולות</TableCell>
+              <TableCell>מחיקת פריט מהעמוד הראשי</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sortedAndFilteredDonations.map((donation) => (
+              <TableRow key={donation._id}>
+                <TableCell>{donation.category}</TableCell>
+                <TableCell>{donation.itemName}</TableCell>
+                <TableCell>{donation.itemCondition}</TableCell>
+                <TableCell>{donation.description}</TableCell>
+                <TableCell>{donation.amount}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setCurrentDonation(donation);
+                      setShowModal(true);
+                    }}
+                  >
+                    פרטי התרומה
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    onClick={() => navigate('/editRequestedProduct', { state: { donation } })}
+                  >
+                    עריכת פרטי התרומה
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Tooltip title="מחק תרומה">
+                    <IconButton color="secondary" onClick={() => handleDelete(donation._id)}>
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
+      <Modal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      >
+        <Box className="modal-box">
+          <Typography variant="h6" component="h2" gutterBottom>
+            פרטי תרומה
+          </Typography>
           {currentDonation && (
             <div>
-              <p><strong>קטגוריה:</strong> {currentDonation.category}</p>
-              <p><strong>שם המוצר:</strong> {currentDonation.itemName}</p>
-              <p><strong>תיאור:</strong> {currentDonation.description}</p>
-              <p><strong>מצב:</strong> {currentDonation.itemCondition}</p>
-              <p><strong>כמות:</strong> {currentDonation.amount}</p>
+              <Typography variant="body1"><strong>קטגוריה:</strong> {currentDonation.category}</Typography>
+              <Typography variant="body1"><strong>שם המוצר:</strong> {currentDonation.itemName}</Typography>
+              <Typography variant="body1"><strong>תיאור:</strong> {currentDonation.description}</Typography>
+              <Typography variant="body1"><strong>מצב:</strong> {currentDonation.itemCondition}</Typography>
+              <Typography variant="body1"><strong>כמות:</strong> {currentDonation.amount}</Typography>
               {currentDonation.image && (
-                <div>
-                  <p><strong>תמונה:</strong></p>
+                <div style={{ textAlign: 'center' }}>
                   <img src={currentDonation.image} alt="Donation" className="img-fluid" />
                 </div>
               )}
             </div>
           )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button onClick={() => setShowModal(false)} variant="contained" color="primary" sx={{ mt: 2 }}>
             סגור
           </Button>
-        </Modal.Footer>
+        </Box>
       </Modal>
-
-      </div>
-
-
-      
-      );
+    </div>
+  );
 };
-
 
 export default ManageRequestedDonations;

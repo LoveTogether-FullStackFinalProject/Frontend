@@ -1,13 +1,40 @@
-import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useLocation } from 'react-router-dom';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import RadioGroup from '@mui/material/RadioGroup';
+import Radio from '@mui/material/Radio';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
-import './UploadProduct.css';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
+import MenuItem from '@mui/material/MenuItem';
+import Alert from '@mui/material/Alert';
+
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://your-website.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const defaultTheme = createTheme();
 
 const schema = z.object({
   itemName: z.string().min(2, 'שם הפריט חייב להכיל לפחות 2 תווים'),
@@ -26,29 +53,25 @@ const schema = z.object({
   pickupAddress: z.string().optional(),
   branch: z.string().optional(),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
+  deliveryOption: z.string().min(1, 'יש לבחור אפשרות מסירה'),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const UploadProduct: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [imgPreview, setImgPreview] = useState<string | null>(null);
-  const [status, setStatus] = useState('');
-  const [showPickupAddress, setShowPickupAddress] = useState(false);
-  const [showBranch, setShowBranch] = useState(false);
-  const [amountError, setamountError] = useState('');
-  const [selectedDeliveryOption, setSelectedDeliveryOption] = useState('');
-  const [showError, setShowError] = useState(false);
-  const [showPickUpError, setPickUpShowError] = useState(false);
-  const [showBranchError, setBranchShowError] = useState(false);
+export default function UploadProduct() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
+  const [imgPreview, setImgPreview] = React.useState<string | null>(null);
+  const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const productName = queryParams.get('productName') || '';
   const category = queryParams.get('category') || '';
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     watch,
     setValue,
@@ -56,11 +79,13 @@ const UploadProduct: React.FC = () => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    defaultValues: {
+      itemName: productName,
+      category: category,
+    },
   });
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
+  React.useEffect(() => {
     const checkLoginStatus = () => {
       const accessToken = localStorage.getItem('accessToken');
       setIsLoggedIn(!!accessToken);
@@ -74,18 +99,12 @@ const UploadProduct: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setValue('itemName', productName);
-    setValue('category', category);
-    console.log('productName:', productName);
-    console.log('category:', category);
-  }, [productName, category, setValue]);
-
   const selectedCategory = watch('category');
+  const selectedDeliveryOption = watch('deliveryOption');
 
-  const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
       setValue('image', file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -95,35 +114,7 @@ const UploadProduct: React.FC = () => {
     }
   };
 
-  const selectImg = () => {
-    fileInputRef.current?.click();
-  };
-
   const onSubmit = async (data: FormData) => {
-    if (!status) {
-      setShowError(true);
-      return;
-    }
-    if (showPickupAddress && data.pickupAddress === "") {
-      setPickUpShowError(true);
-      return;
-    }
-    if (showBranch && data.branch === "") {
-      setBranchShowError(true);
-      return;
-    }
-    if (data.quantity < 1) {
-      setamountError('כמות חייבת להיות גדולה מ-0');
-      return;
-    } else {
-      setamountError('');
-    }
-
-    if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
-      trigger('expirationDate');
-      return;
-    }
-
     try {
       let imageUrl = '';
       if (data.image) {
@@ -139,7 +130,7 @@ const UploadProduct: React.FC = () => {
         image: imageUrl,
         donor: userId,
         approvedByAdmin: false,
-        status,
+        status: data.deliveryOption,
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
       await uploadProduct(productData);
@@ -150,211 +141,202 @@ const UploadProduct: React.FC = () => {
     }
   };
 
-  const handleDeliveryOptionChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    if (showError) setShowError(false);
-
-    setSelectedDeliveryOption(value);
-    if (value === 'ממתין לאיסוף') {
-      setShowPickupAddress(true);
-      setShowBranch(false);
-      setStatus('ממתין לאיסוף');
-      setValue('pickupAddress', '');
-    } else {
-      setShowPickupAddress(false);
-      setShowBranch(true);
-      setStatus('לא נמסר לעמותה');
-      setValue('pickupAddress', 'default');
-    }
-  };
-
   if (!isLoggedIn) {
     navigate('/login');
+    return null;
   }
 
   return (
-    <Container className="upload-product-container">
-      <h1 className="upload-product-title">תרמו כאן:</h1>
-      <Form onSubmit={handleSubmit(onSubmit)} className="upload-product-form">
-        <div className="form-section">
-          <Form.Group className="mb-3">
-            <Form.Control
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <CloudUploadIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            תרמו כאן
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="itemName"
+              label="שם הפריט"
+              autoFocus
               {...register('itemName')}
-              type="text"
-              placeholder="שם הפריט"
-              isInvalid={!!errors.itemName}
+              error={!!errors.itemName}
+              helperText={errors.itemName?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.itemName?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-  
-          <Form.Group className="mb-3">
-            <Form.Control
-              {...register('quantity', { valueAsNumber: true })}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="quantity"
+              label="כמות"
               type="number"
-              placeholder="כמות"
-              isInvalid={!!errors.quantity || !!amountError}
+              {...register('quantity', { valueAsNumber: true })}
+              error={!!errors.quantity}
+              helperText={errors.quantity?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.quantity?.message || amountError}
-            </Form.Control.Feedback>
-          </Form.Group>
-  
-          <Form.Group className="mb-3">
-            <Form.Select {...register('category')} isInvalid={!!errors.category}>
-              <option value="">בחר קטגוריה</option>
-              <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="ביגוד והנעלה">ביגוד והנעלה</option>
-              <option value="ריהוט">ריהוט</option>
-              <option value="מכשירי חשמל">מכשירי חשמל</option>
-              <option value="צעצועים">צעצועים</option>
-              <option value="אחר">אחר</option>
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              {errors.category?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-  
-        <div className="form-section">
-          {watch('category') === 'אחר' && (
-            <Form.Group className="mb-3">
-              <Form.Control
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  fullWidth
+                  label="קטגוריה"
+                  error={!!errors.category}
+                  helperText={errors.category?.message}
+                  {...field}
+                >
+                  <MenuItem value="">בחר קטגוריה</MenuItem>
+                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
+                  <MenuItem value="ביגוד והנעלה">ביגוד והנעלה</MenuItem>
+                  <MenuItem value="ריהוט">ריהוט</MenuItem>
+                  <MenuItem value="מכשירי חשמל">מכשירי חשמל</MenuItem>
+                  <MenuItem value="צעצועים">צעצועים</MenuItem>
+                  <MenuItem value="אחר">אחר</MenuItem>
+                </TextField>
+              )}
+            />
+            {selectedCategory === 'אחר' && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="customCategory"
+                label="קטגוריה מותאמת אישית"
                 {...register('customCategory')}
-                type="text"
-                placeholder="קטגוריה מותאמת אישית"
-                isInvalid={!!errors.customCategory}
+                error={!!errors.customCategory}
+                helperText={errors.customCategory?.message}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.customCategory?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          )}
-  
-          <Form.Group className="mb-3">
-            <Form.Control
+            )}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="condition"
+              label="מצב הפריט"
               {...register('condition')}
-              type="text"
-              placeholder="מצב הפריט"
-              isInvalid={!!errors.condition}
+              error={!!errors.condition}
+              helperText={errors.condition?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.condition?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-  
-          {watch('category') === 'מזון ושתייה' && (
-            <Form.Group className="mb-3">
-              <Form.Control
-                {...register('expirationDate')}
+            {selectedCategory === 'מזון ושתייה' && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="expirationDate"
+                label="תאריך תפוגה"
                 type="date"
-                isInvalid={!!errors.expirationDate}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                {...register('expirationDate')}
+                error={!!errors.expirationDate}
+                helperText={errors.expirationDate?.message}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.expirationDate?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          )}
-        </div>
-  
-        <div className="form-section">
-          <Form.Group className="mb-3">
-            <Form.Control
-              as="textarea"
+            )}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="description"
+              label="תיאור"
+              multiline
               rows={4}
               {...register('description')}
-              placeholder="תיאור"
-              isInvalid={!!errors.description}
+              error={!!errors.description}
+              helperText={errors.description?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.description?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-  
-          <Form.Group className="mb-3">
-            <Form.Label>אפשרות מסירה</Form.Label>
-            <div>
-              <Form.Check
-                type="radio"
-                id="pickup"
-                label="ממתין לאיסוף"
-                name="deliveryOption"
-                value="ממתין לאיסוף"
-                checked={selectedDeliveryOption === 'ממתין לאיסוף'}
-                onChange={handleDeliveryOptionChange}
-                className="mb-2"
-              />
-              <Form.Check
-                type="radio"
-                id="notDelivered"
-                label="לא נמסר לעמותה"
-                name="deliveryOption"
-                value="לא נמסר לעמותה"
-                checked={selectedDeliveryOption === 'לא נמסר לעמותה'}
-                onChange={handleDeliveryOptionChange}
-              />
-            </div>
-            {showError && <Alert variant="danger" className="mt-2">יש לבחור אפשרות מסירה</Alert>}
-          </Form.Group>
-        </div>
-  
-        <div className="form-section">
-          {showPickupAddress && (
-            <Form.Group className="mb-3">
-              <Form.Control
+            <Typography component="legend">אפשרות מסירה</Typography>
+            <Controller
+              name="deliveryOption"
+              control={control}
+              render={({ field }) => (
+                <RadioGroup {...field}>
+                  <FormControlLabel value="ממתין לאיסוף" control={<Radio />} label="ממתין לאיסוף" />
+                  <FormControlLabel value="לא נמסר לעמותה" control={<Radio />} label="לא נמסר לעמותה" />
+                </RadioGroup>
+              )}
+            />
+            {errors.deliveryOption && (
+              <Alert severity="error">{errors.deliveryOption.message}</Alert>
+            )}
+            {selectedDeliveryOption === 'ממתין לאיסוף' && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="pickupAddress"
+                label="כתובת לאיסוף"
                 {...register('pickupAddress')}
-                type="text"
-                placeholder="כתובת לאיסוף"
-                isInvalid={!!errors.pickupAddress || showPickUpError}
+                error={!!errors.pickupAddress}
+                helperText={errors.pickupAddress?.message}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.pickupAddress?.message || (showPickUpError && 'יש למלא את כתובת האיסוף')}
-              </Form.Control.Feedback>
-            </Form.Group>
-          )}
-  
-          {showBranch && (
-            <Form.Group className="mb-3">
-              <Form.Select
-                {...register('branch')}
-                isInvalid={showBranchError}
-              >
-                <option value="">בחר סניף</option>
-                <option value="סניף 1">סניף 1</option>
-                <option value="סניף 2">סניף 2</option>
-                <option value="סניף 3">סניף 3</option>
-              </Form.Select>
-              {showBranchError && <Form.Control.Feedback type="invalid">יש לבחור סניף</Form.Control.Feedback>}
-            </Form.Group>
-          )}
-  
-  <Form.Group className="mb-3">
-    <Button variant="secondary" onClick={selectImg} className="w-100 mb-2">
-    <FontAwesomeIcon icon={faImage} className="ms-2" />
-      {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
-      
-    </Button>
-    <Form.Control
-      ref={fileInputRef}
-      type="file"
-      accept="image/*"
-      onChange={imgSelected}
-      style={{ display: 'none' }}
-    />
-    {imgPreview && <img src={imgPreview} alt="תמונה נבחרת" className="img-preview" />}
-  </Form.Group>
-
-  <div className="text-center">
-    <Button type="submit" variant="primary" className="w-100">
-      שלח
-    </Button>
-  </div>
-</div>
-      </Form>
-    </Container>
+            )}
+            {selectedDeliveryOption === 'לא נמסר לעמותה' && (
+              <Controller
+                name="branch"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    fullWidth
+                    label="בחר סניף"
+                    error={!!errors.branch}
+                    helperText={errors.branch?.message}
+                    {...field}
+                  >
+                    <MenuItem value="">בחר סניף</MenuItem>
+                    <MenuItem value="סניף 1">סניף 1</MenuItem>
+                    <MenuItem value="סניף 2">סניף 2</MenuItem>
+                    <MenuItem value="סניף 3">סניף 3</MenuItem>
+                  </TextField>
+                )}
+              />
+            )}
+            <Button
+              variant="contained"
+              component="label"
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+            >
+              העלאת תמונה
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </Button>
+            {imgPreview && (
+              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+              </Box>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              שלח
+            </Button>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default UploadProduct;
+}

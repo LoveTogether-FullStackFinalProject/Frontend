@@ -100,3 +100,12 @@
  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
     direction: rtl;
  }
+
+ .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: 'Assistant', sans-serif;
+    font-weight: bold;
+  }

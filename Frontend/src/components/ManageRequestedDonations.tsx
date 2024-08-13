@@ -226,7 +226,14 @@ const ManageRequestedDonations: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Tooltip title="מחק תרומה">
-                    <IconButton color="secondary" onClick={() => handleDelete(donation._id)}>
+                  <IconButton
+                  color="secondary"
+                  onClick={() => {
+                  if (donation._id) { 
+                  handleDelete(donation._id);
+                  }
+                  }}
+                    >
                       <Delete />
                     </IconButton>
                   </Tooltip>

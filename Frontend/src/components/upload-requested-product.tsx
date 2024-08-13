@@ -357,9 +357,14 @@ function UploadRequestedProduct() {
       return;
     }
 
+    // if(category === "אחר"){
+    //   data.category = data.customCategory || '';
+    // }
+
     const url = await requestedProduectService.uploadPhoto(imgSrc!);
     const product = {
       ...data,
+      //customCategory: data.customCategory,
       image: url
     };
     const res = await requestedProduectService.addRequestedProduct(product);

@@ -102,7 +102,13 @@ body, html {
   margin-top: 50px; 
 }
 
+.donate-Button{
+  background-color: #ffffff;
+  margin-top: 50px;
+}
+
 .donateButton {
+  background-color: #ffffff;
   width: auto;
   padding: 15px 30px; 
   display: inline-flex;
@@ -151,21 +157,6 @@ body, html {
   margin-top: 50px; 
 }
 
-.donateButton {
-  width: auto;
-  padding: 15px 30px; 
-  display: inline-flex;
-  align-items: right;
-  border-radius: 15px;
-  color: #000000; 
-  font-weight: bold;
-  margin-top: 80px;
-  float: right;
-  text-align: center; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
-  cursor: pointer; 
-  transition: transform 0.3s, box-shadow 0.3s; 
-}
 
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 1024px) {

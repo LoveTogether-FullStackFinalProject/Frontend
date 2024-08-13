@@ -12,6 +12,7 @@ export interface requestedDonation{
     expirationDate?: string;
     description: string;
     image?: string;
+    customCategory?: string;
   }
 
 

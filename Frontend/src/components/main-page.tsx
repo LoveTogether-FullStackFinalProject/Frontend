@@ -110,7 +110,7 @@ function MainPage() {
                     <div className='image-background-container'></div>
                     <div className="centerText-brownText">
                         <h2 style={{fontFamily:"'Assistant', sans-serif" , fontWeight:"500"}}>כמה קל לתרום היום</h2>
-                        <button onClick={handleButtonClick} className="donateButton">
+                        <button style={{backgroundColor:"white"}} onClick={handleButtonClick} className="donateButton" >
                             לתרומה
                             <i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>
                         </button>

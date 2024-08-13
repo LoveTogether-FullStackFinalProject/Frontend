@@ -32,7 +32,7 @@
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .navLink {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start; /* Align links to the left */
   }
   

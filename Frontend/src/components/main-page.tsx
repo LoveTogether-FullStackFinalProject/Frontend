@@ -4,28 +4,71 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Carousel, Row, Col } from 'react-bootstrap';
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Avatar,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+} from '@mui/material';
+import { ChevronLeft } from '@mui/icons-material';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import './main-page.css';
 import whitelogo from '../assets/whiteLogo.png';
+import VisibilitySensor from 'react-visibility-sensor';
+import CountUp from 'react-countup';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
+import KitchenIcon from '@mui/icons-material/Kitchen';
+import WeekendIcon from '@mui/icons-material/Weekend';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import ToysIcon from '@mui/icons-material/Toys';
+import CategoryIcon from '@mui/icons-material/Category';
 
 function MainPage() {
     const navigate = useNavigate();
     const [products, setProducts] = useState<Donation[]>([]);
     const [users, setUsers] = useState<DonorData[]>([]);
     const [requests, setRequests] = useState<requestedDonation[]>([]);
-    //const [ setError] = useState<string | null>(null);
+    const [counts, setCounts] = useState({
+        food: 0,
+        clothing: 0,
+        furniture: 0,
+        footwear: 0,
+        babyGear: 0,
+        houseware: 0,
+        books: 0,
+        toys: 0,
+        other: 0
+    });
 
     useEffect(() => {
         const { req, abort } = dataService.getDonations();
         req.then((res) => {
             setProducts(res.data);
+            const categoryCounts = {
+                food: res.data.filter(product => product.category === 'מזון ושתייה').length,
+                clothing: res.data.filter(product => product.category === 'ביגוד').length,
+                furniture: res.data.filter(product => product.category === 'ריהוט').length,
+                footwear: res.data.filter(product => product.category === 'הנעלה').length,
+                babyGear: res.data.filter(product => product.category === 'ציוד לתינוקות').length,
+                houseware: res.data.filter(product => product.category === 'כלי בית').length,
+                books: res.data.filter(product => product.category === 'ספרים').length,
+                toys: res.data.filter(product => product.category === 'צעצועים').length,
+                other: res.data.filter(product => product.category === 'אחר').length,
+            };
+            setCounts(categoryCounts);
         }).catch((err) => {
             console.log(err);
             if (err instanceof CanceledError) return;
-            //setError(err.message);
         });
 
         return () => {
@@ -40,7 +83,6 @@ function MainPage() {
         }).catch((err) => {
             console.log(err);
             if (err instanceof CanceledError) return;
-            //setError(err.message);
         });
 
         return () => {
@@ -55,7 +97,6 @@ function MainPage() {
         }).catch((err) => {
             console.log(err);
             if (err instanceof CanceledError) return;
-            //setError(err.message);
         });
 
         return () => {
@@ -63,15 +104,14 @@ function MainPage() {
         };
     }, []);
 
-
     const handleProductClick = (productName: string, category: string) => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-          navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}`);
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}`);
         } else {
-          navigate('/login');
-      }
-  };
+            navigate('/login');
+        }
+    };
 
     const handleButtonClick = () => {
         const accessToken = localStorage.getItem('accessToken');
@@ -82,127 +122,187 @@ function MainPage() {
         }
     };
 
-    const countProducts = (category: string) => {
-        return products.filter(product => product.category === category).length;
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        nextArrow: <ChevronLeft />,
+        prevArrow: <ChevronLeft />,
+        centerMode: true,
+        centerPadding: '0px',
     };
-
-    const chunkArray = <T,>(array: T[], chunkSize: number): T[][] => {
-        const chunks: T[][] = [];
-        for (let i = 0; i < array.length; i += chunkSize) {
-            chunks.push(array.slice(i, i + chunkSize));
-        }
-        return chunks;
-    };
-
-    const categories = ['מזון ושתייה', 'ביגוד', 'אלקטרוניקה'];
-
-    const chunkedProducts = categories.map(category =>
-        chunkArray(products.filter(product => product.category === category), 3)
-    ).flat();
-
-    const chunkedRequests = chunkArray(requests, 3);
-    const donorChunks = chunkArray(users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished), 2);
 
     return (
-        <>
-            <div className='body'>
-                <div className='body_backgroud'>
-                    <div className='image-background-container'></div>
-                    <div className="centerText-brownText">
-                        <h2 style={{fontFamily:"'Assistant', sans-serif" , fontWeight:"500"}}>כמה קל לתרום היום</h2>
-                        <button onClick={handleButtonClick} className="donateButton">
-                            לתרומה
-                            <i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>
-                        </button>
-                    </div>
-                    <div>
-                        <img src={whitelogo} alt="whitelogo" className='whiteLogo' />
-                    </div>
-                </div>
-
-                
-                    
-                    <Carousel className='carousel'
-                        nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>}
-                        prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
+        <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: 4 }}>
+            <Container maxWidth="lg">
+                <Box sx={{ textAlign: 'center', mb: 6 }}>
+                    <img src={whitelogo} alt="Logo" style={{ maxWidth: '200px', margin: '0 auto' }} />
+                    <Typography variant="h3" sx={{ fontWeight: 'bold', mt: 4 }}>
+                        כמה קל לתרום היום
+                    </Typography>
+                    <Button
+                        onClick={handleButtonClick}
+                        variant="contained"
+                        sx={{
+                            mt: 3,
+                            backgroundColor: '#f9db78',
+                            color: '#000',
+                            fontWeight: 'bold',
+                            px: 4,
+                            py: 2,
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+                            '&:hover': {
+                                backgroundColor: '#f9db78',
+                                boxShadow: '0 6px 15px rgba(0, 0, 0, 0.5)',
+                            },
+                        }}
                     >
-                        {chunkedRequests.map((chunk, chunkIndex) => (
-                            <Carousel.Item key={chunkIndex}>
-                                <Row style={{backgroundColor:"#ffffff"}}>
-                                <h2 className="headerText">מוצרים שאנחנו צריכים</h2>
-                                    {chunk.map((request, index) => (
-                                        <Col key={index} className="categorySection" onClick={() => handleProductClick(request.itemName, request.category)}>
-                                            <p className="centerText">
-                                                {`${request.itemName}: ${request.amount}`}
-                                            </p>
-                                            <img src={request.image} alt="Product" className="productImage" />
-                                        </Col>
-                                    ))}
-                                </Row>
-                            </Carousel.Item>
+                        לתרומה <ChevronLeft />
+                    </Button>
+                </Box>
+
+                <Box sx={{ mb: 8 }}>
+                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 4 }}>
+                        מוצרים שאנחנו צריכים
+                    </Typography>
+                    <Slider {...settings}>
+                        {requests.map((request, index) => (
+                            <Box key={index} sx={{ p: 2 }}>
+                                <Card sx={{ height: '300px', width: '300px', borderRadius: '50%', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => handleProductClick(request.itemName, request.category)}>
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image={request.image || person} // Default image if none provided
+                                        alt={request.itemName}
+                                        sx={{ objectFit: 'contain', borderRadius: '50%', width: '140px', height: '140px' }} // Ensures uniformity
+                                    />
+                                    <CardContent>
+                                        <Typography variant="h6">{request.itemName}</Typography>
+                                        <Typography variant="body2">{request.amount} :כמות מבוקשת</Typography>
+                                    </CardContent>
+                                </Card>
+                            </Box>
                         ))}
-                    </Carousel>
-             
+                    </Slider>
+                </Box>
 
-                <div className="flexSpaceBetween">
-                    <div className="squareContainer flexCenterColumn">
-                        <h2 style={{ fontSize: '1.5em', textAlign: 'center', marginTop: '10px' }}>
-                            עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!<br />
-                            הצלחנו לגייס {countProducts('מזון ושתייה')} פרטי מזון ושתייה,<br />
-                            {countProducts('ביגוד')} ביגוד, ו- {countProducts('אלקטרוניקה')} מוצרי אלקטרוניקה
-                        </h2>
-                        <Carousel
-                            style={{ marginTop: '30px' }}
-                            nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>}
-                            prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
-                        >
-                            {chunkedProducts.map((chunk, chunkIndex) => (
-                                <Carousel.Item key={chunkIndex}>
-                                    <Row>
-                                        {chunk.map((product, index) => (
-                                            <Col key={index} className="categorySection">
-                                                <p className="centerText">
-                                                    {`${product.itemName}`}
-                                                </p>
-                                                <img
-                                                    src={product.image}
-                                                    alt={`Product ${index + 1}`}
-                                                    className="productImage"
-                                                />
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </Carousel.Item>
-                            ))}
-                        </Carousel>
-                    </div>
+                <Box sx={{ mb: 8 }}>
+                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 4 }}>
+                        תורמים מובילים
+                    </Typography>
+                    <Slider {...settings}>
+                        {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
+                            <Box key={index} sx={{ p: 2 }}>
+                                <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                    <Avatar
+                                        src={user.image || person}
+                                        alt={`${user.firstName} ${user.lastName}`}
+                                        sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                                    />
+                                    <CardContent>
+                                        <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                                        <Typography variant="body2">תורם מוביל</Typography>
+                                    </CardContent>
+                                </Card>
+                            </Box>
+                        ))}
+                    </Slider>
+                </Box>
 
-                    <div className="squareContainer flexCenterColumn">
-                        <div className="donorHeader">
-                            <h1 className="donorSection">תורמים מובילים</h1>
-                            <h2 className="donorInfo">התורמים שתרמו הכי הרבה בשנה האחרונה וסייעו להכי הרבה משפחות נזקקות:</h2>
-                        </div>
-                        <Carousel
-                            nextIcon={<span aria-hidden="true" className="carouselControlNextIcon">&lt;</span>}
-                            prevIcon={<span aria-hidden="true" className="carouselControlPrevIcon">&gt;</span>}
-                        >
-                            {donorChunks.map((chunk, index) => (
-                                <Carousel.Item key={index}>
-                                    <Row className="donorDisplay">
-                                        {chunk.map((user, userIndex) => (
-                                            <Col key={userIndex} className="donorItem" xs={12} sm={4} md={4}>
-                                                <img src={user.image || person} alt={`${user.firstName} ${user.lastName}`} className="donorImage" />
-                                                <p className="donorName">{user.firstName} {user.lastName}</p>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </Carousel.Item>
-                            ))}
-                        </Carousel>
-                    </div>
-                </div>
-            </div>
-        </>
+                <Box sx={{ textAlign: 'center', mb: 8 }}>
+                    <Typography variant="h5">
+                        עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!
+                    </Typography>
+                    <Grid container spacing={4} justifyContent="center" sx={{ mt: 4 }}>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <FastfoodIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">מזון ושתייה</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.food} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <CheckroomIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">ביגוד</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.clothing} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <WeekendIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">ריהוט</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.furniture} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <EmojiPeopleIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">הנעלה</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.footwear} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <ChildFriendlyIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">ציוד לתינוקות</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.babyGear} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <KitchenIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">כלי בית</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.houseware} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <MenuBookIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">ספרים</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.books} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <ToysIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">צעצועים</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.toys} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <CategoryIcon style={{ fontSize: 50 }} />
+                            <Typography variant="h6">אחר</Typography>
+                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                                {({ isVisible }: { isVisible: boolean }) => (
+                                    <div>{isVisible ? <CountUp end={counts.other} duration={2} /> : null}</div>
+                                )}
+                            </VisibilitySensor>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
+        </Box>
     );
 }
 

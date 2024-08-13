@@ -160,6 +160,7 @@ function MainPage() {
                                 boxShadow: '0 6px 15px rgba(0, 0, 0, 0.5)',
                             },
                         }}
+
                     >
                         לתרומה <ChevronLeft />
                     </Button>

@@ -86,7 +86,7 @@ export function Navbar({  setUser }: NavbarProps) {
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <BootstrapNavbar.Brand as={Link} to="/mainPage">
-              <img src="src/assets/logoWithoutBackground.png" alt="Logo" className="logo-image" />
+              <img src={logo} alt="Logo" className="logo-image" />
             </BootstrapNavbar.Brand>
             {isLoggedIn ? (
               <div className='navLink'>

@@ -172,8 +172,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -193,15 +191,16 @@ import dataService from "../services/data-service.ts";
 
 
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+      {/* {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
-      {'.'}
+      {'.'} */}
     </Typography>
   );
 }
@@ -294,33 +293,42 @@ const navigate = useNavigate();
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            התחברות
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" style={{direction:"rtl"}} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="אימייל"
               name="email"
               autoComplete="email"
               autoFocus
+              InputLabelProps={{
+                sx: { textAlign: 'left', direction: 'rtl' }
+              }}
+              InputProps={{
+                sx: { textAlign: 'left', direction: 'ltr' }
+              }}
             />
             <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              label="סיסמא"
               type="password"
               id="password"
               autoComplete="current-password"
+              InputLabelProps={{
+                sx: { textAlign: 'left', direction: 'rtl' }
+              }}
+              InputProps={{
+                sx: { textAlign: 'left', direction: 'ltr' }
+              }}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            
              {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
             <Button
               type="submit"
@@ -328,7 +336,7 @@ const navigate = useNavigate();
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              התחבר/י
             </Button>
             <div className="google-login">
                      <GoogleLogin
@@ -336,14 +344,10 @@ const navigate = useNavigate();
                      />
             </div>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+      
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"אין לך משתמש? הירשם"}
                 </Link>
               </Grid>
             </Grid>

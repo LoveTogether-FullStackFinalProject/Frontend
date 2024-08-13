@@ -350,11 +350,18 @@ const navigate = useNavigate();
             </div>
             <Grid container>
       
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"אין לך משתמש? הירשם"}
-                </Link>
-              </Grid>
+            <Grid item>
+            <Link
+              href="#"
+              variant="body2"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/registration');
+              }}
+            >
+        {"אין לך משתמש? הירשם"}
+      </Link>
+    </Grid>
               
             </Grid>
           </Box>

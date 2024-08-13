@@ -1,14 +1,37 @@
-import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Container, Form, Button } from 'react-bootstrap';
-import './newLiveDonation.css';
+import { useNavigate } from 'react-router-dom';
+import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import dataService from '../services/data-service';
+import MenuItem from '@mui/material/MenuItem';
+
+function Copyright(props: any) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://your-website.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const defaultTheme = createTheme();
 
 const schema = z.object({
   itemName: z.string().min(2, 'שם הפריט חייב להכיל לפחות 2 תווים'),
@@ -31,27 +54,24 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const NewLiveDonation: React.FC = () => {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [imgPreview, setImgPreview] = useState<string | null>(null);
-  const [amountError, setAmountError] = useState('');
+export default function NewLiveDonation() {
+  const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
+  const [imgPreview, setImgPreview] = React.useState<string | null>(null);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     watch,
     setValue,
-    trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
   });
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
+  React.useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
       dataService.getUser(userId).req.then((res) => {
@@ -62,9 +82,9 @@ const NewLiveDonation: React.FC = () => {
 
   const selectedCategory = watch('category');
 
-  const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
       setValue('image', file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -74,23 +94,7 @@ const NewLiveDonation: React.FC = () => {
     }
   };
 
-  const selectImg = () => {
-    fileInputRef.current?.click();
-  };
-
-  const onSubmit = async (data: FormData) => {
-    if (data.quantity < 1) {
-      setAmountError('כמות חייבת להיות גדולה מ-0');
-      return;
-    } else {
-      setAmountError('');
-    }
-
-    if (selectedCategory === 'מזון ושתייה' && !data.expirationDate) {
-      trigger('expirationDate');
-      return;
-    }
-
+  const handleSubmitForm = async (data: FormData) => {
     try {
       let imageUrl = '';
       if (data.image) {
@@ -115,166 +119,199 @@ const NewLiveDonation: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <Container className="error-container">
-        <p className="error-title">שגיאה: אינך מחובר בתור מנהל</p>
-        <Button onClick={() => navigate('/adminDashboard')} variant="warning">התחבר בתור מנהל</Button>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            שגיאה: אינך מחובר בתור מנהל
+          </Typography>
+          <Button
+            onClick={() => navigate('/adminDashboard')}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            התחבר בתור מנהל
+          </Button>
+        </Box>
       </Container>
     );
   }
 
   return (
-    <Container className="new-live-donation-container">
-      <h1 className="new-live-donation-title">הוספת תרומה חדשה</h1>
-      <Form onSubmit={handleSubmit(onSubmit)} className="donation-form">
-        <div className="form-section">
-          <Form.Group className="mb-3">
-            <Form.Control
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <AddCircleOutlineIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            הוספת תרומה חדשה
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit(handleSubmitForm)} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="itemName"
+              label="שם הפריט"
+              autoFocus
               {...register('itemName')}
-              type="text"
-              placeholder="שם הפריט"
-              isInvalid={!!errors.itemName}
+              error={!!errors.itemName}
+              helperText={errors.itemName?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.itemName?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Control
-              {...register('quantity', { valueAsNumber: true })}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="quantity"
+              label="כמות"
               type="number"
-              placeholder="כמות"
-              isInvalid={!!errors.quantity || !!amountError}
+              {...register('quantity', { valueAsNumber: true })}
+              error={!!errors.quantity}
+              helperText={errors.quantity?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.quantity?.message || amountError}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Select {...register('category')} isInvalid={!!errors.category}>
-              <option value="">בחר קטגוריה</option>
-              <option value="ביגוד">ביגוד</option>
-              <option value="הנעלה">הנעלה</option>
-              <option value="ציוד לתינוקות">ציוד לתינוקות</option>
-              <option value="כלי בית">כלי בית</option>
-              <option value="ריהוט">ריהוט</option>
-              <option value="מזון ושתייה">מזון ושתייה</option>
-              <option value="ספרים">ספרים</option>
-              <option value="צעצועים">צעצועים</option>
-              <option value="אחר">אחר</option>
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              {errors.category?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-
-        <div className="form-section">
-          {selectedCategory === 'אחר' && (
-            <Form.Group className="mb-3">
-              <Form.Control
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  select
+                  fullWidth
+                  label="קטגוריה"
+                  error={!!errors.category}
+                  helperText={errors.category?.message}
+                  {...field}
+                >
+                  <MenuItem value="">בחר קטגוריה</MenuItem>
+                  <MenuItem value="ביגוד">ביגוד</MenuItem>
+                  <MenuItem value="הנעלה">הנעלה</MenuItem>
+                  <MenuItem value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+                  <MenuItem value="כלי בית">כלי בית</MenuItem>
+                  <MenuItem value="ריהוט">ריהוט</MenuItem>
+                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
+                  <MenuItem value="ספרים">ספרים</MenuItem>
+                  <MenuItem value="צעצועים">צעצועים</MenuItem>
+                  <MenuItem value="אחר">אחר</MenuItem>
+                </TextField>
+              )}
+            />
+            {selectedCategory === 'אחר' && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="customCategory"
+                label="קטגוריה מותאמת אישית"
                 {...register('customCategory')}
-                type="text"
-                placeholder="קטגוריה מותאמת אישית"
-                isInvalid={!!errors.customCategory}
+                error={!!errors.customCategory}
+                helperText={errors.customCategory?.message}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.customCategory?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          )}
-
-          <Form.Group className="mb-3">
-            <Form.Control
+            )}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="condition"
+              label="מצב הפריט"
               {...register('condition')}
-              type="text"
-              placeholder="מצב הפריט"
-              isInvalid={!!errors.condition}
+              error={!!errors.condition}
+              helperText={errors.condition?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.condition?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          {selectedCategory === 'מזון ושתייה' && (
-            <Form.Group className="mb-3">
-              <Form.Control
-                {...register('expirationDate')}
+            {selectedCategory === 'מזון ושתייה' && (
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="expirationDate"
+                label="תאריך תפוגה"
                 type="date"
-                isInvalid={!!errors.expirationDate}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                {...register('expirationDate')}
+                error={!!errors.expirationDate}
+                helperText={errors.expirationDate?.message}
               />
-              <Form.Control.Feedback type="invalid">
-                {errors.expirationDate?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-          )}
-        </div>
-
-        <div className="form-section">
-          <Form.Group className="mb-3">
-            <Form.Control
-              as="textarea"
+            )}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="description"
+              label="תיאור"
+              multiline
               rows={4}
               {...register('description')}
-              placeholder="תיאור"
-              isInvalid={!!errors.description}
+              error={!!errors.description}
+              helperText={errors.description?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.description?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Control
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="donorName"
+              label="שם התורם"
               {...register('donorName')}
-              type="text"
-              placeholder="שם התורם"
-              isInvalid={!!errors.donorName}
+              error={!!errors.donorName}
+              helperText={errors.donorName?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.donorName?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Control
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="donorPhone"
+              label="טלפון התורם"
               {...register('donorPhone')}
-              type="text"
-              placeholder="טלפון התורם"
-              isInvalid={!!errors.donorPhone}
+              error={!!errors.donorPhone}
+              helperText={errors.donorPhone?.message}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.donorPhone?.message}
-            </Form.Control.Feedback>
-          </Form.Group>
-        </div>
-
-        <div className="form-section">
-          <Form.Group className="mb-3">
-            <Button variant="secondary" onClick={selectImg} className="w-100 mb-2">
-              <FontAwesomeIcon icon={faImage} className="ms-2" />
-              {imgPreview ? 'החלפת תמונה' : 'העלאת תמונה'}
+            <Button
+              variant="contained"
+              component="label"
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+            >
+              העלאת תמונה
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleImageChange}
+              />
             </Button>
-            <Form.Control
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={imgSelected}
-              style={{ display: 'none' }}
-            />
-            {imgPreview && <img src={imgPreview} alt="תמונה נבחרת" className="img-preview" />}
-          </Form.Group>
-
-          <div className="text-center">
-            <Button type="submit" variant="primary" className="w-100">
+            {imgPreview && (
+              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+              </Box>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
               שמור תרומה
             </Button>
-          </div>
-        </div>
-      </Form>
-    </Container>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default NewLiveDonation;
+}

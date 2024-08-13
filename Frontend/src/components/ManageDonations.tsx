@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from '../services/data-service';
 import {
   Table,
@@ -27,7 +27,7 @@ import {
 } from '@mui/material';
 import { CSVLink } from 'react-csv';
  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Edit, Delete, Search } from '@mui/icons-material';
+import {Delete, Search } from '@mui/icons-material';
 import './ManageDonations.css';
 import {Donation} from './donation';
 
@@ -69,7 +69,7 @@ const ManageDonationPage: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();

@@ -605,7 +605,7 @@ function EditRequestedProduct() {
   const [imgSrc, setImgSrc] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState<string>('');
-  const [customCategory, setCustomCategory] = useState<string>('');
+ //const [customCategory, setCustomCategory] = useState<string>('');
   const [amountError, setAmountError] = useState<string>('');
   const location = useLocation();
   const { donation } = location.state || {};

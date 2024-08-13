@@ -98,7 +98,7 @@ const ManageMainPageUsers = () => {
       return (
           <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px',padding: '20px', border: '1px solid black' }}>
           <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-          <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button>
+          {/* <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button> */}
         </div>
       );
     }

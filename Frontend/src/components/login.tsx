@@ -338,6 +338,11 @@ const navigate = useNavigate();
             >
               התחבר/י
             </Button>
+            <div className="separator">
+                     <hr />
+                     <p>או</p>
+                     <hr />
+                 </div>
             <div className="google-login">
                      <GoogleLogin
                        onSuccess={onGoogleLoginSuccess}
@@ -350,6 +355,7 @@ const navigate = useNavigate();
                   {"אין לך משתמש? הירשם"}
                 </Link>
               </Grid>
+              
             </Grid>
           </Box>
         </Box>

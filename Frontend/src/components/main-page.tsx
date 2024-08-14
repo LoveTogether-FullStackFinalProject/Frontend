@@ -15,7 +15,7 @@ import {
   CardMedia,
   Container,
 } from '@mui/material';
-import { ChevronLeft } from '@mui/icons-material';
+import { ChevronLeft, Description } from '@mui/icons-material';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -105,10 +105,14 @@ function MainPage() {
         };
     }, []);
 
-    const handleProductClick = (productName: string, category: string) => {
+    const handleProductClick = (productName: string, category: string, quantity:number, description:string, itemCondition:string, customCategory:string, request:requestedDonation ) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
-            navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}`);
+            console.log("request is" ,request);
+            navigate('/uploadproduct', { state: { request } });
+        //     navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}
+        //     &quantity=${encodeURIComponent(quantity)}&description=${encodeURIComponent(description)}
+        //     &itemCondition=${encodeURIComponent(itemCondition)}&customCategory=${encodeURIComponent(customCategory)}`);
         } else {
             navigate('/login');
         }
@@ -174,7 +178,7 @@ function MainPage() {
                     <Slider {...settings}>
                         {requests.map((request, index) => (
                             <Box key={index} sx={{ p: 2 }}>
-                                <Card sx={{ height: '300px', width: '300px', borderRadius: '50%', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => handleProductClick(request.itemName, request.category)}>
+                                <Card sx={{ height: '300px', width: '300px', borderRadius: '50%', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => handleProductClick(request.itemName, request.category, request.amount,request.description, request.itemCondition, request.customCategory, request)}>
                                     <CardMedia
                                         component="img"
                                         height="140"
@@ -184,7 +188,7 @@ function MainPage() {
                                     />
                                     <CardContent>
                                         <Typography variant="h6">{request.itemName}</Typography>
-                                        <Typography variant="body2">{request.amount} :כמות מבוקשת</Typography>
+                                        <Typography variant="body2">{request.amount.toString()} :כמות מבוקשת</Typography>
                                     </CardContent>
                                 </Card>
                             </Box>

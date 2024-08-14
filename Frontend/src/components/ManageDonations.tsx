@@ -303,7 +303,7 @@ const ManageDonationPage: React.FC = () => {
             {sortedAndFilteredDonations.map((donation) => (
               <TableRow key={donation._id}>
                 <TableCell>{donation.itemName}</TableCell>
-                <TableCell>{donation.customCategory || donation.category}</TableCell>
+                <TableCell>{donation.category}</TableCell>
                 <TableCell>{donation.description}</TableCell>
                 <TableCell>
                   <Select

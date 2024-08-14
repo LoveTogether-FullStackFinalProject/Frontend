@@ -174,6 +174,27 @@ const ManageDonationPage: React.FC = () => {
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+        console.log("isAdmin:", res.data.isAdmin);
+      });
+    }
+  }, []);
+
+  if (!isAdmin) {
+    return (
+      <div className="error-container">
+        <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+        {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+      </div>
+    );
+  }
+
+
   return (
     <div className="manage-donations-page" style={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
       <Typography variant="h4" align="center" gutterBottom style={{ marginBottom: '30px' }}>

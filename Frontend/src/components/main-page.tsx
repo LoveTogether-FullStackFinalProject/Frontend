@@ -35,6 +35,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 
 function MainPage() {
     const navigate = useNavigate();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [products, setProducts] = useState<Donation[]>([]);
     const [users, setUsers] = useState<DonorData[]>([]);
     const [requests, setRequests] = useState<requestedDonation[]>([]);

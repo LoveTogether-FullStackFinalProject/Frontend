@@ -132,14 +132,14 @@ export default function NewLiveDonation() {
           <Typography component="h1" variant="h5">
             שגיאה: אינך מחובר בתור מנהל
           </Typography>
-          <Button
+          {/* <Button
             onClick={() => navigate('/adminDashboard')}
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
             התחבר בתור מנהל
-          </Button>
+          </Button> */}
         </Box>
       </Container>
     );

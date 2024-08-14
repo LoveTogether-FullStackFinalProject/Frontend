@@ -200,7 +200,7 @@ const ManageRequestedDonations: React.FC = () => {
           <TableBody>
             {sortedAndFilteredDonations.map((donation) => (
               <TableRow key={donation._id}>
-                <TableCell>{donation.category}</TableCell>
+                <TableCell>{donation.customCategory || donation.category}</TableCell>
                 <TableCell>{donation.itemName}</TableCell>
                 <TableCell>{donation.itemCondition}</TableCell>
                 <TableCell>{donation.description}</TableCell>

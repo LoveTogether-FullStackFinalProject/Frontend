@@ -221,84 +221,84 @@ function MainPage() {
                     <Grid container spacing={4} justifyContent="center" sx={{ mt: 4 }}>
                         <Grid item xs={12} sm={4} md={4}>
                             <FastfoodIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">מזון ושתייה</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">מזון ושתייה {counts.food}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.food} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <CheckroomIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ביגוד</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">ביגוד {counts.clothing}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.clothing} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <WeekendIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ריהוט</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">ריהוט {counts.furniture}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.furniture} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <EmojiPeopleIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">הנעלה</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">הנעלה {counts.footwear}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.footwear} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <ChildFriendlyIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ציוד לתינוקות</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">ציוד לתינוקות {counts.babyGear}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.babyGear} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <KitchenIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">כלי בית</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">כלי בית {counts.houseware}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.houseware} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <MenuBookIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ספרים</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">ספרים {counts.books}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.books} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <ToysIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">צעצועים</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">צעצועים {counts.toys}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.toys} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
                             <CategoryIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">אחר</Typography>
-                            <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+                            <Typography variant="h6">אחר {counts.other}</Typography>
+                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
                                 {({ isVisible }: { isVisible: boolean }) => (
                                     <div>{isVisible ? <CountUp end={counts.other} duration={2} /> : null}</div>
                                 )}
-                            </VisibilitySensor>
+                            </VisibilitySensor> */}
                         </Grid>
                     </Grid>
                 </Box>

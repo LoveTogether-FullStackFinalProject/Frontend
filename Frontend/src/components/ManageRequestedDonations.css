@@ -3,6 +3,22 @@
     padding: 20px;
     direction: rtl;
     text-align: right;
+
+  }
+  .button-primary {
+    background-color: #f9db78 !important; /* Soft yellow */
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Optional: Add margin if needed */
+  }
+  
+  .button-primary:hover {
+    background-color: #f9db78 !important; /* Maintain the same color on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
   }
   
   .table-container {
@@ -17,7 +33,7 @@
   }
   
   .table-container thead th {
-    background-color: #f0e0ad;
+    background-color: #f0e0ad  !important;
     padding: 12px 15px;
     font-weight: bold;
     text-align: center;
@@ -30,15 +46,15 @@
   }
   
   .table-container tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9  !important;
   }
   
   .table-container tbody tr:nth-of-type(even) {
-    background-color: #fff;
+    background-color: #fff  !important;
   }
   
   .table-container tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1  !important;
   }
   
   .snackbar-success {

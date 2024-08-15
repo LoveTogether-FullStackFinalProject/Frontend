@@ -206,23 +206,23 @@ function MainPage() {
     return (
         <Container maxWidth="lg">
             {/* Section 1: Logo and Main CTA */}
-            <Box className="section section-yellow">
-                <img src={whitelogo} alt="Logo" style={{ maxWidth: '200px', margin: '0 auto' }} />
-                <Typography variant="h3" sx={{ fontWeight: 'bold', mt: 4 }}>
-                    כמה קל לתרום היום
-                </Typography>
-                <Button
-                    onClick={handleButtonClick}
-                    variant="contained"
-                    className="button-primary"
-                >
-                    לתרומה <ChevronLeft />
-                </Button>
-            </Box>
+            <Box className="first-section">
+    <img src={whitelogo} alt="Logo" className="first-section-logo" />
+    <Typography variant="h5" className="first-section-title">
+        כמה קל לתרום היום
+    </Typography>
+    <Button
+        onClick={handleButtonClick}
+        variant="contained"
+        className="first-section-button"
+    >
+        לתרומה <ChevronLeft />
+    </Button>
+</Box>
 
             {/* Section 2: Products We Need */}
             <Box className="section section-light">
-                <Typography variant="h4">
+                <Typography variant="h5">
                     מוצרים שאנחנו צריכים
                 </Typography>
                 <Slider {...sliderSettings}>
@@ -252,7 +252,7 @@ function MainPage() {
 
             {/* Section 3: Leading Donors */}
             <Box className="section section-light">
-                <Typography variant="h4">
+                <Typography variant="h5">
                     תורמים מובילים
                 </Typography>
                 <Slider {...sliderSettings}>

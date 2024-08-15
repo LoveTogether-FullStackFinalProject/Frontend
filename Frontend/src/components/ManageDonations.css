@@ -17,7 +17,7 @@
 thead th {
   position: sticky;
   top: 0;
-  background-color: #f8f9fa;
+  background-color: #f8f9fa !important;
   z-index: 1;
 }
 

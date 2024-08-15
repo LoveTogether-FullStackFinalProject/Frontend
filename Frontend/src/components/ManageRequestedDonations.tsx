@@ -206,6 +206,8 @@ const ManageRequestedDonations: React.FC = () => {
                 <TableCell>
                   <Button
                     variant="contained"
+                    className="button-primary"
+
                     onClick={() => {
                       setCurrentDonation(donation);
                       setShowModal(true);
@@ -217,6 +219,8 @@ const ManageRequestedDonations: React.FC = () => {
                 <TableCell>
                   <Button
                     variant="contained"
+                    className="button-primary"
+
                     onClick={() => navigate('/editRequestedProduct', { state: { donation } })}
                   >
                     עריכת פרטי התרומה

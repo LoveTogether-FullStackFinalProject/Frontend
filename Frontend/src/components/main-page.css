@@ -1,3 +1,59 @@
+.section {
+  padding: 80px 0;
+  text-align: center;
+  width: 100%; /* Ensure the section takes the full width */
+  margin: 0; /* Remove any default margins */
+}
+
+.section-plain {
+  background-color: rgba(255, 255, 255, 0.8); /* Light transparent background */
+}
+
+.section-light {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.section-cream {
+  background-color: rgba(245, 245, 245, 0.8); /* Light cream background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.section-yellow {
+  background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.button-primary {
+  background-color: #f9db78; /* Soft yellow */
+  color: #000;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Add space between the title and button */
+}
+
+.button-primary:hover {
+  background-color: #f9db78; /* Darker yellow */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.icon-large {
+  font-size: 50px;
+  margin-bottom: 10px;
+  color: #D4A373; /* Consistent Icon Color */
+}
+
 .slider-3d .slick-list {
   overflow: visible;
 }
@@ -31,4 +87,16 @@
 
 .slider-3d .slick-next {
   right: -50px;
+}
+
+.counter-box {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 0 5%; /* Make the counters closer together */
+}
+
+.counter-box div {
+  flex: 1;
+  padding: 0 10px; /* Adjust padding to bring counters closer */
 }

@@ -67,6 +67,7 @@ export default function UploadProduct() {
   const queryParams = new URLSearchParams(location.search);
   const productName = queryParams.get('productName') || '';
   const category = queryParams.get('category') || '';
+  const amount = queryParams.get('amount') || '';
 
   const {
     register,
@@ -82,6 +83,7 @@ export default function UploadProduct() {
     defaultValues: {
       itemName: productName,
       category: category,
+      quantity: amount ? parseInt(amount, 10) : 1, // Default to 1 if no amount is passed
     },
   });
 

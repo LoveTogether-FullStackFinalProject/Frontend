@@ -1,9 +1,99 @@
 .section {
-  padding: 80px 0;
   text-align: center;
   width: 100%; /* Ensure the section takes the full width */
-  margin: 0; /* Remove any default margins */
+  margin:80px ; /* Remove any default margins */
+  padding: 120px 0; /* Increase padding */
+  min-height: 200px; /* Ensure the section has a minimum height */
 }
+
+.first-section {
+  background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 120px 0;  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align content to the right */
+  text-align: auto;
+  position: relative;
+  margin: 100px
+  
+}
+
+.first-section-logo {
+  position: absolute;
+  left: -10px; /* Adjust this value to move the logo more or less to the left */
+  top: -5%; /* Adjust vertical alignment of the logo */
+  max-width: 400px; /* Increase logo size */
+}
+
+.first-section-title {
+  font-size: 2.5rem; /* Adjust font size */
+  margin-bottom: 10px; /* Reduce the space below the title */
+  margin-top: 80px; /* Move the title up by reducing top margin */
+  margin-right: 50px; /* Adjust to position the title */
+}
+
+.first-section-button {
+  background-color: #f9db78 !important;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  margin-right: 50px; /* Align button to the right */
+  margin-top: 20px; /* Increase the top margin to move the button down */
+  font-size: 1.2rem; /* Adjust font size */
+}
+
+
+.first-section-button:hover {
+  background-color: #f9db78; /* Darker yellow */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+.firstsec {
+  background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 120px 0; /* Adjust padding for height */
+  padding-left: 0;
+  padding-right: 0;
+  text-align: right; /* Align text to the right */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end; /* Align content to the right */
+}
+
+.firstsec img {
+  max-width: 150px; /* Adjust logo size */
+  margin: 0 auto 20px 0; /* Adjust margin to position the logo */
+  align-self: center;
+}
+
+.firstsec h3 {
+  font-weight: bold;
+  font-size: 2.5rem; /* Adjust the font size to match the image */
+  margin-bottom: 30px;
+}
+
+.button-primary {
+  background-color: #f9db78 !important;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  font-size: 1.2rem; /* Adjust font size to match the image */
+  margin-left: 0;
+  margin-right: 50px; /* Adjust right margin for positioning */
+}
+
 
 .section-plain {
   background-color: rgba(255, 255, 255, 0.8); /* Light transparent background */
@@ -28,20 +118,13 @@
   background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  padding: 120px 0; /* Increase padding */
+  min-height: 300px; /* Ensure the section has a minimum height */
   padding-left: 0;
   padding-right: 0;
 }
 
-.button-primary {
-  background-color: #f9db78; /* Soft yellow */
-  color: #000;
-  font-weight: bold;
-  padding: 10px 30px;
-  border-radius: 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
-  margin-top: 20px; /* Add space between the title and button */
-}
+
 
 .button-primary:hover {
   background-color: #f9db78; /* Darker yellow */

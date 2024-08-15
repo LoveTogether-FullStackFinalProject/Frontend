@@ -28,18 +28,6 @@ import './ManageUsers.css';
 
 import { useNavigate } from 'react-router-dom';
 
-
-
-// interface User {
-//   _id: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   mainAddress: string;
-//   phoneNumber: string;
-//   rating: string;
-// }
-
 type Order = 'asc' | 'desc';
 
 const ManageUsers: React.FC = () => {
@@ -174,15 +162,14 @@ const ManageUsers: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px', padding: '20px', border: '1px solid black' }}>
-        <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-        {/* <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button> */}
+      <div className="error-container">
+        <p>שגיאה: אינך מחובר בתור מנהל</p>
       </div>
     );
   }
 
   return (
-    <div className="manage-users-page" style={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
+    <div className="manage-users-page">
       <Typography variant="h4" align="center" gutterBottom>
         ניהול יוזרים
       </Typography>
@@ -207,23 +194,18 @@ const ManageUsers: React.FC = () => {
         <CSVLink
           data={handleExport()}
           filename="users.csv"
-          className="btn btn-primary"
-          style={{ marginLeft: '20px', padding: '10px 20px', backgroundColor: '#f9db78', color: '#000', borderRadius: '5px', textDecoration: 'none' }}
+          className="csv-link"
         >
           ייצוא לאקסל
         </CSVLink>
       </Toolbar>
       {error && <Typography color="error" align="center">{error}</Typography>}
-      <TableContainer component={Paper} style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
-        <Table style={{ minWidth: 650 }}>
-          <TableHead style={{ backgroundColor: '#f0e0ad' }}>
+      <TableContainer component={Paper} className="table-container">
+        <Table className="table">
+          <TableHead className="table-head">
             <TableRow>
               {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
-                <TableCell
-                key={column}
-                className="rtl-table-col"
-                style={{ fontWeight: 'bold', fontFamily: 'Assistant' }}
-              >
+                <TableCell key={column} className="rtl-table-col">
                   <TableSortLabel
                     active={orderBy === column}
                     direction={orderBy === column ? order : 'asc'}
@@ -240,7 +222,6 @@ const ManageUsers: React.FC = () => {
               ))}
               <TableCell className="rtl-table-col">עריכה</TableCell>
               <TableCell className="rtl-table-col">מחיקה</TableCell>
-           
             </TableRow>
           </TableHead>
           <TableBody>

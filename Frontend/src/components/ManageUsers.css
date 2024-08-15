@@ -1,74 +1,111 @@
-
-.container {
-  margin-top:10px;
-  padding: 0px;
+.manage-users-page {
+  direction: rtl;
+  text-align: right;
+  padding: 20px;
 }
 
-.data-table {
-  width: 100%;
+.table-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow-x: auto;
 }
 
-.data-title {
-  font-weight: bold;
-  margin-bottom: 20px;
+.table {
+  min-width: 650px;
 }
 
-.data-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.data-section {
-  margin-bottom: 20px;
+.rtl-table-col, .rtl-table {
+  font-family: 'Assistant', sans-serif;
 }
 
 .rtl-table-col {
   font-weight: bold;
-  direction: rtl;
   text-align: right;
-  padding: 30px;
-  background-color:#d2d0cb;
-  font-family: 'Assistant', sans-serif;
-} 
-.rtl-table {
-  direction: rtl;
-  text-align: right;
-  font-family: 'Assistant', sans-serif;
+  padding: 16px;
+  background-color: #d2d0cb;
 }
 
 .table-head {
-  background-color: gray;
-}
-
-.table-bordered {
-  border-collapse: collapse;
-  border: 1px solid rgb(130, 128, 128);
-}
-
-.typography-title {
-  color: black;
-  font-size: 3rem;
-  text-align: center;
-  font-weight: bold;
-  font-family: 'Assistant', sans-serif;
+  background-color: #f0e0ad;
 }
 
 .csv-link {
-  background-color: #28a745; 
-  color: white;
-  padding: 10px 10px;
+  background-color: #f9db78;
+  color: #000;
+  padding: 10px 20px;
   border-radius: 5px;
-  display: inline-block;
-  margin-bottom: 15px;
+  text-decoration: none;
   font-weight: bold;
-  font-family: 'Assistant', sans-serif;
-  text-align: center;
-  margin-right: 650px;
-  white-space: nowrap;
+  margin-left: 20px;
 }
 
 .csv-link:hover {
-  background-color: hsl(110, 62%, 44%);
-  color: white;
+  background-color: #f8c85d;
+  color: #000;
+}
+
+.error-container {
+  background-color: white;
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rtl-table-col, .rtl-table {
+    padding: 8px;
+    font-size: 0.875rem;
+  }
+
+  .csv-link {
+    margin-left: 10px;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+  }
+
+  .table-container {
+    border-radius: 5px;
+  }
+
+  .manage-users-page {
+    padding: 10px;
+  }
+
+  .error-container {
+    padding: 10px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .rtl-table-col, .rtl-table {
+    padding: 4px;
+    font-size: 0.75rem;
+  }
+
+  .csv-link {
+    margin-left: 5px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+
+  .table-container {
+    border-radius: 3px;
+  }
+
+  .manage-users-page {
+    padding: 5px;
+  }
+
+  .error-container {
+    padding: 5px;
+    font-size: 0.75rem;
+  }
 }

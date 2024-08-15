@@ -66,7 +66,6 @@ const ManageRequestedDonations: React.FC = () => {
     setFilter(event.target.value);
   };
 
-
   const applySortAndFilter = (data: requestedDonation[]) => {
     return data
       .filter(donation =>
@@ -111,9 +110,8 @@ const ManageRequestedDonations: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <div style={{ backgroundColor: 'white', width: '100%', height: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '100px', padding: '20px', border: '1px solid black' }}>
-        <p style={{ color: 'black' }}>שגיאה: אינך מחובר בתור מנהל</p>
-        {/* <button onClick={() => navigate('/mainPage')} style={{ backgroundColor: '#F9DA78', marginTop: '20px' }}>התחבר בתור מנהל</button> */}
+      <div className="error-container">
+        <p>שגיאה: אינך מחובר בתור מנהל</p>
       </div>
     );
   }
@@ -193,8 +191,8 @@ const ManageRequestedDonations: React.FC = () => {
                 </TableSortLabel>
               </TableCell>
               <TableCell>פרטי התרומות</TableCell>
-              <TableCell>פעולות</TableCell>
-              <TableCell>מחיקת פריט מהעמוד הראשי</TableCell>
+              <TableCell>עריכה</TableCell>
+              <TableCell>מחיקה</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -208,6 +206,8 @@ const ManageRequestedDonations: React.FC = () => {
                 <TableCell>
                   <Button
                     variant="contained"
+                    className="button-primary"
+
                     onClick={() => {
                       setCurrentDonation(donation);
                       setShowModal(true);
@@ -219,6 +219,8 @@ const ManageRequestedDonations: React.FC = () => {
                 <TableCell>
                   <Button
                     variant="contained"
+                    className="button-primary"
+
                     onClick={() => navigate('/editRequestedProduct', { state: { donation } })}
                   >
                     עריכת פרטי התרומה
@@ -226,13 +228,13 @@ const ManageRequestedDonations: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Tooltip title="מחק תרומה">
-                  <IconButton
-                  color="secondary"
-                  onClick={() => {
-                  if (donation._id) { 
-                  handleDelete(donation._id);
-                  }
-                  }}
+                    <IconButton
+                      color="secondary"
+                      onClick={() => {
+                        if (donation._id) {
+                          handleDelete(donation._id);
+                        }
+                      }}
                     >
                       <Delete />
                     </IconButton>

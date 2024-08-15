@@ -1,0 +1,91 @@
+/* General styles for the container */
+.manage-users-page {
+    margin-top: 20px;
+    padding: 20px;
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .manage-users-page h2 {
+    font-family: 'Assistant', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-input {
+    width: 60%;
+    margin-bottom: 20px;
+  }
+  
+  .donors-table th,
+  .donors-table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .donors-table th {
+    background-color: #f0e0ad;
+  }
+  
+  .donors-table td {
+    padding: 12px 15px;
+  }
+  
+  .donors-table tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .donors-table tbody tr:nth-of-type(even) {
+    background-color: #fff;
+  }
+  
+  .donors-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* Responsive styles for mobile devices */
+  @media (max-width: 768px) {
+    .filter-input {
+      width: 100%;
+    }
+  
+    .manage-users-page {
+      padding: 10px;
+    }
+  
+    .donors-table th,
+    .donors-table td {
+      font-size: 0.875rem;
+      padding: 8px;
+    }
+  
+    .profile-image {
+      width: 40px;
+      height: 40px;
+    }
+  
+    .manage-users-page h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .donors-table th,
+    .donors-table td {
+      font-size: 0.75rem;
+      padding: 6px;
+    }
+  
+    .profile-image {
+      width: 35px;
+      height: 35px;
+    }
+  }
+  

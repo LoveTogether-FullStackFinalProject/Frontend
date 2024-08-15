@@ -17,6 +17,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
+import {useEffect } from 'react';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
@@ -65,9 +66,12 @@ export default function UploadProduct() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  console.log('queryParams', queryParams.get('category'));
+  console.log('queryParams', queryParams.get('customCategory'));
   const productName = queryParams.get('productName') || '';
   const category = queryParams.get('category') || '';
   const amount = queryParams.get('amount') || '';
+
 
   const {
     register,
@@ -84,8 +88,23 @@ export default function UploadProduct() {
       itemName: productName,
       category: category,
       quantity: amount ? parseInt(amount, 10) : 1, // Default to 1 if no amount is passed
+
     },
   });
+
+  const { request } = location.state || {};
+  useEffect(() => {
+    console.log("requestedDonation", request);
+    if (request) {
+      setValue('customCategory', request.customCategory);
+      setValue('category', request.category);
+      setValue('itemName', request.itemName);
+      setValue('quantity', request.amount.toString());
+      setValue('condition', request.itemCondition);
+      setValue('description', request.description);
+    }
+  }, [request, setValue]);
+
 
   React.useEffect(() => {
     const checkLoginStatus = () => {

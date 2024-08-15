@@ -19,6 +19,7 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import VisibilitySensor from 'react-visibility-sensor';
 import GroupIcon from '@mui/icons-material/Group';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -163,6 +164,8 @@ function MainPage() {
       }
   };
 
+
+
     const handleButtonClick = () => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
@@ -245,6 +248,7 @@ function MainPage() {
                     ))}
                 </Slider>
             </Box>
+
 
             {/* Section 3: Leading Donors */}
             <Box className="section section-light">

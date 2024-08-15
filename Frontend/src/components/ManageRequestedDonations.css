@@ -5,14 +5,10 @@
     text-align: right;
   }
   
-  .manage-donations-page h2 {
-    margin-bottom: 30px;
-  }
-  
   .table-container {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    overflow: hidden;
+    overflow-x: auto;
   }
   
   .table-container table {
@@ -68,10 +64,29 @@
     max-width: 500px;
   }
   
-  .modal-box img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 20px;
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .table-container thead th,
+    .table-container tbody td {
+      padding: 8px;
+      font-size: 0.875rem;
+    }
+  
+    .modal-box {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .table-container thead th,
+    .table-container tbody td {
+      padding: 6px;
+      font-size: 0.75rem;
+    }
+  
+    .modal-box {
+      padding: 16px;
+      width: 95%;
+    }
   }
   

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from '../services/data-service';
 import {
   Table,
@@ -15,7 +14,6 @@ import {
   Modal,
   Button,
   TableSortLabel,
-
   TextField,
   InputAdornment,
   Toolbar,
@@ -26,62 +24,31 @@ import {
   Tooltip,
 } from '@mui/material';
 import { CSVLink } from 'react-csv';
- // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {Delete, Search } from '@mui/icons-material';
+import { Delete, Search } from '@mui/icons-material';
 import './ManageDonations.css';
-import {Donation} from './donation';
-
-// interface Donation {
-//   _id: string;
-//   itemName: string;
-//   category: string;
-//   description: string;
-//   status: string;
-//   approvedByAdmin?: boolean | string;
-//   donor?: {
-//     firstName: string;
-//     lastName: string;
-//     phone: string;
-//   };
-//   pickUpAddress: string;
-//   userAddress?: string;
-//   branch?: string;
-//   image?: string;
-//   quantity?: number;
-//   itemCondition?: string;
-//   expirationDate?: string;
-//   createdAt: string;
-// }
-
+import { Donation } from './donation';
 
 type Order = 'asc' | 'desc';
 
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
-
   const [showModal, setShowModal] = useState(false);
   const [currentDonation, setCurrentDonation] = useState<Donation | null>(null);
-  //const [ setError] = useState<string | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('itemName');
   const [filterText, setFilterText] = useState<string>('');
   const [pendingChanges, setPendingChanges] = useState<Donation[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
- // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getDonations();
     req.then((res) => {
-      if(res.data){
+      if (res.data) {
         setDonations(res.data);
       }
-      
-
     }).catch((err) => {
       if (err instanceof CanceledError) return;
-      //setError(err.message);
     });
 
     return () => {
@@ -137,7 +104,7 @@ const ManageDonationPage: React.FC = () => {
     setPendingChanges((prev) => [...prev, updatedDonation]);
   };
 
-  const handleApprovalUpdate = (donation: Donation, approvedByAdmin:string) => {
+  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: string) => {
     const updatedDonation = { ...donation, approvedByAdmin };
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
@@ -189,11 +156,9 @@ const ManageDonationPage: React.FC = () => {
     return (
       <div className="error-container">
         <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
-        {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
       </div>
     );
   }
-
 
   return (
     <div className="manage-donations-page" style={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
@@ -226,9 +191,8 @@ const ManageDonationPage: React.FC = () => {
           ייצוא ל-CSV
         </CSVLink>
       </Toolbar>
-      {/* {error && <Typography color="error" align="center">{error}</Typography>} */}
-      <TableContainer component={Paper} style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
-        <Table style={{ minWidth: 650 }}>
+      <TableContainer component={Paper} className="table-responsive" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+        <Table>
           <TableHead style={{ backgroundColor: '#f0e0ad' }}>
             <TableRow>
               <TableCell>
@@ -275,15 +239,6 @@ const ManageDonationPage: React.FC = () => {
                 >
                   אישור מנהל
                 </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                {/* <TableSortLabel
-                  active={orderBy === 'donor.firstName'}
-                  direction={orderBy === 'donor.firstName' ? order : 'asc'}
-                  onClick={() => handleRequestSort('donor.firstName')}
-                >
-                  שם התורם
-                </TableSortLabel> */}
               </TableCell>
               <TableCell>
                 <TableSortLabel

@@ -1,14 +1,14 @@
-/* General Page Styling */
 body {
   height: 100%;
   padding: 0;
   font-family: Arial, sans-serif;
   background-color: #ffffff;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 
 .profile-page {
-  margin-top: 150px;
+  margin-top: 100px;
+  padding: 20px;
 }
 
 .user-info {
@@ -16,32 +16,35 @@ body {
   display: flex;
   align-items: center;
   margin-top: 2px;
+  justify-content: center;
 }
 
 .Avatar-profile {
   margin-left: 20px;
-  width: 40px;
-  height: 40px;
+  width: 60px; /* Slightly larger for better visibility on small screens */
+  height: 60px;
   border-radius: 50%;
 }
 
 .profile-header {
   font-family: 'Assistant', sans-serif;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.5rem; /* Slightly larger for mobile screens */
+  text-align: center; /* Center-align for better mobile experience */
 }
 
 .rating-status {
-  margin-top: 60px;
+  margin-top: 40px;
   font-weight: bold;
   font-family: 'Assistant', sans-serif;
   color: rgb(0, 0, 0);
   font-size: 1.5em;
+  text-align: center;
 }
 
 /* Search Bar Styling */
 .search-bar {
-  margin-top: 50px;
+  margin-top: 30px;
   font-family: 'Assistant', sans-serif;
   display: flex;
   justify-content: center;
@@ -52,7 +55,8 @@ body {
   border-radius: 15px;
   font-family: 'Assistant', sans-serif;
   padding: 10px;
-  width: 300px;
+  width: 100%; /* Full width on mobile devices */
+  max-width: 400px; /* Restrict maximum width on larger screens */
   border: 1px solid #ccc;
 }
 
@@ -70,9 +74,9 @@ select {
 /* Donation Cards Styling */
 .donations-list {
   display: flex;
-  flex-wrap: wrap; /* Allows the cards to wrap to the next line if there's no space */
-  gap: 20px; /* Space between the cards */
-  justify-content: center; /* Centers the cards in the container */
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
   direction: rtl;
   text-align: right;
 }
@@ -81,7 +85,8 @@ select {
   background-color: #ffffff;
   padding: 15px;
   border-radius: 10px;
-  width: 300px; /* Fixed width for uniform card size */
+  width: 100%;
+  max-width: 300px; /* Restrict maximum width for larger screens */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
@@ -93,8 +98,8 @@ select {
 
 .donation-card img {
   width: 100%;
-  height: 150px; /* Fixed height for uniform image display */
-  object-fit: cover; /* Ensure the image covers the entire area without distortion */
+  height: 150px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -102,7 +107,7 @@ select {
   margin-top: 10px;
   font-size: 1.2em;
   text-align: center;
-  min-height: 3em; /* Ensure uniform height for titles */
+  min-height: 3em;
 }
 
 .donation-card p {
@@ -110,7 +115,7 @@ select {
   color: #555;
   text-align: center;
   margin: 5px 0;
-  min-height: 2em; /* Ensure uniform height for text */
+  min-height: 2em;
 }
 
 .donation-card:hover {
@@ -119,11 +124,11 @@ select {
 }
 
 .background-section {
-  padding: 200px 0;
+  padding: 150px 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Ensure text is centered */
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -146,45 +151,56 @@ select {
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
   .donation-card {
-      width: 45%; /* Adjust width to fit two cards per row on medium screens */
+    width: 45%;
   }
 }
 
 @media (max-width: 768px) {
   .donation-card {
-      width: 100%; /* One card per row on small screens */
+    width: 100%;
+  }
+
+  .profile-header, .rating-status {
+    font-size: 1.2rem; /* Reduce font size on smaller screens */
+  }
+
+  .search-input {
+    max-width: 100%; /* Ensure full width on small screens */
+  }
+
+  .background-section {
+    padding: 100px 0; /* Reduce padding for smaller screens */
   }
 }
 
 /* Show More Button Styling */
 .show-more {
-  display: block; /* Ensures the button is treated as a block element */
-  margin: 20px auto; /* Centers the button horizontally and adds space above */
+  display: block;
+  margin: 20px auto;
   padding: 10px 20px;
-  background-color: #f9db78c9; /* Use the site color */
-  color: #000; /* Text color */
+  background-color: #f9db78c9;
+  color: #000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transition on hover */
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .show-more:hover {
-  background-color: #d8b965; /* Slightly darker shade on hover */
-  transform: scale(1.05); /* Slight scaling effect on hover */
+  background-color: #d8b965;
+  transform: scale(1.05);
   color: black;
 }
 
 /* No Donations Container */
 .no-donations-container {
-  text-align: center; 
+  text-align: center;
   padding: 20px;
-  background-color: #ffffff; 
-  border-radius: 8px; 
-  color: #000; 
-  width: 80%; 
-  margin-left: auto; 
-  margin-right: auto; 
+  background-color: #ffffff;
+  border-radius: 8px;
+  color: #000;
+  width: 80%;
+  margin: 20px auto;
   font-family: 'Assistant', sans-serif;
   font-size: 1.2em;
 }

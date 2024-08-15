@@ -621,7 +621,7 @@ function EditRequestedProduct() {
       setValue('description', donation.description);
       setValue('image', donation.image);
       setCategory(donation.category);
-      setCustomCategory(donation.customCategory);
+      //setCustomCategory(donation.customCategory);
     }
   }, [donation, setValue]);
 

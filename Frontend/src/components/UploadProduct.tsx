@@ -70,10 +70,8 @@ export default function UploadProduct() {
   console.log('queryParams', queryParams.get('customCategory'));
   const productName = queryParams.get('productName') || '';
   const category = queryParams.get('category') || '';
-  const quantity = parseInt(queryParams.get('quantity') || '', 10);
-  const description = queryParams.get('description') || '';
-  const itemCondition = queryParams.get('itemCondition') || '';
-  const customCategory = queryParams.get('customCategory') || '';
+  const amount = queryParams.get('amount') || '';
+
 
   const {
     register,
@@ -89,10 +87,8 @@ export default function UploadProduct() {
     defaultValues: {
       itemName: productName,
       category: category,
-      quantity: quantity,
-      description: description,
-      condition: itemCondition,
-      customCategory: customCategory,
+      quantity: amount ? parseInt(amount, 10) : 1, // Default to 1 if no amount is passed
+
     },
   });
 

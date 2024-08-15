@@ -12,32 +12,82 @@ import {
   Avatar,
   Card,
   CardContent,
-  CardMedia,
   Container,
+  IconButton,
 } from '@mui/material';
-import { ChevronLeft, Description } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import VisibilitySensor from 'react-visibility-sensor';
+import GroupIcon from '@mui/icons-material/Group';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
-import VisibilitySensor from 'react-visibility-sensor';
 import CountUp from 'react-countup';
-import CheckroomIcon from '@mui/icons-material/Checkroom';
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
-import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
-import KitchenIcon from '@mui/icons-material/Kitchen';
-import WeekendIcon from '@mui/icons-material/Weekend';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import ToysIcon from '@mui/icons-material/Toys';
-import CategoryIcon from '@mui/icons-material/Category';
+import './main-page.css'; // Import the CSS file
+
+const NextArrow = (props: any) => {
+    const { onClick } = props;
+    return (
+        <IconButton
+            onClick={onClick}
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                right: '-20px',
+                transform: 'translateY(-50%)',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                color: '#000',
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+                '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+                },
+                '& .MuiSvgIcon-root': {
+                    fontSize: '1.5rem',
+                }
+            }}
+        >
+            <ChevronRight />
+        </IconButton>
+    );
+};
+
+const PrevArrow = (props: any) => {
+    const { onClick } = props;
+    return (
+        <IconButton
+            onClick={onClick}
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '-20px',
+                transform: 'translateY(-50%)',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                color: '#000',
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+                '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+                },
+                '& .MuiSvgIcon-root': {
+                    fontSize: '1.5rem',
+                }
+            }}
+        >
+            <ChevronLeft />
+        </IconButton>
+    );
+};
 
 function MainPage() {
     const navigate = useNavigate();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [products, setProducts] = useState<Donation[]>([]);
     const [users, setUsers] = useState<DonorData[]>([]);
+    const [hasAnimatedDonations, setHasAnimatedDonations] = useState(false);
+    const [hasAnimatedUsers, setHasAnimatedUsers] = useState(false);
     const [requests, setRequests] = useState<requestedDonation[]>([]);
     const [counts, setCounts] = useState({
         food: 0,
@@ -105,18 +155,16 @@ function MainPage() {
         };
     }, []);
 
-    const handleProductClick = (productName: string, category: string, quantity:number, description:string, itemCondition:string, customCategory:string, request:requestedDonation ) => {
-        const accessToken = localStorage.getItem('accessToken');
-        if (accessToken) {
-            console.log("request is" ,request);
-            navigate('/uploadproduct', { state: { request } });
-        //     navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}
-        //     &quantity=${encodeURIComponent(quantity)}&description=${encodeURIComponent(description)}
-        //     &itemCondition=${encodeURIComponent(itemCondition)}&customCategory=${encodeURIComponent(customCategory)}`);
-        } else {
-            navigate('/login');
-        }
-    };
+    const handleProductClick = (productName: string, category: string, amount: number) => {
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+          navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}&amount=${amount}`);
+      } else {
+          navigate('/login');
+      }
+  };
+
+
 
     const handleButtonClick = () => {
         const accessToken = localStorage.getItem('accessToken');
@@ -127,7 +175,19 @@ function MainPage() {
         }
     };
 
-    const settings = {
+    const handleDonationsVisibility = (isVisible: boolean) => {
+        if (isVisible && !hasAnimatedDonations) {
+            setHasAnimatedDonations(true);
+        }
+    };
+
+    const handleUsersVisibility = (isVisible: boolean) => {
+        if (isVisible && !hasAnimatedUsers) {
+            setHasAnimatedUsers(true);
+        }
+    };
+
+    const sliderSettings = {
         dots: true,
         infinite: true,
         speed: 500,
@@ -135,180 +195,116 @@ function MainPage() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
-        nextArrow: <ChevronLeft />,
-        prevArrow: <ChevronLeft />,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
         centerMode: true,
         centerPadding: '0px',
     };
 
+    const totalDonations = Object.values(counts).reduce((acc, count) => acc + count, 0);
+
     return (
-        <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh', py: 4 }}>
-            <Container maxWidth="lg">
-                <Box sx={{ textAlign: 'center', mb: 6 }}>
-                    <img src={whitelogo} alt="Logo" style={{ maxWidth: '200px', margin: '0 auto' }} />
-                    <Typography variant="h3" sx={{ fontWeight: 'bold', mt: 4 }}>
-                        כמה קל לתרום היום
-                    </Typography>
-                    <Button
-                        onClick={handleButtonClick}
-                        variant="contained"
-                        sx={{
-                            mt: 3,
-                            backgroundColor: '#f9db78',
-                            color: '#000',
-                            fontWeight: 'bold',
-                            px: 4,
-                            py: 2,
-                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
-                            '&:hover': {
-                                backgroundColor: '#f9db78',
-                                boxShadow: '0 6px 15px rgba(0, 0, 0, 0.5)',
-                            },
-                        }}
+        <Container maxWidth="lg">
+            {/* Section 1: Logo and Main CTA */}
+            <Box className="section section-yellow">
+                <img src={whitelogo} alt="Logo" style={{ maxWidth: '200px', margin: '0 auto' }} />
+                <Typography variant="h3" sx={{ fontWeight: 'bold', mt: 4 }}>
+                    כמה קל לתרום היום
+                </Typography>
+                <Button
+                    onClick={handleButtonClick}
+                    variant="contained"
+                    className="button-primary"
+                >
+                    לתרומה <ChevronLeft />
+                </Button>
+            </Box>
 
-                    >
-                        לתרומה <ChevronLeft />
-                    </Button>
-                </Box>
+            {/* Section 2: Products We Need */}
+            <Box className="section section-light">
+                <Typography variant="h4">
+                    מוצרים שאנחנו צריכים
+                </Typography>
+                <Slider {...sliderSettings}>
+                    {requests.map((request, index) => (
+                        <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                            <Box
+                                component="img"
+                                src={request.image || person}
+                                sx={{
+                                    width: '120px',
+                                    height: '120px',
+                                    objectFit: 'cover',
+                                    borderRadius: '50%',
+                                    overflow: 'hidden',
+                                    display: 'block',
+                                    margin: '0 auto',
+                                }}
+                                onClick={() => handleProductClick(request.itemName, request.category, request.amount)}
+                                />
+                            <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>{request.itemName}</Typography>
+                            <Typography variant="body2" sx={{ mt: 1 }}>{request.amount} :כמות מבוקשת</Typography>
+                        </Box>
+                    ))}
+                </Slider>
+            </Box>
 
-                <Box sx={{ mb: 8 }}>
-                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 4 }}>
-                        מוצרים שאנחנו צריכים
-                    </Typography>
-                    <Slider {...settings}>
-                        {requests.map((request, index) => (
-                            <Box key={index} sx={{ p: 2 }}>
-                                <Card sx={{ height: '300px', width: '300px', borderRadius: '50%', cursor: 'pointer', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} onClick={() => handleProductClick(request.itemName, request.category, request.amount,request.description, request.itemCondition, request.customCategory, request)}>
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={request.image || person} // Default image if none provided
-                                        alt={request.itemName}
-                                        sx={{ objectFit: 'contain', borderRadius: '50%', width: '140px', height: '140px' }} // Ensures uniformity
-                                    />
-                                    <CardContent>
-                                        <Typography variant="h6">{request.itemName}</Typography>
-                                        <Typography variant="body2">{request.amount.toString()} :כמות מבוקשת</Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        ))}
-                    </Slider>
-                </Box>
 
-                <Box sx={{ mb: 8 }}>
-                    <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 'bold', mb: 4 }}>
-                        תורמים מובילים
-                    </Typography>
-                    <Slider {...settings}>
-                        {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
-                            <Box key={index} sx={{ p: 2 }}>
-                                <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                    <Avatar
-                                        src={user.image || person}
-                                        alt={`${user.firstName} ${user.lastName}`}
-                                        sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
-                                        <Typography variant="body2">תורם מוביל</Typography>
-                                    </CardContent>
-                                </Card>
-                            </Box>
-                        ))}
-                    </Slider>
-                </Box>
+            {/* Section 3: Leading Donors */}
+            <Box className="section section-light">
+                <Typography variant="h4">
+                    תורמים מובילים
+                </Typography>
+                <Slider {...sliderSettings}>
+                    {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
+                        <Box key={index} sx={{ p: 2 }}>
+                            <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
+                                <Avatar
+                                    src={user.image || person}
+                                    alt={`${user.firstName} ${user.lastName}`}
+                                    sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                                />
+                                <CardContent>
+                                    <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                                    <Typography variant="body2">תורם מוביל</Typography>
+                                </CardContent>
+                            </Card>
+                        </Box>
+                    ))}
+                </Slider>
+            </Box>
 
-                <Box sx={{ textAlign: 'center', mb: 8 }}>
-                    <Typography variant="h5">
-                        עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה!
-                    </Typography>
-                    <Grid container spacing={4} justifyContent="center" sx={{ mt: 4 }}>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <FastfoodIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">מזון ושתייה {counts.food}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.food} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <CheckroomIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ביגוד {counts.clothing}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.clothing} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <WeekendIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ריהוט {counts.furniture}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.furniture} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <EmojiPeopleIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">הנעלה {counts.footwear}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.footwear} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <ChildFriendlyIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ציוד לתינוקות {counts.babyGear}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.babyGear} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <KitchenIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">כלי בית {counts.houseware}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.houseware} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <MenuBookIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">ספרים {counts.books}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.books} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <ToysIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">צעצועים {counts.toys}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.toys} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                        <Grid item xs={12} sm={4} md={4}>
-                            <CategoryIcon style={{ fontSize: 50 }} />
-                            <Typography variant="h6">אחר {counts.other}</Typography>
-                            {/* <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
-                                {({ isVisible }: { isVisible: boolean }) => (
-                                    <div>{isVisible ? <CountUp end={counts.other} duration={2} /> : null}</div>
-                                )}
-                            </VisibilitySensor> */}
-                        </Grid>
-                    </Grid>
+            {/* Section 4: Donations and Community Counters */}
+            <Box className="section section-yellow">
+                <Typography variant="h5">
+                    !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
+                </Typography>
+                <Box className="counter-box">
+                    <Box>
+                        <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
+                            <div>
+                                <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+                                    <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
+                                </Typography>
+                                <VolunteerActivismIcon sx={{ fontSize: 50, mt: 1 }} />
+                                <Typography variant="h6">תרומות שנתרמו</Typography>
+                            </div>
+                        </VisibilitySensor>
+                    </Box>
+                    <Box>
+                        <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleUsersVisibility}>
+                            <div>
+                                <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+                                    <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
+                                </Typography>
+                                <GroupIcon sx={{ fontSize: 50, mt: 1 }} />
+                                <Typography variant="h6">תורמים בקהילה</Typography>
+                            </div>
+                        </VisibilitySensor>
+                    </Box>
                 </Box>
-            </Container>
-        </Box>
+            </Box>
+        </Container>
     );
 }
 

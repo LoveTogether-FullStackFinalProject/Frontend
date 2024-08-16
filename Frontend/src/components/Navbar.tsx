@@ -19,6 +19,7 @@ export function Navbar({ setUser }: NavbarProps) {
   const [userId, setUserId] = useState(localStorage.getItem("userID"));
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
   const [isAdmin, setIsAdmin] = useState(false);
+  const [expanded, setExpanded] = useState(false); // State to control menu collapse
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -63,6 +64,10 @@ export function Navbar({ setUser }: NavbarProps) {
 
   const isLoggedIn = userId && token;
 
+  const handleToggle = () => setExpanded(!expanded); // Toggle the expanded state
+
+  const handleClose = () => setExpanded(false); // Close the menu when a link is clicked
+
   return (
     <BootstrapNavbar 
       style={{
@@ -79,23 +84,27 @@ export function Navbar({ setUser }: NavbarProps) {
         padding: "0",
       }}
       expand="md"
+      expanded={expanded} // Set the expanded state
     >
       <Container fluid>
-        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+        <BootstrapNavbar.Toggle 
+          aria-controls="basic-navbar-nav" 
+          onClick={handleToggle} // Toggle the menu on click
+        />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {isLoggedIn ? (
               <div className='navLink'>
-                <Nav.Link as={Link} to="/profile">החשבון שלי</Nav.Link>
-                <Nav.Link as={Link} to="/mainPage" onClick={handleLogout}>התנתק</Nav.Link>
-                <Nav.Link as={Link} to="/uploadproduct">תרמו כאן</Nav.Link>
-                <Nav.Link as={Link} to="/about">על העמותה</Nav.Link>
-                {isAdmin && <Nav.Link as={Link} to="/adminDashboard">ניהול</Nav.Link>}
+                <Nav.Link as={Link} to="/profile" onClick={handleClose}>החשבון שלי</Nav.Link>
+                <Nav.Link as={Link} to="/mainPage" onClick={() => { handleLogout(); handleClose(); }}>התנתק</Nav.Link>
+                <Nav.Link as={Link} to="/uploadproduct" onClick={handleClose}>תרמו כאן</Nav.Link>
+                <Nav.Link as={Link} to="/about" onClick={handleClose}>על העמותה</Nav.Link>
+                {isAdmin && <Nav.Link as={Link} to="/adminDashboard" onClick={handleClose}>ניהול</Nav.Link>}
               </div>
             ) : (
               <div className='navLink'>
-                <Nav.Link as={Link} to="/login">התחבר</Nav.Link>
-                <Nav.Link as={Link} to="/registration">הירשם</Nav.Link>
+                <Nav.Link as={Link} to="/login" onClick={handleClose}>התחבר</Nav.Link>
+                <Nav.Link as={Link} to="/registration" onClick={handleClose}>הירשם</Nav.Link>
               </div>
             )}
           </Nav>

@@ -5,15 +5,14 @@
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
+  background: linear-gradient(90deg, rgba(169,169,169,1) 5%, rgb(255, 239, 186) 62%, rgba(245,245,245,1) 100%);
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.background-section {
-  padding: 100px 20px;
+.background-section-text-center{
   width: 100%;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -21,12 +20,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  direction: rtl;
 }
 
-.about-title, .about-registration, .about-description {
+
+.about-registration{
+  margin-top: 50px;
+  max-width: 800px;
+  text-align: center;
+  direction: rtl;
+}
+
+
+.about-description{
+  margin-top: 30px;
+  text-align: center;
+  max-width: 800px;
+  margin-bottom: 60px;
+
+}
+
+.about-title {
+  margin-top: 150px;
   max-width: 800px;
   padding: 0 20px;
   text-align: center;
+  direction: rtl;
 }
 
 .about-title {
@@ -34,6 +53,7 @@
   font-weight: bold;
   margin-bottom: 10px;
   color: #444;
+  direction: rtl;
 }
 
 .about-registration {
@@ -41,13 +61,15 @@
   color: #666;
   margin-bottom: 10px;
   font-weight: bold;
+  direction: rtl;
 }
 
 .about-description {
+  
   font-size: 1.5em;
   line-height: 1.6;
   color: #555;
-  margin: 0 auto;
+  direction: rtl;
 }
 
 .section {
@@ -55,12 +77,14 @@
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  direction: rtl;
 }
 
 .section h2 {
   font-size: 1.8em;
   color: #333;
   margin-bottom: 10px;
+  direction: rtl;
 }
 
 .section p {
@@ -68,6 +92,7 @@
   color: #555;
   line-height: 1.6;
   margin: 0 auto;
+  direction: rtl;
 }
 
 .video-section {
@@ -129,7 +154,10 @@
   color: #000;
   text-decoration: none;
   font-weight: bold;
+  direction: rtl;
 }
+
+
 
 .card:hover {
   transform: translateY(-5px);

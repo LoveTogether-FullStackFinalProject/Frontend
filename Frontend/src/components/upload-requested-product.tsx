@@ -200,6 +200,13 @@ function UploadRequestedProduct() {
                       '& .MuiOutlinedInput-notchedOutline': {
                         textAlign: 'right',
                       },
+                      '& .MuiSelect-icon': {
+                        left: 0, // Move the arrow to the left
+                        right: 'auto',
+                      },
+                      '& .MuiInputBase-input': {
+                        paddingRight: 4, // Adjust padding to make space for the arrow
+                      }
                     }
                   }}
                 >

@@ -57,11 +57,8 @@ const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     );
 };
 
-type PrevArrowProps = {
-    onClick: () => void;
-};
 
-const PrevArrow = (props: PrevArrowProps) => {
+const PrevArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
     return (
         <IconButton
@@ -174,6 +171,7 @@ function MainPage() {
 
 
     const handleButtonClick = () => {
+        console.log("clicked");
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             navigate('/uploadproduct');
@@ -199,15 +197,27 @@ function MainPage() {
         infinite: true,
         speed: 500,
         slidesToShow: 3, 
-        slidesToScroll: 1,
+        slidesToScroll: 3,
         autoplay: true,
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow onClick={function (): void {
-            throw new Error('Function not implemented.');
-        } } />,
+        prevArrow: <PrevArrow />,
         centerMode: true,
         centerPadding: '0px',
+    });
+    const numUsers= users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).length;
+    const sliderSettings1 =({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        centerMode: false,
+         centerPadding: '0px',
     });
 
 
@@ -287,15 +297,11 @@ function MainPage() {
                 boxShadow:"2px"
             }}
         >
+            
             לתרומה
         </Button>
     </Box>
 </Box>
-            
-    
-     
-       
-
              {/* Section 2: Products We Need */}
              <Box className="section-section-light" >
                 <Typography variant="h5" sx={{ mb: 2}}>
@@ -326,32 +332,39 @@ function MainPage() {
             </Box>
 
 
-          {/* Section 3: Products We Need */}
-          <Box className="section-section3-light" >
-                <Typography variant="h5" sx={{ mb: 2}}>
-                    תורמים מובילים
-                </Typography>
-                <Slider {...sliderSettings}>
+            {/* Section 3: Leading Donors */}
+            <Box className="section-section3-light" sx={{ mb: 5 }}>
+    <Typography variant="h5" sx={{ mb: 2 }}>
+        תורמים מובילים
+    </Typography>
+    {numUsers === 1 ? (
+            users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
+                <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                    <Avatar
+                        src={user.image || person}
+                        alt={user.firstName + ' ' + user.lastName}
+                        sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                    />
+                    <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                    <Typography variant="body2">תורם מוביל</Typography>
+                </Box>
+            ))
+        ) : (
+            <Slider {...sliderSettings1}>
                 {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
-                        <Box key={index} sx={{ p: 2 }}>
-                            <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
-                                <Avatar
-                                    src={user.image || person}
-                                    alt={user.firstName + ' ' + user.lastName}
-                                    sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
-                                    <Typography variant="body2">תורם מוביל</Typography>
-                                </CardContent>
-                            </Card>
-                        </Box>
-                    ))}
-                </Slider>
-            </Box>
-
-
-
+                    <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                        <Avatar
+                            src={user.image || person}
+                            alt={user.firstName + ' ' + user.lastName}
+                            sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                        />
+                        <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                        <Typography variant="body2">תורם מוביל</Typography>
+                    </Box>
+                ))}
+            </Slider>
+        )}
+</Box>
 
 
             {/* Section 4: Donations and Community Counters */}

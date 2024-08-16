@@ -306,25 +306,28 @@ const navigate = useNavigate();
   autoComplete="email"
   autoFocus
   InputLabelProps={{
-    sx: {
-      right: 20,
-      left: 'auto',
-      transformOrigin: 'top right',
-      '&.MuiInputLabel-shrink': {
-        transform: 'translate(0, -10px) scale(0.75)',
-        transformOrigin: 'top right',
-      },
-    }
-  }}
-  InputProps={{
-    sx: { 
-      textAlign: 'right', 
-      direction: 'rtl',
-      '& .MuiOutlinedInput-notchedOutline': {
-        textAlign: 'right',
-      },
-    }
-  }}
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.85)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
+                  }}
+                  InputProps={{
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
 />
 
 <TextField
@@ -338,24 +341,27 @@ const navigate = useNavigate();
   autoComplete="current-password"
   InputLabelProps={{
     sx: {
-      right: 20,
+      right: 19,
       left: 'auto',
       transformOrigin: 'top right',
       '&.MuiInputLabel-shrink': {
-        transform: 'translate(0, -10px) scale(0.75)',
+        transform: 'translate(0, -10px) scale(0.85)',
         transformOrigin: 'top right',
       },
+      '& .MuiFormLabel-asterisk': {
+      display: 'none',
+    },
     }
   }}
-  InputProps={{
-    sx: { 
-      textAlign: 'right', 
-      direction: 'rtl',
-      '& .MuiOutlinedInput-notchedOutline': {
-        textAlign: 'right',
-      },
-    }
-  }}
+                  InputProps={{
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
 />
             
              {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
@@ -389,7 +395,7 @@ const navigate = useNavigate();
                 navigate('/registration');
               }}
             >
-        {"אין לך משתמש? הירשם"}
+        {"אין לך משתמש? הירשמ/י כאן"}
       </Link>
       </div>
     </Grid>

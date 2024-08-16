@@ -4,11 +4,13 @@ body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   overflow-x: hidden;
+  direction: rtl; /* Ensure the entire body is RTL */
 }
 
 .profile-page {
   margin-top: 100px;
   padding: 20px;
+  text-align: center; /* Center align content */
 }
 
 .user-info {
@@ -21,7 +23,7 @@ body {
 
 .Avatar-profile {
   margin-left: 20px;
-  width: 60px; /* Slightly larger for better visibility on small screens */
+  width: 60px;
   height: 60px;
   border-radius: 50%;
 }
@@ -29,8 +31,8 @@ body {
 .profile-header {
   font-family: 'Assistant', sans-serif;
   font-weight: bold;
-  font-size: 1.5rem; /* Slightly larger for mobile screens */
-  text-align: center; /* Center-align for better mobile experience */
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .rating-status {
@@ -55,8 +57,8 @@ body {
   border-radius: 15px;
   font-family: 'Assistant', sans-serif;
   padding: 10px;
-  width: 100%; /* Full width on mobile devices */
-  max-width: 400px; /* Restrict maximum width on larger screens */
+  width: 100%; 
+  max-width: 400px; 
   border: 1px solid #ccc;
 }
 
@@ -71,6 +73,14 @@ select {
   border: 1px solid #ccc;
 }
 
+/* Add spacing between sort selectors and search input */
+.sort-section {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
 /* Donation Cards Styling */
 .donations-list {
   display: flex;
@@ -78,7 +88,7 @@ select {
   gap: 20px;
   justify-content: center;
   direction: rtl;
-  text-align: right;
+  text-align: center; /* Center text in donation cards */
 }
 
 .donation-card {
@@ -86,7 +96,7 @@ select {
   padding: 15px;
   border-radius: 10px;
   width: 100%;
-  max-width: 300px; /* Restrict maximum width for larger screens */
+  max-width: 300px; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
@@ -106,16 +116,12 @@ select {
 .donation-card h5 {
   margin-top: 10px;
   font-size: 1.2em;
-  text-align: center;
-  min-height: 3em;
 }
 
 .donation-card p {
   font-size: 1em;
   color: #555;
-  text-align: center;
   margin: 5px 0;
-  min-height: 2em;
 }
 
 .donation-card:hover {
@@ -139,7 +145,6 @@ select {
   font-weight: bold;
   font-size: 2rem;
   color: #444;
-  text-align: center;
   margin-top: 20px;
   margin-bottom: 30px;
   background-color: #f9db78;
@@ -161,15 +166,15 @@ select {
   }
 
   .profile-header, .rating-status {
-    font-size: 1.2rem; /* Reduce font size on smaller screens */
+    font-size: 1.2rem;
   }
 
   .search-input {
-    max-width: 100%; /* Ensure full width on small screens */
+    max-width: 100%; 
   }
 
   .background-section {
-    padding: 100px 0; /* Reduce padding for smaller screens */
+    padding: 100px 0; 
   }
 }
 
@@ -240,4 +245,21 @@ select {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 0.9em;
+}
+
+/* Reset Filters Button Styling */
+.reset-filters {
+  margin-top: 20px;
+  background-color: #ff6b6b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.reset-filters:hover {
+  background-color: #d9534f;
+  transform: scale(1.05);
 }

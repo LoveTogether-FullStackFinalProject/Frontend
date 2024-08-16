@@ -4,15 +4,17 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
+
+
 import {
   Box,
   Typography,
   Button,
   Avatar,
-  Card,
   CardContent,
   Container,
   IconButton,
+  Card,
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -26,6 +28,7 @@ import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
+import '../styles/globals.css';
 
 const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
@@ -35,7 +38,7 @@ const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
             sx={{
                 position: 'absolute',
                 top: '50%',
-                right: '-20px',
+                right: '-10px',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 color: '#000',
@@ -66,7 +69,7 @@ const PrevArrow = (props: PrevArrowProps) => {
             sx={{
                 position: 'absolute',
                 top: '50%',
-                left: '-20px',
+                left: '-10px',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 color: '#000',
@@ -159,15 +162,15 @@ function MainPage() {
         };
     }, []);
 
-    const handleProductClick = (productName: string, category: string, amount: number) => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-          navigate(`/uploadproduct?productName=${encodeURIComponent(productName)}&category=${encodeURIComponent(category)}&amount=${amount}`);
-      } else {
-          navigate('/login');
-      }
-  };
-
+    const handleProductClick = (request:requestedDonation ) => {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            console.log("request is" ,request);
+            navigate('/uploadproduct', { state: { request } });
+ } else {
+            navigate('/login');
+        }
+    }
 
 
     const handleButtonClick = () => {
@@ -191,42 +194,111 @@ function MainPage() {
         }
     };
 
-    const sliderSettings = {
+    const sliderSettings =({
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 3, 
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow onClick={() => {}} />,
+        prevArrow: <PrevArrow onClick={function (): void {
+            throw new Error('Function not implemented.');
+        } } />,
         centerMode: true,
         centerPadding: '0px',
-    };
+    });
+
 
     const totalDonations = Object.values(counts).reduce((acc, count) => acc + count, 0);
 
     return (
-        <Container maxWidth="lg">
+        <Container style={{ 
+            width: '100%', 
+            padding: 0, 
+            margin: 0, 
+            maxWidth: '100%' 
+        }}>
             {/* Section 1: Logo and Main CTA */}
-            <Box className="first-section">
-    <img src={whitelogo} alt="Logo" className="first-section-logo" />
-    <Typography variant="h5" className="first-section-title">
-        כמה קל לתרום היום
-    </Typography>
-    <Button
-        onClick={handleButtonClick}
-        variant="contained"
-        className="first-section-button"
-    >
-        לתרומה <ChevronLeft />
-    </Button>
-</Box>
+            {/* Background Gradient Container */}
+            {/* Background */}
+            <Box
+        sx={{
+        marginTop: '150px',
+        position: 'relative',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between', 
+        background: 'linear-gradient(135deg, rgba(249, 218, 120, 0.8) 5%, rgba(245, 245, 245, 0.8) 95%)',
+        zIndex: -1, 
+        padding: '0 20px', 
+    }}
+>
+    {/* Logo */}
+    <Box
+        component="img"
+        src={whitelogo}
+        alt="whitelogo"
+        sx={{ 
+            maxWidth: '300px',
+            marginLeft:'80px',
+            minWidth:'100px',
+            height: 'auto'
+        }}
+    />
 
-            {/* Section 2: Products We Need */}
-            <Box className="section section-light">
-                <Typography variant="h5">
+    {/* Text and Button */}
+    <Box
+        sx={{
+            marginBottom:'20px',
+            marginRight:'50px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            textAlign: 'right',
+            gap: 2, // Space between text and button
+        }}
+    >
+        {/* Center Text */}
+        <Typography variant="h4" sx={{ 
+            fontFamily: "'Assistant', sans-serif", 
+            fontWeight: 500, 
+            color: 'black',
+            mb: 2,
+        }}>
+            כמה קל לתרום היום
+        </Typography>
+
+       
+        <Button
+            onClick={handleButtonClick}
+            variant="contained"
+            endIcon={<i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>}
+            sx={{ 
+                px: 4, 
+                py: 2, 
+                fontSize: '1rem', 
+                textTransform: 'none', 
+                backgroundColor: "white", 
+                color: "black", 
+                borderRadius: "8px",
+                boxShadow:"2px"
+            }}
+        >
+            לתרומה
+        </Button>
+    </Box>
+</Box>
+            
+    
+     
+       
+
+             {/* Section 2: Products We Need */}
+             <Box className="section-section-light" >
+                <Typography variant="h5" sx={{ mb: 2}}>
                     מוצרים שאנחנו צריכים
                 </Typography>
                 <Slider {...sliderSettings}>
@@ -236,16 +308,16 @@ function MainPage() {
                                 component="img"
                                 src={request.image || person}
                                 sx={{
-                                    width: '120px',
-                                    height: '120px',
+                                    width: '100px',
+                                    height: '100px',
                                     objectFit: 'cover',
                                     borderRadius: '50%',
                                     overflow: 'hidden',
                                     display: 'block',
                                     margin: '0 auto',
                                 }}
-                                onClick={() => handleProductClick(request.itemName, request.category, request.amount)}
-                                />
+                                onClick={() => handleProductClick(request)}
+                            />
                             <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>{request.itemName}</Typography>
                             <Typography variant="body2" sx={{ mt: 1 }}>{request.amount} :כמות מבוקשת</Typography>
                         </Box>
@@ -254,18 +326,18 @@ function MainPage() {
             </Box>
 
 
-            {/* Section 3: Leading Donors */}
-            <Box className="section section-light">
-                <Typography variant="h5">
+          {/* Section 3: Products We Need */}
+          <Box className="section-section3-light" >
+                <Typography variant="h5" sx={{ mb: 2}}>
                     תורמים מובילים
                 </Typography>
                 <Slider {...sliderSettings}>
-                    {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
+                {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
                         <Box key={index} sx={{ p: 2 }}>
                             <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
                                 <Avatar
                                     src={user.image || person}
-                                    alt={`${user.firstName} ${user.lastName}`}
+                                    alt={user.firstName + ' ' + user.lastName}
                                     sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
                                 />
                                 <CardContent>
@@ -277,6 +349,10 @@ function MainPage() {
                     ))}
                 </Slider>
             </Box>
+
+
+
+
 
             {/* Section 4: Donations and Community Counters */}
             <Box className="section section-yellow">
@@ -310,6 +386,7 @@ function MainPage() {
             </Box>
         </Container>
     );
-}
+
+    }
 
 export default MainPage;

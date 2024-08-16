@@ -194,22 +194,28 @@ function MainPage() {
         }
     };
 
-    const sliderSettings =({
+    const sliderSettings = (numUsers: number) => ({
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3, 
+        slidesToShow: Math.min(numUsers, 3), // Show up to 3 slides, or fewer if there are fewer users
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow onClick={function (): void {
-            throw new Error('Function not implemented.');
-        } } />,
+        prevArrow: <PrevArrow  />,
         centerMode: true,
         centerPadding: '0px',
     });
 
+    const LeadingDonors = () => {
+        // Filter users based on rating and publication status
+        const leadingDonors = users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished);
+        const numUsers = leadingDonors.length;
+        console.log("numUsers",numUsers);
+        return numUsers
+    };
+    const numUsers = LeadingDonors();
 
     const totalDonations = Object.values(counts).reduce((acc, count) => acc + count, 0);
 
@@ -324,7 +330,7 @@ function MainPage() {
                 <Typography variant="h5" sx={{ mb: 2}}>
                     תורמים מובילים
                 </Typography>
-                <Slider {...sliderSettings}>
+                <Slider {...sliderSettings(numUsers)}>
                 {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
                         <Box key={index} sx={{ p: 2 }}>
                             <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>

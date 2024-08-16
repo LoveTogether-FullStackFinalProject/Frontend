@@ -390,7 +390,11 @@ function UploadRequestedProduct() {
                     sx={{
                       mt: 2,
                       maxWidth: '100%',
-                      height: 'auto'
+                      height: 'auto',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                      transform: 'translateX(10px)' // Adjust the value as needed
                     }}
                     src={URL.createObjectURL(imgSrc)}
                     alt="Preview"

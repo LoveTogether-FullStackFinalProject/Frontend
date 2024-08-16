@@ -566,6 +566,29 @@ export default function UploadProduct() {
               {...register('itemName')}
               error={!!errors.itemName}
               helperText={errors.itemName?.message}
+              InputLabelProps={{
+                sx: {
+                  right: 19,
+                  left: 'auto',
+                  transformOrigin: 'top right',
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(0, -10px) scale(0.85)',
+                    transformOrigin: 'top right',
+                  },
+                  '& .MuiFormLabel-asterisk': {
+                  display: 'none',
+                },
+                }
+              }}
+              InputProps={{
+                sx: { 
+                  textAlign: 'right', 
+                  direction: 'rtl',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    textAlign: 'right',
+                  },
+                }
+              }}
             />
             <TextField
               margin="normal"
@@ -577,6 +600,29 @@ export default function UploadProduct() {
               {...register('quantity', { valueAsNumber: true })}
               error={!!errors.quantity}
               helperText={errors.quantity?.message}
+              InputLabelProps={{
+                sx: {
+                  right: 19,
+                  left: 'auto',
+                  transformOrigin: 'top right',
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(0, -10px) scale(0.85)',
+                    transformOrigin: 'top right',
+                  },
+                  '& .MuiFormLabel-asterisk': {
+                  display: 'none',
+                },
+                }
+              }}
+              InputProps={{
+                sx: { 
+                  textAlign: 'right', 
+                  direction: 'rtl',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    textAlign: 'right',
+                  },
+                }
+              }}
             />
             <Controller
               name="category"
@@ -588,6 +634,36 @@ export default function UploadProduct() {
                   label="קטגוריה"
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    }
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                      '& .MuiSelect-icon': {
+                        left: 0, // Move the arrow to the left
+                        right: 'auto',
+                      },
+                      '& .MuiInputBase-input': {
+                        paddingRight: 4, // Adjust padding to make space for the arrow
+                      }
+                    }
+                  }}
                   {...field}
                 >
                   <MenuItem value="">בחר קטגוריה</MenuItem>
@@ -598,6 +674,7 @@ export default function UploadProduct() {
                   <MenuItem value="צעצועים">צעצועים</MenuItem>
                   <MenuItem value="אחר">אחר</MenuItem>
                 </TextField>
+                
               )}
             />
             {selectedCategory === 'אחר' && (
@@ -610,6 +687,29 @@ export default function UploadProduct() {
                 {...register('customCategory')}
                 error={!!errors.customCategory}
                 helperText={errors.customCategory?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.85)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                  }
+                }}
+                InputProps={{
+                  sx: { 
+                    textAlign: 'right', 
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             )}
             <TextField
@@ -621,6 +721,29 @@ export default function UploadProduct() {
               {...register('condition')}
               error={!!errors.condition}
               helperText={errors.condition?.message}
+              InputLabelProps={{
+                sx: {
+                  right: 19,
+                  left: 'auto',
+                  transformOrigin: 'top right',
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(0, -10px) scale(0.85)',
+                    transformOrigin: 'top right',
+                  },
+                  '& .MuiFormLabel-asterisk': {
+                  display: 'none',
+                },
+                }
+              }}
+              InputProps={{
+                sx: { 
+                  textAlign: 'right', 
+                  direction: 'rtl',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    textAlign: 'right',
+                  },
+                }
+              }}
             />
             {selectedCategory === 'מזון ושתייה' && (
               <TextField
@@ -636,6 +759,29 @@ export default function UploadProduct() {
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
                 helperText={errors.expirationDate?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.85)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                  }
+                }}
+                InputProps={{
+                  sx: { 
+                    textAlign: 'right', 
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             )}
             <TextField
@@ -649,6 +795,29 @@ export default function UploadProduct() {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
+              InputLabelProps={{
+                sx: {
+                  right: 19,
+                  left: 'auto',
+                  transformOrigin: 'top right',
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(0, -10px) scale(0.85)',
+                    transformOrigin: 'top right',
+                  },
+                  '& .MuiFormLabel-asterisk': {
+                  display: 'none',
+                },
+                }
+              }}
+              InputProps={{
+                sx: { 
+                  textAlign: 'right', 
+                  direction: 'rtl',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    textAlign: 'right',
+                  },
+                }
+              }}
             />
             <Typography component="legend">אפשרות מסירה</Typography>
             <Controller
@@ -660,6 +829,7 @@ export default function UploadProduct() {
                   <FormControlLabel value="לא נמסר לעמותה" control={<Radio />} label="אמסור את התרומה לעמותה בעצמי" />
                 </RadioGroup>
               )}
+              
             />
             {errors.deliveryOption && (
               <Alert severity="error">{errors.deliveryOption.message}</Alert>
@@ -674,6 +844,29 @@ export default function UploadProduct() {
                 {...register('pickupAddress')}
                 error={!!errors.pickupAddress}
                 helperText={errors.pickupAddress?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.85)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                  }
+                }}
+                InputProps={{
+                  sx: { 
+                    textAlign: 'right', 
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             )}
             {/* {selectedDeliveryOption === 'לא נמסר לעמותה' && (

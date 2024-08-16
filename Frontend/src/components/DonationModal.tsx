@@ -29,9 +29,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
 
     const handleSave = () => {
         if (editData) {
-            onEditClick(editData); // Ensure the updated data is passed back to Profile.tsx
+            onEditClick(editData);
             setIsEditing(false);
-            onHide();  // Hide the modal after saving
+            onHide();
         }
     };
 
@@ -42,7 +42,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
 
     const handleClose = () => {
         setIsEditing(false);
-        setEditData(donation); // Reset editData to original donation data
+        setEditData(donation); 
         onHide();
     };
 
@@ -87,7 +87,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                     <Form.Label>מצב הפריט</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="condition"
+                                        name="itemCondition"
                                         value={editData.itemCondition}
                                         onChange={handleChange}
                                     />
@@ -112,6 +112,15 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         />
                                     </Form.Group>
                                 )}
+                                <Form.Group>
+                                    <Form.Label>סטטוס</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="status"
+                                        value={editData.status}
+                                        onChange={handleChange}
+                                    />
+                                </Form.Group>
                                 {editData.status === 'ממתין לאיסוף מבית התורם' && (
                                     <Form.Group>
                                         <Form.Label>כתובת לאיסוף</Form.Label>
@@ -144,6 +153,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                 {editData.category === 'מזון ושתייה' && editData.expirationDate && (
                                     <p><strong>תאריך תפוגה:</strong> {new Date(editData.expirationDate).toLocaleDateString()}</p>
                                 )}
+                                <p><strong>סטטוס:</strong> {editData.status}</p>
                                 {editData.status === 'ממתין לאיסוף מבית התורם' && editData.pickUpAddress && (
                                     <p><strong>כתובת לאיסוף:</strong> {editData.pickUpAddress}</p>
                                 )}

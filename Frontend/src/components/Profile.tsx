@@ -13,12 +13,12 @@ const Profile: React.FC = () => {
     const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
     const [loading, setLoading] = useState(true);
     const [itemsToShow, setItemsToShow] = useState(4);
-    const [editDonationId, setEditDonationId] = useState<string | null>(null);
-    const [editableDonation, setEditableDonation] = useState<Partial<Donation>>({});
     const [showModal, setShowModal] = useState(false);
     const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFilters, setSelectedFilters] = useState<{ status: string[]; approved: string[] }>({ status: [], approved: [] });
+    const [sortProperty, setSortProperty] = useState<keyof Donation | ''>('');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     const userId = localStorage.getItem('userID');
 
@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         applyFilters();
-    }, [donations, searchQuery, selectedFilters, itemsToShow]);
+    }, [donations, searchQuery, selectedFilters, itemsToShow, sortProperty, sortOrder]);
 
     const applyFilters = () => {
         let filtered = donations;
@@ -67,6 +67,22 @@ const Profile: React.FC = () => {
             filtered = filtered.filter(donation =>
                 selectedFilters.approved.includes(String(donation.approvedByAdmin))
             );
+        }
+
+        if (sortProperty) {
+            filtered.sort((a, b) => {
+                const aValue = a[sortProperty];
+                const bValue = b[sortProperty];
+
+                if (typeof aValue === 'string' && typeof bValue === 'string') {
+                    return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+                    return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+                } else if (aValue instanceof Date && bValue instanceof Date) {
+                    return sortOrder === 'asc' ? aValue.getTime() - bValue.getTime() : bValue.getTime() - aValue.getTime();
+                }
+                return 0;
+            });
         }
 
         setFilteredDonations(filtered.slice(0, itemsToShow));
@@ -121,20 +137,6 @@ const Profile: React.FC = () => {
         }
     };
 
-    const handleEditClick = (donation: Donation) => {
-        console.log('Editing donation:', donation); // Log to check if donation data is correct
-        setEditDonationId(donation._id);
-        setEditableDonation(donation);
-        setShowModal(true);
-    };
-    
-
-    const handleCancelClick = () => {
-        setEditDonationId(null);
-        setEditableDonation({});
-        setShowModal(false);
-    };
-
     const handleCardClick = (donation: Donation) => {
         setSelectedDonation(donation);
         setShowModal(true);
@@ -149,8 +151,6 @@ const Profile: React.FC = () => {
                         donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
                     )
                 );
-                setEditDonationId(null);
-                setEditableDonation({});
                 setShowModal(false);
             } else {
                 console.error('Error: No donation ID found');
@@ -158,6 +158,17 @@ const Profile: React.FC = () => {
         } catch (error) {
             console.error('Error saving changes:', error);
         }
+    };
+    const handleCancelClick = () => {
+        setShowModal(false);
+    };
+
+    const handleSortChange = (property: keyof Donation | '') => {
+        setSortProperty(property);
+    };
+
+    const handleSortOrderChange = (order: 'asc' | 'desc') => {
+        setSortOrder(order);
     };
 
     const resetFilters = () => {
@@ -191,8 +202,31 @@ const Profile: React.FC = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
+
+                <div className="sort-section">
+                    <select
+                        value={sortProperty}
+                        onChange={(e) => handleSortChange(e.target.value as keyof Donation)}
+                    >   
+                        <option value="">מיין לפי</option>
+                        <option value="category">קטגוריה</option>
+                        <option value="quantity">כמות</option>
+                        <option value="itemCondition">מצב הפריט</option>
+                        <option value="status">סטטוס</option>
+                        <option value="createdAt">תאריך יצירה</option>
+                        <option value="updatedAt">תאריך עדכון</option>
+                    </select>
+                    <select
+                        value={sortOrder}
+                        onChange={(e) => handleSortOrderChange(e.target.value as 'asc' | 'desc')}
+                    >
+                        <option value="asc">סדר עולה</option>
+                        <option value="desc">סדר יורד</option>
+                    </select>
+                </div>
+
                 <div className="filter-section">
-                    <h4>בחר מסננים:</h4>
+                    <h4>סינון לפי:</h4>
                     <div className="filter-buttons">
                         {['ממתין לאיסוף מבית התורם', 'נמסר בעמותה', 'ממתין לאיסוף', 'נמסר'].map(status => (
                             <button
@@ -262,12 +296,12 @@ const Profile: React.FC = () => {
             </main>
 
             <DonationModal
-    show={showModal}
-    onHide={handleCancelClick}
-    donation={selectedDonation}
-    onEditClick={handleSaveChanges}  // Pass handleSaveChanges as onEditClick
-    onDeleteClick={handleDeleteClick}
-/>
+                show={showModal}
+                onHide={handleCancelClick}
+                donation={selectedDonation}
+                onEditClick={handleSaveChanges}  // Pass handleSaveChanges as onEditClick
+                onDeleteClick={handleDeleteClick}
+            />
         </div>
     );
 };

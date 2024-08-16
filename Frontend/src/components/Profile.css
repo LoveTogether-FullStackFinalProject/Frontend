@@ -73,6 +73,14 @@ select {
   border: 1px solid #ccc;
 }
 
+/* Add spacing between sort selectors and search input */
+.sort-section {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
 /* Donation Cards Styling */
 .donations-list {
   display: flex;

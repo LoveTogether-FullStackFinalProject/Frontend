@@ -174,6 +174,7 @@ function MainPage() {
 
 
     const handleButtonClick = () => {
+          console.log('Button clicked');
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             navigate('/uploadproduct');

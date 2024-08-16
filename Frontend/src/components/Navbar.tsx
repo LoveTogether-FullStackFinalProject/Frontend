@@ -15,11 +15,10 @@ interface NavbarProps {
   googleSignIn: boolean;
 }
 
-export function Navbar({  setUser }: NavbarProps) {
+export function Navbar({ setUser }: NavbarProps) {
   const [userId, setUserId] = useState(localStorage.getItem("userID"));
   const [token, setToken] = useState(localStorage.getItem("accessToken"));
   const [isAdmin, setIsAdmin] = useState(false);
-  //const location = useLocation();
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -85,9 +84,6 @@ export function Navbar({  setUser }: NavbarProps) {
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <BootstrapNavbar.Brand as={Link} to="/mainPage">
-              <img src={logo} alt="Logo" className="logo-image" />
-            </BootstrapNavbar.Brand>
             {isLoggedIn ? (
               <div className='navLink'>
                 <Nav.Link as={Link} to="/profile">החשבון שלי</Nav.Link>
@@ -104,6 +100,9 @@ export function Navbar({  setUser }: NavbarProps) {
             )}
           </Nav>
         </BootstrapNavbar.Collapse>
+        <BootstrapNavbar.Brand as={Link} to="/mainPage" className="ms-auto">
+          <img src={logo} alt="Logo" className="logo-image" />
+        </BootstrapNavbar.Brand>
       </Container>
     </BootstrapNavbar>
   );

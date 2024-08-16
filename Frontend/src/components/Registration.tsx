@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
+//import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
@@ -288,7 +288,7 @@ export default function SignUp() {
                   onClick={selectImg}
                   sx={{ mt: 1, mb: 2 }}
                 >
-                  <FontAwesomeIcon icon={faImage}  style={{direction:"rtl"}}/> בחר תמונה
+                  <FontAwesomeIcon icon={['fas', 'image']}  style={{direction:"rtl"}}/> בחר תמונה
                 </Button>
                
               </Grid>

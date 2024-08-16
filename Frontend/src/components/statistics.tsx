@@ -4,6 +4,7 @@ import { DonorData } from './donorData';
 import { requestedDonation } from '../services/upload-requested-product-service';
 import dataService, { CanceledError } from '../services/data-service';
 import { useNavigate } from 'react-router-dom';
+import { SelectChangeEvent } from '@mui/material';
 import {
   Container,
   Typography,
@@ -29,8 +30,8 @@ import {
   Bar,
   PieChart,
   Pie,
-  LineChart,
-  Line,
+  //LineChart,
+  //Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -121,19 +122,21 @@ const Statistics = () => {
   };
 
   const handleChartChange = (event: any) => {
+
     setSelectedChart(event.target.value);
   };
 
-  const aggregateData = (data: any[], field: string, isObject = false) => {
+  const aggregateData = (data: unknown[], field: string, isObject = false) => {
     if (!data || data.length === 0) return {};
     return data.reduce((acc, item) => {
-      const key = isObject ? `${item[field]?.firstName} ${item[field]?.lastName}` : item[field];
+      const key = isObject ? `${(item as any)[field]?.firstName} ${(item as any)[field]?.lastName}` : (item as any)[field];
       if (!acc[key]) {
         acc[key] = 0;
       }
       acc[key] += item.quantity || item.amount || 1;
+
       return acc;
-    }, {});
+    }, {} as Record<string, number>);
   };
 
   const getTopN = (data: Record<string, number>, n: number) => {
@@ -144,7 +147,7 @@ const Statistics = () => {
   };
 
   const topProducts = getTopN(aggregateData(products, 'itemName'), 5);
-  const topRequests = getTopN(aggregateData(requests, 'itemName'), 5);
+  //const topRequests = getTopN(aggregateData(requests, 'itemName'), 5);
   const topUsers = getTopN(aggregateData(products, 'donor', true), 5);
   const topBranches = getTopN(aggregateData(products, 'branch'), 5);
   const topCategories = getTopN(aggregateData(products, 'category'), 5);

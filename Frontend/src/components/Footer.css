@@ -1,28 +1,39 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%; /* Ensure the body takes up the full height */
+}
+
+#root {
+  min-height: 100%; /* Adjust the root element if using React */
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1; /* Allow the content area to grow and take up available space */
 }
 
 .footer {
-  bottom: 0;
-  width: 100%;
   background-color: #000000d3;
   color: rgb(255, 255, 255);
   text-align: center;
   padding: 10px 0;
   box-shadow: 0 -2px 5px rgba(37, 36, 36, 0.421);
-  box-sizing: border-box; /* Include padding and borders in width */
+  box-sizing: border-box;
+  position: relative; /* Default position */
+  bottom: 0;
+  width: 100%;
 }
 
-
 .footer p {
-  margin: 0 0;
+  margin: 0;
 }
 
 .social-media {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
   margin: 10px 0;
 }
 

@@ -9,9 +9,10 @@ import socialCoats from '../assets/coats.png';
 const AboutPage = () => {
   return (
     <div className="about-page">
-      <div className="background-section text-center">
+      <div className="background-section-text-center">
         <h1 className="about-title">עמותת ואהבתם ביחד</h1>
         <p className="about-registration">ע.ר 580776359</p>
+  
         <p className="about-description">
           עמותת "ואהבתם ביחד" נוסדה מתוך חזון להעניק סיוע ותמיכה לאוכלוסיות נזקקות באשדוד והסביבה. העמותה מפעילה מגוון יוזמות חברתיות ייחודיות, ביניהן המכולת החברתית, המקרר השיתופי, תיק לכל ילד וקיר המעילים, במטרה לספק פתרונות מידיים ויעילים לצרכים הבסיסיים של משפחות נזקקות.
         </p>

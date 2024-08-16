@@ -26,7 +26,7 @@ import { Edit, Delete, Search } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 type Order = 'asc' | 'desc';
 
@@ -41,7 +41,8 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();

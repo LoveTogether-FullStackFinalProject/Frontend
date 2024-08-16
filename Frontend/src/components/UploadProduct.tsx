@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+//import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
@@ -62,7 +62,7 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
-  const [showError, setShowError] = React.useState(false);
+  //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -80,7 +80,7 @@ export default function UploadProduct() {
     formState: { errors },
     watch,
     setValue,
-    trigger,
+    //trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',

@@ -8,7 +8,6 @@ import {
   Box,
   Typography,
   Button,
-  Grid,
   Avatar,
   Card,
   CardContent,
@@ -28,7 +27,7 @@ import whitelogo from '../assets/whiteLogo.png';
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
 
-const NextArrow = (props: any) => {
+const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
     return (
         <IconButton
@@ -55,7 +54,11 @@ const NextArrow = (props: any) => {
     );
 };
 
-const PrevArrow = (props: any) => {
+type PrevArrowProps = {
+    onClick: () => void;
+};
+
+const PrevArrow = (props: PrevArrowProps) => {
     const { onClick } = props;
     return (
         <IconButton
@@ -105,6 +108,7 @@ function MainPage() {
         const { req, abort } = dataService.getDonations();
         req.then((res) => {
             setProducts(res.data);
+            console.log(products);
             const categoryCounts = {
                 food: res.data.filter(product => product.category === 'מזון ושתייה').length,
                 clothing: res.data.filter(product => product.category === 'ביגוד').length,
@@ -196,7 +200,7 @@ function MainPage() {
         autoplay: true,
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
+        prevArrow: <PrevArrow onClick={() => {}} />,
         centerMode: true,
         centerPadding: '0px',
     };

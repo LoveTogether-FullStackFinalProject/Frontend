@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ManageMainPageUsers.css';  // Import the CSS file
 import dataService, { CanceledError } from "../services/data-service";
 import { DonorData } from './donorData';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import {
   Table,
   Dropdown,
@@ -22,7 +22,8 @@ const ManageMainPageUsers = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();

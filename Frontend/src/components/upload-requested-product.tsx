@@ -372,6 +372,11 @@ function UploadRequestedProduct() {
                 >
                   בחר תמונה
                 </Button>
+                {errors.image && (
+                  <Alert severity="error" sx={{ mt: 2 }}>
+                   יש להעלות תמונה של המוצר המבוקש
+                  </Alert>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -385,7 +390,11 @@ function UploadRequestedProduct() {
                     sx={{
                       mt: 2,
                       maxWidth: '100%',
-                      height: 'auto'
+                      height: 'auto',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                      transform: 'translateX(10px)' // Adjust the value as needed
                     }}
                     src={URL.createObjectURL(imgSrc)}
                     alt="Preview"

@@ -372,6 +372,11 @@ function UploadRequestedProduct() {
                 >
                   בחר תמונה
                 </Button>
+                {errors.image && (
+                  <Alert severity="error" sx={{ mt: 2 }}>
+                   יש להעלות תמונה של המוצר המבוקש
+                  </Alert>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"

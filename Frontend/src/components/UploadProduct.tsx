@@ -391,18 +391,18 @@ import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://your-website.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright(props: any) {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://your-website.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const defaultTheme = createTheme();
 
@@ -420,8 +420,8 @@ const schema = z.object({
     return selectedDate > currentDate && selectedDate > nextWeek;
   }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.').optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
-  pickupAddress: z.string().optional(),
-  branch: z.string().optional(),
+  pickupAddress: z.string().min(2, 'הכתובת חייבת להכיל לפחות 2 תווים').optional(),
+  //branch: z.string().optional(),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
   deliveryOption: z.string().min(1, 'יש לבחור אפשרות מסירה'),
 });
@@ -515,6 +515,7 @@ export default function UploadProduct() {
         alert('User not logged in');
         return;
       }
+      console.log('status:', data.deliveryOption);
       const productData = {
         ...data,
         image: imageUrl,
@@ -655,8 +656,8 @@ export default function UploadProduct() {
               control={control}
               render={({ field }) => (
                 <RadioGroup {...field}>
-                  <FormControlLabel value="ממתין לאיסוף" control={<Radio />} label="ממתין לאיסוף" />
-                  <FormControlLabel value="לא נמסר לעמותה" control={<Radio />} label="אשמח שיאספו ממני את התרומה" />
+                  <FormControlLabel value="ממתין לאיסוף" control={<Radio />} label="אשמח שיאספו ממני את התרומה" />
+                  <FormControlLabel value="לא נמסר לעמותה" control={<Radio />} label="אמסור את התרומה לעמותה בעצמי" />
                 </RadioGroup>
               )}
             />
@@ -675,7 +676,7 @@ export default function UploadProduct() {
                 helperText={errors.pickupAddress?.message}
               />
             )}
-            {selectedDeliveryOption === 'לא נמסר לעמותה' && (
+            {/* {selectedDeliveryOption === 'לא נמסר לעמותה' && (
               <Controller
                 name="branch"
                 control={control}
@@ -693,9 +694,9 @@ export default function UploadProduct() {
                     <MenuItem value="סניף 2">סניף 2</MenuItem>
                     <MenuItem value="סניף 3">סניף 3</MenuItem>
                   </TextField>
-                )}
-              />
-            )}
+                )} */}
+              {/* />
+            )} */}
             <Button
               variant="contained"
               component="label"
@@ -710,6 +711,11 @@ export default function UploadProduct() {
                 onChange={handleImageChange}
               />
             </Button>
+            {errors.image && (
+                  <Alert severity="error" sx={{ mt: 2 }}>
+                   יש להעלות תמונה של המוצר המבוקש
+                  </Alert>
+                )}
             {imgPreview && (
               <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                 <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
@@ -725,7 +731,7 @@ export default function UploadProduct() {
             </Button>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

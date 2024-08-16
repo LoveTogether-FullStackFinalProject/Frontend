@@ -4,17 +4,15 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
-
-
 import {
   Box,
   Typography,
   Button,
   Avatar,
-  CardContent,
+  //CardContent,
   Container,
   IconButton,
-  Card,
+  //Card,
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -167,8 +165,7 @@ function MainPage() {
  } else {
             navigate('/login');
         }
-    }
-
+    };
 
     const handleButtonClick = () => {
         console.log("clicked");
@@ -216,8 +213,8 @@ function MainPage() {
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-        centerMode: false,
-         centerPadding: '0px',
+        centerMode: true,
+        centerPadding: '0px',
     });
 
 
@@ -283,7 +280,7 @@ function MainPage() {
 
        
         <Button
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick()}
             variant="contained"
             endIcon={<i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>}
             sx={{ 
@@ -297,7 +294,6 @@ function MainPage() {
                 boxShadow:"2px"
             }}
         >
-            
             לתרומה
         </Button>
     </Box>

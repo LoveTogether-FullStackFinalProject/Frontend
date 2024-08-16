@@ -4,6 +4,7 @@
 
 
 .navLink {
+  margin-right: 20px;
   color: black;
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;
   font-weight: bold;
@@ -34,7 +35,14 @@
   .navLink {
     flex-direction: row;
     align-items: flex-start; /* Align links to the left */
+    .navbar-collapse {
+      order: 2;
   }
+
+ 
+    
+  }
+  
   
   .navbar-container {
     justify-content: space-between;
@@ -48,6 +56,11 @@
 
   .navbar-toggler {
     margin-right: 10px; /* Ensure the toggle button is on the right */
+  }
+
+  .navbar-brand {
+    order: 1;
+    margin-left: auto;
   }
 }
 

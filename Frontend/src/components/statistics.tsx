@@ -4,7 +4,6 @@ import { DonorData } from './donorData';
 import { requestedDonation } from '../services/upload-requested-product-service';
 import dataService, { CanceledError } from '../services/data-service';
 import { useNavigate } from 'react-router-dom';
-import { SelectChangeEvent } from '@mui/material';
 import {
   Container,
   Typography,
@@ -20,7 +19,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   Paper
@@ -30,8 +28,8 @@ import {
   Bar,
   PieChart,
   Pie,
-  //LineChart,
-  //Line,
+  LineChart, // Corrected Import
+  Line, // Corrected Import
   XAxis,
   YAxis,
   CartesianGrid,
@@ -55,8 +53,6 @@ const StyledTableContainer = styled(Paper)(({ theme }) => ({
     fontSize: '1.1rem',
   },
 }));
-
-
 
 const Statistics = () => {
   const navigate = useNavigate();
@@ -122,21 +118,19 @@ const Statistics = () => {
   };
 
   const handleChartChange = (event: any) => {
-
     setSelectedChart(event.target.value);
   };
 
-  const aggregateData = (data: unknown[], field: string, isObject = false) => {
+  const aggregateData = (data: any[], field: string, isObject = false): Record<string, number> => {
     if (!data || data.length === 0) return {};
-    return data.reduce((acc, item) => {
-      const key = isObject ? `${(item as any)[field]?.firstName} ${(item as any)[field]?.lastName}` : (item as any)[field];
+    return data.reduce((acc: Record<string, number>, item: any) => {
+      const key = isObject ? `${item[field]?.firstName} ${item[field]?.lastName}` : item[field];
       if (!acc[key]) {
         acc[key] = 0;
       }
       acc[key] += item.quantity || item.amount || 1;
-
       return acc;
-    }, {} as Record<string, number>);
+    }, {});
   };
 
   const getTopN = (data: Record<string, number>, n: number) => {
@@ -147,7 +141,7 @@ const Statistics = () => {
   };
 
   const topProducts = getTopN(aggregateData(products, 'itemName'), 5);
-  //const topRequests = getTopN(aggregateData(requests, 'itemName'), 5);
+  const topRequests = getTopN(aggregateData(requests, 'itemName'), 5);
   const topUsers = getTopN(aggregateData(products, 'donor', true), 5);
   const topBranches = getTopN(aggregateData(products, 'branch'), 5);
   const topCategories = getTopN(aggregateData(products, 'category'), 5);
@@ -251,7 +245,7 @@ const Statistics = () => {
             <MenuItem value="requests">בקשות</MenuItem>
           </Select>
         </FormControl>
-        </Box>
+      </Box>
       <Grid container spacing={4}>
         {/* Bar Chart */}
         <Grid item xs={12} md={6}>
@@ -284,9 +278,9 @@ const Statistics = () => {
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie data={topRequests} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d" label>
-                  {topRequests.map((_, index) => (
-  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-))}
+                    {topRequests.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
                   </Pie>
                   <Tooltip />
                 </PieChart>

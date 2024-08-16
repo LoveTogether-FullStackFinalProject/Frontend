@@ -14,7 +14,6 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState<Donation | null>(null);
 
-    // Update local state when the donation prop changes
     useEffect(() => {
         setEditData(donation);
     }, [donation]);
@@ -30,9 +29,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
 
     const handleSave = () => {
         if (editData) {
-            onEditClick(editData);
+            onEditClick(editData); // Ensure the updated data is passed back to Profile.tsx
             setIsEditing(false);
-            onHide();  // Optionally hide the modal after saving
+            onHide();  // Hide the modal after saving
         }
     };
 
@@ -53,8 +52,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
 
     return (
         <Modal show={show} onHide={handleClose} dir="rtl">
-            <Modal.Header closeButton>
-            </Modal.Header>
+            <Modal.Header closeButton />
             <Modal.Body>
                 <div className="row">
                     <div className="col-md-6" style={{ textAlign: 'right' }}>

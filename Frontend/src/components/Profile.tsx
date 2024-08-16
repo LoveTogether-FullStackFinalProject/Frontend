@@ -1,11 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useCallback, useEffect } from 'react';
-import dataService, { CanceledError } from '../services/data-service'; // Adjust import paths as necessary
-import { Donation } from './donation'; // Adjust import paths as necessary
-import { DonorData } from './donorData'; // Adjust import paths as necessary
-import { Avatar } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import dataService, { CanceledError } from '../services/data-service';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Profile.css';
+import { Donation } from './donation';
+import { DonorData } from './donorData';
 import DonationModal from './DonationModal';
+import { Avatar } from '@mui/material';
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<DonorData | null>(null);
@@ -13,30 +13,28 @@ const Profile: React.FC = () => {
     const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
     const [loading, setLoading] = useState(true);
     const [itemsToShow, setItemsToShow] = useState(4);
+    const [editDonationId, setEditDonationId] = useState<string | null>(null);
+    const [editableDonation, setEditableDonation] = useState<Partial<Donation>>({});
     const [showModal, setShowModal] = useState(false);
     const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFilters, setSelectedFilters] = useState<{ status: string[]; approved: string[] }>({ status: [], approved: [] });
-     
-    const userId = localStorage.getItem('userID') || '';
-    
+
+    const userId = localStorage.getItem('userID');
+
     const fetchData = useCallback(async () => {
-        setLoading(true);
-        
         try {
-            const { req: userReq } = dataService.getUser(userId);
+            const { req: userReq } = dataService.getUser(userId!);
             const userResponse = await userReq;
             setUser(userResponse.data);
 
-            const { req: donationsReq } = dataService.getDonationsByUser(userId);
+            const { req: donationsReq } = dataService.getDonationsByUser(userId!);
             const donationsResponse = await donationsReq;
             setDonations(donationsResponse.data);
-            setFilteredDonations(donationsResponse.data); 
+            setFilteredDonations(donationsResponse.data);
         } catch (error) {
             if (error instanceof CanceledError) return;
-
             console.error('Error fetching data:', error);
-            // Consider implementing a user-friendly error message display here
         } finally {
             setLoading(false);
         }
@@ -74,6 +72,21 @@ const Profile: React.FC = () => {
         setFilteredDonations(filtered.slice(0, itemsToShow));
     };
 
+    const getStatusClass = (status: string) => {
+        switch (status) {
+            case 'ממתין לאיסוף מבית התורם':
+                return 'status-awaiting-pickup';
+            case 'נמסר בעמותה':
+                return 'status-delivered-to-charity';
+            case 'ממתין לאיסוף':
+                return 'status-awaiting-collection';
+            case 'נמסר':
+                return 'status-delivered';
+            default:
+                return '';
+        }
+    };
+
     const handleShowMoreClick = () => {
         setItemsToShow(itemsToShow + 4);
     };
@@ -98,39 +111,28 @@ const Profile: React.FC = () => {
         });
     };
 
-    const handleDeleteClick = async (donationId: string) => {
+    const handleDeleteClick = async (donationId: string): Promise<void> => {
         try {
             await dataService.deleteDonation(donationId);
             setDonations(donations.filter((donation) => donation._id !== donationId));
+            setFilteredDonations(filteredDonations.filter((donation) => donation._id !== donationId));
         } catch (error) {
             console.error('Error deleting donation:', error);
-            // Consider implementing a user-friendly error message display here
         }
     };
 
     const handleEditClick = (donation: Donation) => {
-        setSelectedDonation(donation);
+        console.log('Editing donation:', donation); // Log to check if donation data is correct
+        setEditDonationId(donation._id);
+        setEditableDonation(donation);
         setShowModal(true);
     };
+    
 
     const handleCancelClick = () => {
-        setSelectedDonation(null);
+        setEditDonationId(null);
+        setEditableDonation({});
         setShowModal(false);
-    };
-
-    const getStatusClass = (status: string) => {
-        switch (status) {
-            case 'ממתין לאיסוף מבית התורם':
-                return 'status-awaiting-pickup';
-            case 'נמסר בעמותה':
-                return 'status-delivered-to-charity';
-            case 'ממתין לאיסוף':
-                return 'status-awaiting-collection';
-            case 'נמסר':
-                return 'status-delivered';
-            default:
-                return '';
-        }
     };
 
     const handleCardClick = (donation: Donation) => {
@@ -138,11 +140,36 @@ const Profile: React.FC = () => {
         setShowModal(true);
     };
 
+    const handleSaveChanges = async (updatedDonation: Donation) => {
+        try {
+            if (updatedDonation && updatedDonation._id) {
+                await dataService.updateDonation(updatedDonation._id, updatedDonation);
+                setDonations((prevDonations) =>
+                    prevDonations.map((donation) =>
+                        donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
+                    )
+                );
+                setEditDonationId(null);
+                setEditableDonation({});
+                setShowModal(false);
+            } else {
+                console.error('Error: No donation ID found');
+            }
+        } catch (error) {
+            console.error('Error saving changes:', error);
+        }
+    };
+
+    const resetFilters = () => {
+        setSelectedFilters({ status: [], approved: [] });
+        setSearchQuery('');
+    };
+
     if (loading) return <div className="loading">Loading...</div>;
     if (!user) return <div className="loading">User not found</div>;
 
     return (
-        <div className="profile-page"> 
+        <div className="profile-page">
             <div className="user-info">
                 <Avatar className='Avatar-profile' alt="Remy Sharp" src={user.image} />
                 <span className='profile-header'>שלום, {user.firstName} {user.lastName}</span>
@@ -156,12 +183,12 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div className="search-bar">
-                    <input 
+                    <input
                         className='search-input'
-                        type="text" 
-                        placeholder="חפש תרומה..." 
-                        value={searchQuery} 
-                        onChange={(e) => setSearchQuery(e.target.value)} 
+                        type="text"
+                        placeholder="חפש תרומה..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 <div className="filter-section">
@@ -189,6 +216,9 @@ const Profile: React.FC = () => {
                             לא מאושר
                         </button>
                     </div>
+                    <button className="reset-filters" onClick={resetFilters}>
+                        הסר מסננים
+                    </button>
                 </div>
 
                 <div className="selected-filters">
@@ -232,12 +262,12 @@ const Profile: React.FC = () => {
             </main>
 
             <DonationModal
-                show={showModal}
-                onHide={handleCancelClick}
-                donation={selectedDonation}
-                onEditClick={handleEditClick}
-                onDeleteClick={handleDeleteClick}
-            /> 
+    show={showModal}
+    onHide={handleCancelClick}
+    donation={selectedDonation}
+    onEditClick={handleSaveChanges}  // Pass handleSaveChanges as onEditClick
+    onDeleteClick={handleDeleteClick}
+/>
         </div>
     );
 };

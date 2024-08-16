@@ -38,7 +38,7 @@ const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
             sx={{
                 position: 'absolute',
                 top: '50%',
-                right: '-20px',
+                right: '-10px',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 color: '#000',
@@ -69,7 +69,7 @@ const PrevArrow = (props: PrevArrowProps) => {
             sx={{
                 position: 'absolute',
                 top: '50%',
-                left: '-20px',
+                left: '-10px',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 color: '#000',
@@ -220,21 +220,26 @@ function MainPage() {
     const totalDonations = Object.values(counts).reduce((acc, count) => acc + count, 0);
 
     return (
-        <Container style={{width:"100%"}}>
+        <Container style={{ 
+            width: '100%', 
+            padding: 0, 
+            margin: 0, 
+            maxWidth: '100%' 
+        }}>
             {/* Section 1: Logo and Main CTA */}
             {/* Background Gradient Container */}
             {/* Background */}
             <Box
         sx={{
-        marginTop: '80px',
+        marginTop: '150px',
         position: 'relative',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between', // Space between logo and text/button
-        background: 'linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%)',
-        zIndex: -1, // Ensure it is behind other content
-        padding: '0 20px', // Optional: padding for better spacing
+        justifyContent: 'space-between', 
+        background: 'linear-gradient(135deg, rgba(249, 218, 120, 0.8) 5%, rgba(245, 245, 245, 0.8) 95%)',
+        zIndex: -1, 
+        padding: '0 20px', 
     }}
 >
     {/* Logo */}
@@ -244,6 +249,7 @@ function MainPage() {
         alt="whitelogo"
         sx={{ 
             maxWidth: '300px',
+            marginLeft:'80px',
             minWidth:'100px',
             height: 'auto'
         }}
@@ -253,6 +259,7 @@ function MainPage() {
     <Box
         sx={{
             marginBottom:'20px',
+            marginRight:'50px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-end',
@@ -270,7 +277,7 @@ function MainPage() {
             כמה קל לתרום היום
         </Typography>
 
-        {/* Button */}
+       
         <Button
             onClick={handleButtonClick}
             variant="contained"
@@ -282,15 +289,15 @@ function MainPage() {
                 textTransform: 'none', 
                 backgroundColor: "white", 
                 color: "black", 
-                borderRadius: "8px" 
+                borderRadius: "8px",
+                boxShadow:"2px"
             }}
         >
             לתרומה
         </Button>
     </Box>
 </Box>
-            {/* </Box> */}
-        {/* </Box> */}
+            
     
      
        

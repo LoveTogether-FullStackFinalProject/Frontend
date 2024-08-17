@@ -112,7 +112,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         />
                                     </Form.Group>
                                 )}
-                                <Form.Group>
+                                {/* <Form.Group>
                                     <Form.Label>סטטוס</Form.Label>
                                     <Form.Control
                                         type="text"
@@ -120,7 +120,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         value={editData.status}
                                         onChange={handleChange}
                                     />
-                                </Form.Group>
+                                </Form.Group> */}
                                 {editData.pickUpAddress && (
                                     <Form.Group>
                                         <Form.Label>כתובת לאיסוף</Form.Label>

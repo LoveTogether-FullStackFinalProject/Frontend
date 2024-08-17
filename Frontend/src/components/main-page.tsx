@@ -172,7 +172,6 @@ function MainPage() {
 
 
     const handleButtonClick = () => {
-          console.log('Button clicked');
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             navigate('/uploadproduct');
@@ -204,7 +203,7 @@ function MainPage() {
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-        centerMode: true,
+        // centerMode: true,
         centerPadding: '0px',
     });
 
@@ -220,6 +219,7 @@ function MainPage() {
             {/* Section 1: Logo and Main CTA */}
             {/* Background Gradient Container */}
             {/* Background */}
+            
             <Box
         sx={{
         marginTop: '150px',
@@ -228,7 +228,7 @@ function MainPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between', 
-        background: 'linear-gradient(135deg, rgba(249, 218, 120, 0.8) 5%, rgba(245, 245, 245, 0.8) 95%)',
+        background: 'linear-gradient( rgba(249, 218, 120, 1) 40%, rgba(245, 245, 245, 0.8) 85%)',
         zIndex: -1, 
         padding: '0 20px', 
     }}
@@ -267,29 +267,32 @@ function MainPage() {
         }}>
             כמה קל לתרום היום
         </Typography>
-
-       
+      
         <Button
-  onClick={handleButtonClick}
+  onClick={() => {
+    console.log('Button clicked');
+    handleButtonClick();
+  }}
   variant="contained"
-  endIcon={<i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>}
+  className="first-section-button"
+  startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
   sx={{ 
     px: 4, 
     py: 2, 
     fontSize: '1rem', 
-    textTransform: 'none', 
+    // textTransform: 'none', 
     backgroundColor: "white", 
     color: "black", 
-    borderRadius: "8px",
-    boxShadow:"5px",
-    hover: "blue"
+    // borderRadius: "8px",
+    // boxShadow:"5px",
   }}
 >
   לתרומה
 </Button>
+</Box>
 
     </Box>
-</Box>
+
             
     
      
@@ -297,7 +300,7 @@ function MainPage() {
 
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
-  <Typography variant="h5" sx={{ mb: 2 }}>
+  <Typography variant="h3" sx={{ mb: 2 ,fontFamily: 'Assistant'}}>
     מוצרים שאנחנו צריכים
   </Typography>
   {requests.length === 1 ? (
@@ -316,7 +319,7 @@ function MainPage() {
         }}
         onClick={() => handleProductClick(requests[0])}
       />
-      <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+      <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold',fontFamily: 'Assistant' }}>
         {requests[0].itemName}
       </Typography>
       <Typography variant="body2" sx={{ mt: 1 }}>
@@ -326,7 +329,7 @@ function MainPage() {
   ) : (
     <Slider {...sliderSettings}>
       {requests.map((request, index) => (
-        <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+        <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' }}>
           <Box
             component="img"
             src={request.image || person}
@@ -341,7 +344,7 @@ function MainPage() {
             }}
             onClick={() => handleProductClick(request)}
           />
-          <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+          <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold',fontFamily: 'Assistant' }}>
             {request.itemName}
           </Typography>
           <Typography variant="body2" sx={{ mt: 1 }}>
@@ -355,8 +358,8 @@ function MainPage() {
 
 
          {/* Section 3: Leading Donors */}
-         <Box className="section-section3-light" sx={{ mb: 5 }}>
-    <Typography variant="h5" sx={{ mb: 2 }}>
+         <Box className="section-section3-light" sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
+    <Typography variant="h3" sx={{ mb: 2 ,fontFamily: 'Assistant'}}>
         תורמים מובילים
     </Typography>
     {numUsers === 1 ? (
@@ -374,13 +377,13 @@ function MainPage() {
         ) : (
             <Slider {...sliderSettings}>
                 {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
-                    <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                    <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' }}>
                         <Avatar
                             src={user.image || person}
                             alt={user.firstName + ' ' + user.lastName}
-                            sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                            sx={{ width: 100, height: 100, mx: 'auto', my: 2,fontFamily: 'Assistant' }}
                         />
-                        <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                        <Typography variant="h6" style={{fontFamily: 'Assistant'}}>{user.firstName} {user.lastName}</Typography>
                         <Typography variant="body2">תורם מוביל</Typography>
                     </Box>
                 ))}
@@ -393,8 +396,8 @@ function MainPage() {
 
 
             {/* Section 4: Donations and Community Counters */}
-            <Box className="section section-yellow">
-                <Typography variant="h5">
+            <Box className="section-section-yellow">
+                <Typography variant="h4" style={{fontFamily: 'Assistant',marginTop:"10px"}}>
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
                 <Box className="counter-box">

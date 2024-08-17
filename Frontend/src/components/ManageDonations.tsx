@@ -33,6 +33,7 @@ type Order = 'asc' | 'desc';
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [showModal, setShowModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentDonation, setCurrentDonation] = useState<Donation | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('itemName');

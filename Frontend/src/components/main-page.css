@@ -39,61 +39,61 @@
 
 .first-section-logo {
   position: absolute;
-  left: -10px; /* Adjust this value to move the logo more or less to the left */
-  top: -5%; /* Adjust vertical alignment of the logo */
-  max-width: 400px; /* Increase logo size */
+  left: -10px; 
+  top: -5%; 
+  max-width: 400px; 
 }
 
 .first-section-title {
-  font-size: 2.5rem; /* Adjust font size */
-  margin-bottom: 10px; /* Reduce the space below the title */
-  margin-top: 80px; /* Move the title up by reducing top margin */
-  margin-right: 50px; /* Adjust to position the title */
+  font-size: 2.5rem; 
+  margin-bottom: 10px; 
+  margin-top: 80px; 
+  margin-right: 50px; 
 }
 
 .first-section-button {
-  background-color: #f9db78 !important;
+  background-color: #f2f0ea !important;
   color: #000;
   font-weight: bold;
   padding: 10px 30px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s ease;
-  margin-right: 50px; /* Align button to the right */
-  margin-top: 20px; /* Increase the top margin to move the button down */
-  font-size: 1.2rem; /* Adjust font size */
+  margin-right: 50px; 
+  margin-top: 20px; 
+  font-size: 1.2rem; 
+  z-index: 1;
 }
 
 
 .first-section-button:hover {
-  background-color: #f9db78; /* Darker yellow */
+  background-color: #f9db78; 
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
 
 .firstsec {
-  background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, rgb(249, 219, 120) 0%, rgba(245, 245, 245, 0.8) 100%); 
   border-radius: 10px;
-  padding: 120px 0; /* Adjust padding for height */
+  padding: 120px 0; 
   padding-left: 0;
   padding-right: 0;
-  text-align: right; /* Align text to the right */
+  text-align: right;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end; /* Align content to the right */
+  align-items: flex-end; 
 }
-
+/* 
 .firstsec img {
-  max-width: 150px; /* Adjust logo size */
-  margin: 0 auto 20px 0; /* Adjust margin to position the logo */
+  max-width: 150px; 
+  margin: 0 auto 20px 0; 
   align-self: center;
-}
+} */
 
 .firstsec h3 {
   font-weight: bold;
-  font-size: 2.5rem; /* Adjust the font size to match the image */
+  font-size: 2.5rem; 
   margin-bottom: 30px;
 }
 
@@ -106,9 +106,9 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s ease;
   margin-top: 20px;
-  font-size: 1.2rem; /* Adjust font size to match the image */
+  font-size: 1.2rem; 
   margin-left: 0;
-  margin-right: 50px; /* Adjust right margin for positioning */
+  margin-right: 50px; 
 }
 
 
@@ -131,30 +131,19 @@
   padding-right: 0;
 }
 
-.section-yellow {
-  background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
+.section-section-yellow {
+  margin-bottom: 50px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(249, 226, 144, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 120px 0; /* Increase padding */
-  min-height: 300px; /* Ensure the section has a minimum height */
-  padding-left: 0;
-  padding-right: 0;
+  min-height: 300px; 
   margin-top: 150px;
-  margin-bottom: 100px;
 }
 
 
 
-.button-primary:hover {
-  background-color: #f9db78; /* Darker yellow */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-}
 
-.icon-large {
-  font-size: 50px;
-  margin-bottom: 10px;
-  color: #D4A373; /* Consistent Icon Color */
-}
 
 .slider-3d .slick-list {
   overflow: visible;
@@ -179,7 +168,7 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 50%;
   width: 40px;
   
@@ -199,9 +188,10 @@
 
 .counter-box {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-  padding: 0 5%; /* Make the counters closer together */
+  justify-content: space-between;
+  
+  margin-top: 70px;
+  padding: 0 30%; /* Make the counters closer together */
 }
 
 .counter-box div {

@@ -114,7 +114,8 @@ function UploadRequestedProduct() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 10,
+            marginBottom: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -123,7 +124,7 @@ function UploadRequestedProduct() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <CloudUploadIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" className= "form-title">
             העלאת מוצר המבוקש לתרומה
           </Typography>
           <Box component="form" onSubmit={handleSubmit(addNewProduct)} noValidate sx={{ mt: 3 }}>

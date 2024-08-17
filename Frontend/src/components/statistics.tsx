@@ -40,6 +40,7 @@ import {
 } from 'recharts';
 import { styled } from '@mui/system';
 import './statistics.css';
+import CustomLabel from './CustomLabelProps';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28FF2'];
 
@@ -172,7 +173,8 @@ const Statistics = () => {
     );
   }
   
-  const CustomYAxisTick = ({ x, y, payload }) => (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomYAxisTick = ({ x = 0, y = 0, payload = { value: '' } }: { x?: number, y?: number, payload?: any }) => (
     <text x={x - 25} y={y} dy={4} textAnchor="end" fill="#666">
       {payload.value}
     </text>
@@ -282,24 +284,34 @@ const Statistics = () => {
 
         {/* Pie Chart */}
         <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="secondary" gutterBottom>
-                נתוני פריטים חסרים בעמותה שנדרשים לתרומות
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie data={topRequests} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d" label>
-                    {topRequests.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
+  <Card>
+    <CardContent>
+      <Typography variant="h6" color="secondary" gutterBottom>
+        נתוני פריטים חסרים בעמותה שנדרשים לתרומות
+      </Typography>
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            data={topRequests}
+            dataKey="count"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            fill="#82ca9d"
+            label={<CustomLabel cx={0} cy={0} midAngle={0} innerRadius={0} outerRadius={0} value={''} />} // Use the custom label component here
+          >
+            {topRequests.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
+    </CardContent>
+  </Card>
+</Grid>
+
 
         {/* Line Chart */}
         <Grid item xs={12}>

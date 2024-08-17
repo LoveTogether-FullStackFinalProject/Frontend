@@ -666,13 +666,16 @@ export default function UploadProduct() {
                   }}
                   {...field}
                 >
-                  <MenuItem value="">בחר קטגוריה</MenuItem>
-                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-                  <MenuItem value="ביגוד והנעלה">ביגוד והנעלה</MenuItem>
-                  <MenuItem value="ריהוט">ריהוט</MenuItem>
-                  <MenuItem value="מכשירי חשמל">מכשירי חשמל</MenuItem>
-                  <MenuItem value="צעצועים">צעצועים</MenuItem>
-                  <MenuItem value="אחר">אחר</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
                 </TextField>
                 
               )}
@@ -753,13 +756,14 @@ export default function UploadProduct() {
                 id="expirationDate"
                 label="תאריך תפוגה"
                 type="date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
                 helperText={errors.expirationDate?.message}
                 InputLabelProps={{
+                  shrink: true,
                   sx: {
                     right: 19,
                     left: 'auto',
@@ -819,18 +823,33 @@ export default function UploadProduct() {
                 }
               }}
             />
-            <Typography component="legend">אפשרות מסירה</Typography>
+          <Typography component="legend" sx={{ textAlign: 'right' }}>
+            :אפשרות מסירה
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Controller
               name="deliveryOption"
               control={control}
               render={({ field }) => (
-                <RadioGroup {...field}>
-                  <FormControlLabel value="ממתין לאיסוף" control={<Radio />} label="אשמח שיאספו ממני את התרומה" />
-                  <FormControlLabel value="טרם הגיע לעמותה" control={<Radio />} label="אמסור את התרומה לעמותה בעצמי" />
+                <RadioGroup {...field} sx={{ textAlign: 'right'}}>
+                  <FormControlLabel
+                    value="ממתין לאיסוף"
+                    control={<Radio />}
+                    label="אשמח שיאספו ממני את התרומה"
+                    labelPlacement="start"
+                  />
+                  <FormControlLabel
+                    value="טרם הגיע לעמותה"
+                    control={<Radio />}
+                    label="אמסור את התרומה לעמותה בעצמי"
+                    labelPlacement="start"
+                    sx={{ justifyContent: 'flex-end' }}
+                  />
                 </RadioGroup>
               )}
-              
             />
+          </Box>
+
             {errors.deliveryOption && (
               <Alert severity="error">{errors.deliveryOption.message}</Alert>
             )}

@@ -3,7 +3,7 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from '../services/upload-requested-product-service';
 import dataService, { CanceledError } from '../services/data-service';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -15,7 +15,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Button,
+  // Button,
   Table,
   TableBody,
   TableCell,
@@ -55,7 +55,7 @@ const StyledTableContainer = styled(Paper)(({ theme }) => ({
 }));
 
 const Statistics = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [products, setProducts] = useState<Donation[]>([]);
   const [requests, setRequests] = useState<requestedDonation[]>([]);
   const [users, setUsers] = useState<DonorData[]>([]);

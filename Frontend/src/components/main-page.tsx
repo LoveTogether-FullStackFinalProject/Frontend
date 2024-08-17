@@ -189,21 +189,21 @@ function MainPage() {
         }
     };
 
-    const sliderSettings =({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3, 
-        slidesToScroll: 3,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        centerMode: true,
-        centerPadding: '0px',
-    });
+    // const sliderSettings =({
+    //     dots: true,
+    //     infinite: true,
+    //     speed: 500,
+    //     slidesToShow: 3, 
+    //     slidesToScroll: 3,
+    //     autoplay: true,
+    //     autoplaySpeed: 5000,
+    //     nextArrow: <NextArrow />,
+    //     prevArrow: <PrevArrow />,
+    //     centerMode: true,
+    //     centerPadding: '0px',
+    // });
     const numUsers= users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).length;
-    const sliderSettings1 =({
+    const sliderSettings =({
         dots: true,
         infinite: true,
         speed: 500,
@@ -299,33 +299,62 @@ function MainPage() {
     </Box>
 </Box>
              {/* Section 2: Products We Need */}
-             <Box className="section-section-light" >
-                <Typography variant="h5" sx={{ mb: 2}}>
-                    מוצרים שאנחנו צריכים
-                </Typography>
-                <Slider {...sliderSettings}>
-                    {requests.map((request, index) => (
-                        <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
-                            <Box
-                                component="img"
-                                src={request.image || person}
-                                sx={{
-                                    width: '100px',
-                                    height: '100px',
-                                    objectFit: 'cover',
-                                    borderRadius: '50%',
-                                    overflow: 'hidden',
-                                    display: 'block',
-                                    margin: '0 auto',
-                                }}
-                                onClick={() => handleProductClick(request)}
-                            />
-                            <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>{request.itemName}</Typography>
-                            <Typography variant="body2" sx={{ mt: 1 }}>{request.amount} :כמות מבוקשת</Typography>
-                        </Box>
-                    ))}
-                </Slider>
-            </Box>
+             <Box className="section-section-light">
+  <Typography variant="h5" sx={{ mb: 2 }}>
+    מוצרים שאנחנו צריכים
+  </Typography>
+  {requests.length === 1 ? (
+    <Box sx={{ p: 1, textAlign: 'center' }}>
+      <Box
+        component="img"
+        src={requests[0].image || person}
+        sx={{
+          width: '100px',
+          height: '100px',
+          objectFit: 'cover',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          display: 'block',
+          margin: '0 auto',
+        }}
+        onClick={() => handleProductClick(requests[0])}
+      />
+      <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+        {requests[0].itemName}
+      </Typography>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        {requests[0].amount} :כמות מבוקשת
+      </Typography>
+    </Box>
+  ) : (
+    <Slider {...sliderSettings}>
+      {requests.map((request, index) => (
+        <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+          <Box
+            component="img"
+            src={request.image || person}
+            sx={{
+              width: '100px',
+              height: '100px',
+              objectFit: 'cover',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              display: 'block',
+              margin: '0 auto',
+            }}
+            onClick={() => handleProductClick(request)}
+          />
+          <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+            {request.itemName}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {request.amount} :כמות מבוקשת
+          </Typography>
+        </Box>
+      ))}
+    </Slider>
+  )}
+</Box>
 
 
             {/* Section 3: Leading Donors */}
@@ -346,7 +375,7 @@ function MainPage() {
                 </Box>
             ))
         ) : (
-            <Slider {...sliderSettings1}>
+            <Slider {...sliderSettings}>
                 {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
                     <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
                         <Avatar

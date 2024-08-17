@@ -3,7 +3,7 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from '../services/upload-requested-product-service';
 import dataService, { CanceledError } from '../services/data-service';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -15,7 +15,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Button,
+  // Button,
   Table,
   TableBody,
   TableCell,
@@ -55,7 +55,7 @@ const StyledTableContainer = styled(Paper)(({ theme }) => ({
 }));
 
 const Statistics = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [products, setProducts] = useState<Donation[]>([]);
   const [requests, setRequests] = useState<requestedDonation[]>([]);
   const [users, setUsers] = useState<DonorData[]>([]);
@@ -172,6 +172,11 @@ const Statistics = () => {
     );
   }
   
+  const CustomYAxisTick = ({ x, y, payload }) => (
+    <text x={x - 25} y={y} dy={4} textAnchor="end" fill="#666">
+      {payload.value}
+    </text>
+  );
 
   return (
 <Container className="statistics-page" dir="rtl">
@@ -266,8 +271,7 @@ const Statistics = () => {
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tick={<CustomYAxisTick x={undefined} y={undefined} payload={undefined} />} />                  <Tooltip />
                   <Legend />
                   <Bar dataKey="count" fill="#8884d8" />
                 </BarChart>

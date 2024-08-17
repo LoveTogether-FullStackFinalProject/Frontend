@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState, useRef } from 'react';
 import {
-  Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem
+  Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem, Alert
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useForm, Controller } from 'react-hook-form';
@@ -67,6 +67,9 @@ export default function NewLiveDonation() {
   const { register, handleSubmit, control, formState: { errors }, watch, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    defaultValues: {
+      quantity: 1, // Initialize quantity with 1
+    },
   });
 
   useEffect(() => {
@@ -198,15 +201,16 @@ export default function NewLiveDonation() {
                   InputProps={rightAlignedInputStyle.InputProps}
                   {...field}
                 >
-                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-                  <MenuItem value="ביגוד">ביגוד</MenuItem>
-                  <MenuItem value="רהיטים">רהיטים</MenuItem>
-                  <MenuItem value="צעצועים">צעצועים</MenuItem>
-                  <MenuItem value="ספרים">ספרים</MenuItem>
-                  <MenuItem value="היגיינה">היגיינה</MenuItem>
-                  <MenuItem value="מוצרי ניקוי">מוצרי ניקוי</MenuItem>
-                  <MenuItem value="טכנולוגיה">טכנולוגיה</MenuItem>
-                  <MenuItem value="אחר">אחר</MenuItem>
+                 <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
                 </TextField>
               )}
             />
@@ -258,7 +262,6 @@ export default function NewLiveDonation() {
                     },
                   }
                 }}
-             
               />
             )}
             <TextField
@@ -326,6 +329,11 @@ export default function NewLiveDonation() {
             >
               בחר תמונה
             </Button>
+            {errors.image && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {errors.image.message}
+              </Alert>
+            )}
             {imgPreview && (
               <Box sx={{ mt: 2 }}>
                 <img src={imgPreview} alt="תצוגה מקדימה" style={{ width: '100%', height: 'auto' }} />

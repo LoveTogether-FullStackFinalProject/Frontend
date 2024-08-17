@@ -753,9 +753,9 @@ export default function UploadProduct() {
                 id="expirationDate"
                 label="תאריך תפוגה"
                 type="date"
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
                 helperText={errors.expirationDate?.message}

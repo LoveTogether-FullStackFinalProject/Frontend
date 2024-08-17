@@ -17,7 +17,7 @@
   }
   
   .button-primary:hover {
-    background-color: #f9db78 !important; /* Maintain the same color on hover */
+    background-color: #0f2fe4 !important; /* Maintain the same color on hover */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
   }
   

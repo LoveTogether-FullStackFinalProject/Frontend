@@ -11,10 +11,10 @@ import {
   Typography,
   Button,
   Avatar,
-  CardContent,
+//   CardContent,
   Container,
   IconButton,
-  Card,
+//   Card,
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import VisibilitySensor from 'react-visibility-sensor';
@@ -29,7 +29,7 @@ import whitelogo from '../assets/whiteLogo.png';
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
 import '../styles/globals.css';
-import { blue } from '@mui/material/colors';
+// import { blue } from '@mui/material/colors';
 
 const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
@@ -58,11 +58,8 @@ const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     );
 };
 
-type PrevArrowProps = {
-    onClick: () => void;
-};
 
-const PrevArrow = (props: PrevArrowProps) => {
+const PrevArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
     return (
         <IconButton
@@ -196,22 +193,20 @@ function MainPage() {
         }
     };
 
+    const numUsers = users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).length;
     const sliderSettings =({
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3, 
-        slidesToScroll: 1,
+        slidesToShow: 2,
+        slidesToScroll: 2,
         autoplay: true,
         autoplaySpeed: 5000,
         nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow onClick={function (): void {
-            throw new Error('Function not implemented.');
-        } } />,
+        prevArrow: <PrevArrow />,
         centerMode: true,
         centerPadding: '0px',
     });
-
 
     const totalDonations = Object.values(counts).reduce((acc, count) => acc + count, 0);
 
@@ -300,59 +295,98 @@ function MainPage() {
      
        
 
-             {/* Section 2: Products We Need */}
-             <Box className="section-section-light" >
-                <Typography variant="h5" sx={{ mb: 2}}>
-                    מוצרים שאנחנו צריכים
-                </Typography>
-                <Slider {...sliderSettings}>
-                    {requests.map((request, index) => (
-                        <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
-                            <Box
-                                component="img"
-                                src={request.image || person}
-                                sx={{
-                                    width: '100px',
-                                    height: '100px',
-                                    objectFit: 'cover',
-                                    borderRadius: '50%',
-                                    overflow: 'hidden',
-                                    display: 'block',
-                                    margin: '0 auto',
-                                }}
-                                onClick={() => handleProductClick(request)}
-                            />
-                            <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>{request.itemName}</Typography>
-                            <Typography variant="body2" sx={{ mt: 1 }}>{request.amount} :כמות מבוקשת</Typography>
-                        </Box>
-                    ))}
-                </Slider>
-            </Box>
+    {/* Section 2: Products We Need */}
+    <Box className="section-section-light">
+  <Typography variant="h5" sx={{ mb: 2 }}>
+    מוצרים שאנחנו צריכים
+  </Typography>
+  {requests.length === 1 ? (
+    <Box sx={{ p: 1, textAlign: 'center' }}>
+      <Box
+        component="img"
+        src={requests[0].image || person}
+        sx={{
+          width: '100px',
+          height: '100px',
+          objectFit: 'cover',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          display: 'block',
+          margin: '0 auto',
+        }}
+        onClick={() => handleProductClick(requests[0])}
+      />
+      <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+        {requests[0].itemName}
+      </Typography>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        {requests[0].amount} :כמות מבוקשת
+      </Typography>
+    </Box>
+  ) : (
+    <Slider {...sliderSettings}>
+      {requests.map((request, index) => (
+        <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+          <Box
+            component="img"
+            src={request.image || person}
+            sx={{
+              width: '100px',
+              height: '100px',
+              objectFit: 'cover',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              display: 'block',
+              margin: '0 auto',
+            }}
+            onClick={() => handleProductClick(request)}
+          />
+          <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+            {request.itemName}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {request.amount} :כמות מבוקשת
+          </Typography>
+        </Box>
+      ))}
+    </Slider>
+  )}
+</Box>
 
 
-          {/* Section 3: Products We Need */}
-          <Box className="section-section3-light" >
-                <Typography variant="h5" sx={{ mb: 2}}>
-                    תורמים מובילים
-                </Typography>
-                <Slider {...sliderSettings}>
+         {/* Section 3: Leading Donors */}
+         <Box className="section-section3-light" sx={{ mb: 5 }}>
+    <Typography variant="h5" sx={{ mb: 2 }}>
+        תורמים מובילים
+    </Typography>
+    {numUsers === 1 ? (
+            users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
+                <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                    <Avatar
+                        src={user.image || person}
+                        alt={user.firstName + ' ' + user.lastName}
+                        sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                    />
+                    <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                    <Typography variant="body2">תורם מוביל</Typography>
+                </Box>
+            ))
+        ) : (
+            <Slider {...sliderSettings}>
                 {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
-                        <Box key={index} sx={{ p: 2 }}>
-                            <Card sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
-                                <Avatar
-                                    src={user.image || person}
-                                    alt={user.firstName + ' ' + user.lastName}
-                                    sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
-                                    <Typography variant="body2">תורם מוביל</Typography>
-                                </CardContent>
-                            </Card>
-                        </Box>
-                    ))}
-                </Slider>
-            </Box>
+                    <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                        <Avatar
+                            src={user.image || person}
+                            alt={user.firstName + ' ' + user.lastName}
+                            sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                        />
+                        <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                        <Typography variant="body2">תורם מוביל</Typography>
+                    </Box>
+                ))}
+            </Slider>
+        )}
+</Box>
 
 
 

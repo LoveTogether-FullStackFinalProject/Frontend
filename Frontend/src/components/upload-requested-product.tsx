@@ -44,7 +44,7 @@ function UploadRequestedProduct() {
   const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setImgSrc(e.target.files[0]);
-      setValue("image", e.target.files[0]);
+      //setValue("image", e.target.files[0]);
       trigger("image");
     }
   };
@@ -374,7 +374,7 @@ function UploadRequestedProduct() {
                   בחר תמונה
                 </Button>
                 {errors.image && (
-                  <Alert severity="error" sx={{ mt: 2 }}>
+                  <Alert severity="error" sx={{ mt: 2 , direction: "rtl"}}>
                    יש להעלות תמונה של המוצר המבוקש
                   </Alert>
                 )}

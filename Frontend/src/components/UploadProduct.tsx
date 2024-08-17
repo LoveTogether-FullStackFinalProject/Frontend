@@ -851,7 +851,7 @@ export default function UploadProduct() {
           </Box>
 
             {errors.deliveryOption && (
-              <Alert severity="error">{errors.deliveryOption.message}</Alert>
+              <Alert severity="error" style={{direction :"rtl"}}>יש לבחור אפשרות מסירה</Alert>
             )}
             {selectedDeliveryOption === 'ממתין לאיסוף' && (
               <TextField
@@ -924,7 +924,7 @@ export default function UploadProduct() {
               />
             </Button>
             {errors.image && (
-                  <Alert severity="error" sx={{ mt: 2 }}>
+                  <Alert severity="error" sx={{ mt: 2 , direction:"rtl"}}>
                    יש להעלות תמונה של המוצר המבוקש
                   </Alert>
                 )}

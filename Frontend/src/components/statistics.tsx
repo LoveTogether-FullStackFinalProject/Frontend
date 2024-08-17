@@ -174,10 +174,17 @@ const Statistics = () => {
   
 
   return (
-    <Container className="statistics-page" dir="rtl">
-      <Typography variant="h4" component="h1" fontSize={50} gutterBottom align="center" sx={{ marginTop: 15 }}>
-        נתונים וסטטיסטיקות
-      </Typography>
+<Container className="statistics-page" dir="rtl">
+  <Typography
+    variant="h4"
+    component="h1"
+    fontSize={50}
+    gutterBottom
+    align="center"
+    sx={{ marginTop: 15, textDecoration: 'underline' }}
+  >
+    נתונים וסטטיסטיקות
+  </Typography>
       {error && <Typography color="error">{error}</Typography>}
       <Grid container spacing={4}>
         <Grid item xs={12}>

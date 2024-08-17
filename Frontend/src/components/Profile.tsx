@@ -90,14 +90,16 @@ const Profile: React.FC = () => {
 
     const getStatusClass = (status: string) => {
         switch (status) {
-            case 'ממתין לאיסוף מבית התורם':
-                return 'status-awaiting-pickup';
-            case 'נמסר בעמותה':
-                return 'status-delivered-to-charity';
             case 'ממתין לאיסוף':
                 return 'status-awaiting-collection';
-            case 'נמסר':
-                return 'status-delivered';
+            case 'נאסף':
+                return 'status-collected';
+            case 'הגיע לעמותה':
+                return 'status-arrived-at-charity';
+            case 'טרם הגיע לעמותה':
+                return 'status-not-arrived-at-charity';
+            case 'נמסר בעמותה':
+                return 'status-delivered-to-charity';
             default:
                 return '';
         }
@@ -211,7 +213,7 @@ const Profile: React.FC = () => {
                         <option value="">מיין לפי</option>
                         <option value="category">קטגוריה</option>
                         <option value="quantity">כמות</option>
-                        <option value="itemCondition">מצב הפריט</option>
+                        <option value="condition">מצב הפריט</option>  {/* Updated */}
                         <option value="status">סטטוס</option>
                         <option value="createdAt">תאריך יצירה</option>
                         <option value="updatedAt">תאריך עדכון</option>
@@ -228,7 +230,7 @@ const Profile: React.FC = () => {
                 <div className="filter-section">
                     <h4>סינון לפי:</h4>
                     <div className="filter-buttons">
-                        {['ממתין לאיסוף מבית התורם', 'נמסר בעמותה', 'ממתין לאיסוף', 'נמסר'].map(status => (
+                        {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
                             <button
                                 key={status}
                                 onClick={() => toggleFilter('status', status)}
@@ -279,6 +281,8 @@ const Profile: React.FC = () => {
                                 <img src={donation.image} alt={donation.itemName} />
                                 <h5>{donation.itemName}</h5>
                                 <p>סטטוס: {donation.status}</p>
+                                <p>מצב הפריט: {donation.condition}</p> {/* Updated */}
+                                <p>כתובת לאיסוף: {donation.pickUpAddress}</p> {/* Ensure this is displayed */}
                                 <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
                             </div>
                         ))
@@ -299,7 +303,7 @@ const Profile: React.FC = () => {
                 show={showModal}
                 onHide={handleCancelClick}
                 donation={selectedDonation}
-                onEditClick={handleSaveChanges}  // Pass handleSaveChanges as onEditClick
+                onEditClick={handleSaveChanges}
                 onDeleteClick={handleDeleteClick}
             />
         </div>

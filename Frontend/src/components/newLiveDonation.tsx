@@ -36,11 +36,11 @@ type FormData = z.infer<typeof schema>;
 const rightAlignedInputStyle = {
   InputLabelProps: {
     sx: {
-      right: 19,
+      right: 17,
       left: 'auto',
       transformOrigin: 'top right',
       '&.MuiInputLabel-shrink': {
-        transform: 'translate(0, -10px) scale(0.85)',
+        transform: 'translate(0, -10px) scale(0.75)',
         transformOrigin: 'top right',
       },
       '& .MuiFormLabel-asterisk': {
@@ -234,8 +234,31 @@ export default function NewLiveDonation() {
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
                 helperText={errors.expirationDate?.message}
-                InputLabelProps={rightAlignedInputStyle.InputLabelProps}
-                InputProps={rightAlignedInputStyle.InputProps}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: {
+                    right: 17,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                  }
+                }}
+                InputProps={{
+                  sx: { 
+                    textAlign: 'right', 
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
+             
               />
             )}
             <TextField

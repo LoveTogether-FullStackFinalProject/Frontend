@@ -5,16 +5,20 @@
 }
 
 .table-container {
+  direction: rtl;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow-x: auto;
 }
 
 .table {
+  direction: rtl;
+  margin-top: 50px;
   min-width: 650px;
 }
 
 .rtl-table-col, .rtl-table {
+  direction: rtl;
   font-family: 'Assistant', sans-serif;
 }
 
@@ -29,18 +33,34 @@
   background-color: #f0e0ad;
 }
 
+.table-users thead th{
+  background-color: #f0e0ad  !important;
+  padding: 12px 15px;
+  font-weight: bold;
+  text-align: right;
+}
+
+
+
 .csv-link {
-  background-color: #f9db78;
-  color: #000;
+  background-color: #217346;
+  color: #ffffff;
   padding: 10px 20px;
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
-  margin-left: 20px;
+  font-family: 'Assistant', sans-serif;
+  margin-left: 500px;
+  margin-right: 50px;
+  border-radius: 20px;
+}
+
+.fas fa-file-excel{
+  text-align: center;
 }
 
 .csv-link:hover {
-  background-color: #f8c85d;
+  background-color: #fafafa;
   color: #000;
 }
 

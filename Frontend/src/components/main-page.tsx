@@ -428,8 +428,6 @@ function MainPage() {
             {/* Section 4: Donations and Community Counters */}
             <Box className="section-section-yellow">
                 <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
-
-            
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
                 

@@ -1,9 +1,8 @@
 import React, { ChangeEvent, useEffect, useState, useRef } from 'react';
 import {
-  Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem,
-  Grid
+  Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem, Alert
 } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,7 +33,31 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-
+const rightAlignedInputStyle = {
+  InputLabelProps: {
+    sx: {
+      right: 17,
+      left: 'auto',
+      transformOrigin: 'top right',
+      '&.MuiInputLabel-shrink': {
+        transform: 'translate(0, -10px) scale(0.75)',
+        transformOrigin: 'top right',
+      },
+      '& .MuiFormLabel-asterisk': {
+        display: 'none',
+      },
+    },
+  },
+  InputProps: {
+    sx: {
+      textAlign: 'right',
+      direction: 'rtl',
+      '& .MuiOutlinedInput-notchedOutline': {
+        textAlign: 'right',
+      },
+    },
+  },
+};
 
 export default function NewLiveDonation() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -44,7 +67,11 @@ export default function NewLiveDonation() {
   const { register, handleSubmit, control, formState: { errors }, watch, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    defaultValues: {
+      quantity: 1, // Initialize quantity with 1
+    },
   });
+
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -67,11 +94,12 @@ export default function NewLiveDonation() {
       reader.readAsDataURL(file);
     }
   };
+
   const selectImg = () => {
     fileInputRef.current?.click();
   };
 
-  const handleSubmitForm = async (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     try {
       let imageUrl = '';
       if (data.image) {
@@ -127,329 +155,190 @@ export default function NewLiveDonation() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <AddCircleOutlineIcon />
+            <CloudUploadIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            הוספת תרומה חדשה
+            הוסף תרומה חדשה
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(handleSubmitForm)} noValidate sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="itemName"
+              label="שם הפריט"
+              autoFocus
+              {...register('itemName')}
+              error={!!errors.itemName}
+              helperText={errors.itemName?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="quantity"
+              label="כמות"
+              type="number"
+              {...register('quantity', { valueAsNumber: true })}
+              error={!!errors.quantity}
+              helperText={errors.quantity?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
                 <TextField
-                  {...register('itemName')}
-                  variant="outlined"
-                  required
+                  select
                   fullWidth
-                  id="itemName"
-                  label="שם הפריט"
-                  autoFocus
-                  error={!!errors.itemName}
-                  helperText={errors.itemName?.message}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register('quantity', { valueAsNumber: true })}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="quantity"
-                  label="כמות"
-                  type="number"
-                  error={!!errors.quantity}
-                  helperText={errors.quantity?.message}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="category"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      select
-                      fullWidth
-                      label="קטגוריה"
-                      error={!!errors.category}
-                      helperText={errors.category?.message}
-                      {...field}
-                      InputLabelProps={{
-                        sx: {
-                          right: 19,
-                          left: 'auto',
-                          transformOrigin: 'top right',
-                          '&.MuiInputLabel-shrink': {
-                            transform: 'translate(0, -10px) scale(0.75)',
-                            transformOrigin: 'top right',
-                          },
-                        }
-                      }}
-                      InputProps={{
-                        sx: {
-                          textAlign: 'right',
-                          direction: 'rtl',
-                          '& .MuiSelect-icon': {
-                            left: 0,
-                            right: 'auto',
-                          },
-                        }
-                      }}
-                    >
-                      <MenuItem value="">בחר קטגוריה</MenuItem>
-                      <MenuItem value="ביגוד">ביגוד</MenuItem>
-                      <MenuItem value="הנעלה">הנעלה</MenuItem>
-                      <MenuItem value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-                      <MenuItem value="כלי בית">כלי בית</MenuItem>
-                      <MenuItem value="ריהוט">ריהוט</MenuItem>
-                      <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-                      <MenuItem value="ספרים">ספרים</MenuItem>
-                      <MenuItem value="צעצועים">צעצועים</MenuItem>
-                      <MenuItem value="אחר">אחר</MenuItem>
-                    </TextField>
-                  )}
-                />
-              </Grid>
-              {watch('category') === 'אחר' && (
-                <Grid item xs={12}>
-                  <TextField
-                    {...register('customCategory')}
-                    variant="outlined"
-                    fullWidth
-                    id="customCategory"
-                    label="קטגוריה מותאמת אישית"
-                    error={!!errors.customCategory}
-                    helperText={errors.customCategory?.message}
-                    InputLabelProps={{
-                      sx: {
-                        right: 19,
-                        left: 'auto',
-                        transformOrigin: 'top right',
-                        '&.MuiInputLabel-shrink': {
-                          transform: 'translate(0, -10px) scale(0.75)',
-                          transformOrigin: 'top right',
-                        },
-                      }
-                    }}
-                    InputProps={{
-                      sx: {
-                        textAlign: 'right',
-                        direction: 'rtl',
-                      }
-                    }}
-                  />
-                </Grid>
+                  label="קטגוריה"
+                  error={!!errors.category}
+                  helperText={errors.category?.message}
+                  InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+                  InputProps={rightAlignedInputStyle.InputProps}
+                  {...field}
+                >
+                 <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
+                </TextField>
               )}
-              <Grid item xs={12}>
-                <TextField
-                  {...register('condition')}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="condition"
-                  label="מצב הפריט"
-                  error={!!errors.condition}
-                  helperText={errors.condition?.message}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
+            />
+            {selectedCategory === 'אחר' && (
+              <TextField
+                margin="normal"
+                fullWidth
+                id="customCategory"
+                label="קטגוריה מותאמת אישית"
+                {...register('customCategory')}
+                error={!!errors.customCategory}
+                helperText={errors.customCategory?.message}
+                InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+                InputProps={rightAlignedInputStyle.InputProps}
+              />
+            )}
+            {selectedCategory === 'מזון ושתייה' && (
+              <TextField
+                margin="normal"
+                fullWidth
+                id="expirationDate"
+                label="תאריך תפוגה"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                {...register('expirationDate')}
+                error={!!errors.expirationDate}
+                helperText={errors.expirationDate?.message}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: {
+                    right: 17,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
                       transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                  }
+                }}
+                InputProps={{
+                  sx: { 
+                    textAlign: 'right', 
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
                       textAlign: 'right',
-                      direction: 'rtl',
-                    }
-                  }}
-                />
-              </Grid>
-              {watch('category') === 'מזון ושתייה' && (
-                <Grid item xs={12}>
-                  <TextField
-                    {...register('expirationDate')}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="expirationDate"
-                    label="תאריך תפוגה"
-                    type="date"
-                    InputLabelProps={{
-                      shrink: true,
-                      sx: {
-                        right: 19,
-                        left: 'auto',
-                        transformOrigin: 'top right',
-                      }
-                    }}
-                    error={!!errors.expirationDate}
-                    helperText={errors.expirationDate?.message}
-                    InputProps={{
-                      sx: {
-                        textAlign: 'right',
-                        direction: 'rtl',
-                      }
-                    }}
-                  />
-                </Grid>
-              )}
-              <Grid item xs={12}>
-                <TextField
-                  {...register('description')}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="description"
-                  label="תיאור"
-                  multiline
-                  rows={4}
-                  error={!!errors.description}
-                  helperText={errors.description?.message}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register('donorName')}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="donorName"
-                  label="שם התורם"
-                  error={!!errors.donorName}
-                  helperText={errors.donorName?.message}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register('donorPhone')}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="donorPhone"
-                  label="טלפון התורם"
-                  error={!!errors.donorPhone}
-                  helperText={errors.donorPhone?.message}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          startIcon={<AddCircleOutlineIcon />}
-          onClick={selectImg}
-        >
-          העלאת תמונה
-        </Button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={handleImageChange}
-        />
-        {imgPreview && (
-          <Box
-            component="img"
-            sx={{
-              mt: 2,
-              maxWidth: '100%',
-              height: 'auto'
-            }}
-            src={imgPreview}
-            alt="תמונה נבחרת"
-          />
-        )}
-      </Grid>
-            </Grid>
+                    },
+                  }
+                }}
+              />
+            )}
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="condition"
+              label="מצב הפריט"
+              {...register('condition')}
+              error={!!errors.condition}
+              helperText={errors.condition?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="description"
+              label="תיאור"
+              multiline
+              rows={4}
+              {...register('description')}
+              error={!!errors.description}
+              helperText={errors.description?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="donorName"
+              label="שם התורם"
+              {...register('donorName')}
+              error={!!errors.donorName}
+              helperText={errors.donorName?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="donorPhone"
+              label="טלפון התורם"
+              {...register('donorPhone')}
+              error={!!errors.donorPhone}
+              helperText={errors.donorPhone?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleImageChange}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={selectImg}
+            >
+              בחר תמונה
+            </Button>
+            {errors.image && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {errors.image.message}
+              </Alert>
+            )}
+            {imgPreview && (
+              <Box sx={{ mt: 2 }}>
+                <img src={imgPreview} alt="תצוגה מקדימה" style={{ width: '100%', height: 'auto' }} />
+              </Box>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -457,7 +346,7 @@ export default function NewLiveDonation() {
               color="primary"
               sx={{ mt: 3, mb: 2 }}
             >
-              שמור תרומה
+              הוסף תרומה
             </Button>
           </Box>
         </Box>

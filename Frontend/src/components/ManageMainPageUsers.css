@@ -6,7 +6,18 @@
     text-align: right;
   }
   
-  .manage-users-page h2 {
+  .manage-users-page h1 {
+    font-family: 'Assistant', sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .h1{
+    font-family: 'Assistant', sans-serif;
+    text-align: center;
+    /* margin-bottom: 20px; */
+    margin-top: 20px;
+  }
+  .title{
     font-family: 'Assistant', sans-serif;
     text-align: center;
     margin-bottom: 20px;
@@ -21,6 +32,12 @@
   .donors-table td {
     text-align: center;
     vertical-align: middle;
+  }
+  .donors-table thead th {
+    background-color: #f0e0ad  !important;
+    padding: 12px 15px;
+    font-weight: bold;
+    text-align: center;
   }
   
   .donors-table th {
@@ -88,4 +105,13 @@
       height: 35px;
     }
   }
-  
+
+  .custom-dropdown {
+    background-color: white;
+    color: white;
+    border: 1px solid white;
+  }
+  .custom-dropdown:hover {
+    background-color: white; 
+    color: white;
+  }

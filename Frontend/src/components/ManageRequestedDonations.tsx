@@ -206,8 +206,8 @@ const ManageRequestedDonations: React.FC = () => {
                 <TableCell>
                   <Button
                     variant="contained"
-                    className="button-primary"
-
+                    className="button-info"
+                    
                     onClick={() => {
                       setCurrentDonation(donation);
                       setShowModal(true);
@@ -229,7 +229,7 @@ const ManageRequestedDonations: React.FC = () => {
                 <TableCell>
                   <Tooltip title="מחק תרומה">
                     <IconButton
-                      color="secondary"
+                      sx={{ color: 'red' }}
                       onClick={() => {
                         if (donation._id) {
                           handleDelete(donation._id);
@@ -261,11 +261,11 @@ const ManageRequestedDonations: React.FC = () => {
         onClose={() => setShowModal(false)}
       >
         <Box className="modal-box">
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h6" component="h2" gutterBottom  align="center">
             פרטי תרומה
           </Typography>
           {currentDonation && (
-            <div>
+            <div style={{ textAlign: 'right' }}>
               <Typography variant="body1"><strong>קטגוריה:</strong> {currentDonation.category}</Typography>
               <Typography variant="body1"><strong>שם המוצר:</strong> {currentDonation.itemName}</Typography>
               <Typography variant="body1"><strong>תיאור:</strong> {currentDonation.description}</Typography>

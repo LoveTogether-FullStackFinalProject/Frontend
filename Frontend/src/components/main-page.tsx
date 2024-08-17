@@ -4,7 +4,7 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
-
+//import {  Button} from 'react-bootstrap';
 
 import {
   Box,
@@ -276,6 +276,7 @@ function MainPage() {
         </Typography>
       
         <Button
+
         style={{
             borderRadius:"100px",
             
@@ -308,6 +309,7 @@ function MainPage() {
      
        
 
+       
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
     <Typography 
@@ -422,9 +424,12 @@ function MainPage() {
 
 
 
+
             {/* Section 4: Donations and Community Counters */}
             <Box className="section-section-yellow">
                 <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
+
+            
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
                 

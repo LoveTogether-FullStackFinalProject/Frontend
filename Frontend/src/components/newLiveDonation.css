@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
-
+/* Global settings */
 body, html {
     margin: 0;
     padding: 0;
@@ -9,12 +8,11 @@ body, html {
     height: 100%;
 }
 
+/* Container styles */
 .new-live-donation-container {
-    max-width: none;
     width: 100%;
-    margin: 0;
     padding: 20px;
-    background-color: #ffffff  !important;
+    background-color: #ffffff !important;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     height: 100vh;
@@ -24,31 +22,31 @@ body, html {
     flex-direction: column;
 }
 
+/* Form styling */
 .donation-form {
     display: flex;
-    flex-wrap: nowrap;
     gap: 20px;
 }
 
 .form-section {
-    flex: 0 0 auto;
     width: 300px;
     padding: 0 10px;
 }
 
+/* Title styling */
 .new-live-donation-title {
     text-align: center;
     margin-bottom: 30px;
     font-size: 36px;
     font-weight: 700;
     color: #333;
-    font-family: 'Rubik', sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     position: relative;
     padding-bottom: 15px;
 }
 
+/* Title underline */
 .new-live-donation-title::after {
     content: '';
     position: absolute;
@@ -60,14 +58,16 @@ body, html {
     border-radius: 2px;
 }
 
+/* Image preview styling */
 .img-preview {
     max-width: 100px;
     max-height: 100px;
     object-fit: cover;
     border-radius: 8px;
     margin-top: 10px;
-  }
+}
 
+/* Error container */
 .error-container {
     display: flex;
     flex-direction: column;
@@ -81,9 +81,43 @@ body, html {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Error title */
 .error-title {
     font-size: 24px;
     font-weight: 700;
     color: #333;
     margin-bottom: 20px;
+}
+
+/* Input fields: aligning the 'hole' to the right */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"] {
+    text-align: right;
+    padding-right: 10px; /* Padding to shift the input area to the right */
+    direction: rtl;
+}
+
+.MuiInputLabel-root {
+    transform-origin: top right;
+    right: 10px;
+}
+
+.MuiInputLabel-root.MuiInputLabel-shrink {
+    transform: translate(0, -6px) scale(0.75);
+    right: 10px;
+    left: auto;
+}
+
+.MuiInputBase-input {
+    text-align: right;
+    padding-right: 10px; /* Ensure the input text aligns to the right */
+    direction: rtl;
+}
+
+input:focus {
+    text-align: right;
+    padding-right: 10px;
 }

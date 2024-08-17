@@ -4,7 +4,7 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
-
+//import {  Button} from 'react-bootstrap';
 
 import {
   Box,
@@ -269,35 +269,28 @@ function MainPage() {
         </Typography>
       
         <Button
-  onClick={() => {
-    console.log('Button clicked');
-    handleButtonClick();
-  }}
-  variant="contained"
-  className="first-section-button"
-  startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
-  sx={{ 
-    px: 4, 
-    py: 2, 
-    fontSize: '1rem', 
-    // textTransform: 'none', 
-    backgroundColor: "white", 
-    color: "black", 
-    // borderRadius: "8px",
-    // boxShadow:"5px",
-  }}
->
-  לתרומה
-</Button>
+        onClick={() => {
+            console.log('Button clicked');
+            handleButtonClick();
+        }}
+        variant="contained"
+        className="first-section-button"
+        startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
+        sx={{ 
+            px: 4, 
+            py: 2, 
+            fontSize: '1rem', 
+            // textTransform: 'none', 
+            backgroundColor: "white", 
+            color: "black", 
+            // borderRadius: "8px",
+            // boxShadow:"5px",
+        }}
+        >
+        לתרומה
+    </Button>
 </Box>
-
     </Box>
-
-            
-    
-     
-       
-
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
   <Typography variant="h3" sx={{ mb: 2 ,fontFamily: 'Assistant'}}>
@@ -356,7 +349,6 @@ function MainPage() {
   )}
 </Box>
 
-
          {/* Section 3: Leading Donors */}
          <Box className="section-section3-light" sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
     <Typography variant="h3" sx={{ mb: 2 ,fontFamily: 'Assistant'}}>
@@ -391,13 +383,9 @@ function MainPage() {
         )}
 </Box>
 
-
-
-
-
             {/* Section 4: Donations and Community Counters */}
-            <Box className="section-section-yellow">
-                <Typography variant="h4" style={{fontFamily: 'Assistant',marginTop:"10px"}}>
+            <Box className="section-section-yellow" >
+                <Typography variant="h4" style={{fontFamily: 'Assistant', padding: '10px'}}>
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
                 <Box className="counter-box">

@@ -388,7 +388,7 @@ function MainPage() {
                 <Typography variant="h4" style={{fontFamily: 'Assistant', padding: '10px'}}>
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
-                <Box className="counter-box">
+                <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Box>
                         <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
                             <div>

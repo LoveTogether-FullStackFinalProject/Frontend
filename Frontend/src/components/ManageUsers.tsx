@@ -201,7 +201,7 @@ const ManageUsers: React.FC = () => {
         </CSVLink>
       </Toolbar>
       {error && <Typography color="error" align="center">{error}</Typography>}
-      <TableContainer component={Paper} className="table-container">
+      <TableContainer component={Paper} >
         <Table className="table">
           <TableHead className="table-head">
             <TableRow>

@@ -22,7 +22,7 @@ import {
   InputAdornment,
   Tooltip,
 } from '@mui/material';
-import { Edit, Delete, Search } from '@mui/icons-material';
+import { Edit, Delete, Search, Close } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 
@@ -254,14 +254,30 @@ const ManageUsers: React.FC = () => {
         </Table>
       </TableContainer>
       <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+  open={snackbarOpen}
+  autoHideDuration={6000}
+  onClose={handleCloseSnackbar}
+>
+  <Alert
+    onClose={handleCloseSnackbar}
+    severity={
+      snackbarMessage.includes('נכשלה') ? 'error' : 'success'
+    }
+    icon={
+      snackbarMessage.includes('נכשלה')
+        ? <Close fontSize="inherit" />
+        : undefined
+    }
+    sx={{
+      color:
+        snackbarMessage.includes('נכשלה') ? '#fff' : undefined,
+      backgroundColor:
+        snackbarMessage.includes('נכשלה') ? '#f44336' : undefined,
+    }}
+  >
+    {snackbarMessage}
+  </Alert>
+</Snackbar>
       <Modal
         open={editModalOpen}
         onClose={handleCloseEditModal}

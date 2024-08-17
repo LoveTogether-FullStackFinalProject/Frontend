@@ -52,7 +52,7 @@
 }
 
 .first-section-button {
-  background-color: #f2f0ea !important;
+  background-color: #f9db78da !important;
   color: #000;
   font-weight: bold;
   padding: 10px 30px;
@@ -60,20 +60,20 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s ease;
   margin-right: 50px; 
-  margin-top: 20px; 
+  margin-top: 70px !important;
   font-size: 1.2rem; 
-  z-index: 1;
+  
 }
 
 
 .first-section-button:hover {
-  background-color: #f9db78; 
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  background-color: #fbfbfb !important;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5)!important;
 }
 
 
 .firstsec {
-  background: linear-gradient(135deg, rgb(249, 219, 120) 0%, rgba(245, 245, 245, 0.8) 100%); 
+  background: linear-gradient(135deg, rgb(249, 230, 167) 0%, rgba(245, 237, 205, 0.891) 100%); 
   border-radius: 10px;
   padding: 120px 0; 
   padding-left: 0;
@@ -84,12 +84,7 @@
   justify-content: center;
   align-items: flex-end; 
 }
-/* 
-.firstsec img {
-  max-width: 150px; 
-  margin: 0 auto 20px 0; 
-  align-self: center;
-} */
+
 
 .firstsec h3 {
   font-weight: bold;
@@ -133,12 +128,12 @@
 
 .section-section-yellow {
   margin-bottom: 50px;
-  text-align: center;
-  background: linear-gradient(135deg, rgba(249, 226, 144, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
+  background: linear-gradient(135deg, rgba(249, 228, 164, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%); /* Gradient from yellow to cream */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   min-height: 300px; 
   margin-top: 150px;
+  text-align: center !important;
 }
 
 
@@ -154,7 +149,6 @@
   transform-origin: center center;
   opacity: 0.5;
   perspective: 1000px;
-
 }
 
 .slider-3d .slick-center {
@@ -171,7 +165,6 @@
   background-color: #ffffff;
   border-radius: 50%;
   width: 40px;
-  
   height: 40px;
 }
 
@@ -189,12 +182,13 @@
 .counter-box {
   display: flex;
   justify-content: space-between;
-  
+  text-align: center !important;
   margin-top: 70px;
   padding: 0 30%; /* Make the counters closer together */
 }
 
 .counter-box div {
+  text-align: center !important;
   flex: 1;
   padding: 0 10px; /* Adjust padding to bring counters closer */
 }

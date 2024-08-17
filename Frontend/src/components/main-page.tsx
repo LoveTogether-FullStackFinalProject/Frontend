@@ -4,7 +4,7 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
-
+//import {  Button} from 'react-bootstrap';
 
 import {
   Box,
@@ -38,18 +38,19 @@ const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
             onClick={onClick}
             sx={{
                 position: 'absolute',
+                zIndex:999,
                 top: '50%',
-                right: '-10px',
+                right: '0px',
                 transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
                 color: '#000',
-                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.8)',
                 '&:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.7)',
                     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
                 },
                 '& .MuiSvgIcon-root': {
-                    fontSize: '1.5rem',
+                    fontSize: '2.5rem',
                 }
             }}
         >
@@ -66,18 +67,19 @@ const PrevArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
             onClick={onClick}
             sx={{
                 position: 'absolute',
+                zIndex:999,
                 top: '50%',
-                left: '-10px',
+                left: '0px',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'rgba(255, 255, 255, 0.5)',
                 color: '#000',
-                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.8)',
                 '&:hover': {
                     backgroundColor: 'rgba(255, 255, 255, 0.7)',
                     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
                 },
                 '& .MuiSvgIcon-root': {
-                    fontSize: '1.5rem',
+                    fontSize: '2.5rem',
                 }
             }}
         >
@@ -214,23 +216,26 @@ function MainPage() {
             width: '100%', 
             padding: 0, 
             margin: 0, 
-            maxWidth: '100%' 
+            maxWidth: '100%' ,
         }}>
             {/* Section 1: Logo and Main CTA */}
             {/* Background Gradient Container */}
             {/* Background */}
             
             <Box
-        sx={{
+      sx={{
         marginTop: '150px',
+        height:"500px",
         position: 'relative',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between', 
-        background: 'linear-gradient( rgba(249, 218, 120, 1) 40%, rgba(245, 245, 245, 0.8) 85%)',
-        zIndex: -1, 
+        background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
+        //249, 218, 120, 0.8)
+        // zIndex: -1, 
         padding: '0 20px', 
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' // Adjust shadow here
     }}
 >
     {/* Logo */}
@@ -238,9 +243,11 @@ function MainPage() {
         component="img"
         src={whitelogo}
         alt="whitelogo"
+        style={{
+            maxWidth: '500px',
+        }}
         sx={{ 
-            maxWidth: '300px',
-            marginLeft:'80px',
+            marginLeft:'7px',
             minWidth:'100px',
             height: 'auto'
         }}
@@ -259,7 +266,7 @@ function MainPage() {
         }}
     >
         {/* Center Text */}
-        <Typography variant="h4" sx={{ 
+        <Typography variant="h3" sx={{ 
             fontFamily: "'Assistant', sans-serif", 
             fontWeight: 500, 
             color: 'black',
@@ -269,6 +276,11 @@ function MainPage() {
         </Typography>
       
         <Button
+
+        style={{
+            borderRadius:"100px",
+            
+        }}
   onClick={() => {
     console.log('Button clicked');
     handleButtonClick();
@@ -290,21 +302,30 @@ function MainPage() {
   לתרומה
 </Button>
 </Box>
-
-    </Box>
+</Box>
 
             
     
      
        
 
+       
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
-  <Typography variant="h3" sx={{ mb: 2 ,fontFamily: 'Assistant'}}>
-    מוצרים שאנחנו צריכים
-  </Typography>
+    <Typography 
+    variant="h3" 
+    sx={{ 
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        marginTop: "100px", 
+        borderBottom: '3px solid #f9db78', 
+        display: 'inline-block'
+    }}
+>
+    מוצרים שאנו צריכים
+</Typography>
   {requests.length === 1 ? (
-    <Box sx={{ p: 1, textAlign: 'center' }}>
+    <Box sx={{ p: 1, textAlign: 'center',  }}>
       <Box
         component="img"
         src={requests[0].image || person}
@@ -329,7 +350,7 @@ function MainPage() {
   ) : (
     <Slider {...sliderSettings}>
       {requests.map((request, index) => (
-        <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' }}>
+        <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' ,marginTop:"50px",}}>
           <Box
             component="img"
             src={request.image || person}
@@ -356,12 +377,21 @@ function MainPage() {
   )}
 </Box>
 
-
          {/* Section 3: Leading Donors */}
          <Box className="section-section3-light" sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
-    <Typography variant="h3" sx={{ mb: 2 ,fontFamily: 'Assistant'}}>
-        תורמים מובילים
-    </Typography>
+         <Typography 
+        variant="h3" 
+        sx={{ 
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        marginTop: "140px", 
+        borderBottom: '3px solid #f9db78', 
+        display: 'inline-block'
+        
+    }}
+>
+    תורמים מובילים
+</Typography>
     {numUsers === 1 ? (
             users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
                 <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
@@ -397,10 +427,13 @@ function MainPage() {
 
             {/* Section 4: Donations and Community Counters */}
             <Box className="section-section-yellow">
-                <Typography variant="h4" style={{fontFamily: 'Assistant',marginTop:"10px"}}>
+                <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
+
+            
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
-                <Box className="counter-box">
+                
+                <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Box>
                         <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
                             <div>

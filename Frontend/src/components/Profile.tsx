@@ -211,8 +211,9 @@ const Profile: React.FC = () => {
                         <option value="">מיין לפי</option>
                         <option value="category">קטגוריה</option>
                         <option value="quantity">כמות</option>
-                        <option value="itemCondition">מצב הפריט</option>
+                        <option value="condition">מצב הפריט</option>
                         <option value="status">סטטוס</option>
+                        <option value="pickUpAddress">כתובת לאיסוף</option>
                         <option value="createdAt">תאריך יצירה</option>
                         <option value="updatedAt">תאריך עדכון</option>
                     </select>
@@ -299,7 +300,7 @@ const Profile: React.FC = () => {
                 show={showModal}
                 onHide={handleCancelClick}
                 donation={selectedDonation}
-                onEditClick={handleSaveChanges}  // Pass handleSaveChanges as onEditClick
+                onEditClick={handleSaveChanges}
                 onDeleteClick={handleDeleteClick}
             />
         </div>

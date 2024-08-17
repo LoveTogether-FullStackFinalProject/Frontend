@@ -42,7 +42,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
 
     const handleClose = () => {
         setIsEditing(false);
-        setEditData(donation); 
+        setEditData(donation);
         onHide();
     };
 
@@ -87,8 +87,8 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                     <Form.Label>מצב הפריט</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="itemCondition"
-                                        value={editData.itemCondition}
+                                        name="condition"
+                                        value={editData.condition}
                                         onChange={handleChange}
                                     />
                                 </Form.Group>
@@ -121,24 +121,13 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         onChange={handleChange}
                                     />
                                 </Form.Group>
-                                {editData.status === 'ממתין לאיסוף מבית התורם' && (
+                                {editData.pickUpAddress && (
                                     <Form.Group>
                                         <Form.Label>כתובת לאיסוף</Form.Label>
                                         <Form.Control
                                             type="text"
-                                            name="pickupAddress"
+                                            name="pickUpAddress"
                                             value={editData.pickUpAddress}
-                                            onChange={handleChange}
-                                        />
-                                    </Form.Group>
-                                )}
-                                {editData.status === 'טרם הגיע לעמותה' && (
-                                    <Form.Group>
-                                        <Form.Label>סניף עמותה</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="branch"
-                                            value={editData.branch}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -148,23 +137,22 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                             <>
                                 <p><strong>קטגוריה:</strong> {editData.category}</p>
                                 <p><strong>כמות:</strong> {editData.quantity}</p>
-                                <p><strong>מצב הפריט:</strong> {editData.itemCondition}</p>
+                                <p><strong>מצב הפריט:</strong> {editData.condition}</p>
                                 <p><strong>תיאור:</strong> {editData.description}</p>
                                 {editData.category === 'מזון ושתייה' && editData.expirationDate && (
                                     <p><strong>תאריך תפוגה:</strong> {new Date(editData.expirationDate).toLocaleDateString()}</p>
                                 )}
                                 <p><strong>סטטוס:</strong> {editData.status}</p>
-                                {editData.status === 'ממתין לאיסוף מבית התורם' && editData.pickUpAddress && (
+                                {editData.pickUpAddress && (
                                     <p><strong>כתובת לאיסוף:</strong> {editData.pickUpAddress}</p>
-                                )}
-                                {editData.status === 'טרם הגיע לעמותה' && editData.branch && (
-                                    <p><strong>סניף עמותה:</strong> {editData.branch}</p>
                                 )}
                             </>
                         )}
                     </div>
                     <div className="col-md-6">
-                        <img src={editData.image} alt={editData.itemName} className="img-fluid" style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }} />
+                        {editData.image && (
+                            <img src={editData.image} alt={editData.itemName} className="img-fluid" style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }} />
+                        )}
                     </div>
                 </div>
             </Modal.Body>

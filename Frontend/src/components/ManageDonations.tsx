@@ -355,7 +355,7 @@ const ManageDonationPage: React.FC = () => {
               <Typography variant="body1"><strong>כמות:</strong> {currentDonation.quantity}</Typography>
               {currentDonation.image && (
                 <div style={{ textAlign: 'center' }}>
-                  <img src={currentDonation.image} className="img-fluid" />
+                  <img src={currentDonation.image} alt="Donation" className="img-fluid" />
                 </div>
               )}
             </div>

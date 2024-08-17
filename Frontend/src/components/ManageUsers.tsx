@@ -24,7 +24,7 @@ import {
   Tooltip,
 
 } from '@mui/material';
-import { Edit, Delete, Search } from '@mui/icons-material';
+import { Edit, Delete, Search, Close } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 
@@ -283,7 +283,7 @@ const ManageUsers: React.FC = () => {
 
       {/* Snackbar for notifications */}
       <Snackbar
-        open={snackbarOpen}
+       open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
@@ -293,6 +293,7 @@ const ManageUsers: React.FC = () => {
       </Snackbar>
 
       {/* Modal for editing users */}
+
       <Modal
         open={editModalOpen}
         onClose={handleCloseEditModal}

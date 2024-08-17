@@ -171,41 +171,20 @@ const Statistics = () => {
       </div>
     );
   }
-  // if (!accessToken) {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         backgroundColor: 'white',
-  //         width: '100%',
-  //         height: '50vh',
-  //         display: 'flex',
-  //         flexDirection: 'column',
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         padding: '20px',
-  //         border: '1px solid black',
-  //       }}
-  //     >
-  //       <Typography variant="h6" color="error">
-  //         שגיאה: אינך מחובר בתור מנהל
-  //       </Typography>
-  //       {/* <Button
-  //         onClick={() => navigate('/adminDashboard')}
-  //         variant="contained"
-  //         color="primary"
-  //         sx={{ marginTop: '20px' }}
-  //       >
-  //         התחבר בתור מנהל
-  //       </Button> */}
-  //     </Box>
-  //   );
-  // }
+  
 
   return (
-    <Container className="statistics-page" dir="rtl">
-      <Typography variant="h4" component="h1" fontSize={50} gutterBottom align="center" sx={{ marginTop: 15 }}>
-        נתונים וסטטיסטיקות
-      </Typography>
+<Container className="statistics-page" dir="rtl">
+  <Typography
+    variant="h4"
+    component="h1"
+    fontSize={50}
+    gutterBottom
+    align="center"
+    sx={{ marginTop: 15, textDecoration: 'underline' }}
+  >
+    נתונים וסטטיסטיקות
+  </Typography>
       {error && <Typography color="error">{error}</Typography>}
       <Grid container spacing={4}>
         <Grid item xs={12}>
@@ -214,26 +193,35 @@ const Statistics = () => {
               <Typography variant="h6" gutterBottom>
               </Typography>
               <StyledTableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>פריטים הכי נתרמים</TableCell>
-                      <TableCell>משתמשים הכי תורמים</TableCell>
-                      <TableCell>סניפים עם הכי הרבה תרומות</TableCell>
-                      <TableCell>קטגוריות הכי נתרמות</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+              <Table>
+  <TableHead>
+    <TableRow>
+      <TableCell style={{ textAlign: 'right' }}>פריטים הכי נתרמים</TableCell>
+      <TableCell style={{ textAlign: 'right' }}>משתמשים הכי תורמים</TableCell>
+      <TableCell style={{ textAlign: 'right' }}>סניפים עם הכי הרבה תרומות</TableCell>
+      <TableCell style={{ textAlign: 'right' }}>קטגוריות הכי נתרמות</TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {Array.from({ length: 5 }).map((_, index) => (
+      <TableRow key={index}>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}
+        </TableCell>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}
+        </TableCell>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}
+        </TableCell>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+
               </StyledTableContainer>
             </CardContent>
           </Card>
@@ -241,8 +229,8 @@ const Statistics = () => {
       </Grid>
 
       <Box mb={4}>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>שדה X</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 120, padding:2 }}>
+          <InputLabel sx={{ textAlign: 'right', width: '100%' , padding:1}}>שדה X</InputLabel>
           <Select value={xAxisField} onChange={handleXAxisFieldChange} disabled={selectedChart === 'users'}>
             <MenuItem value="itemName">שם המוצר</MenuItem>
             <MenuItem value="category">קטגוריה</MenuItem>
@@ -251,15 +239,15 @@ const Statistics = () => {
             <MenuItem value="branch">סניף עמותה</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>שדה Y</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 120 , padding:2}}>
+          <InputLabel sx={{ textAlign: 'right', width: '100%', padding:1 }}>שדה Y</InputLabel>
           <Select value={yAxisField} onChange={handleYAxisFieldChange}>
             <MenuItem value="quantity">כמות</MenuItem>
             <MenuItem value="amount">סכום</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>סוג הגרף</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 120 , padding:2}}>
+          <InputLabel sx={{ textAlign: 'right', width: '100%', padding:1 }}>סוג הגרף</InputLabel>
           <Select value={selectedChart} onChange={handleChartChange}>
             <MenuItem value="donations">תרומות</MenuItem>
             <MenuItem value="requests">בקשות</MenuItem>

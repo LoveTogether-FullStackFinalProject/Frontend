@@ -27,6 +27,7 @@ import whitelogo from '../assets/whiteLogo.png';
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
 import '../styles/globals.css';
+import { blue } from '@mui/material/colors';
 
 const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
@@ -280,22 +281,27 @@ function MainPage() {
 
        
         <Button
-            onClick={() => handleButtonClick()}
-            variant="contained"
-            endIcon={<i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>}
-            sx={{ 
-                px: 4, 
-                py: 2, 
-                fontSize: '1rem', 
-                textTransform: 'none', 
-                backgroundColor: "white", 
-                color: "black", 
-                borderRadius: "8px",
-                boxShadow:"2px"
-            }}
-        >
-            לתרומה
-        </Button>
+
+  onClick={handleButtonClick}
+  variant="contained"
+  endIcon={<i className="bi bi-chevron-left" style={{ fontSize: "20px" }}></i>}
+  sx={{ 
+    px: 4, 
+    py: 2, 
+    fontSize: '1rem', 
+    textTransform: 'none', 
+    backgroundColor: "white", 
+    color: "black", 
+    borderRadius: "8px",
+    boxShadow:"5px",
+    hover: "blue"
+  }}
+>
+  לתרומה
+</Button>
+
+
+  
     </Box>
 </Box>
              {/* Section 2: Products We Need */}

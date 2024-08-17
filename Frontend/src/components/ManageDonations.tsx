@@ -344,10 +344,7 @@ const ManageDonationPage: React.FC = () => {
       >
         <Box sx={{ width: '400px', margin: 'auto', marginTop: '100px', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <Typography id="simple-modal-title" variant="h6" component="h2">
-            מחיקת תרומה
-          </Typography>
-          <Typography id="simple-modal-description" sx={{ mt: 2 }}>
-            האם אתה בטוח שברצונך למחוק את התרומה הזאת?
+            פרטי תרומה 
           </Typography>
           {currentDonation && (
             <div>

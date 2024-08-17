@@ -24,7 +24,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { CSVLink } from 'react-csv';
-import { Delete, Search } from '@mui/icons-material';
+import { Delete, Search, Visibility } from '@mui/icons-material';
 import './ManageDonations.css';
 import { Donation } from './donation';
 
@@ -139,6 +139,13 @@ const ManageDonationPage: React.FC = () => {
     });
   };
 
+  const handleDeleteClick = (donation: Donation, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevents modal from opening
+    setDonations(donations.filter((d) => d._id !== donation._id));
+    setSnackbarMessage('התרומה נמחקה בהצלחה!');
+    setSnackbarOpen(true);
+  };
+
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -147,7 +154,6 @@ const ManageDonationPage: React.FC = () => {
     if (userId) {
       dataService.getUser(userId).req.then((res) => {
         setIsAdmin(res.data.isAdmin);
-        console.log("isAdmin:", res.data.isAdmin);
       });
     }
   }, []);
@@ -195,7 +201,7 @@ const ManageDonationPage: React.FC = () => {
         <Table>
           <TableHead style={{ backgroundColor: '#f0e0ad' }}>
             <TableRow>
-              <TableCell>
+              <TableCell style={{ width: '15%' }}>
                 <TableSortLabel
                   active={orderBy === 'itemName'}
                   direction={orderBy === 'itemName' ? order : 'asc'}
@@ -204,7 +210,7 @@ const ManageDonationPage: React.FC = () => {
                   שם הפריט
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ width: '15%' }}>
                 <TableSortLabel
                   active={orderBy === 'category'}
                   direction={orderBy === 'category' ? order : 'asc'}
@@ -213,7 +219,7 @@ const ManageDonationPage: React.FC = () => {
                   קטגוריה
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ width: '20%' }}>
                 <TableSortLabel
                   active={orderBy === 'description'}
                   direction={orderBy === 'description' ? order : 'asc'}
@@ -222,7 +228,7 @@ const ManageDonationPage: React.FC = () => {
                   תיאור
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ width: '10%' }}>
                 <TableSortLabel
                   active={orderBy === 'status'}
                   direction={orderBy === 'status' ? order : 'asc'}
@@ -231,7 +237,7 @@ const ManageDonationPage: React.FC = () => {
                   סטטוס
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ width: '10%' }}>
                 <TableSortLabel
                   active={orderBy === 'approvedByAdmin'}
                   direction={orderBy === 'approvedByAdmin' ? order : 'asc'}
@@ -240,18 +246,9 @@ const ManageDonationPage: React.FC = () => {
                   אישור מנהל
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'createdAt'}
-                  direction={orderBy === 'createdAt' ? order : 'asc'}
-                  onClick={() => handleRequestSort('createdAt')}
-                >
-                  תאריך
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>סניף</TableCell>
-              <TableCell>פרטי התרומות</TableCell>
-              <TableCell>מחיקה</TableCell>
+              <TableCell style={{ width: '10%' }}>סניף</TableCell>
+              <TableCell style={{ width: '5%', textAlign: 'center' }}>פרטי התרומה</TableCell>
+              <TableCell style={{ width: '5%', textAlign: 'center' }}>מחיקה</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -285,31 +282,23 @@ const ManageDonationPage: React.FC = () => {
                     <MenuItem value="false">לא מאושר</MenuItem>
                   </Select>
                 </TableCell>
-                <TableCell>
-                  {donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא ידוע'}
-                </TableCell>
-                <TableCell>{formatDate(donation.createdAt)}</TableCell>
                 <TableCell>{donation.branch || 'לא זמין'}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="outlined"
+                <TableCell style={{ textAlign: 'center' }}>
+                  <IconButton
                     color="primary"
                     onClick={() => {
                       setCurrentDonation(donation);
                       setShowModal(true);
                     }}
                   >
-                    פרטי התרומה
-                  </Button>
+                    <Visibility />
+                  </IconButton>
                 </TableCell>
-                <TableCell>
+                <TableCell style={{ textAlign: 'center' }}>
                   <Tooltip title="מחק תרומה">
                     <IconButton
                       color="secondary"
-                      onClick={() => {
-                        setCurrentDonation(donation);
-                        setShowModal(true);
-                      }}
+                      onClick={(e) => handleDeleteClick(donation, e)}
                     >
                       <Delete />
                     </IconButton>
@@ -351,7 +340,7 @@ const ManageDonationPage: React.FC = () => {
             <div>
               <Typography variant="body1"><strong>שם המוצר:</strong> {currentDonation.itemName}</Typography>
               <Typography variant="body1"><strong>תיאור:</strong> {currentDonation.description}</Typography>
-              <Typography variant="body1"><strong>מצב:</strong> {currentDonation.itemCondition}</Typography>
+              <Typography variant="body1"><strong>מצב:</strong> {currentDonation.condition}</Typography>
               <Typography variant="body1"><strong>כמות:</strong> {currentDonation.quantity}</Typography>
               {currentDonation.image && (
                 <div style={{ textAlign: 'center' }}>
@@ -370,7 +359,7 @@ const ManageDonationPage: React.FC = () => {
 };
 
 const modalStyle = {
-  position: 'absolute' ,
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

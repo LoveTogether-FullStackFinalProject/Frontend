@@ -826,7 +826,7 @@ export default function UploadProduct() {
               render={({ field }) => (
                 <RadioGroup {...field}>
                   <FormControlLabel value="ממתין לאיסוף" control={<Radio />} label="אשמח שיאספו ממני את התרומה" />
-                  <FormControlLabel value="לא נמסר לעמותה" control={<Radio />} label="אמסור את התרומה לעמותה בעצמי" />
+                  <FormControlLabel value="טרם הגיע לעמותה" control={<Radio />} label="אמסור את התרומה לעמותה בעצמי" />
                 </RadioGroup>
               )}
               

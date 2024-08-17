@@ -198,23 +198,21 @@ export default function NewLiveDonation() {
                   InputProps={rightAlignedInputStyle.InputProps}
                   {...field}
                 >
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
+                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
+                  <MenuItem value="ביגוד">ביגוד</MenuItem>
+                  <MenuItem value="רהיטים">רהיטים</MenuItem>
+                  <MenuItem value="צעצועים">צעצועים</MenuItem>
+                  <MenuItem value="ספרים">ספרים</MenuItem>
+                  <MenuItem value="היגיינה">היגיינה</MenuItem>
+                  <MenuItem value="מוצרי ניקוי">מוצרי ניקוי</MenuItem>
+                  <MenuItem value="טכנולוגיה">טכנולוגיה</MenuItem>
+                  <MenuItem value="אחר">אחר</MenuItem>
                 </TextField>
               )}
             />
             {selectedCategory === 'אחר' && (
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="customCategory"
                 label="קטגוריה מותאמת אישית"
@@ -225,28 +223,31 @@ export default function NewLiveDonation() {
                 InputProps={rightAlignedInputStyle.InputProps}
               />
             )}
+            {selectedCategory === 'מזון ושתייה' && (
+              <TextField
+                margin="normal"
+                fullWidth
+                id="expirationDate"
+                label="תאריך תפוגה"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                {...register('expirationDate')}
+                error={!!errors.expirationDate}
+                helperText={errors.expirationDate?.message}
+                InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+                InputProps={rightAlignedInputStyle.InputProps}
+              />
+            )}
             <TextField
               margin="normal"
               required
               fullWidth
               id="condition"
-              label="מצב"
+              label="מצב הפריט"
               {...register('condition')}
               error={!!errors.condition}
               helperText={errors.condition?.message}
               InputLabelProps={rightAlignedInputStyle.InputLabelProps}
-              InputProps={rightAlignedInputStyle.InputProps}
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              id="expirationDate"
-              label="תאריך תפוגה"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              {...register('expirationDate')}
-              error={!!errors.expirationDate}
-              helperText={errors.expirationDate?.message}
               InputProps={rightAlignedInputStyle.InputProps}
             />
             <TextField
@@ -280,7 +281,7 @@ export default function NewLiveDonation() {
               required
               fullWidth
               id="donorPhone"
-              label="טלפון של התורם"
+              label="טלפון התורם"
               {...register('donorPhone')}
               error={!!errors.donorPhone}
               helperText={errors.donorPhone?.message}
@@ -297,33 +298,24 @@ export default function NewLiveDonation() {
             <Button
               fullWidth
               variant="contained"
-              component="label"
-              startIcon={<CloudUploadIcon />}
-              sx={{ mt: 3, mb: 2 }}
+              color="primary"
               onClick={selectImg}
             >
-              העלה תמונה
+              בחר תמונה
             </Button>
             {imgPreview && (
-              <Box
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  mt: 2,
-                }}
-              >
-                <img src={imgPreview} alt="תמונה מקדימה" style={{ maxWidth: '100%', maxHeight: '300px' }} />
+              <Box sx={{ mt: 2 }}>
+                <img src={imgPreview} alt="תצוגה מקדימה" style={{ width: '100%', height: 'auto' }} />
               </Box>
             )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              color="primary"
               sx={{ mt: 3, mb: 2 }}
             >
-              שלח תרומה
+              הוסף תרומה
             </Button>
           </Box>
         </Box>

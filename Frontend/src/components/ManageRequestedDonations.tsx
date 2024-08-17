@@ -255,34 +255,62 @@ const ManageRequestedDonations: React.FC = () => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-
-      <Modal
-        open={showModal}
-        onClose={() => setShowModal(false)}
-      >
-        <Box className="modal-box">
-          <Typography variant="h6" component="h2" gutterBottom>
-            פרטי תרומה
-          </Typography>
-          {currentDonation && (
-            <div>
-              <Typography variant="body1"><strong>קטגוריה:</strong> {currentDonation.category}</Typography>
-              <Typography variant="body1"><strong>שם המוצר:</strong> {currentDonation.itemName}</Typography>
-              <Typography variant="body1"><strong>תיאור:</strong> {currentDonation.description}</Typography>
-              <Typography variant="body1"><strong>מצב:</strong> {currentDonation.itemCondition}</Typography>
-              <Typography variant="body1"><strong>כמות:</strong> {currentDonation.amount}</Typography>
-              {currentDonation.image && (
-                <div style={{ textAlign: 'center' }}>
-                  <img src={currentDonation.image} alt="Donation" className="img-fluid" />
-                </div>
-              )}
-            </div>
-          )}
-          <Button onClick={() => setShowModal(false)} variant="contained" color="primary" sx={{ mt: 2 }}>
-            סגור
-          </Button>
-        </Box>
-      </Modal>
+         <Modal
+          open={showModal}
+          onClose={() => setShowModal(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Box
+            sx={{
+              width: '400px',
+              margin: 'auto',
+              marginTop: '100px',
+              backgroundColor: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              textAlign: 'right',
+              direction: 'rtl',
+            }}
+          >
+            <Typography id="simple-modal-title" variant="h6" component="h2">
+              פרטי תרומה
+            </Typography>
+            {currentDonation && (
+              <div>
+                <Typography variant="body1" sx={{ marginBottom: '10px' }}>
+                  <strong>שם המוצר:</strong> {currentDonation.itemName}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: '10px' }}>
+                  <strong>קטגוריה:</strong> {currentDonation.category}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: '10px' }}>
+                  <strong>תיאור:</strong> {currentDonation.description}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: '10px' }}>
+                  <strong>מצב:</strong> {currentDonation.itemCondition}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: '10px' }}>
+                  <strong>כמות:</strong> {currentDonation.amount}
+                </Typography>
+                {currentDonation.image && (
+                  <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <img
+                      src={currentDonation.image}
+                      className="img-fluid"
+                      alt="Donation"
+                      style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+            <Button onClick={() => setShowModal(false)} variant="contained" color="primary" sx={{ mt: 2 }}>
+              סגור
+            </Button>
+          </Box>
+        </Modal>
     </div>
   );
 };

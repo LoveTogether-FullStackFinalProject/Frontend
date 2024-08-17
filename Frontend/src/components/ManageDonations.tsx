@@ -24,7 +24,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { CSVLink } from 'react-csv';
-import { Delete, Search } from '@mui/icons-material';
+import { Delete, Search, Visibility } from '@mui/icons-material';
 import './ManageDonations.css';
 import { Donation } from './donation';
 
@@ -140,6 +140,13 @@ const ManageDonationPage: React.FC = () => {
     });
   };
 
+  const handleDeleteClick = (donation: Donation, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevents modal from opening
+    setDonations(donations.filter((d) => d._id !== donation._id));
+    setSnackbarMessage('התרומה נמחקה בהצלחה!');
+    setSnackbarOpen(true);
+  };
+
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -148,7 +155,6 @@ const ManageDonationPage: React.FC = () => {
     if (userId) {
       dataService.getUser(userId).req.then((res) => {
         setIsAdmin(res.data.isAdmin);
-        console.log("isAdmin:", res.data.isAdmin);
       });
     }
   }, []);
@@ -192,136 +198,120 @@ const ManageDonationPage: React.FC = () => {
           ייצוא ל-CSV
         </CSVLink>
       </Toolbar>
-      <TableContainer
-  component={Paper}
-  className="table-responsive"
-  sx={{
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '10px',
-    overflowX: 'auto',
-  }}
->
-  <Box sx={{ direction: 'rtl' }}>
-    <Table stickyHeader>
-      <TableHead sx={{ backgroundColor: '#f0e0ad' }}>
-        <TableRow>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'itemName'}
-              direction={orderBy === 'itemName' ? order : 'asc'}
-              onClick={() => handleRequestSort('itemName')}
-            >
-              שם הפריט
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'category'}
-              direction={orderBy === 'category' ? order : 'asc'}
-              onClick={() => handleRequestSort('category')}
-            >
-              קטגוריה
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'description'}
-              direction={orderBy === 'description' ? order : 'asc'}
-              onClick={() => handleRequestSort('description')}
-            >
-              תיאור
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'status'}
-              direction={orderBy === 'status' ? order : 'asc'}
-              onClick={() => handleRequestSort('status')}
-            >
-              סטטוס
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'approvedByAdmin'}
-              direction={orderBy === 'approvedByAdmin' ? order : 'asc'}
-              onClick={() => handleRequestSort('approvedByAdmin')}
-            >
-              אישור מנהל
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>שם התורם</TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'branch'}
-              direction={orderBy === 'branch' ? order : 'asc'}
-              onClick={() => handleRequestSort('branch')}
-            >
-              סניף
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>
-            <TableSortLabel
-              active={orderBy === 'createdAt'}
-              direction={orderBy === 'createdAt' ? order : 'asc'}
-              onClick={() => handleRequestSort('createdAt')}
-            >
-              נוצר ב-
-            </TableSortLabel>
-          </TableCell>
-          <TableCell sx={{ textAlign: 'right' }}>פעולות</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {sortedAndFilteredDonations.map((donation) => (
-          <TableRow key={donation._id}>
-            <TableCell sx={{ textAlign: 'right' }}>{donation.itemName}</TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>{donation.category}</TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>{donation.description}</TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>
-              <Select
-                value={donation.status || ''}
-                onChange={(e) => handleStatusUpdate(donation, e.target.value)}
-                sx={{ textAlign: 'right' }}
-              >
-                <MenuItem value="ממתין לאיסוף">ממתין לאיסוף</MenuItem>
-                <MenuItem value="נאסף">נאסף</MenuItem>
-                <MenuItem value="הגיע לעמותה">הגיע לעמותה</MenuItem>
-                <MenuItem value="טרם הגיע לעמותה">טרם הגיע לעמותה</MenuItem>
-                <MenuItem value="נמסר בעמותה">נמסר בעמותה</MenuItem>
-              </Select>
-            </TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>
-              <Select
-                value={donation.approvedByAdmin || ''}
-                onChange={(e) => handleApprovalUpdate(donation, e.target.value)}
-                sx={{ textAlign: 'right' }}
-              >
-                <MenuItem value="Pending">ממתין לאישור</MenuItem>
-                <MenuItem value="Approved">כן</MenuItem>
-                <MenuItem value="Declined">לא</MenuItem>
-              </Select>
-            </TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>
-              {donation.donor
-                ? `${donation.donor.firstName} ${donation.donor.lastName}`
-                : ''}
-            </TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>{donation.branch}</TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>{formatDate(donation.createdAt)}</TableCell>
-            <TableCell sx={{ textAlign: 'right' }}>
-              <Tooltip title="מחק תרומה">
-                <IconButton onClick={() => setCurrentDonation(donation)}>
-                  <Delete />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </Box>
-</TableContainer>
+      <TableContainer component={Paper} className="table-responsive" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+        <Table>
+          <TableHead style={{ backgroundColor: '#f0e0ad' }}>
+            <TableRow>
+              <TableCell style={{ width: '15%' }}>
+                <TableSortLabel
+                  active={orderBy === 'itemName'}
+                  direction={orderBy === 'itemName' ? order : 'asc'}
+                  onClick={() => handleRequestSort('itemName')}
+                >
+                  שם הפריט
+                </TableSortLabel>
+              </TableCell>
+              <TableCell style={{ width: '15%' }}>
+                <TableSortLabel
+                  active={orderBy === 'category'}
+                  direction={orderBy === 'category' ? order : 'asc'}
+                  onClick={() => handleRequestSort('category')}
+                >
+                  קטגוריה
+                </TableSortLabel>
+              </TableCell>
+              <TableCell style={{ width: '20%' }}>
+                <TableSortLabel
+                  active={orderBy === 'description'}
+                  direction={orderBy === 'description' ? order : 'asc'}
+                  onClick={() => handleRequestSort('description')}
+                >
+                  תיאור
+                </TableSortLabel>
+              </TableCell>
+              <TableCell style={{ width: '10%' }}>
+                <TableSortLabel
+                  active={orderBy === 'status'}
+                  direction={orderBy === 'status' ? order : 'asc'}
+                  onClick={() => handleRequestSort('status')}
+                >
+                  סטטוס
+                </TableSortLabel>
+              </TableCell>
+              <TableCell style={{ width: '10%' }}>
+                <TableSortLabel
+                  active={orderBy === 'approvedByAdmin'}
+                  direction={orderBy === 'approvedByAdmin' ? order : 'asc'}
+                  onClick={() => handleRequestSort('approvedByAdmin')}
+                >
+                  אישור מנהל
+                </TableSortLabel>
+              </TableCell>
+              <TableCell style={{ width: '10%' }}>סניף</TableCell>
+              <TableCell style={{ width: '5%', textAlign: 'center' }}>פרטי התרומה</TableCell>
+              <TableCell style={{ width: '5%', textAlign: 'center' }}>מחיקה</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {sortedAndFilteredDonations.map((donation) => (
+              <TableRow key={donation._id}>
+                <TableCell>{donation.itemName}</TableCell>
+                <TableCell>{donation.category}</TableCell>
+                <TableCell>{donation.description}</TableCell>
+                <TableCell>
+                  <Select
+                    value={donation.status}
+                    onChange={(e) => handleStatusUpdate(donation, e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ backgroundColor: '#f9f9f9' }}
+                  >
+                    <MenuItem value="נמסר בעמותה">נמסר בעמותה</MenuItem>
+                    <MenuItem value="ממתין לאיסוף">ממתין לאיסוף</MenuItem>
+                    <MenuItem value="נאסף">נאסף</MenuItem>
+                  </Select>
+                </TableCell>
+                <TableCell>
+                  <Select
+                    value={String(donation.approvedByAdmin)}
+                    onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true' ? 'false' : 'true')}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ backgroundColor: '#f9f9f9' }}
+                  >
+                    <MenuItem value="true">מאושר</MenuItem>
+                    <MenuItem value="false">לא מאושר</MenuItem>
+                  </Select>
+                </TableCell>
+                <TableCell>{donation.branch || 'לא זמין'}</TableCell>
+                <TableCell style={{ textAlign: 'center' }}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => {
+                      setCurrentDonation(donation);
+                      setShowModal(true);
+                    }}
+                  >
+                    <Visibility />
+                  </IconButton>
+                </TableCell>
+                <TableCell style={{ textAlign: 'center' }}>
+                  <Tooltip title="מחק תרומה">
+                    <IconButton
+                      color="secondary"
+                      onClick={(e) => handleDeleteClick(donation, e)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+
       <Button
         variant="contained"
         color="primary"
@@ -359,13 +349,38 @@ const ManageDonationPage: React.FC = () => {
           <Typography id="simple-modal-description" sx={{ mt: 2 }}>
             האם אתה בטוח שברצונך למחוק את התרומה הזאת?
           </Typography>
-          <Button variant="contained" color="secondary" onClick={() => setShowModal(false)} sx={{ marginTop: '20px' }}>
-            ביטול
+          {currentDonation && (
+            <div>
+              <Typography variant="body1"><strong>שם המוצר:</strong> {currentDonation.itemName}</Typography>
+              <Typography variant="body1"><strong>תיאור:</strong> {currentDonation.description}</Typography>
+              <Typography variant="body1"><strong>מצב:</strong> {currentDonation.condition}</Typography>
+              <Typography variant="body1"><strong>כמות:</strong> {currentDonation.quantity}</Typography>
+              {currentDonation.image && (
+                <div style={{ textAlign: 'center' }}>
+                  <img src={currentDonation.image} className="img-fluid" />
+                </div>
+              )}
+            </div>
+          )}
+          <Button onClick={() => setShowModal(false)} variant="contained" color="primary" sx={{ mt: 2 }}>
+            סגור
+
           </Button>
         </Box>
       </Modal>
     </Box>
   );
 };
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 export default ManageDonationPage;

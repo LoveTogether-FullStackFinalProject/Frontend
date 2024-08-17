@@ -13,7 +13,7 @@ export interface Donation{
   category: string;
   itemName: string; 
   quantity: number;
-  itemCondition: string;
+  condition: string;
   expirationDate: Date;
   description: string;
   pickUpAddress: string;
@@ -38,7 +38,7 @@ function Donation({ donation }: DonationProps) {
         <p>Category: {donation.category}</p>
         <p>Donation Type: {donation.itemName}</p>
         <p>Amount: {donation.quantity}</p>
-        <p>Item Condition: {donation.itemCondition}</p>
+        <p>Item Condition: {donation.condition}</p>
         <p>Description: {donation.description}</p>
         <p>Pick Up Address: {donation.pickUpAddress}</p>
         <p>Branch: {donation.branch}</p>

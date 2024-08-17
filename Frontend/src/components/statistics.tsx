@@ -214,26 +214,35 @@ const Statistics = () => {
               <Typography variant="h6" gutterBottom>
               </Typography>
               <StyledTableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>פריטים הכי נתרמים</TableCell>
-                      <TableCell>משתמשים הכי תורמים</TableCell>
-                      <TableCell>סניפים עם הכי הרבה תרומות</TableCell>
-                      <TableCell>קטגוריות הכי נתרמות</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+              <Table>
+  <TableHead>
+    <TableRow>
+      <TableCell style={{ textAlign: 'right' }}>פריטים הכי נתרמים</TableCell>
+      <TableCell style={{ textAlign: 'right' }}>משתמשים הכי תורמים</TableCell>
+      <TableCell style={{ textAlign: 'right' }}>סניפים עם הכי הרבה תרומות</TableCell>
+      <TableCell style={{ textAlign: 'right' }}>קטגוריות הכי נתרמות</TableCell>
+    </TableRow>
+  </TableHead>
+  <TableBody>
+    {Array.from({ length: 5 }).map((_, index) => (
+      <TableRow key={index}>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}
+        </TableCell>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}
+        </TableCell>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}
+        </TableCell>
+        <TableCell style={{ textAlign: 'right' }}>
+          {topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}
+        </TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+
               </StyledTableContainer>
             </CardContent>
           </Card>

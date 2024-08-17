@@ -33,6 +33,7 @@ type Order = 'asc' | 'desc';
 const ManageDonationPage: React.FC = () => {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [showModal, setShowModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentDonation, setCurrentDonation] = useState<Donation | null>(null);
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Donation>('itemName');
@@ -167,8 +168,8 @@ const ManageDonationPage: React.FC = () => {
   }
 
   return (
-    <div className="manage-donations-page" style={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
-      <Typography variant="h4" align="center" gutterBottom style={{ marginBottom: '30px' }}>
+    <Box className="manage-donations-page" sx={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
+      <Typography variant="h4" align="center" gutterBottom sx={{ marginBottom: '30px' }}>
         ניהול תרומות
       </Typography>
       <Toolbar>
@@ -310,31 +311,43 @@ const ManageDonationPage: React.FC = () => {
         </Table>
       </TableContainer>
 
+
       <Button
         variant="contained"
         color="primary"
         onClick={saveChanges}
-        disabled={pendingChanges.length === 0}
-        sx={{ mt: 2 }}
+        sx={{
+          marginTop: '20px',
+          backgroundColor: '#f9db78',
+          color: '#000',
+          fontWeight: 'bold',
+          borderRadius: '10px',
+          padding: '10px 20px',
+        }}
       >
         שמור שינויים
       </Button>
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
       >
-        <Alert onClose={() => setSnackbarOpen(false)} severity="success" sx={{ width: '100%' }}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity="success">
           {snackbarMessage}
         </Alert>
       </Snackbar>
       <Modal
         open={showModal}
         onClose={() => setShowModal(false)}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
       >
-        <Box sx={modalStyle}>
-          <Typography variant="h6" gutterBottom>
-            פרטי התרומה
+        <Box sx={{ width: '400px', margin: 'auto', marginTop: '100px', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+          <Typography id="simple-modal-title" variant="h6" component="h2">
+            מחיקת תרומה
+          </Typography>
+          <Typography id="simple-modal-description" sx={{ mt: 2 }}>
+            האם אתה בטוח שברצונך למחוק את התרומה הזאת?
           </Typography>
           {currentDonation && (
             <div>
@@ -351,10 +364,11 @@ const ManageDonationPage: React.FC = () => {
           )}
           <Button onClick={() => setShowModal(false)} variant="contained" color="primary" sx={{ mt: 2 }}>
             סגור
+
           </Button>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 };
 
@@ -367,5 +381,6 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
 };
+
 
 export default ManageDonationPage;

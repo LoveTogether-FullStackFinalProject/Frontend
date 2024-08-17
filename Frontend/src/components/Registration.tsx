@@ -151,7 +151,6 @@ export default function SignUp() {
       </Container>
     );
   }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -172,7 +171,9 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit(registerUserHandler)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid item xs={12}> 
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -184,16 +185,32 @@ export default function SignUp() {
                   error={!!errors.firstName}
                   helperText={errors.firstName ? errors.firstName.message : ""}
                   InputLabelProps={{
-                    sx: { textAlign: 'right', direction: 'rtl' }
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
                   }}
                   InputProps={{
-                    sx: { textAlign: 'right', direction: 'rtl' }
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
                   }}
                 />
               </Grid>
-              
-              <Grid item xs={12} sm={6}>
-                <TextField
+              <Grid item xs={12}>
+              <TextField
                   required
                   fullWidth
                   id="lastName"
@@ -203,13 +220,30 @@ export default function SignUp() {
                   error={!!errors.lastName}
                   helperText={errors.lastName ? errors.lastName.message : ""}
                   InputLabelProps={{
-                    sx: { textAlign: 'right', direction: 'rtl' }
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
                   }}
                   InputProps={{
-                    sx: { textAlign: 'right', direction: 'rtl' }
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
                   }}
                 />
-              </Grid>
+                </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -220,8 +254,28 @@ export default function SignUp() {
                   {...register('email')}
                   error={!!errors.email}
                   helperText={errors.email ? errors.email.message : ""}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
+                  }}
                   InputProps={{
-                    sx: { textAlign: 'right', direction: 'ltr' }
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
                   }}
                 />
               </Grid>
@@ -236,8 +290,28 @@ export default function SignUp() {
                   {...register('password')}
                   error={!!errors.password}
                   helperText={errors.password ? errors.password.message : ""}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
+                  }}
                   InputProps={{
-                    sx: { textAlign: 'right', direction: 'ltr' }
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
                   }}
                 />
               </Grid>
@@ -251,8 +325,28 @@ export default function SignUp() {
                   {...register('phoneNumber')}
                   error={!!errors.phoneNumber}
                   helperText={errors.phoneNumber ? errors.phoneNumber.message : ""}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
+                  }}
                   InputProps={{
-                    sx: { textAlign: 'right', direction: 'ltr' }
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
                   }}
                 />
               </Grid>
@@ -267,10 +361,27 @@ export default function SignUp() {
             error={!!errors.mainAddress}
             helperText={errors.mainAddress ? errors.mainAddress.message : ""}
             InputLabelProps={{
-                sx: { textAlign: 'right', direction: 'rtl' }
+              sx: {
+                right: 19,
+                left: 'auto',
+                transformOrigin: 'top right',
+                '&.MuiInputLabel-shrink': {
+                  transform: 'translate(0, -10px) scale(0.75)',
+                  transformOrigin: 'top right',
+                },
+                '& .MuiFormLabel-asterisk': {
+                display: 'none',
+              },
+              }
             }}
             InputProps={{
-                sx: { textAlign: 'right', direction: 'rtl' }
+              sx: { 
+                textAlign: 'right', 
+                direction: 'rtl',
+                '& .MuiOutlinedInput-notchedOutline': {
+                  textAlign: 'right',
+                },
+              }
             }}
             />
             </Grid>
@@ -307,9 +418,9 @@ export default function SignUp() {
               הרשמה
             </Button>
             <Grid container justifyContent="flex-end" style={{direction:"rtl"}}>
-              <Grid item style={{direction:"rtl"}}>
-                <Link href="/login" variant="body2" style={{direction:"rtl"}}>
-                  כבר יש לך חשבון? התחבר
+              <Grid item style={{direction:"rtl", marginLeft: "130px"}}>
+                <Link href="/login" variant="body2" style={{ direction: "rtl"}}>
+                  כבר יש לך חשבון? התחבר/י כאן
                 </Link>
               </Grid>
             </Grid>

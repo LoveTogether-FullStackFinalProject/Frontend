@@ -296,38 +296,73 @@ const navigate = useNavigate();
             התחברות
           </Typography>
           <Box component="form" style={{direction:"rtl"}} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="אימייל"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              InputLabelProps={{
-                sx: { textAlign: 'left', direction: 'rtl' }
-              }}
-              InputProps={{
-                sx: { textAlign: 'left', direction: 'ltr' }
-              }}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="סיסמא"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              InputLabelProps={{
-                sx: { textAlign: 'left', direction: 'rtl' }
-              }}
-              InputProps={{
-                sx: { textAlign: 'left', direction: 'ltr' }
-              }}
-            />
+          <TextField
+  margin="normal"
+  required
+  fullWidth
+  id="email"
+  label="אימייל"
+  name="email"
+  autoComplete="email"
+  autoFocus
+  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.85)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                    }
+                  }}
+                  InputProps={{
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+/>
+
+<TextField
+  margin="normal"
+  required
+  fullWidth
+  name="password"
+  label="סיסמא"
+  type="password"
+  id="password"
+  autoComplete="current-password"
+  InputLabelProps={{
+    sx: {
+      right: 19,
+      left: 'auto',
+      transformOrigin: 'top right',
+      '&.MuiInputLabel-shrink': {
+        transform: 'translate(0, -10px) scale(0.85)',
+        transformOrigin: 'top right',
+      },
+      '& .MuiFormLabel-asterisk': {
+      display: 'none',
+    },
+    }
+  }}
+                  InputProps={{
+                    sx: { 
+                      textAlign: 'right', 
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+/>
             
              {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
             <Button
@@ -351,6 +386,7 @@ const navigate = useNavigate();
             <Grid container>
       
             <Grid item>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 130 }}>
             <Link
               href="#"
               variant="body2"
@@ -359,8 +395,9 @@ const navigate = useNavigate();
                 navigate('/registration');
               }}
             >
-        {"אין לך משתמש? הירשם"}
+        {"אין לך משתמש? הירשמ/י כאן"}
       </Link>
+      </div>
     </Grid>
               
             </Grid>

@@ -64,7 +64,7 @@ const AdminPage = () => {
 
   return (
     <div className="admin-page">
-      <div className="background-section text-center">
+      <div className="background-section-text-center">
         <h1 className="admin-title">ניהול ובקרה</h1>
       </div>
       <div className="cards-container">

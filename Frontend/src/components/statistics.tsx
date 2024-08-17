@@ -109,20 +109,23 @@ const Statistics = () => {
     };
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleXAxisFieldChange = (event: any) => {
     setXAxisField(event.target.value);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleYAxisFieldChange = (event: any) => {
     setYAxisField(event.target.value);
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChartChange = (event: any) => {
     setSelectedChart(event.target.value);
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const aggregateData = (data: any[], field: string, isObject = false): Record<string, number> => {
     if (!data || data.length === 0) return {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return data.reduce((acc: Record<string, number>, item: any) => {
       const key = isObject ? `${item[field]?.firstName} ${item[field]?.lastName}` : item[field];
       if (!acc[key]) {
@@ -150,36 +153,53 @@ const Statistics = () => {
     ? getTopN(aggregateData(users, 'id', true), 10)
     : getTopN(aggregateData(selectedChart === 'requests' ? requests : products, xAxisField), 10);
 
-  const accessToken = localStorage.getItem('accessToken');
-  if (!accessToken) {
+  //const accessToken = localStorage.getItem('accessToken');
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      dataService.getUser(userId).req.then((res) => {
+        setIsAdmin(res.data.isAdmin);
+      });
+    }
+  }, []);
+
+  if (!isAdmin) {
     return (
-      <Box
-        sx={{
-          backgroundColor: 'white',
-          width: '100%',
-          height: '50vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '20px',
-          border: '1px solid black',
-        }}
-      >
-        <Typography variant="h6" color="error">
-          שגיאה: אינך מחובר בתור מנהל
-        </Typography>
-        <Button
-          onClick={() => navigate('/adminDashboard')}
-          variant="contained"
-          color="primary"
-          sx={{ marginTop: '20px' }}
-        >
-          התחבר בתור מנהל
-        </Button>
-      </Box>
+      <div className="error-container">
+        <p>שגיאה: אינך מחובר בתור מנהל</p>
+      </div>
     );
   }
+  // if (!accessToken) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         backgroundColor: 'white',
+  //         width: '100%',
+  //         height: '50vh',
+  //         display: 'flex',
+  //         flexDirection: 'column',
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         padding: '20px',
+  //         border: '1px solid black',
+  //       }}
+  //     >
+  //       <Typography variant="h6" color="error">
+  //         שגיאה: אינך מחובר בתור מנהל
+  //       </Typography>
+  //       {/* <Button
+  //         onClick={() => navigate('/adminDashboard')}
+  //         variant="contained"
+  //         color="primary"
+  //         sx={{ marginTop: '20px' }}
+  //       >
+  //         התחבר בתור מנהל
+  //       </Button> */}
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Container className="statistics-page" dir="rtl">

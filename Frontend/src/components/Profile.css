@@ -4,7 +4,7 @@ body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   overflow-x: hidden;
-  direction: rtl; /* Ensure the entire body is RTL */
+  
 }
 
 .profile-page {
@@ -60,6 +60,7 @@ body {
   width: 100%; 
   max-width: 400px; 
   border: 1px solid #ccc;
+  direction: rtl;
 }
 
 .search-input::placeholder {
@@ -67,6 +68,7 @@ body {
 }
 
 select {
+  direction: rtl;
   border-radius: 15px;
   padding: 10px;
   font-family: 'Assistant', sans-serif;
@@ -229,6 +231,10 @@ select {
 
 .filter-buttons button.active {
   background-color: #d8b965;
+}
+
+.filter-section{
+direction: rtl;
 }
 
 .selected-filters {

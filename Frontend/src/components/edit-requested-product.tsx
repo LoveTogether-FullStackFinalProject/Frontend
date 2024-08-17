@@ -716,7 +716,8 @@ function EditRequestedProduct() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 10,
+            marginBottom: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -726,7 +727,7 @@ function EditRequestedProduct() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <CloudUploadIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" className= "form-title">
           עריכת מוצר המבוקש לתרומה
         </Typography>
         <Box
@@ -743,6 +744,29 @@ function EditRequestedProduct() {
                 label="שם המוצר"
                 error={Boolean(errors.itemName)}
                 helperText={errors.itemName?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                  }
+                }}
+                InputProps={{
+                  sx: {
+                    textAlign: 'right',
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -759,17 +783,40 @@ function EditRequestedProduct() {
                 }}
                 error={Boolean(errors.category)}
                 helperText={errors.category?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                  }
+                }}
+                InputProps={{
+                  sx: {
+                    textAlign: 'right',
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               >
-                <MenuItem value="">בחר קטגוריה</MenuItem>
-                <MenuItem value="ביגוד">ביגוד</MenuItem>
-                <MenuItem value="הנעלה">הנעלה</MenuItem>
-                <MenuItem value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-                <MenuItem value="כלי בית">כלי בית</MenuItem>
-                <MenuItem value="ריהוט">ריהוט</MenuItem>
-                <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-                <MenuItem value="ספרים">ספרים</MenuItem>
-                <MenuItem value="צעצועים">צעצועים</MenuItem>
-                <MenuItem value="אחר">אחר...</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
               </TextField>
               {category === "אחר" && (
                 <TextField
@@ -780,6 +827,29 @@ function EditRequestedProduct() {
                   error={!!errors.customCategory}
                     helperText={errors.customCategory?.message}
                     sx={{ mt: 2 }}
+                    InputLabelProps={{
+                      sx: {
+                        right: 19,
+                        left: 'auto',
+                        transformOrigin: 'top right',
+                        '&.MuiInputLabel-shrink': {
+                          transform: 'translate(0, -10px) scale(0.75)',
+                          transformOrigin: 'top right',
+                        },
+                        '& .MuiFormLabel-asterisk': {
+                          display: 'none',
+                        },
+                      }
+                    }}
+                    InputProps={{
+                      sx: {
+                        textAlign: 'right',
+                        direction: 'rtl',
+                        '& .MuiOutlinedInput-notchedOutline': {
+                          textAlign: 'right',
+                        },
+                      }
+                    }}
                 />
               )}
             </Grid>
@@ -792,6 +862,29 @@ function EditRequestedProduct() {
                 label="כמות"
                 error={Boolean(errors.amount) || Boolean(amountError)}
                 helperText={errors.amount?.message || amountError}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                  }
+                }}
+                InputProps={{
+                  sx: {
+                    textAlign: 'right',
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -802,6 +895,29 @@ function EditRequestedProduct() {
                 label="מצב"
                 error={Boolean(errors.itemCondition)}
                 helperText={errors.itemCondition?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                  }
+                }}
+                InputProps={{
+                  sx: {
+                    textAlign: 'right',
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -814,6 +930,29 @@ function EditRequestedProduct() {
                 label="תיאור המוצר"
                 error={Boolean(errors.description)}
                 helperText={errors.description?.message}
+                InputLabelProps={{
+                  sx: {
+                    right: 19,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                      display: 'none',
+                    },
+                  }
+                }}
+                InputProps={{
+                  sx: {
+                    textAlign: 'right',
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             </Grid>
           </Grid>

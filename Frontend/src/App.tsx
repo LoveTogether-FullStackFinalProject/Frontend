@@ -27,7 +27,6 @@ const App = () => {
     return (
         
        <div className="App">
-        <div className="main-content">
         <Router>
             
             <Navbar user={user} setUser={setUser} googleSignIn={false} />
@@ -54,7 +53,7 @@ const App = () => {
                 <Route path="/editRequestedProduct" element={<EditRequestedProduct />} />                          
             </Routes>
         </Router>
-        </div>
+
         <Footer />
         </div>
       

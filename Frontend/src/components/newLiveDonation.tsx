@@ -1,37 +1,16 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-//import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { ChangeEvent, useEffect, useState, useRef } from 'react';
+import {
+  Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem, Alert
+} from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useNavigate } from 'react-router-dom';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import dataService from '../services/data-service';
-import MenuItem from '@mui/material/MenuItem';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://your-website.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const defaultTheme = createTheme();
+const theme = createTheme();
 
 const schema = z.object({
   itemName: z.string().min(2, 'שם הפריט חייב להכיל לפחות 2 תווים'),
@@ -54,24 +33,46 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function NewLiveDonation() {
-  const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
-  const [imgPreview, setImgPreview] = React.useState<string | null>(null);
-  const navigate = useNavigate();
+const rightAlignedInputStyle = {
+  InputLabelProps: {
+    sx: {
+      right: 17,
+      left: 'auto',
+      transformOrigin: 'top right',
+      '&.MuiInputLabel-shrink': {
+        transform: 'translate(0, -10px) scale(0.75)',
+        transformOrigin: 'top right',
+      },
+      '& .MuiFormLabel-asterisk': {
+        display: 'none',
+      },
+    },
+  },
+  InputProps: {
+    sx: {
+      textAlign: 'right',
+      direction: 'rtl',
+      '& .MuiOutlinedInput-notchedOutline': {
+        textAlign: 'right',
+      },
+    },
+  },
+};
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-    watch,
-    setValue,
-  } = useForm<FormData>({
+export default function NewLiveDonation() {
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [imgPreview, setImgPreview] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { register, handleSubmit, control, formState: { errors }, watch, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    defaultValues: {
+      quantity: 1, // Initialize quantity with 1
+    },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
       dataService.getUser(userId).req.then((res) => {
@@ -82,7 +83,7 @@ export default function NewLiveDonation() {
 
   const selectedCategory = watch('category');
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setValue('image', file);
@@ -94,7 +95,11 @@ export default function NewLiveDonation() {
     }
   };
 
-  const handleSubmitForm = async (data: FormData) => {
+  const selectImg = () => {
+    fileInputRef.current?.click();
+  };
+
+  const onSubmit = async (data: FormData) => {
     try {
       let imageUrl = '';
       if (data.image) {
@@ -132,21 +137,13 @@ export default function NewLiveDonation() {
           <Typography component="h1" variant="h5">
             שגיאה: אינך מחובר בתור מנהל
           </Typography>
-          {/* <Button
-            onClick={() => navigate('/adminDashboard')}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            התחבר בתור מנהל
-          </Button> */}
         </Box>
       </Container>
     );
   }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -158,12 +155,12 @@ export default function NewLiveDonation() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <AddCircleOutlineIcon />
+            <CloudUploadIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            הוספת תרומה חדשה
+            הוסף תרומה חדשה
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(handleSubmitForm)} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -174,6 +171,8 @@ export default function NewLiveDonation() {
               {...register('itemName')}
               error={!!errors.itemName}
               helperText={errors.itemName?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
             />
             <TextField
               margin="normal"
@@ -185,6 +184,8 @@ export default function NewLiveDonation() {
               {...register('quantity', { valueAsNumber: true })}
               error={!!errors.quantity}
               helperText={errors.quantity?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
             />
             <Controller
               name="category"
@@ -196,31 +197,71 @@ export default function NewLiveDonation() {
                   label="קטגוריה"
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+                  InputProps={rightAlignedInputStyle.InputProps}
                   {...field}
                 >
-                  <MenuItem value="">בחר קטגוריה</MenuItem>
-                  <MenuItem value="ביגוד">ביגוד</MenuItem>
-                  <MenuItem value="הנעלה">הנעלה</MenuItem>
-                  <MenuItem value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-                  <MenuItem value="כלי בית">כלי בית</MenuItem>
-                  <MenuItem value="ריהוט">ריהוט</MenuItem>
-                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-                  <MenuItem value="ספרים">ספרים</MenuItem>
-                  <MenuItem value="צעצועים">צעצועים</MenuItem>
-                  <MenuItem value="אחר">אחר</MenuItem>
+                 <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
                 </TextField>
               )}
             />
             {selectedCategory === 'אחר' && (
               <TextField
                 margin="normal"
-                required
                 fullWidth
                 id="customCategory"
                 label="קטגוריה מותאמת אישית"
                 {...register('customCategory')}
                 error={!!errors.customCategory}
                 helperText={errors.customCategory?.message}
+                InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+                InputProps={rightAlignedInputStyle.InputProps}
+              />
+            )}
+            {selectedCategory === 'מזון ושתייה' && (
+              <TextField
+                margin="normal"
+                fullWidth
+                id="expirationDate"
+                label="תאריך תפוגה"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                {...register('expirationDate')}
+                error={!!errors.expirationDate}
+                helperText={errors.expirationDate?.message}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: {
+                    right: 17,
+                    left: 'auto',
+                    transformOrigin: 'top right',
+                    '&.MuiInputLabel-shrink': {
+                      transform: 'translate(0, -10px) scale(0.75)',
+                      transformOrigin: 'top right',
+                    },
+                    '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                  }
+                }}
+                InputProps={{
+                  sx: { 
+                    textAlign: 'right', 
+                    direction: 'rtl',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      textAlign: 'right',
+                    },
+                  }
+                }}
               />
             )}
             <TextField
@@ -232,23 +273,9 @@ export default function NewLiveDonation() {
               {...register('condition')}
               error={!!errors.condition}
               helperText={errors.condition?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
             />
-            {selectedCategory === 'מזון ושתייה' && (
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="expirationDate"
-                label="תאריך תפוגה"
-                type="date"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                {...register('expirationDate')}
-                error={!!errors.expirationDate}
-                helperText={errors.expirationDate?.message}
-              />
-            )}
             <TextField
               margin="normal"
               required
@@ -260,6 +287,8 @@ export default function NewLiveDonation() {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
             />
             <TextField
               margin="normal"
@@ -270,6 +299,8 @@ export default function NewLiveDonation() {
               {...register('donorName')}
               error={!!errors.donorName}
               helperText={errors.donorName?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
             />
             <TextField
               margin="normal"
@@ -280,37 +311,45 @@ export default function NewLiveDonation() {
               {...register('donorPhone')}
               error={!!errors.donorPhone}
               helperText={errors.donorPhone?.message}
+              InputLabelProps={rightAlignedInputStyle.InputLabelProps}
+              InputProps={rightAlignedInputStyle.InputProps}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleImageChange}
             />
             <Button
-              variant="contained"
-              component="label"
               fullWidth
-              sx={{ mt: 3, mb: 2 }}
+              variant="contained"
+              color="primary"
+              onClick={selectImg}
             >
-              העלאת תמונה
-              <input
-                type="file"
-                hidden
-                accept="image/*"
-                onChange={handleImageChange}
-              />
+              בחר תמונה
             </Button>
+            {errors.image && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {errors.image.message}
+              </Alert>
+            )}
             {imgPreview && (
-              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+              <Box sx={{ mt: 2 }}>
+                <img src={imgPreview} alt="תצוגה מקדימה" style={{ width: '100%', height: 'auto' }} />
               </Box>
             )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              color="primary"
               sx={{ mt: 3, mb: 2 }}
             >
-              שמור תרומה
+              הוסף תרומה
             </Button>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

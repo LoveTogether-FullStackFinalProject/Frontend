@@ -114,7 +114,8 @@ function UploadRequestedProduct() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 10,
+            marginBottom: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -123,7 +124,7 @@ function UploadRequestedProduct() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <CloudUploadIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" className= "form-title">
             העלאת מוצר המבוקש לתרומה
           </Typography>
           <Box component="form" onSubmit={handleSubmit(addNewProduct)} noValidate sx={{ mt: 3 }}>
@@ -210,16 +211,16 @@ function UploadRequestedProduct() {
                     }
                   }}
                 >
-                  <MenuItem value="">בחר קטגוריה</MenuItem>
-                  <MenuItem value="ביגוד">ביגוד</MenuItem>
-                  <MenuItem value="הנעלה">הנעלה</MenuItem>
-                  <MenuItem value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-                  <MenuItem value="כלי בית">כלי בית</MenuItem>
-                  <MenuItem value="ריהוט">ריהוט</MenuItem>
-                  <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-                  <MenuItem value="ספרים">ספרים</MenuItem>
-                  <MenuItem value="צעצועים">צעצועים</MenuItem>
-                  <MenuItem value="אחר">אחר...</MenuItem>
+                <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
                 </TextField>
                 {category === "אחר" && (
                   <TextField
@@ -372,6 +373,11 @@ function UploadRequestedProduct() {
                 >
                   בחר תמונה
                 </Button>
+                {errors.image && (
+                  <Alert severity="error" sx={{ mt: 2 }}>
+                   יש להעלות תמונה של המוצר המבוקש
+                  </Alert>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -385,7 +391,11 @@ function UploadRequestedProduct() {
                     sx={{
                       mt: 2,
                       maxWidth: '100%',
-                      height: 'auto'
+                      height: 'auto',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                      transform: 'translateX(10px)'
                     }}
                     src={URL.createObjectURL(imgSrc)}
                     alt="Preview"

@@ -99,11 +99,25 @@ const ManageMainPageUsers = () => {
 
   return (
     <div className="manage-users-page">
-      <Typography variant="h4" align="center" gutterBottom sx={{ marginBottom: '10px', marginTop: '60px', fontFamily: 'Assistant' }}>
-        ניהול הצגת תורמים בעמוד הראשי
-      </Typography>
+      <Typography 
+        variant="h3"
+        style={{
+          alignItems:"center"
+        }}
+        sx={{ 
+        align:"center",
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        marginTop: "100px", 
+        borderBottom: '3px solid #f9db78', 
+        display: 'inline-block',
+        marginRight:"35%"
+        
+    }}
+>
+    ניהול הצגת יוזרים בעמוד הראשי</Typography>
       <TextField
-        label="חפש תורם"
+        
         placeholder="חפש תורם לפי שם פרטי, שם משפחה, דירוג"
         variant="outlined"
         className="filter-input"

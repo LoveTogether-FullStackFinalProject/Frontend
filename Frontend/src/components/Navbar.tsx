@@ -95,11 +95,11 @@ export function Navbar({ setUser }: NavbarProps) {
           <Nav className="ms-auto">
             {isLoggedIn ? (
               <div className='navLink'>
-                <Nav.Link as={Link} to="/profile" onClick={handleClose}>החשבון שלי</Nav.Link>
                 <Nav.Link as={Link} to="/mainPage" onClick={() => { handleLogout(); handleClose(); }}>התנתק</Nav.Link>
+                {isAdmin && <Nav.Link as={Link} to="/adminDashboard" onClick={handleClose}>ניהול</Nav.Link>}
                 <Nav.Link as={Link} to="/uploadproduct" onClick={handleClose}>תרמו כאן</Nav.Link>
                 <Nav.Link as={Link} to="/about" onClick={handleClose}>על העמותה</Nav.Link>
-                {isAdmin && <Nav.Link as={Link} to="/adminDashboard" onClick={handleClose}>ניהול</Nav.Link>}
+                <Nav.Link as={Link} to="/profile" onClick={handleClose}>החשבון שלי</Nav.Link>
               </div>
             ) : (
               <div className='navLink'>

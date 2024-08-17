@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import dataService, { CanceledError } from '../services/data-service';
 import { DonorData } from './donorData';
@@ -21,15 +22,13 @@ import {
   Toolbar,
   InputAdornment,
   Tooltip,
+
 } from '@mui/material';
 import { Edit, Delete, Search, Close } from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 
-//import { useNavigate } from 'react-router-dom';
-
 type Order = 'asc' | 'desc';
-
 const ManageUsers: React.FC = () => {
   const [users, setUsers] = useState<DonorData[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -41,8 +40,6 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //const navigate = useNavigate();
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();
@@ -171,13 +168,32 @@ const ManageUsers: React.FC = () => {
 
   return (
     <div className="manage-users-page">
-      <Typography variant="h4" align="center" gutterBottom>
-        ניהול יוזרים
-      </Typography>
+        <Typography 
+        variant="h3"
+        style={{
+          alignItems:"center"
+        }}
+        sx={{ 
+        align:"center",
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        marginTop: "100px", 
+        borderBottom: '3px solid #f9db78', 
+        display: 'inline-block',
+        marginRight:"45%"
+        
+    }}
+>
+    ניהול יוזרים
+</Typography>
 
       <Toolbar>
         <TextField
-          label="חפש משתמש"
+        style={{
+          width:"400px",
+          direction:"rtl"
+        }}
+          
           placeholder="חפש תורם לפי פרטיו"
           variant="outlined"
           fullWidth
@@ -196,17 +212,26 @@ const ManageUsers: React.FC = () => {
           data={handleExport()}
           filename="users.csv"
           className="csv-link"
+          style={{ 
+            textDecoration: "none", 
+            color: "white", 
+            backgroundColor: "#217346", // Green background color
+            padding: "10px 20px",       // Padding for the button
+            borderRadius: "5px",        // Rounded corners
+            display: "inline-flex",     // Align icon and text
+            alignItems: "center"        // Center icon and text vertically
+          }}
         >
           ייצוא לאקסל
         </CSVLink>
       </Toolbar>
       {error && <Typography color="error" align="center">{error}</Typography>}
-      <TableContainer component={Paper} className="table-container">
-        <Table className="table">
+      <TableContainer component={Paper}  className="table-container-color">    
+      <Table className="table-users">
           <TableHead className="table-head">
             <TableRow>
               {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
-                <TableCell key={column} className="rtl-table-col">
+                <TableCell key={column} className="rtl-table-col" style={{textAlign:"center"}}>
                   <TableSortLabel
                     active={orderBy === column}
                     direction={orderBy === column ? order : 'asc'}
@@ -228,20 +253,20 @@ const ManageUsers: React.FC = () => {
           <TableBody>
             {sortedAndFilteredUsers.map((user) => (
               <TableRow key={user._id}>
-                <TableCell className="rtl-table">{user.email}</TableCell>
-                <TableCell className="rtl-table">{user.firstName}</TableCell>
-                <TableCell className="rtl-table">{user.lastName}</TableCell>
-                <TableCell className="rtl-table">{user.address}</TableCell>
-                <TableCell className="rtl-table">{user.phoneNumber}</TableCell>
-                <TableCell className="rtl-table">{user.rating}</TableCell>
-                <TableCell className="rtl-table">
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.email}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.firstName}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.lastName}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.address}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.phoneNumber}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.rating}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>
                   <Tooltip title="ערוך משתמש">
                     <IconButton color="primary" onClick={() => editUser(user)}>
                       <Edit />
                     </IconButton>
                   </Tooltip>
                 </TableCell>
-                <TableCell className="rtl-table">
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>
                   <Tooltip title="מחק משתמש">
                     <IconButton color="secondary" sx={{ color: 'red' }} onClick={() => deleteUser(user._id)}>
                       <Delete />
@@ -252,99 +277,88 @@ const ManageUsers: React.FC = () => {
             ))}
           </TableBody>
         </Table>
+  
+
       </TableContainer>
+
+      {/* Snackbar for notifications */}
       <Snackbar
-  open={snackbarOpen}
-  autoHideDuration={6000}
-  onClose={handleCloseSnackbar}
->
-  <Alert
-    onClose={handleCloseSnackbar}
-    severity={
-      snackbarMessage.includes('נכשלה') ? 'error' : 'success'
-    }
-    icon={
-      snackbarMessage.includes('נכשלה')
-        ? <Close fontSize="inherit" />
-        : undefined
-    }
-    sx={{
-      color:
-        snackbarMessage.includes('נכשלה') ? '#fff' : undefined,
-      backgroundColor:
-        snackbarMessage.includes('נכשלה') ? '#f44336' : undefined,
-    }}
-  >
-    {snackbarMessage}
-  </Alert>
-</Snackbar>
+       open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
+      {/* Modal for editing users */}
+
       <Modal
         open={editModalOpen}
         onClose={handleCloseEditModal}
+        aria-labelledby="edit-user-modal-title"
+        aria-describedby="edit-user-modal-description"
       >
-        <Box sx={modalStyle}>
-          <Typography variant="h6" gutterBottom>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '90%', // responsive width
+            maxWidth: 500, // max width for larger screens
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 1,
+          }}
+        >
+          <Typography id="edit-user-modal-title" variant="h6" component="h2">
             עריכת משתמש
           </Typography>
           <TextField
             fullWidth
-            margin="normal"
             label="שם פרטי"
+            margin="normal"
             value={updatedUser.firstName || ''}
             onChange={(e) => setUpdatedUser({ ...updatedUser, firstName: e.target.value })}
           />
           <TextField
             fullWidth
-            margin="normal"
             label="שם משפחה"
+            margin="normal"
             value={updatedUser.lastName || ''}
             onChange={(e) => setUpdatedUser({ ...updatedUser, lastName: e.target.value })}
           />
           <TextField
             fullWidth
-            margin="normal"
             label="אימייל"
+            margin="normal"
             value={updatedUser.email || ''}
             onChange={(e) => setUpdatedUser({ ...updatedUser, email: e.target.value })}
           />
           <TextField
             fullWidth
-            margin="normal"
             label="כתובת"
+            margin="normal"
             value={updatedUser.address || ''}
             onChange={(e) => setUpdatedUser({ ...updatedUser, address: e.target.value })}
           />
           <TextField
             fullWidth
-            margin="normal"
             label="מספר טלפון"
+            margin="normal"
             value={updatedUser.phoneNumber || ''}
             onChange={(e) => setUpdatedUser({ ...updatedUser, phoneNumber: e.target.value })}
           />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="דירוג"
-            value={updatedUser.rating || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, rating: e.target.value })}
-          />
-          <Button onClick={handleUpdateUser} color="primary" variant="contained" sx={{ mt: 2 }}>
-            שמור
+          <Button variant="contained" color="primary" fullWidth onClick={handleUpdateUser}>
+            עדכן משתמש
           </Button>
         </Box>
       </Modal>
     </div>
   );
-};
-
-const modalStyle = {
-  position: 'absolute' ,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
 };
 
 export default ManageUsers;

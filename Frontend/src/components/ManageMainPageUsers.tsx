@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
+  Typography,
   TextField,
   InputAdornment,
   TableSortLabel
@@ -98,7 +99,9 @@ const ManageMainPageUsers = () => {
 
   return (
     <div className="manage-users-page">
-      <h2>ניהול הצגת תורמים בעמוד הראשי</h2>
+      <Typography variant="h4" align="center" gutterBottom sx={{ marginBottom: '10px', marginTop: '60px', fontFamily: 'Assistant' }}>
+        ניהול הצגת תורמים בעמוד הראשי
+      </Typography>
       <TextField
         label="חפש תורם"
         placeholder="חפש תורם לפי שם פרטי, שם משפחה, דירוג"
@@ -159,8 +162,15 @@ const ManageMainPageUsers = () => {
                 <img src={donor.image || person} alt={donor.firstName} className="profile-image" />
               </td>
               <td>
-                <Dropdown>
-                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                <Dropdown >
+                  <Dropdown.Toggle variant="secondary" 
+                  id="dropdown-basic" 
+                  className="custom-dropdown"
+                  style ={{
+                    backgroundColor: donor.isPublished ? 'green' : 'red',
+                    color: 'white',
+                    
+                  }}>
                     {donor.isPublished === true || donor.isPublished ? "מאושר" : "לא מאושר"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>

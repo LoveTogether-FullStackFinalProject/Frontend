@@ -24,7 +24,7 @@ import {
   Tooltip,
 
 } from '@mui/material';
-import { Edit, Delete, Search, Close } from '@mui/icons-material';
+import { Edit, Delete, Search} from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 

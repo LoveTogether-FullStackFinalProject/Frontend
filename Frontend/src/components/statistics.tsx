@@ -172,6 +172,11 @@ const Statistics = () => {
     );
   }
   
+  const CustomYAxisTick = ({ x, y, payload }) => (
+    <text x={x - 25} y={y} dy={4} textAnchor="end" fill="#666">
+      {payload.value}
+    </text>
+  );
 
   return (
 <Container className="statistics-page" dir="rtl">
@@ -266,8 +271,7 @@ const Statistics = () => {
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tick={<CustomYAxisTick x={undefined} y={undefined} payload={undefined} />} />                  <Tooltip />
                   <Legend />
                   <Bar dataKey="count" fill="#8884d8" />
                 </BarChart>

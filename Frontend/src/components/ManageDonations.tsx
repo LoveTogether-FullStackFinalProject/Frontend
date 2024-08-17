@@ -283,11 +283,11 @@ const ManageDonationPage: React.FC = () => {
                 onChange={(e) => handleStatusUpdate(donation, e.target.value)}
                 sx={{ textAlign: 'right' }}
               >
-                <MenuItem value="Approved">ממתין לאיסוף</MenuItem>
-                <MenuItem value="Pending">נאסף</MenuItem>
-                <MenuItem value="Declined">הגיע לעמותה</MenuItem>
-                <MenuItem value="Declined">טרם הגיע לעמותה</MenuItem>
-                <MenuItem value="Declined">נמסר בעמותה</MenuItem>
+                <MenuItem value="ממתין לאיסוף">ממתין לאיסוף</MenuItem>
+                <MenuItem value="נאסף">נאסף</MenuItem>
+                <MenuItem value="הגיע לעמותה">הגיע לעמותה</MenuItem>
+                <MenuItem value="טרם הגיע לעמותה">טרם הגיע לעמותה</MenuItem>
+                <MenuItem value="נמסר בעמותה">נמסר בעמותה</MenuItem>
               </Select>
             </TableCell>
             <TableCell sx={{ textAlign: 'right' }}>

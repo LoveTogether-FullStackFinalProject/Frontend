@@ -403,7 +403,7 @@ const navigate = useNavigate();
               
             </Grid>
             <Grid item xs>
-            <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 130 , marginTop:"20px"}}>
+            <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 150 , marginTop:"20px"}}>
       <Link
         href="#"
         variant="body2"
@@ -412,7 +412,7 @@ const navigate = useNavigate();
           navigate('/forgotPassword'); 
         }}
       >
-        שכחת את הסיסמא?
+        שכחת את הסיסמה?
       </Link>
     </div>
   </Grid>

@@ -103,9 +103,8 @@ const ManageDonationPage: React.FC = () => {
     );
     setPendingChanges((prev) => [...prev, updatedDonation]);
   };
-
-  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: string) => {
-    const updatedDonation = { ...donation, approvedByAdmin };
+  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean) => {
+    const updatedDonation = { ...donation, approvedByAdmin: approvedByAdmin.toString() };
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
     );
@@ -128,16 +127,16 @@ const ManageDonationPage: React.FC = () => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('he-IL', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  // const formatDate = (dateString: string) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString('he-IL', {
+  //     year: 'numeric',
+  //     month: '2-digit',
+  //     day: '2-digit',
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   });
+  // };
 
   const handleDeleteClick = (donation: Donation, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevents modal from opening
@@ -283,8 +282,8 @@ const ManageDonationPage: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Select
-                      value={String(donation.approvedByAdmin)}
-                      onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true' ? 'false' : 'true')}
+                      value={donation.approvedByAdmin}
+                      onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true')}
                       fullWidth
                       variant="outlined"
                       sx={{ backgroundColor: '#f9f9f9' }}

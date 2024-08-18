@@ -80,7 +80,7 @@ select {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 /* Donation Cards Styling */
@@ -135,7 +135,7 @@ select {
   padding: 150px 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -143,16 +143,23 @@ select {
 }
 
 .my-donations-title {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  justify-content: center;
   font-family: 'Assistant', sans-serif;
   font-weight: bold;
   font-size: 2rem;
   color: #444;
   margin-top: 20px;
   margin-bottom: 30px;
-  background-color: #f9db78;
+  background-color: #dad5c4a0;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Assistant', sans-serif;
 }
 
 /* Responsive Adjustments */
@@ -185,18 +192,20 @@ select {
   display: block;
   margin: 20px auto;
   padding: 10px 20px;
-  background-color: #f9db78c9;
+  background-color: #d5d2cbc9;
   color: #000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  font-family: 'Assistant', sans-serif;
 }
 
 .show-more:hover {
   background-color: #d8b965;
   transform: scale(1.05);
   color: black;
+  font-family: 'Assistant', sans-serif;
 }
 
 /* No Donations Container */
@@ -210,9 +219,11 @@ select {
   margin: 20px auto;
   font-family: 'Assistant', sans-serif;
   font-size: 1.2em;
+  font-family: 'Assistant', sans-serif;
 }
 
 .filter-buttons {
+  margin-top: 20px;
   margin: 20px 0;
   display: flex;
   gap: 10px;
@@ -221,27 +232,34 @@ select {
 }
 
 .filter-buttons button {
+  margin-top: 20px;
   background-color: #f9db78c9;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: 'Assistant', sans-serif;
 }
 
 .filter-buttons button.active {
+ 
   background-color: #d8b965;
+  font-family: 'Assistant', sans-serif;
 }
 
 .filter-section{
+  margin-top: 20px;
 direction: rtl;
 }
 
 .selected-filters {
+  
   margin: 20px 0;
   display: flex;
   gap: 10px;
   justify-content: center;
+  font-family: 'Assistant', sans-serif;
   flex-wrap: wrap;
 }
 
@@ -251,18 +269,20 @@ direction: rtl;
   padding: 5px 10px;
   cursor: pointer;
   font-size: 0.9em;
+  font-family: 'Assistant', sans-serif;
 }
 
 /* Reset Filters Button Styling */
 .reset-filters {
   margin-top: 20px;
-  background-color: #ff6b6b;
+  background-color: #e62727;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  font-family: 'Assistant', sans-serif;
 }
 
 .reset-filters:hover {

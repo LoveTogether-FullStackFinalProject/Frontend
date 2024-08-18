@@ -98,7 +98,7 @@ const AdminPage = () => {
         </div>
         <div className="card" onClick={() => handleButtonClick('/newLiveDonation')}>
           <i className="fas fa-donate card-icon"></i>
-          <p>תרומה חדשה</p>
+          <p>תרומה חדשה שהגיעה לעמותה</p>
         </div>
       </div>
     </div>

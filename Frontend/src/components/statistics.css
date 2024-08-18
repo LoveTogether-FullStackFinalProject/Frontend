@@ -10,6 +10,13 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+.MuiTableCell-root {
+  text-align: right; /* Align text to the right */
+}
+
+.MuiTableCell-head {
+  text-align: right;
+}
 
 .chart {
   flex: 1;
@@ -25,6 +32,9 @@
   text-align: center;
   margin-bottom: 20px;
 }
+ .recharts-layer{
+  margin: 10px;
+ }
 
 @media (max-width: 768px) {
   .chart {

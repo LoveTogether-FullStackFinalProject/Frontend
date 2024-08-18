@@ -531,6 +531,7 @@ function MainPage() {
             
 !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
 </Typography>
+
                 
                 <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Box>

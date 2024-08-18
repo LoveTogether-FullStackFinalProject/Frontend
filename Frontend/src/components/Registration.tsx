@@ -157,7 +157,7 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -184,6 +184,11 @@ export default function SignUp() {
                   {...register('firstName')}
                   error={!!errors.firstName}
                   helperText={errors.firstName ? errors.firstName.message : ""}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '200px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -219,6 +224,11 @@ export default function SignUp() {
                   {...register('lastName')}
                   error={!!errors.lastName}
                   helperText={errors.lastName ? errors.lastName.message : ""}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '180px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -254,6 +264,11 @@ export default function SignUp() {
                   {...register('email')}
                   error={!!errors.email}
                   helperText={errors.email ? errors.email.message : ""}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '200px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -290,6 +305,11 @@ export default function SignUp() {
                   {...register('password')}
                   error={!!errors.password}
                   helperText={errors.password ? errors.password.message : ""}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '190px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -325,6 +345,11 @@ export default function SignUp() {
                   {...register('phoneNumber')}
                   error={!!errors.phoneNumber}
                   helperText={errors.phoneNumber ? errors.phoneNumber.message : ""}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '200px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -360,6 +385,11 @@ export default function SignUp() {
             {...register('mainAddress')}
             error={!!errors.mainAddress}
             helperText={errors.mainAddress ? errors.mainAddress.message : ""}
+            FormHelperTextProps={{
+              sx: {
+                marginLeft: '170px', 
+              },
+            }}
             InputLabelProps={{
               sx: {
                 right: 19,

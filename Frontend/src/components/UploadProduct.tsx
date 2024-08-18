@@ -390,6 +390,7 @@ import {useEffect } from 'react';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
+import dataService from "../services/data-service.ts";
 
 // function Copyright(props: any) {
 //   return (
@@ -473,6 +474,22 @@ export default function UploadProduct() {
       setValue('description', request.description);
     }
   }, [request, setValue]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('userID');
+      if (userId) {
+        try {
+          const { data } = await dataService.getUser(userId).req;
+          setValue('pickupAddress', data.mainAddress);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [setValue]);
 
 
   React.useEffect(() => {
@@ -866,7 +883,7 @@ export default function UploadProduct() {
                 helperText={errors.pickupAddress?.message}
                 InputLabelProps={{
                   sx: {
-                    right: 19,
+                    right: 16,
                     left: 'auto',
                     transformOrigin: 'top right',
                     '&.MuiInputLabel-shrink': {

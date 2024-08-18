@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useRef } from 'react';
+import { ChangeEvent, useEffect, useState, useRef } from 'react';
 import {
   Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem, Alert
 } from '@mui/material';
@@ -259,7 +259,6 @@ export default function NewLiveDonation() {
                 id="expirationDate"
                 label="תאריך תפוגה"
                 type="date"
-                InputLabelProps={{ shrink: true }}
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
                 helperText={errors.expirationDate?.message}
@@ -354,10 +353,10 @@ export default function NewLiveDonation() {
             >
               בחר תמונה
             </Button>
-            {errors.image && (
-              <Alert severity="error" sx={{ mt: 2 }}>
-                {errors.image.message}
-              </Alert>
+            {errors.image && errors.image.message && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+            {errors.image.message as string} {/* Explicitly cast to string */}
+  </Alert>
             )}
             {imgPreview && (
               <Box sx={{ mt: 2 }}>

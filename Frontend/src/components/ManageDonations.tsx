@@ -103,9 +103,8 @@ const ManageDonationPage: React.FC = () => {
     );
     setPendingChanges((prev) => [...prev, updatedDonation]);
   };
-
-  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: string) => {
-    const updatedDonation = { ...donation, approvedByAdmin };
+  const handleApprovalUpdate = (donation: Donation, approvedByAdmin: boolean) => {
+    const updatedDonation = { ...donation, approvedByAdmin: approvedByAdmin.toString() };
     setDonations((prevDonations) =>
       prevDonations.map((d) => (d._id === donation._id ? updatedDonation : d))
     );
@@ -283,8 +282,8 @@ const ManageDonationPage: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Select
-                      value={String(donation.approvedByAdmin)}
-                      onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true' ? 'false' : 'true')}
+                      value={donation.approvedByAdmin}
+                      onChange={(e) => handleApprovalUpdate(donation, e.target.value === 'true')}
                       fullWidth
                       variant="outlined"
                       sx={{ backgroundColor: '#f9f9f9' }}

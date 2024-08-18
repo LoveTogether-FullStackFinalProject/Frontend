@@ -146,21 +146,21 @@ const Profile: React.FC = () => {
 
     const handleSaveChanges = async (updatedDonation: Donation) => {
         try {
-            if (updatedDonation && updatedDonation._id) {
-                await dataService.updateDonation(updatedDonation._id, updatedDonation);
-                setDonations((prevDonations) =>
-                    prevDonations.map((donation) =>
-                        donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
-                    )
-                );
-                setShowModal(false);
-            } else {
-                console.error('Error: No donation ID found');
-            }
+          if (updatedDonation && updatedDonation._id) {
+            await dataService.updateDonation(updatedDonation._id, updatedDonation);
+            setDonations((prevDonations) =>
+              prevDonations.map((donation) =>
+                donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
+              )
+            );
+            setShowModal(false);
+          } else {
+            console.error('Error: No donation ID found');
+          }
         } catch (error) {
-            console.error('Error saving changes:', error);
+          console.error('Error saving changes:', error);
         }
-    };
+      };
     const handleCancelClick = () => {
         setShowModal(false);
     };
@@ -283,8 +283,7 @@ const Profile: React.FC = () => {
                                 <p>סטטוס: {donation.status}</p>
                                 <p>מצב הפריט: {donation.condition}</p> {/* Updated */}
                                 <p>כתובת לאיסוף: {donation.pickUpAddress}</p> {/* Ensure this is displayed */}
-                                <p>אושר על ידי מנהל: {donation.approvedByAdmin ? "כן" : "לא"}</p>
-                            </div>
+                                <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>                            </div>
                         ))
                     ) : (
                         <div className="no-donations-container">

@@ -14,6 +14,7 @@ import ManageRequestedDonations from './components/ManageRequestedDonations';
 import NewLiveDonation from './components/newLiveDonation';
 import ManageMainPageUsers from './components/ManageMainPageUsers';
 import EditRequestedProduct from './components/edit-requested-product';
+import ForgotPassword from './components/ForgotPassword '; // Adjust the path as necessary
 import {Navbar} from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';
@@ -50,7 +51,8 @@ const App = () => {
                 <Route path="/manageUsers" element={<ManageUsers />} />   
                 <Route path="/manageRequestedDonations" element={<ManageRequestedDonations />} />
                 <Route path="/manageMainPageUsers" element={<ManageMainPageUsers />} /> 
-                <Route path="/editRequestedProduct" element={<EditRequestedProduct />} />                          
+                <Route path="/editRequestedProduct" element={<EditRequestedProduct />} /> 
+                <Route path="/forgotPassword" element={<ForgotPassword />} />                    
             </Routes>
         </Router>
 

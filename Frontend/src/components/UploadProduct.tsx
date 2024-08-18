@@ -375,7 +375,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 //import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -851,7 +851,7 @@ export default function UploadProduct() {
           </Box>
 
             {errors.deliveryOption && (
-              <Alert severity="error">{errors.deliveryOption.message}</Alert>
+              <Alert severity="error" style={{direction :"rtl"}}>יש לבחור אפשרות מסירה</Alert>
             )}
             {selectedDeliveryOption === 'ממתין לאיסוף' && (
               <TextField
@@ -924,7 +924,7 @@ export default function UploadProduct() {
               />
             </Button>
             {errors.image && (
-                  <Alert severity="error" sx={{ mt: 2 }}>
+                  <Alert severity="error" sx={{ mt: 2 , direction:"rtl"}}>
                    יש להעלות תמונה של המוצר המבוקש
                   </Alert>
                 )}

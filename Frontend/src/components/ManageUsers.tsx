@@ -24,7 +24,7 @@ import {
   Tooltip,
 
 } from '@mui/material';
-import { Edit, Delete, Search, Close } from '@mui/icons-material';
+import { Edit, Delete, Search} from '@mui/icons-material';
 import { CSVLink } from 'react-csv';
 import './ManageUsers.css';
 
@@ -171,16 +171,22 @@ const ManageUsers: React.FC = () => {
         <Typography 
         variant="h3"
         style={{
-          alignItems:"center"
+          alignItems:"center",
+          marginRight:"40%"
         }}
         sx={{ 
         align:"center",
+        justifyContent:"center",
+        textAlign:"center",
         mb: 2, 
         fontFamily: 'Assistant', 
         marginTop: "100px", 
-        borderBottom: '3px solid #f9db78', 
-        display: 'inline-block',
-        marginRight:"45%"
+        textDecoration: 'underline #f9db78',
+        display: 'table',
+
+       
+        
+        
         
     }}
 >

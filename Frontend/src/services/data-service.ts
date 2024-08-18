@@ -199,4 +199,44 @@ const deleteRequestedDonation = async (donationId: string) => {
   return makeRequest(request);
 };
 
-export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, updateRequestedDonation, deleteRequestedDonation };
+const updateUserPassword = async (userId: string, newPassword: string) => {
+  console.log("updateUserPassword");
+
+  const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+    console.log("accessToken in request:", accessToken);
+
+    return apiClient.put(
+      `/donor/password/${userId}`,
+      { password: newPassword }, // Add new password in the request body
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
+      }
+    );
+  };
+
+  return makeRequest(request);
+};
+
+const sendResetPasswordEmail = async (email: string) => {
+  try {
+    const response = await apiClient.post('/auth/forgot-password', { email });
+    return response.data;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.message || 'Failed to send reset password email.');
+    } else {
+      throw new Error('Failed to send reset password email.');
+    }
+  }
+};
+
+ 
+
+
+export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, updateRequestedDonation, deleteRequestedDonation, updateUserPassword, sendResetPasswordEmail };

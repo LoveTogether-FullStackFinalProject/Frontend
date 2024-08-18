@@ -21,7 +21,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  TableContainer
 } from '@mui/material';
 import {
   BarChart,
@@ -40,6 +41,7 @@ import {
 } from 'recharts';
 import { styled } from '@mui/system';
 import './statistics.css';
+// import CustomLabel from './CustomLabelProps';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28FF2'];
 
@@ -172,7 +174,8 @@ const Statistics = () => {
     );
   }
   
-  const CustomYAxisTick = ({ x, y, payload }) => (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomYAxisTick = ({ x = 0, y = 0, payload = { value: '' } }: { x?: number, y?: number, payload?: any }) => (
     <text x={x - 25} y={y} dy={4} textAnchor="end" fill="#666">
       {payload.value}
     </text>
@@ -186,7 +189,7 @@ const Statistics = () => {
     fontSize={50}
     gutterBottom
     align="center"
-    sx={{ marginTop: 15, textDecoration: 'underline' }}
+    sx={{ marginTop: 15, textDecoration: 'underline #f9db78' }}
   >
     נתונים וסטטיסטיקות
   </Typography>
@@ -198,34 +201,36 @@ const Statistics = () => {
               <Typography variant="h6" gutterBottom>
               </Typography>
               <StyledTableContainer>
-              <Table>
-  <TableHead>
-    <TableRow>
-      <TableCell style={{ textAlign: 'right' }}>פריטים הכי נתרמים</TableCell>
-      <TableCell style={{ textAlign: 'right' }}>משתמשים הכי תורמים</TableCell>
-      <TableCell style={{ textAlign: 'right' }}>סניפים עם הכי הרבה תרומות</TableCell>
-      <TableCell style={{ textAlign: 'right' }}>קטגוריות הכי נתרמות</TableCell>
-    </TableRow>
-  </TableHead>
-  <TableBody>
-    {Array.from({ length: 5 }).map((_, index) => (
-      <TableRow key={index}>
-        <TableCell style={{ textAlign: 'right' }}>
-          {topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}
-        </TableCell>
-        <TableCell style={{ textAlign: 'right' }}>
-          {topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}
-        </TableCell>
-        <TableCell style={{ textAlign: 'right' }}>
-          {topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}
-        </TableCell>
-        <TableCell style={{ textAlign: 'right' }}>
-          {topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>
+         <TableContainer component={Paper}>
+      <Table aria-label="responsive table">
+        <TableHead>
+          <TableRow>
+            <TableCell style={{ textAlign: 'right' }}>פריטים הכי נתרמים</TableCell>
+            <TableCell style={{ textAlign: 'right' }}>משתמשים הכי תורמים</TableCell>
+            <TableCell style={{ textAlign: 'right' }}>סניפים עם הכי הרבה תרומות</TableCell>
+            <TableCell style={{ textAlign: 'right' }}>קטגוריות הכי נתרמות</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <TableRow key={index}>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}
+              </TableCell>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}
+              </TableCell>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}
+              </TableCell>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
 
               </StyledTableContainer>
             </CardContent>
@@ -282,24 +287,34 @@ const Statistics = () => {
 
         {/* Pie Chart */}
         <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="secondary" gutterBottom>
-                נתוני פריטים חסרים בעמותה שנדרשים לתרומות
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie data={topRequests} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d" label>
-                    {topRequests.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
+      <Card>
+        <CardContent>
+          <Typography variant="h6" color="secondary" gutterBottom>
+            נתוני פריטים חסרים בעמותה שנדרשים לתרומות
+          </Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={topRequests}
+                dataKey="count"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#82ca9d"
+                // label={<CustomLabel/>} // Use the custom label component here
+              >
+                {topRequests.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </Grid>
+
 
         
 

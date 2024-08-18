@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -38,19 +38,24 @@ function UploadRequestedProduct() {
   useEffect(() => {
     if (imgSrc) {
       setValue("image", URL.createObjectURL(imgSrc));
+      console.log("imgSrc:", imgSrc);
     }
   }, [imgSrc, setValue]);
 
   const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setImgSrc(e.target.files[0]);
-      //setValue("image", e.target.files[0]);
+      setValue("image", URL.createObjectURL(e.target.files[0]));
+      //clearErrors("image");
+      //setValue("image", URL.createObjectURL(e.target.files[0]));
+
       trigger("image");
     }
   };
 
   const selectImg = () => {
     fileInputRef.current?.click();
+    setErrorImg(false);
   };
 
   const addNewProduct = async (data: FormData) => {
@@ -61,10 +66,6 @@ function UploadRequestedProduct() {
       setAmountError('');
     }
 
-    if (!imgSrc) {
-      alert("Please select an image");
-      return;
-    }
 
     const url = await requestedProduectService.uploadPhoto(imgSrc!);
     const product = {
@@ -391,6 +392,7 @@ function UploadRequestedProduct() {
                   accept="image/*"
                   style={{ display: 'none' }}
                   onChange={imgSelected}
+               
                 />
                 {imgSrc && (
                   <Box

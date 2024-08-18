@@ -449,7 +449,7 @@ export default function UploadProduct() {
     formState: { errors },
     watch,
     setValue,
-    //trigger,
+    trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
@@ -496,6 +496,7 @@ export default function UploadProduct() {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setValue('image', file);
+      trigger("image");
       const reader = new FileReader();
       reader.onloadend = () => {
         setImgPreview(reader.result as string);

@@ -841,7 +841,7 @@ export default function UploadProduct() {
                   <FormControlLabel
                     value="טרם הגיע לעמותה"
                     control={<Radio />}
-                    label="אמסור את התרומה לעמותה בעצמי"
+                    label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד" 
                     labelPlacement="start"
                     sx={{ justifyContent: 'flex-end' }}
                   />

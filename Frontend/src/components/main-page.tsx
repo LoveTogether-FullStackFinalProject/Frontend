@@ -512,14 +512,7 @@ function MainPage() {
 
 
             {/* Section 4: Donations and Community Counters */}
-            <Box className="section-section-yellow">
-<<<<<<< Updated upstream
-                <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
-
-            
-                    !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
-                </Typography>
-=======
+            <Box className="section-section-yellow">           
             <Typography 
     variant="h3" 
     sx={{ 
@@ -533,7 +526,11 @@ function MainPage() {
     אנחנו במספרים
   </Typography>
 
->>>>>>> Stashed changes
+  <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
+
+            
+!עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
+</Typography>
                 
                 <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Box>

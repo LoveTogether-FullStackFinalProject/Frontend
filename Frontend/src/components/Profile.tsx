@@ -283,7 +283,7 @@ const Profile: React.FC = () => {
                                 <p>סטטוס: {donation.status}</p>
                                 <p>מצב הפריט: {donation.condition}</p> {/* Updated */}
                                 <p>כתובת לאיסוף: {donation.pickUpAddress}</p> {/* Ensure this is displayed */}
-                                <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
+                                <p>אושר על ידי מנהל: {donation.approvedByAdmin ? "כן" : "לא"}</p>
                             </div>
                         ))
                     ) : (

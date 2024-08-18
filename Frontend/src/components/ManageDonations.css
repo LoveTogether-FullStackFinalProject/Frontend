@@ -1,17 +1,18 @@
 .manage-donations-page {
   padding: 20px;
-  direction: rtl;
-  text-align: right;
+  direction: rtl; /* Already set for RTL */
+  text-align: right; /* Text aligned to the right */
 }
 
 .table-responsive {
   max-height: 70vh;
   overflow-y: auto;
-  direction: rtl;
+  direction: rtl; /* Ensure table is RTL */
 }
 
 .table-responsive table {
   min-width: 1000px;
+  direction: rtl; /* Ensure table contents are RTL */
 }
 
 thead th {
@@ -19,6 +20,7 @@ thead th {
   top: 0;
   background-color: #f8f9fa !important;
   z-index: 1;
+  text-align: right; /* Ensure table headers are right-aligned */
 }
 
 .modal-container {
@@ -30,21 +32,18 @@ thead th {
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  text-align: center;
+  text-align: right; /* Modal content aligned to the right */
   width: 300px;
 }
 
 .modal-container h2 {
   margin-bottom: 20px;
+  text-align: right;
 }
 
 .modal-container p {
   margin-bottom: 20px;
-}
-
-.snackbar {
-  bottom: 20px;
-  left: 20px;
+  text-align: right;
 }
 
 /* Responsive Adjustments */
@@ -55,6 +54,7 @@ thead th {
 
   .table-responsive table {
     min-width: 600px;
+    direction: rtl; /* Ensure table is RTL on smaller screens */
   }
 
   .modal-container {
@@ -63,21 +63,25 @@ thead th {
 
   .MuiTypography-h4 {
     font-size: 1.5rem;
+    text-align: right;
   }
 
   .MuiTypography-h6 {
     font-size: 1.2rem;
+    text-align: right;
   }
 
   .MuiButton-root {
     font-size: 0.9rem;
     padding: 8px 12px;
+    text-align: right;
   }
 }
 
 @media screen and (max-width: 480px) {
   .table-responsive table {
     min-width: 100%;
+    direction: rtl; /* Ensure table is RTL on smallest screens */
   }
 
   .modal-container {
@@ -86,14 +90,17 @@ thead th {
 
   .MuiTypography-h4 {
     font-size: 1.2rem;
+    text-align: right;
   }
 
   .MuiTypography-h6 {
     font-size: 1rem;
+    text-align: right;
   }
 
   .MuiButton-root {
     font-size: 0.8rem;
     padding: 6px 10px;
+    text-align: right;
   }
 }

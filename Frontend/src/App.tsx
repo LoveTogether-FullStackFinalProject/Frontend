@@ -22,6 +22,7 @@ import Footer from './components/Footer'
 import './styles/globals.css';
 
 
+
 const App = () => {
     const [user, setUser] = useState<User | null>(localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null);
 

@@ -78,15 +78,13 @@ const ManageDonationPage: React.FC = () => {
         const donorName = donation.donor 
           ? (donation.donor.firstName?.toLowerCase() + " " + donation.donor.lastName?.toLowerCase()) 
           : '';
-        const branch = donation.branch?.toLowerCase() || '';
 
         return (
           itemName.includes(lowerCaseFilterText) ||
           category.includes(lowerCaseFilterText) ||
           description.includes(lowerCaseFilterText) ||
           status.includes(lowerCaseFilterText) ||
-          donorName.includes(lowerCaseFilterText) ||
-          branch.includes(lowerCaseFilterText)
+          donorName.includes(lowerCaseFilterText) 
         );
       })
       .sort((a, b) => {
@@ -138,12 +136,23 @@ const ManageDonationPage: React.FC = () => {
   //   });
   // };
 
-  const handleDeleteClick = (donation: Donation, e: React.MouseEvent) => {
+  const handleDeleteClick = async (donation: Donation, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevents modal from opening
-    setDonations(donations.filter((d) => d._id !== donation._id));
-    setSnackbarMessage('התרומה נמחקה בהצלחה!');
+    
+    try {
+        // Call the deleteDonation function to remove the donation from the database
+        await dataService.deleteDonation(donation._id);
+        
+        // Update the UI after successful deletion
+        setDonations(donations.filter((d) => d._id !== donation._id));
+        setSnackbarMessage('התרומה נמחקה בהצלחה!');
+    } catch (error) {
+        console.error('Error deleting donation:', error);
+        setSnackbarMessage('מחיקת התרומה נכשלה.');
+    }
+    
     setSnackbarOpen(true);
-  };
+};
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
@@ -255,7 +264,6 @@ const ManageDonationPage: React.FC = () => {
                     אישור מנהל
                   </TableSortLabel>
                 </TableCell>
-                <TableCell style={{ width: '10%' }}>סניף</TableCell>
                 <TableCell style={{ width: '5%', textAlign: 'center' }}>פרטי התרומה</TableCell>
                 <TableCell style={{ width: '5%', textAlign: 'center' }}>מחיקה</TableCell>
               </TableRow>
@@ -292,7 +300,6 @@ const ManageDonationPage: React.FC = () => {
                       <MenuItem value="false">לא מאושר</MenuItem>
                     </Select>
                   </TableCell>
-                  <TableCell>{donation.branch || 'לא זמין'}</TableCell>
                   <TableCell style={{ textAlign: 'center' }}>
                     <IconButton
                       color="primary"

@@ -281,9 +281,9 @@ const Profile: React.FC = () => {
                                 <img src={donation.image} alt={donation.itemName} />
                                 <h5>{donation.itemName}</h5>
                                 <p>סטטוס: {donation.status}</p>
-                                <p>מצב הפריט: {donation.condition}</p> {/* Updated */}
-                                <p>כתובת לאיסוף: {donation.pickUpAddress}</p> {/* Ensure this is displayed */}
-                                <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>                            </div>
+                                <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
+                            </div>
+
                         ))
                     ) : (
                         <div className="no-donations-container">

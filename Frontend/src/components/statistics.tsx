@@ -3,7 +3,7 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from '../services/upload-requested-product-service';
 import dataService, { CanceledError } from '../services/data-service';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -15,13 +15,14 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Button,
+  // Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  TableContainer
 } from '@mui/material';
 import {
   BarChart,
@@ -40,6 +41,7 @@ import {
 } from 'recharts';
 import { styled } from '@mui/system';
 import './statistics.css';
+// import CustomLabel from './CustomLabelProps';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A28FF2'];
 
@@ -55,7 +57,7 @@ const StyledTableContainer = styled(Paper)(({ theme }) => ({
 }));
 
 const Statistics = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [products, setProducts] = useState<Donation[]>([]);
   const [requests, setRequests] = useState<requestedDonation[]>([]);
   const [users, setUsers] = useState<DonorData[]>([]);
@@ -171,41 +173,26 @@ const Statistics = () => {
       </div>
     );
   }
-  // if (!accessToken) {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         backgroundColor: 'white',
-  //         width: '100%',
-  //         height: '50vh',
-  //         display: 'flex',
-  //         flexDirection: 'column',
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         padding: '20px',
-  //         border: '1px solid black',
-  //       }}
-  //     >
-  //       <Typography variant="h6" color="error">
-  //         שגיאה: אינך מחובר בתור מנהל
-  //       </Typography>
-  //       {/* <Button
-  //         onClick={() => navigate('/adminDashboard')}
-  //         variant="contained"
-  //         color="primary"
-  //         sx={{ marginTop: '20px' }}
-  //       >
-  //         התחבר בתור מנהל
-  //       </Button> */}
-  //     </Box>
-  //   );
-  // }
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomYAxisTick = ({ x = 0, y = 0, payload = { value: '' } }: { x?: number, y?: number, payload?: any }) => (
+    <text x={x - 25} y={y} dy={4} textAnchor="end" fill="#666">
+      {payload.value}
+    </text>
+  );
 
   return (
-    <Container className="statistics-page" dir="rtl">
-      <Typography variant="h4" component="h1" fontSize={50} gutterBottom align="center" sx={{ marginTop: 15 }}>
-        נתונים וסטטיסטיקות
-      </Typography>
+<Container className="statistics-page" dir="rtl">
+  <Typography
+    variant="h4"
+    component="h1"
+    fontSize={50}
+    gutterBottom
+    align="center"
+    sx={{ marginTop: 15, textDecoration: 'underline #f9db78' }}
+  >
+    נתונים וסטטיסטיקות
+  </Typography>
       {error && <Typography color="error">{error}</Typography>}
       <Grid container spacing={4}>
         <Grid item xs={12}>
@@ -214,26 +201,37 @@ const Statistics = () => {
               <Typography variant="h6" gutterBottom>
               </Typography>
               <StyledTableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>פריטים הכי נתרמים</TableCell>
-                      <TableCell>משתמשים הכי תורמים</TableCell>
-                      <TableCell>סניפים עם הכי הרבה תרומות</TableCell>
-                      <TableCell>קטגוריות הכי נתרמות</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <TableRow key={index}>
-                        <TableCell>{topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}</TableCell>
-                        <TableCell>{topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+         <TableContainer component={Paper}>
+      <Table aria-label="responsive table">
+        <TableHead>
+          <TableRow>
+            <TableCell style={{ textAlign: 'right' }}>פריטים הכי נתרמים</TableCell>
+            <TableCell style={{ textAlign: 'right' }}>משתמשים הכי תורמים</TableCell>
+            <TableCell style={{ textAlign: 'right' }}>סניפים עם הכי הרבה תרומות</TableCell>
+            <TableCell style={{ textAlign: 'right' }}>קטגוריות הכי נתרמות</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <TableRow key={index}>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topProducts[index]?.name && `${topProducts[index].name} (${topProducts[index].count} תרומות)`}
+              </TableCell>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}
+              </TableCell>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}
+              </TableCell>
+              <TableCell style={{ textAlign: 'right' }}>
+                {topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
               </StyledTableContainer>
             </CardContent>
           </Card>
@@ -241,8 +239,8 @@ const Statistics = () => {
       </Grid>
 
       <Box mb={4}>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>שדה X</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 120, padding:2 }}>
+          <InputLabel sx={{ textAlign: 'right', width: '100%' , padding:1}}>שדה X</InputLabel>
           <Select value={xAxisField} onChange={handleXAxisFieldChange} disabled={selectedChart === 'users'}>
             <MenuItem value="itemName">שם המוצר</MenuItem>
             <MenuItem value="category">קטגוריה</MenuItem>
@@ -251,15 +249,15 @@ const Statistics = () => {
             <MenuItem value="branch">סניף עמותה</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>שדה Y</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 120 , padding:2}}>
+          <InputLabel sx={{ textAlign: 'right', width: '100%', padding:1 }}>שדה Y</InputLabel>
           <Select value={yAxisField} onChange={handleYAxisFieldChange}>
             <MenuItem value="quantity">כמות</MenuItem>
             <MenuItem value="amount">סכום</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel>סוג הגרף</InputLabel>
+        <FormControl sx={{ m: 1, minWidth: 120 , padding:2}}>
+          <InputLabel sx={{ textAlign: 'right', width: '100%', padding:1 }}>סוג הגרף</InputLabel>
           <Select value={selectedChart} onChange={handleChartChange}>
             <MenuItem value="donations">תרומות</MenuItem>
             <MenuItem value="requests">בקשות</MenuItem>
@@ -278,8 +276,7 @@ const Statistics = () => {
                 <BarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tick={<CustomYAxisTick x={undefined} y={undefined} payload={undefined} />} />                  <Tooltip />
                   <Legend />
                   <Bar dataKey="count" fill="#8884d8" />
                 </BarChart>
@@ -290,24 +287,36 @@ const Statistics = () => {
 
         {/* Pie Chart */}
         <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" color="secondary" gutterBottom>
-                נתוני פריטים חסרים בעמותה שנדרשים לתרומות
-              </Typography>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie data={topRequests} dataKey="count" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d" label>
-                    {topRequests.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </Grid>
+      <Card>
+        <CardContent>
+          <Typography variant="h6" color="secondary" gutterBottom>
+            נתוני פריטים חסרים בעמותה שנדרשים לתרומות
+          </Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={topRequests}
+                dataKey="count"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#82ca9d"
+                // label={<CustomLabel/>} // Use the custom label component here
+              >
+                {topRequests.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </Grid>
+
+
+        
 
         {/* Line Chart */}
         <Grid item xs={12}>

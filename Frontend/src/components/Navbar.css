@@ -33,7 +33,7 @@
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .navLink {
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start; /* Align links to the left */
     .navbar-collapse {
       order: 2;
@@ -51,7 +51,11 @@
 
   .logo-image {
     width: 100px;
-    margin-left: 10px; /* Ensure the logo is in the left corner */
+    position: fixed; /* Fix the logo at the top */
+    top:15px; /* Adjust the value to your needs */
+    margin-right: 10px;
+    right:0; /* Keeps it aligned to the left */
+    z-index: 1000; /* Ensures the logo stays on top */
   }
 
   .navbar-toggler {
@@ -63,14 +67,6 @@
     margin-left: auto;
   }
 }
-
-.logo{
-  width: 130px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 75rem;
-}
-
 
 
 .navLinkMainpage{

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useRef } from 'react';
+import { ChangeEvent, useEffect, useState, useRef } from 'react';
 import {
   Avatar, Button, CssBaseline, TextField, Box, Typography, Container, createTheme, ThemeProvider, MenuItem, Alert
 } from '@mui/material';
@@ -148,7 +148,7 @@ export default function NewLiveDonation() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -197,8 +197,33 @@ export default function NewLiveDonation() {
                   label="קטגוריה"
                   error={!!errors.category}
                   helperText={errors.category?.message}
-                  InputLabelProps={rightAlignedInputStyle.InputLabelProps}
-                  InputProps={rightAlignedInputStyle.InputProps}
+                  InputLabelProps={{
+                    sx: {
+                      right: 17,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    },
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                      '& .MuiSelect-icon': {
+                        left: 0, // Move the arrow to the left
+                        right: 'auto',
+                      },
+                    },
+                  }}
                   {...field}
                 >
                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
@@ -234,7 +259,6 @@ export default function NewLiveDonation() {
                 id="expirationDate"
                 label="תאריך תפוגה"
                 type="date"
-                InputLabelProps={{ shrink: true }}
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
                 helperText={errors.expirationDate?.message}
@@ -329,10 +353,10 @@ export default function NewLiveDonation() {
             >
               בחר תמונה
             </Button>
-            {errors.image && (
-              <Alert severity="error" sx={{ mt: 2 }}>
-                {errors.image.message}
-              </Alert>
+            {errors.image && errors.image.message && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+            {errors.image.message as string} {/* Explicitly cast to string */}
+  </Alert>
             )}
             {imgPreview && (
               <Box sx={{ mt: 2 }}>

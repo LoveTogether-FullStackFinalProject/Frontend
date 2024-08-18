@@ -375,7 +375,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 //import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -390,6 +390,7 @@ import {useEffect } from 'react';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
+import dataService from "../services/data-service.ts";
 
 // function Copyright(props: any) {
 //   return (
@@ -431,6 +432,7 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
+  //const [pickUpAddress, setPickUpAddress] = React.useState<string>("");
   //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -441,6 +443,18 @@ export default function UploadProduct() {
   const category = queryParams.get('category') || '';
   const amount = queryParams.get('amount') || '';
 
+  // const fetchUserData = async () => {
+  //   const userId = localStorage.getItem('userID');
+  //   if (userId) {
+  //     try {
+  //       const { data } = await dataService.getUser(userId).req;
+  //       setPickUpAddress(data.mainAddress);
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     }
+  //   }
+  // };
+  // fetchUserData();
 
   const {
     register,
@@ -449,7 +463,7 @@ export default function UploadProduct() {
     formState: { errors },
     watch,
     setValue,
-    //trigger,
+    trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
@@ -492,10 +506,12 @@ export default function UploadProduct() {
   const selectedCategory = watch('category');
   const selectedDeliveryOption = watch('deliveryOption');
 
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setValue('image', file);
+      trigger("image");
       const reader = new FileReader();
       reader.onloadend = () => {
         setImgPreview(reader.result as string);
@@ -505,6 +521,7 @@ export default function UploadProduct() {
   };
 
   const onSubmit = async (data: FormData) => {
+
     try {
       let imageUrl = '';
       if (data.image) {
@@ -832,26 +849,32 @@ export default function UploadProduct() {
               control={control}
               render={({ field }) => (
                 <RadioGroup {...field} sx={{ textAlign: 'right'}}>
-                  <FormControlLabel
-                    value="ממתין לאיסוף"
-                    control={<Radio />}
-                    label="אשמח שיאספו ממני את התרומה"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="טרם הגיע לעמותה"
-                    control={<Radio />}
-                    label="אמסור את התרומה לעמותה בעצמי"
-                    labelPlacement="start"
-                    sx={{ justifyContent: 'flex-end' }}
-                  />
-                </RadioGroup>
+                <FormControlLabel
+                  value="ממתין לאיסוף"
+                  control={<Radio />}
+                  label="אשמח שיאספו ממני את התרומה"
+                  labelPlacement="start"
+                />
+                 {/* <FormControlLabel
+                  value="ממתין לאיסוף מהבית"
+                  control={<Radio />}
+                  label={` אשמח שיאספו את התרומה מהכתובת ${pickUpAddress}`}
+                  labelPlacement="start"
+                /> */}
+                <FormControlLabel
+                  value="טרם הגיע לעמותה"
+                  control={<Radio />}
+                  label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד" 
+                  labelPlacement="start"
+                  sx={{ justifyContent: 'flex-end' }}
+                />
+              </RadioGroup>
               )}
             />
           </Box>
 
             {errors.deliveryOption && (
-              <Alert severity="error">{errors.deliveryOption.message}</Alert>
+              <Alert severity="error" style={{direction :"rtl"}}>יש לבחור אפשרות מסירה</Alert>
             )}
             {selectedDeliveryOption === 'ממתין לאיסוף' && (
               <TextField
@@ -865,7 +888,7 @@ export default function UploadProduct() {
                 helperText={errors.pickupAddress?.message}
                 InputLabelProps={{
                   sx: {
-                    right: 19,
+                    right: 16,
                     left: 'auto',
                     transformOrigin: 'top right',
                     '&.MuiInputLabel-shrink': {
@@ -888,27 +911,7 @@ export default function UploadProduct() {
                 }}
               />
             )}
-            {/* {selectedDeliveryOption === 'לא נמסר לעמותה' && (
-              <Controller
-                name="branch"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    fullWidth
-                    label="בחר סניף"
-                    error={!!errors.branch}
-                    helperText={errors.branch?.message}
-                    {...field}
-                  >
-                    <MenuItem value="">בחר סניף</MenuItem>
-                    <MenuItem value="סניף 1">סניף 1</MenuItem>
-                    <MenuItem value="סניף 2">סניף 2</MenuItem>
-                    <MenuItem value="סניף 3">סניף 3</MenuItem>
-                  </TextField>
-                )} */}
-              {/* />
-            )} */}
+ 
             <Button
               variant="contained"
               component="label"
@@ -924,7 +927,7 @@ export default function UploadProduct() {
               />
             </Button>
             {errors.image && (
-                  <Alert severity="error" sx={{ mt: 2 }}>
+                  <Alert severity="error" sx={{ mt: 2 , direction:"rtl"}}>
                    יש להעלות תמונה של המוצר המבוקש
                   </Alert>
                 )}

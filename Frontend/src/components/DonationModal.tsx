@@ -111,7 +111,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
-                                )}
+                                )}                    
                                 {editData.pickUpAddress && (
                                     <Form.Group>
                                         <Form.Label>כתובת לאיסוף</Form.Label>

@@ -390,6 +390,7 @@ import {useEffect } from 'react';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
+import dataService from "../services/data-service.ts";
 
 // function Copyright(props: any) {
 //   return (
@@ -449,7 +450,7 @@ export default function UploadProduct() {
     formState: { errors },
     watch,
     setValue,
-    //trigger,
+    trigger,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
@@ -474,6 +475,22 @@ export default function UploadProduct() {
     }
   }, [request, setValue]);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('userID');
+      if (userId) {
+        try {
+          const { data } = await dataService.getUser(userId).req;
+          setValue('pickupAddress', data.mainAddress);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [setValue]);
+
 
   React.useEffect(() => {
     const checkLoginStatus = () => {
@@ -496,6 +513,7 @@ export default function UploadProduct() {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setValue('image', file);
+      trigger("image");
       const reader = new FileReader();
       reader.onloadend = () => {
         setImgPreview(reader.result as string);
@@ -841,7 +859,7 @@ export default function UploadProduct() {
                   <FormControlLabel
                     value="טרם הגיע לעמותה"
                     control={<Radio />}
-                    label="אמסור את התרומה לעמותה בעצמי"
+                    label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד" 
                     labelPlacement="start"
                     sx={{ justifyContent: 'flex-end' }}
                   />
@@ -865,7 +883,7 @@ export default function UploadProduct() {
                 helperText={errors.pickupAddress?.message}
                 InputLabelProps={{
                   sx: {
-                    right: 19,
+                    right: 16,
                     left: 'auto',
                     transformOrigin: 'top right',
                     '&.MuiInputLabel-shrink': {

@@ -48,3 +48,19 @@ export const googleSignin = (credentialResponse: CredentialResponse) => {
 //       throw new Error('Google Sign-In failed');
 //   }
 // };
+
+export const newPassword = async (email: string, password: string): Promise<IDonor> => {
+  return new Promise<IDonor>((resolve, reject) => {
+    console.log("email: " + email);
+    console.log("password: " + password);
+    apiClient.post<IDonor>("auth/newPassword", { email, password })
+      .then((response) => {
+        if (response.data._id) {
+          localStorage.setItem('userID', response.data._id);
+        }
+        resolve(response.data);
+      }).catch((error) => {
+        reject(error);
+      });
+  });
+}

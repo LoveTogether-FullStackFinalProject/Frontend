@@ -432,6 +432,7 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
+  //const [pickUpAddress, setPickUpAddress] = React.useState<string>("");
   //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -442,6 +443,18 @@ export default function UploadProduct() {
   const category = queryParams.get('category') || '';
   const amount = queryParams.get('amount') || '';
 
+  // const fetchUserData = async () => {
+  //   const userId = localStorage.getItem('userID');
+  //   if (userId) {
+  //     try {
+  //       const { data } = await dataService.getUser(userId).req;
+  //       setPickUpAddress(data.mainAddress);
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     }
+  //   }
+  // };
+  // fetchUserData();
 
   const {
     register,
@@ -475,22 +488,6 @@ export default function UploadProduct() {
     }
   }, [request, setValue]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const userId = localStorage.getItem('userID');
-      if (userId) {
-        try {
-          const { data } = await dataService.getUser(userId).req;
-          setValue('pickupAddress', data.mainAddress);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, [setValue]);
-
 
   React.useEffect(() => {
     const checkLoginStatus = () => {
@@ -509,6 +506,7 @@ export default function UploadProduct() {
   const selectedCategory = watch('category');
   const selectedDeliveryOption = watch('deliveryOption');
 
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -523,6 +521,7 @@ export default function UploadProduct() {
   };
 
   const onSubmit = async (data: FormData) => {
+
     try {
       let imageUrl = '';
       if (data.image) {
@@ -850,20 +849,26 @@ export default function UploadProduct() {
               control={control}
               render={({ field }) => (
                 <RadioGroup {...field} sx={{ textAlign: 'right'}}>
-                  <FormControlLabel
-                    value="ממתין לאיסוף"
-                    control={<Radio />}
-                    label="אשמח שיאספו ממני את התרומה"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    value="טרם הגיע לעמותה"
-                    control={<Radio />}
-                    label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד" 
-                    labelPlacement="start"
-                    sx={{ justifyContent: 'flex-end' }}
-                  />
-                </RadioGroup>
+                <FormControlLabel
+                  value="ממתין לאיסוף"
+                  control={<Radio />}
+                  label="אשמח שיאספו ממני את התרומה"
+                  labelPlacement="start"
+                />
+                 {/* <FormControlLabel
+                  value="ממתין לאיסוף מהבית"
+                  control={<Radio />}
+                  label={` אשמח שיאספו את התרומה מהכתובת ${pickUpAddress}`}
+                  labelPlacement="start"
+                /> */}
+                <FormControlLabel
+                  value="טרם הגיע לעמותה"
+                  control={<Radio />}
+                  label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד" 
+                  labelPlacement="start"
+                  sx={{ justifyContent: 'flex-end' }}
+                />
+              </RadioGroup>
               )}
             />
           </Box>
@@ -906,27 +911,7 @@ export default function UploadProduct() {
                 }}
               />
             )}
-            {/* {selectedDeliveryOption === 'לא נמסר לעמותה' && (
-              <Controller
-                name="branch"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    select
-                    fullWidth
-                    label="בחר סניף"
-                    error={!!errors.branch}
-                    helperText={errors.branch?.message}
-                    {...field}
-                  >
-                    <MenuItem value="">בחר סניף</MenuItem>
-                    <MenuItem value="סניף 1">סניף 1</MenuItem>
-                    <MenuItem value="סניף 2">סניף 2</MenuItem>
-                    <MenuItem value="סניף 3">סניף 3</MenuItem>
-                  </TextField>
-                )} */}
-              {/* />
-            )} */}
+ 
             <Button
               variant="contained"
               component="label"

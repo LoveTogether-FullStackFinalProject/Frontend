@@ -152,6 +152,10 @@ function UploadRequestedProduct() {
                       '& .MuiFormLabel-asterisk': {
                         display: 'none',
                       },
+                      '& .MuiFormHelperText-root': {
+        textAlign: 'right', // Align error messages to the right
+        direction: 'rtl', // Ensure text direction is RTL
+      },
                     }
                   }}
                   InputProps={{
@@ -242,6 +246,8 @@ function UploadRequestedProduct() {
                         },
                         '& .MuiFormLabel-asterisk': {
                           display: 'none',
+                          textAlign: 'right', // Align error messages to the right
+                          direction: 'rtl', // Ensure text direction is RTL
                         },
                       }
                     }}
@@ -250,7 +256,8 @@ function UploadRequestedProduct() {
                         textAlign: 'right',
                         direction: 'rtl',
                         '& .MuiOutlinedInput-notchedOutline': {
-                          textAlign: 'right',
+                          textAlign: 'right', // Align error messages to the right
+                          direction: 'rtl', // Ensure text direction is RTL
                         },
                       }
                     }}

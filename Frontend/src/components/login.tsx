@@ -283,7 +283,8 @@ const navigate = useNavigate();
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 15,
+            marginBottom:55,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -401,6 +402,20 @@ const navigate = useNavigate();
     </Grid>
               
             </Grid>
+            <Grid item xs>
+            <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 130 , marginTop:"20px"}}>
+      <Link
+        href="#"
+        variant="body2"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate('/forgotPassword'); 
+        }}
+      >
+        שכחת את הסיסמא?
+      </Link>
+    </div>
+  </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

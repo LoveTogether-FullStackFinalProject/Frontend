@@ -228,7 +228,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div className="filter-section">
-                    <h4>סינון לפי:</h4>
+                    {/* <h4>סינון לפי:</h4> */}
                     <div className="filter-buttons">
                         {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
                             <button

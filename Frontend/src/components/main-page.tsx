@@ -4,6 +4,8 @@ import { Donation } from './donation';
 import { DonorData } from './donorData';
 import { requestedDonation } from "../services/upload-requested-product-service";
 import dataService, { CanceledError } from "../services/data-service";
+import { Link } from 'react-router-dom';
+import Nav from "react-bootstrap/Nav";
 //import {  Button} from 'react-bootstrap';
 
 import {
@@ -26,6 +28,21 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
+import logo from '../assets/cooporates/logo.jpg';
+import logo1 from '../assets/cooporates/logo1.jpg';
+import logo2 from '../assets/cooporates/logo2.jpg';
+import logo3 from '../assets/cooporates/logo3.jpg';
+import logo4 from '../assets/cooporates/logo4.jpg';
+import logo5 from '../assets/cooporates/logo5.jpg';
+import logo6 from '../assets/cooporates/logo6.jpg';
+import logo7 from '../assets/cooporates/logo7.jpg';
+import logo8 from '../assets/cooporates/logo8.jpg';
+import logo9 from '../assets/cooporates/logo9.jpg';
+import logo10 from '../assets/cooporates/logo10.jpg';
+import logo11 from '../assets/cooporates/logo11.jpg';
+import logo12 from '../assets/cooporates/logo12.jpg';
+import logo13 from '../assets/cooporates/logo13.jpg';
+
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
 import '../styles/globals.css';
@@ -421,17 +438,102 @@ function MainPage() {
         )}
 </Box>
 
+<Box className="section-partners" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
+  <Typography 
+    variant="h3" 
+    sx={{ 
+      mb: 2, 
+      fontFamily: 'Assistant', 
+      borderBottom: '3px solid #f9db78', 
+      display: 'inline-block',
+      marginBottom: '50px',
+      fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+    }}
+  >
+    הפרוייקטים שלנו
+  </Typography>
+  <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', marginTop: '40px' }}>
+    <Box component="img" src={logo10} alt="logo10" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo11} alt="logo11" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo12} alt="logo12" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo13} alt="logo13" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+  </Box>
+  <Typography 
+    variant="h5" 
+    sx={{ 
+      mt: 4, 
+      fontFamily: 'Assistant', 
+      color: 'inherit', // Link color
+      '&:hover': {
+        textDecoration: 'underline', // Underline on hover
+      },
+      fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
+    }}
+  >
+    <Nav.Link as={Link} to="/about" style={{ textDecoration: 'none', color: 'inherit' }}>
+      קראו עוד על הפרוייקטים שלנו
+    </Nav.Link>
+  </Typography>
+</Box>
 
+<Box className="section-partners" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
+  <Typography 
+    variant="h3" 
+    sx={{ 
+      mb: 2, 
+      fontFamily: 'Assistant', 
+      borderBottom: '3px solid #f9db78', 
+      display: 'inline-block',
+      marginBottom: '50px',
+      fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+    }}
+  >
+    השותפים שלנו לדרך
+  </Typography>
 
+  {/* First Row */}
+  <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', marginBottom: '40px' }}>
+    <Box component="img" src={logo} alt="logo1" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo1} alt="logo2" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo2} alt="logo3" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo3} alt="logo4" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo4} alt="logo5" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+  </Box>
+
+  {/* Second Row */}
+  <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', marginTop: '20px' }}>
+    <Box component="img" src={logo5} alt="logo6" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo6} alt="logo7" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo7} alt="logo8" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo8} alt="logo9" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+    <Box component="img" src={logo9} alt="logo10" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
+  </Box>
+</Box>
 
 
             {/* Section 4: Donations and Community Counters */}
             <Box className="section-section-yellow">
+<<<<<<< Updated upstream
                 <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
 
             
                     !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
                 </Typography>
+=======
+            <Typography 
+    variant="h3" 
+    sx={{ 
+      mb: 2, 
+      fontFamily: 'Assistant', 
+      borderBottom: '3px solid #f9db78', 
+      display: 'inline-block',
+      marginBottom: '50px',
+    }}
+  >
+    אנחנו במספרים
+  </Typography>
+
+>>>>>>> Stashed changes
                 
                 <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Box>

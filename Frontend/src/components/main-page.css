@@ -184,13 +184,21 @@
   justify-content: space-between;
   text-align: center !important;
   margin-top: 70px;
-  padding: 0 30%; /* Make the counters closer together */
+  padding: 0 20%; /* Adjust to increase the space between counters */
 }
 
 .counter-box div {
   text-align: center !important;
   flex: 1;
-  padding: 0 10px; /* Adjust padding to bring counters closer */
+  padding: 0 20px; /* Increased padding for more space between counters */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
+.counter-box div .MuiTypography-root {
+  white-space: nowrap; /* Ensure text remains on one line */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

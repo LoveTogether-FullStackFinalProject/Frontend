@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Donation } from './donation';
 import { DonorData } from './donorData';
@@ -22,6 +22,8 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import VisibilitySensor from 'react-visibility-sensor';
 import GroupIcon from '@mui/icons-material/Group';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -85,6 +87,7 @@ const NextArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
 };
 
 
+
 const PrevArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
     const { onClick } = props;
     return (
@@ -141,6 +144,7 @@ function MainPage() {
     const [users, setUsers] = useState<DonorData[]>([]);
     const [hasAnimatedDonations, setHasAnimatedDonations] = useState(false);
     const [hasAnimatedUsers, setHasAnimatedUsers] = useState(false);
+    const [hasAnimatedPartners, setHasAnimatedPartners] = useState(false);
     const [requests, setRequests] = useState<requestedDonation[]>([]);
     const [counts, setCounts] = useState({
         food: 0,
@@ -218,6 +222,12 @@ function MainPage() {
             navigate('/login');
         }
     }
+
+    const handlePartnersVisibility = (isVisible: boolean) => {
+      if (isVisible && !hasAnimatedPartners) {
+          setHasAnimatedPartners(true);
+      }
+  };
 
 
     const handleButtonClick = () => {
@@ -548,53 +558,77 @@ function MainPage() {
 
 
             {/* Section 4: Donations and Community Counters */}
-            <Box className="section-section-yellow">           
-            <Typography 
-    variant="h3" 
-    sx={{ 
-      mb: 2, 
-      fontFamily: 'Assistant', 
-      borderBottom: '3px solid #f9db78', 
-      display: 'inline-block',
-      marginBottom: '50px',
-      fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
-    }}
-  >
-    אנחנו במספרים
-  </Typography>
+          {/* Section 4: Donations and Community Counters */}
+          <Box className="section-section-yellow" sx={{ marginTop: '50px', padding: '50px 0' }}>
+        <Typography 
+            variant="h3" 
+            sx={{ 
+                mb: 2, 
+                fontFamily: 'Assistant', 
+                borderBottom: '3px solid #f9db78', 
+                display: 'inline-block',
+                marginBottom: '50px',
+                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+            }}
+        >
+            אנחנו במספרים
+        </Typography>
 
-  <Typography variant="h4" style={{fontFamily: 'Assistant',padding:"15px",textAlign:"center"}}>
+        <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: "15px", textAlign: "center" }}>
+            !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
+        </Typography>
 
-            
-!עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
-</Typography>
-
-                
-                <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <Box>
-                        <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
-                            <div>
-                                <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                                    <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
-                                </Typography>
-                                <VolunteerActivismIcon sx={{ fontSize: 50, mt: 1 }} />
-                                <Typography variant="h6">תרומות שנתרמו</Typography>
-                            </div>
-                        </VisibilitySensor>
-                    </Box>
-                    <Box>
-                        <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleUsersVisibility}>
-                            <div>
-                                <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                                    <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
-                                </Typography>
-                                <GroupIcon sx={{ fontSize: 50, mt: 1 }} />
-                                <Typography variant="h6">תורמים בקהילה</Typography>
-                            </div>
-                        </VisibilitySensor>
-                    </Box>
-                </Box>
+        <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6, marginTop: '30px' }}>
+            <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
+                <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
+                    <div>
+                        <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+                            <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
+                        </Typography>
+                        <VolunteerActivismIcon sx={{ fontSize: 50 }} />
+                        <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
+                            תרומות שנתרמו
+                        </Typography>
+                    </div>
+                </VisibilitySensor>
             </Box>
+
+            <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
+                <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleUsersVisibility}>
+                    <div>
+                        <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+                            <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
+                        </Typography>
+                        <GroupIcon sx={{ fontSize: 50 }} />
+                        <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
+                            תורמים בקהילה
+                        </Typography>
+                    </div>
+                </VisibilitySensor>
+            </Box>
+
+            <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
+    <VisibilitySensor
+        partialVisibility
+        offset={{ bottom: 200 }}
+        onChange={handlePartnersVisibility}
+    >
+        <div>
+            <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+                <CountUp end={hasAnimatedPartners ? 18 : 0} duration={2} />
+            </Typography>
+            <BusinessCenterIcon sx={{ fontSize: 50 }} />
+            <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
+                מוסדות ועסקים שותפים
+            </Typography>
+        </div>
+    </VisibilitySensor>
+</Box>
+        </Box>
+    </Box>
+
+
+
         </Container>
     );
 

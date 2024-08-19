@@ -68,35 +68,35 @@ const AdminPage = () => {
         <h1 className="admin-title">ניהול ובקרה</h1>
       </div>
       <div className="cards-container">
-        <div className="card" onClick={() => handleButtonClick('/')}>
+        <div className="card1" onClick={() => handleButtonClick('/')}>
           <i className="fas fa-home card-icon"></i>
           <p>עמוד הבית</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/manageDonations')}>
+        <div className="card1" onClick={() => handleButtonClick('/manageDonations')}>
           <i className="fas fa-hand-holding-heart card-icon"></i>
           <p>נהל תרומות</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/statistics')}>
+        <div className="card1" onClick={() => handleButtonClick('/statistics')}>
           <i className="fas fa-chart-line card-icon"></i>
           <p>דוחות נתונים</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/manageUsers')}>
+        <div className="card1" onClick={() => handleButtonClick('/manageUsers')}>
           <i className="fas fa-users card-icon"></i>
           <p>נהל יוזרים</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/uploadRequestedProduct')}>
+        <div className="card1" onClick={() => handleButtonClick('/uploadRequestedProduct')}>
           <i className="fas fa-upload card-icon"></i>
           <p>העלאת בקשת פריט</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/manageRequestedDonations')}>
+        <div className="card1" onClick={() => handleButtonClick('/manageRequestedDonations')}>
           <i className="fas fa-clipboard-list card-icon"></i>
           <p>נהל תרומות שהעמותה מבקשת</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/manageMainPageUsers')}>
+        <div className="card1" onClick={() => handleButtonClick('/manageMainPageUsers')}>
           <i className="fas fa-users-cog card-icon"></i>
           <p>נהל הצגת תורמים בעמוד הראשי</p>
         </div>
-        <div className="card" onClick={() => handleButtonClick('/newLiveDonation')}>
+        <div className="card1" onClick={() => handleButtonClick('/newLiveDonation')}>
           <i className="fas fa-donate card-icon"></i>
           <p>תרומה חדשה שהגיעה לעמותה</p>
         </div>

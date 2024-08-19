@@ -44,6 +44,12 @@ import logo12 from '../assets/cooporates/logo12.jpg';
 import logo13 from '../assets/cooporates/logo13.jpg';
 import logo14 from '../assets/cooporates/logo14.jpg';
 import logo15 from '../assets/cooporates/logo15.jpg';
+import logo16 from '../assets/cooporates/logo16.jpg';
+import logo17 from '../assets/cooporates/logo17.jpg';
+import logo18 from '../assets/cooporates/logo18.jpg';
+import logo19 from '../assets/cooporates/logo19.jpg';
+import logo20 from '../assets/cooporates/logo20.jpg';
+import logo21 from '../assets/cooporates/logo21.jpg';
 
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
@@ -477,11 +483,11 @@ function MainPage() {
     הפרוייקטים שלנו
   </Typography>
   <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', marginTop: '40px' }}>
-    <Box component="img" src={logo10} alt="logo10" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo11} alt="logo11" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo12} alt="logo12" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo13} alt="logo13" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-  </Box>
+  <Box component="img" src={logo10} alt="logo10" sx={{ maxWidth: { xs: '150px', sm: '200px', md: '250px' } }} />
+  <Box component="img" src={logo11} alt="logo11" sx={{ maxWidth: { xs: '150px', sm: '200px', md: '250px' } }} />
+  <Box component="img" src={logo12} alt="logo12" sx={{ maxWidth: { xs: '150px', sm: '200px', md: '250px' } }} />
+  <Box component="img" src={logo13} alt="logo13" sx={{ maxWidth: { xs: '150px', sm: '200px', md: '250px' } }} />
+</Box>
   <Typography 
     variant="h5" 
     sx={{ 
@@ -527,6 +533,12 @@ function MainPage() {
     { src: logo9, alt: 'logo10' },
     { src: logo14, alt: 'logo14' },
     { src: logo15, alt: 'logo15' },
+    { src: logo16, alt: 'logo16' },
+    { src: logo17, alt: 'logo17' },
+    { src: logo18, alt: 'logo18' },
+    { src: logo19, alt: 'logo19' },
+    { src: logo20, alt: 'logo20' },
+    { src: logo21, alt: 'logo21' },
   ].map((logoData, index) => (
     <LogoItem key={index} src={logoData.src} alt={logoData.alt} />
   ))}

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-  Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, MenuItem, Alert, CircularProgress
+  Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, MenuItem, Alert, CircularProgress, createTheme, ThemeProvider
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import dataService from '../services/data-service.ts';
@@ -22,6 +22,9 @@ const RequestedProductSchema = z.object({
 });
 
 type FormData = z.infer<typeof RequestedProductSchema>;
+
+// Define the custom theme
+const theme = createTheme();
 
 function EditRequestedProduct() {
   const { register, clearErrors, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({
@@ -166,131 +169,263 @@ function EditRequestedProduct() {
   }
 
   return (
-    <Container component="main" maxWidth="sm" sx={{ paddingX: { xs: 1, sm: 2 }, paddingY: { xs: 1, sm: 2 } }}>
-      <CssBaseline />
-      <Typography variant="h4" align="center" gutterBottom>
-        עריכת מוצר המבוקש לתרומה
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit(editProduct)} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              {...register("itemName")}
-              fullWidth
-              label="שם המוצר"
-              error={!!errors.itemName}
-              helperText={errors.itemName?.message}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              select
-              fullWidth
-              label="קטגוריה"
-              value={category}
-              onChange={(e) => {
-                setCategory(e.target.value);
-                clearErrors("category");
-              }}
-              error={!!errors.category}
-              helperText={errors.category?.message}
-              {...register("category")}
-            >
-              <MenuItem value="">בחר קטגוריה</MenuItem>
-              <MenuItem value="ביגוד">ביגוד</MenuItem>
-              <MenuItem value="הנעלה">הנעלה</MenuItem>
-              <MenuItem value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-              <MenuItem value="כלי בית">כלי בית</MenuItem>
-              <MenuItem value="ריהוט">ריהוט</MenuItem>
-              <MenuItem value="מזון ושתייה">מזון ושתייה</MenuItem>
-              <MenuItem value="ספרים">ספרים</MenuItem>
-              <MenuItem value="צעצועים">צעצועים</MenuItem>
-              <MenuItem value="אחר">אחר...</MenuItem>
-            </TextField>
-            {category === "אחר" && (
-              <TextField
-                fullWidth
-                label="הזן קטגוריה"
-                {...register("customCategory")}
-                error={!!errors.customCategory}
-                helperText={errors.customCategory?.message}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("amount")}
-              fullWidth
-              label="כמות"
-              type="number"
-              error={!!errors.amount || !!amountError}
-              helperText={errors.amount?.message || amountError}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("itemCondition")}
-              fullWidth
-              label="מצב"
-              error={!!errors.itemCondition}
-              helperText={errors.itemCondition?.message}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              {...register("description")}
-              fullWidth
-              label="תיאור המוצר"
-              multiline
-              rows={4}
-              error={!!errors.description}
-              helperText={errors.description?.message}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              component="label"
-              startIcon={<CloudUploadIcon />}
-              fullWidth
-            >
-              עריכת התמונה
-              <input
-                type="file"
-                hidden
-                onChange={(e) => {
-                  clearErrors('image');
-                  imgSelected(e);
-                }}
-                ref={fileInputRef}
-              />
-            </Button>
-            {imgSrc && (
-              <Box mt={2} display="flex" justifyContent="center">
-                <img
-                  src={URL.createObjectURL(imgSrc)}
-                  alt="Product Preview"
-                  style={{ maxWidth: '100%', maxHeight: '200px' }}
-                />
-              </Box>
-            )}
-            {errors.image && (
-              <Alert severity="error" sx={{ mt: 2 }}>
-                {errors.image.message}
-              </Alert>
-            )}
-          </Grid>
-        </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 10,
+            marginBottom: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
         >
-          שמור שינויים
-        </Button>
-      </Box>
-    </Container>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <CloudUploadIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5" className="form-title">
+            עריכת מוצר המבוקש לתרומה
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(editProduct)}
+            noValidate
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("itemName")}
+                  variant="outlined"
+                  fullWidth
+                  label="שם המוצר"
+                  error={Boolean(errors.itemName)}
+                  helperText={errors.itemName?.message}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    }
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  select
+                  {...register("category")}
+                  variant="outlined"
+                  fullWidth
+                  label="קטגוריה"
+                  value={category}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                    clearErrors("category");
+                  }}
+                  error={Boolean(errors.category)}
+                  helperText={errors.category?.message}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    }
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+                >
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("amount")}
+                  variant="outlined"
+                  fullWidth
+                  label="כמות"
+                  type="number"
+                  error={Boolean(errors.amount) || Boolean(amountError)}
+                  helperText={errors.amount?.message || amountError}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    }
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("itemCondition")}
+                  variant="outlined"
+                  fullWidth
+                  label="מצב המוצר"
+                  error={Boolean(errors.itemCondition)}
+                  helperText={errors.itemCondition?.message}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    }
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  {...register("description")}
+                  variant="outlined"
+                  fullWidth
+                  label="תיאור המוצר"
+                  multiline
+                  rows={4}
+                  error={Boolean(errors.description)}
+                  helperText={errors.description?.message}
+                  InputLabelProps={{
+                    sx: {
+                      right: 19,
+                      left: 'auto',
+                      transformOrigin: 'top right',
+                      '&.MuiInputLabel-shrink': {
+                        transform: 'translate(0, -10px) scale(0.75)',
+                        transformOrigin: 'top right',
+                      },
+                      '& .MuiFormLabel-asterisk': {
+                        display: 'none',
+                      },
+                    }
+                  }}
+                  InputProps={{
+                    sx: {
+                      textAlign: 'right',
+                      direction: 'rtl',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        textAlign: 'right',
+                      },
+                    }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="outlined"
+                  fullWidth
+                  startIcon={<CloudUploadIcon />}
+                  onClick={selectImg}
+                  sx={{ mt: 2 }}
+                >
+                  העלאת תמונה
+                </Button>
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={imgSelected}
+                />
+                {imgSrc && (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 200,
+                      mt: 2,
+                    }}
+                  >
+                    <img
+                      src={URL.createObjectURL(imgSrc)}
+                      alt="Preview"
+                      style={{ maxWidth: '100%', maxHeight: '100%' }}
+                    />
+                  </Box>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  שמור שינויים
+                </Button>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
 

@@ -390,7 +390,7 @@ import {useEffect } from 'react';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
-import dataService from "../services/data-service.ts";
+// import dataService from "../services/data-service.ts";
 
 // function Copyright(props: any) {
 //   return (

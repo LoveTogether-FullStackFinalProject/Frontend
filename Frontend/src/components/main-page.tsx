@@ -42,6 +42,8 @@ import logo10 from '../assets/cooporates/logo10.jpg';
 import logo11 from '../assets/cooporates/logo11.jpg';
 import logo12 from '../assets/cooporates/logo12.jpg';
 import logo13 from '../assets/cooporates/logo13.jpg';
+import logo14 from '../assets/cooporates/logo14.jpg';
+import logo15 from '../assets/cooporates/logo15.jpg';
 
 import CountUp from 'react-countup';
 import './main-page.css'; // Import the CSS file
@@ -104,6 +106,28 @@ const PrevArrow = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
         </IconButton>
     );
 };
+
+type LogoItemProps = {
+  src: string;
+  alt: string;
+};
+
+const LogoItem: React.FC<LogoItemProps> = ({ src, alt }) => (
+  <Box sx={{ p: 1, textAlign: 'center' }}>
+    <Box
+      component="img"
+      src={src}
+      alt={alt}
+      sx={{
+        width: '200px',  // Adjust width
+        height: '200px', // Adjust height
+        objectFit: 'contain',
+        display: 'block',
+        margin: '0 auto',
+      }}
+    />
+  </Box>
+);
 
 function MainPage() {
     const navigate = useNavigate();
@@ -475,9 +499,8 @@ function MainPage() {
     </Nav.Link>
   </Typography>
 </Box>
-
-<Box className="section-partners" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
-  <Typography 
+<Box className="section-section-light">
+<Typography 
     variant="h3" 
     sx={{ 
       mb: 2, 
@@ -489,26 +512,27 @@ function MainPage() {
     }}
   >
     השותפים שלנו לדרך
-  </Typography>
-
-  {/* First Row */}
-  <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', marginBottom: '40px' }}>
-    <Box component="img" src={logo} alt="logo1" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo1} alt="logo2" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo2} alt="logo3" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo3} alt="logo4" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo4} alt="logo5" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-  </Box>
-
-  {/* Second Row */}
-  <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '20px', marginTop: '20px' }}>
-    <Box component="img" src={logo5} alt="logo6" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo6} alt="logo7" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo7} alt="logo8" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo8} alt="logo9" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-    <Box component="img" src={logo9} alt="logo10" sx={{ maxWidth: { xs: '100px', sm: '150px', md: '200px' } }} />
-  </Box>
+</Typography>
+<Slider {...sliderSettings}>
+  {[
+    { src: logo, alt: 'logo1' },
+    { src: logo1, alt: 'logo2' },
+    { src: logo2, alt: 'logo3' },
+    { src: logo3, alt: 'logo4' },
+    { src: logo4, alt: 'logo5' },
+    { src: logo5, alt: 'logo6' },
+    { src: logo6, alt: 'logo7' },
+    { src: logo7, alt: 'logo8' },
+    { src: logo8, alt: 'logo9' },
+    { src: logo9, alt: 'logo10' },
+    { src: logo14, alt: 'logo14' },
+    { src: logo15, alt: 'logo15' },
+  ].map((logoData, index) => (
+    <LogoItem key={index} src={logoData.src} alt={logoData.alt} />
+  ))}
+</Slider>
 </Box>
+
 
 
             {/* Section 4: Donations and Community Counters */}
@@ -521,6 +545,7 @@ function MainPage() {
       borderBottom: '3px solid #f9db78', 
       display: 'inline-block',
       marginBottom: '50px',
+      fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
     }}
   >
     אנחנו במספרים

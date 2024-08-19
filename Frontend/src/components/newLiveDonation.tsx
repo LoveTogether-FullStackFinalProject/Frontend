@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import dataService from '../services/data-service';
+import { DonorData } from './donorData';
 
 const theme = createTheme();
 
@@ -94,7 +95,7 @@ const fetchData = async () => {
   } catch (error) {
     console.error("Error fetching data:", error);
     setIsAdmin(false);
-    setError("Error fetching data. Please try again.");
+    //setError("Error fetching data. Please try again.");
   } finally {
     setIsLoading(false);
   }

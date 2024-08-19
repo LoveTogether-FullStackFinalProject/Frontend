@@ -40,19 +40,37 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null); 
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    const userId = localStorage.getItem('userID');
+    if (!userId) {
+      setIsAdmin(false);
+      setIsLoading(false);
+      return;
+    }
+  
+    try {
+      const [userRes, usersRes] = await Promise.all([
+        dataService.getUser(userId).req,
+        dataService.getUsers().req
+      ]);
+      setIsAdmin(userRes.data.isAdmin);
+      setUsers(usersRes.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setIsAdmin(false);
+      setError("Error fetching data. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const { req, abort } = dataService.getUsers();
-    req.then((res) => {
-      setUsers(res.data);
-    }).catch((err) => {
-      if (err instanceof CanceledError) return;
-      setError(err.message);
-    });
-    return () => {
-      abort();
-    };
+    fetchData();
   }, []);
+
 
   const deleteUser = (id: string) => {
     dataService.deleteUser(id)
@@ -148,23 +166,22 @@ const ManageUsers: React.FC = () => {
 
   const sortedAndFilteredUsers = applySortAndFilter(users);
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  useEffect(() => {
-    const userId = localStorage.getItem('userID');
-    if (userId) {
-      dataService.getUser(userId).req.then((res) => {
-        setIsAdmin(res.data.isAdmin);
-      });
-    }
-  }, []);
-
-  if (!isAdmin) {
+  if (isLoading) {
+    return <div>טוען...</div>; // Or use a loading spinner component
+  }
+  
+  if (isAdmin === false) {
     return (
       <div className="error-container">
         <p>שגיאה: אינך מחובר בתור מנהל</p>
       </div>
     );
   }
+  
+  if (users.length === 0) {
+    return <div>No users found.</div>;
+  }
+  
 
   return (
     <div className="manage-users-page">

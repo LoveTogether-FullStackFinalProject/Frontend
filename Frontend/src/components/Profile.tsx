@@ -177,7 +177,7 @@ const Profile: React.FC = () => {
             <Box
       sx={{
         marginTop: '150px',
-        height:"500px",
+        height:"300px",
         position: 'relative',
         width: '100%',
         display: 'flex',
@@ -201,7 +201,7 @@ const Profile: React.FC = () => {
         sx={{ 
             marginLeft:'7px',
             minWidth:'100px',
-            height: 'auto'
+            height: '100%'
         }}
     />
 

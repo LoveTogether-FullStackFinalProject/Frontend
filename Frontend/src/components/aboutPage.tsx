@@ -39,12 +39,15 @@ import img17 from '../assets/organizationImages/img17.jpg';
 
 
 const AboutPage = () => {
-  useEffect(() => {
-    const sections = document.querySelectorAll('.activity-item');
-    const options = {
-      threshold: 0.3,
-    };
 
+  useEffect(() => {
+    const sections = document.querySelectorAll(
+    '.activity-item, .initiative-item, .section, .card'
+  ); 
+  const options = {
+    threshold: 0.3,
+  };
+  
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -53,11 +56,13 @@ const AboutPage = () => {
         }
       });
     }, options);
-
+  
     sections.forEach(section => {
       observer.observe(section);
     });
   }, []);
+
+
   return (
     <div className="about-page">
        <div className="videoTitle">

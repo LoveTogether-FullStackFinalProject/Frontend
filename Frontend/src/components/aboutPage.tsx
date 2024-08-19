@@ -1,19 +1,53 @@
 import React, { useEffect } from 'react';
 import './aboutPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Box,
+  Typography,
+  Button,
+  Avatar,
+//   CardContent,
+  Container,
+  IconButton,
+//   Card,
+} from '@mui/material';
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
 import myVideo from '../assets/videos/fbvideo.mp4';
+import logo10 from '../assets/cooporates/logo10.jpg';
+import logo11 from '../assets/cooporates/logo11.jpg';
+import logo12 from '../assets/cooporates/logo12.jpg';
+import logo13 from '../assets/cooporates/logo13.jpg';
+import img1 from '../assets/organizationImages/img1.jpg';
+import img2 from '../assets/organizationImages/img2.jpg';
+import img3 from '../assets/organizationImages/img3.jpg';
+import img4 from '../assets/organizationImages/img4.jpg';
+import img5 from '../assets/organizationImages/img5.jpg';
+import img6 from '../assets/organizationImages/img6.jpg';
+import img7 from '../assets/organizationImages/img7.jpg';
+import img8 from '../assets/organizationImages/img8.jpg';
+import img9 from '../assets/organizationImages/img9.jpg';
+import img10 from '../assets/organizationImages/img10.jpg';
+import img11 from '../assets/organizationImages/img11.jpg';
+import img12 from '../assets/organizationImages/img12.jpg';
+import img13 from '../assets/organizationImages/img13.jpg';
+import img14 from '../assets/organizationImages/img14.jpg';
+import img15 from '../assets/organizationImages/img15.jpg';
+import img16 from '../assets/organizationImages/img16.jpg';
+import img17 from '../assets/organizationImages/img17.jpg';
 
 
 const AboutPage = () => {
-  useEffect(() => {
-    const sections = document.querySelectorAll('.activity-item');
-    const options = {
-      threshold: 0.3,
-    };
 
+  useEffect(() => {
+    const sections = document.querySelectorAll(
+    '.activity-item, .initiative-item, .section, .card'
+  ); 
+  const options = {
+    threshold: 0.3,
+  };
+  
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -22,11 +56,13 @@ const AboutPage = () => {
         }
       });
     }, options);
-
+  
     sections.forEach(section => {
       observer.observe(section);
     });
   }, []);
+
+
   return (
     <div className="about-page">
        <div className="videoTitle">
@@ -39,40 +75,39 @@ const AboutPage = () => {
           <p className="about-registration">ע.ר 580776359</p>
         </div>
       </div>
+      <section className="initiatives-section">
+        <div className="initiative-item">
+          <img src={logo10} alt="המכולת החברתית" className="initiative-image" />
+          <div className="initiative-content">
+            <h2 className="initiative-title">המכולת החברתית</h2>
+            <p className="initiative-text">
+              המכולת החברתית הראשונה באשדוד הוקמה במטרה לספק מצרכים בסיסיים ללא תשלום למעוטי יכולת. תושבים ובעלי עסקים מוזמנים לתרום מצרכים חיוניים, אותם יוכלו הנזקקים לקחת בכמות מוגדרת וקבועה. המכולת מופעלת על ידי מתנדבים ומתנדבות מסורים אשר דואגים למלא את המדפים באופן שוטף ולסייע למי שצריך.
+            </p>
+          </div>
+        </div>
 
-      <section className=" text-center my-5">
-        <div className="section">
-          <h2>המכולת החברתית</h2>
-          <p>
-            המכולת החברתית הראשונה באשדוד הוקמה במטרה לספק מצרכים בסיסיים ללא תשלום למעוטי יכולת. תושבים ובעלי עסקים מוזמנים לתרום מצרכים חיוניים, אותם יוכלו הנזקקים לקחת בכמות מוגדרת וקבועה. המכולת מופעלת על ידי מתנדבים ומתנדבות מסורים אשר דואגים למלא את המדפים באופן שוטף ולסייע למי שצריך.
-          </p>
+        <div className="initiative-item">
+          <img src={logo12} alt="המקרר השיתופי" className="initiative-image" />
+          <div className="initiative-content">
+            <h2 className="initiative-title">המקרר השיתופי</h2>
+            <p className="initiative-text">
+              המקרר השיתופי הראשון באשדוד ממוקם ברחוב דוד המלך, ומהווה מקום בו תושבים יכולים להניח מוצרי מזון באריזתם המקורית, המיועדים למי שזקוק להם. המקרר פתוח 24/7 ונגיש לכל דורש, המאפשר סיוע דיסקרטי ובלתי מתווך לאלו הזקוקים לו ביותר.
+            </p>
+          </div>
         </div>
-        <hr />
-        <div className="section">
-          <h2>המקרר השיתופי</h2>
-          <p>
-            המקרר השיתופי הראשון באשדוד ממוקם ברחוב דוד המלך, ומהווה מקום בו תושבים יכולים להניח מוצרי מזון באריזתם המקורית, המיועדים למי שזקוק להם. המקרר פתוח 24/7 ונגיש לכל דורש, המאפשר סיוע דיסקרטי ובלתי מתווך לאלו הזקוקים לו ביותר.
-          </p>
-        </div>
-        <hr />
-        <div className="section">
-          <h2>יוזמות נוספות</h2>
-          <p>
-            בין היוזמות הנוספות של העמותה ניתן למצוא את מיזם "תיק לכל ילד", במסגרתו נתרמים מאות ילקוטים וציוד לימוד למשפחות נזקקות, פרויקט "קיר המעילים" שמזמין את הציבור לתרום מעילים עבור אלו שזקוקים להם, וחלוקת סלי מזון למשפחות נזקקות בחגים ובמהלך השנה.
-          </p>
-        </div>
-        <hr />
-        <div className="section">
-          <h2>סיוע מתמשך וקהילה תומכת</h2>
-          <p>
-            מאז הקמתה, עמותת "ואהבתם ביחד" זוכה לשיתוף פעולה נרחב עם עסקים מקומיים, בתי ספר, חברות ותורמים פרטיים. בזכות התמיכה הרחבה, העמותה מצליחה להעניק סיוע מתמשך לחיילי צה"ל, משפחות מפונים, קשישים ובני נוער בסיכון, ולהגשים את מטרתה - סיוע כלכלי ואנושי לאוכלוסיות הנזקקות.
-          </p>
-          <p>
-            עמותת "ואהבתם ביחד" ממשיכה להתרחב ולגייס תרומות ושותפים במטרה לפתוח סניפים נוספים ולהרחיב את מעגל התמיכה לכל מי שזקוק לכך.
-          </p>
+
+        <div className="initiative-item">
+          <img src={logo11} alt="יוזמות נוספות" className="initiative-image" />
+          <div className="initiative-content">
+            <h2 className="initiative-title">יוזמות נוספות</h2>
+            <p className="initiative-text">
+              בין היוזמות הנוספות של העמותה ניתן למצוא את מיזם "תיק לכל ילד", במסגרתו נתרמים מאות ילקוטים וציוד לימוד למשפחות נזקקות, פרויקט "קיר המעילים" שמזמין את הציבור לתרום מעילים עבור אלו שזקוקים להם, וחלוקת סלי מזון למשפחות נזקקות בחגים ובמהלך השנה.
+            </p>
+          </div>
         </div>
       </section>
 
+      
       <section className="video  text-center my-5">
         <div>
           <iframe
@@ -85,6 +120,77 @@ const AboutPage = () => {
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             title="Introduction Video"
           ></iframe>
+        </div>
+      </section>
+
+      <section className="activity-section">
+           <div className="activity-gallery">
+          <div className="activity-item">
+            <img src={img1} alt="Description 1" />
+          </div>
+          <div className="activity-item">
+            <img src={img2} alt="Description 2" />
+          
+          </div>
+          <div className="activity-item">
+            <img src={img3} alt="Description 3" />
+           
+          </div>
+          <div className="activity-item">
+            <img src={img4} alt="Description 4" />
+        
+          </div>
+          <div className="activity-item">
+            <img src={img5} alt="Description 5" />
+       
+          </div>
+          <div className="activity-item">
+            <img src={img6} alt="Description 6" />
+         
+          </div>
+          <div className="activity-item">
+            <img src={img7} alt="Description 7" />
+           
+          </div>
+          <div className="activity-item">
+            <img src={img8} alt="Description 8" />
+          
+          </div>
+          <div className="activity-item">
+            <img src={img9} alt="Description 9" />
+           
+          </div>
+          <div className="activity-item">
+            <img src={img10} alt="Description 10" />
+           
+          </div>
+          <div className="activity-item">
+            <img src={img11} alt="Description 11" />
+         
+          </div>
+          <div className="activity-item">
+            <img src={img12} alt="Description 12" />
+          
+          </div>
+          <div className="activity-item">
+            <img src={img13} alt="Description 13" />
+         
+          </div>
+          <div className="activity-item">
+            <img src={img14} alt="Description 14" />
+           
+          </div>
+          <div className="activity-item">
+            <img src={img15} alt="Description 15" />
+           
+          </div>
+          <div className="activity-item">
+            <img src={img16} alt="Description 16" />
+          
+          </div>
+          <div className="activity-item">
+            <img src={img17} alt="Description 17" />
+          </div>
         </div>
       </section>
 

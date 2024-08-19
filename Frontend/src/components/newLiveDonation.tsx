@@ -60,7 +60,7 @@ const rightAlignedInputStyle = {
 };
 
 export default function NewLiveDonation() {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -72,14 +72,37 @@ export default function NewLiveDonation() {
     },
   });
 
-  useEffect(() => {
-    const userId = localStorage.getItem('userID');
-    if (userId) {
-      dataService.getUser(userId).req.then((res) => {
-        setIsAdmin(res.data.isAdmin);
-      });
-    }
-  }, []);
+const [users, setUsers] = useState<DonorData[]>([]);
+const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+const [isLoading, setIsLoading] = useState(true);
+
+const fetchData = async () => {
+  const userId = localStorage.getItem('userID');
+  if (!userId) {
+    setIsAdmin(false);
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const [userRes, usersRes] = await Promise.all([
+      dataService.getUser(userId).req,
+      dataService.getUsers().req
+    ]);
+    setIsAdmin(userRes.data.isAdmin);
+    setUsers(usersRes.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    setIsAdmin(false);
+    setError("Error fetching data. Please try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
 
   const selectedCategory = watch('category');
 
@@ -122,25 +145,22 @@ export default function NewLiveDonation() {
     }
   };
 
-  if (!isAdmin) {
+  if (isLoading) {
+    return <div>טוען...</div>; 
+  }
+  
+  if (isAdmin === false) {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            שגיאה: אינך מחובר בתור מנהל
-          </Typography>
-        </Box>
-      </Container>
+      <div className="error-container">
+        <p>שגיאה: אינך מחובר בתור מנהל</p>
+      </div>
     );
   }
+  
+  if (users.length === 0) {
+    return <div>No users found.</div>;
+  }
+  
 
   return (
     <ThemeProvider theme={theme}>

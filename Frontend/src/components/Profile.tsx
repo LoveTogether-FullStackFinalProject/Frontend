@@ -224,7 +224,7 @@ const Profile: React.FC = () => {
             color: 'black',
             mb: 2,
         }}>
-          שלום {user.firstName} {user.lastName}
+           {user.firstName} {user.lastName} ,שלום
 
         </Typography>
       

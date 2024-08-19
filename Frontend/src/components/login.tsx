@@ -19,6 +19,7 @@ import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import dataService from "../services/data-service.ts";
+import './login.css';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
@@ -189,7 +190,7 @@ export default function SignIn() {
                       onClick={togglePasswordVisibility}
                       edge="end"
                     >
-                      {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                      {passwordVisible ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 )

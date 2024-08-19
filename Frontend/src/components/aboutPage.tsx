@@ -1,21 +1,43 @@
-
+import React, { useEffect } from 'react';
 import './aboutPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
+import myVideo from '../assets/videos/fbvideo.mp4';
 
 
 const AboutPage = () => {
+  useEffect(() => {
+    const sections = document.querySelectorAll('.activity-item');
+    const options = {
+      threshold: 0.3,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  }, []);
   return (
     <div className="about-page">
-      <div className="background-section-text-center">
-        <h1 className="about-title">עמותת ואהבתם ביחד</h1>
-        <p className="about-registration">ע.ר 580776359</p>
-  
-        <p className="about-description">
-          עמותת "ואהבתם ביחד" נוסדה מתוך חזון להעניק סיוע ותמיכה לאוכלוסיות נזקקות באשדוד והסביבה. העמותה מפעילה מגוון יוזמות חברתיות ייחודיות, ביניהן המכולת החברתית, המקרר השיתופי, תיק לכל ילד וקיר המעילים, במטרה לספק פתרונות מידיים ויעילים לצרכים הבסיסיים של משפחות נזקקות.
-        </p>
+       <div className="videoTitle">
+        <video autoPlay muted loop className="vidBack">
+          <source src={myVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="text-overlay">
+          <h1 className="about-title">עמותת ואהבתם ביחד</h1>
+          <p className="about-registration">ע.ר 580776359</p>
+        </div>
       </div>
 
       <section className=" text-center my-5">

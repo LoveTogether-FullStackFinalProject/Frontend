@@ -20,6 +20,10 @@ import { useNavigate } from 'react-router-dom';
 import { uploadPhoto } from '../services/uploadProductService';
 import { registerUser, googleSignIn } from '../services/registrationService';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import './Registration.css';
 
 
@@ -46,6 +50,11 @@ export default function SignUp() {
   const [imgSrc, setImgSrc] = useState<File | null>(null);
   const { register, handleSubmit, formState: { errors }, setValue, trigger } = useForm<FormData>({ resolver: zodResolver(schema) });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -331,8 +340,19 @@ export default function SignUp() {
                       '& .MuiOutlinedInput-notchedOutline': {
                         textAlign: 'right',
                       },
-                    }
+                    },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={togglePasswordVisibility}
+                          edge="end"
+                        >
+                          {passwordVisible ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
+                  
                 />
               </Grid>
               <Grid item xs={12}>
@@ -447,21 +467,24 @@ export default function SignUp() {
             >
               הרשמה
             </Button>
+
+            <div className="separator">
+              <hr />
+              <p>או</p>
+              <hr />
+            </div>
             <Grid container justifyContent="flex-end" style={{direction:"rtl"}}>
-              <Grid item style={{direction:"rtl", marginLeft: "130px"}}>
+              <Grid item style={{direction:"rtl", marginLeft: "120px"}}>
                 <Link href="/login" variant="body2" style={{ direction: "rtl"}}>
                   כבר יש לך חשבון? התחבר/י כאן
                 </Link>
               </Grid>
             </Grid>
           </Box>
+
           <Box sx={{ mt: 3 }}>
-          <div className="separator">
-                     <hr />
-                     <p>או</p>
-                     <hr />
-                 </div>
-            <Box sx={{ mt: 1, textAlign: 'center' }}>
+         
+            <Box sx={{ mt: 1, textAlign: 'center', mb: 4 }}>
               <GoogleLogin 
               width={"100%"}
                 onSuccess={onGoogleLoginSuccess}

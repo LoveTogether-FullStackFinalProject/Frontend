@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import dataService, { CanceledError } from '../services/data-service';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './Profile.css';
+import { Avatar, Box, Button, Container, Grid, TextField, Typography, Chip, Card, CardContent } from '@mui/material';
 import { Donation } from './donation';
 import { DonorData } from './donorData';
 import DonationModal from './DonationModal';
-import { Avatar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+import whitelogo from '../assets/whiteLogo.png';
+import dataService, { CanceledError } from '../services/data-service';
+import './Profile.css'; // Keeping the custom styles
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<DonorData | null>(null);
@@ -88,23 +90,6 @@ const Profile: React.FC = () => {
         setFilteredDonations(filtered.slice(0, itemsToShow));
     };
 
-    const getStatusClass = (status: string) => {
-        switch (status) {
-            case 'ממתין לאיסוף':
-                return 'status-awaiting-collection';
-            case 'נאסף':
-                return 'status-collected';
-            case 'הגיע לעמותה':
-                return 'status-arrived-at-charity';
-            case 'טרם הגיע לעמותה':
-                return 'status-not-arrived-at-charity';
-            case 'נמסר בעמותה':
-                return 'status-delivered-to-charity';
-            default:
-                return '';
-        }
-    };
-
     const handleShowMoreClick = () => {
         setItemsToShow(itemsToShow + 4);
     };
@@ -146,21 +131,22 @@ const Profile: React.FC = () => {
 
     const handleSaveChanges = async (updatedDonation: Donation) => {
         try {
-          if (updatedDonation && updatedDonation._id) {
-            await dataService.updateDonation(updatedDonation._id, updatedDonation);
-            setDonations((prevDonations) =>
-              prevDonations.map((donation) =>
-                donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
-              )
-            );
-            setShowModal(false);
-          } else {
-            console.error('Error: No donation ID found');
-          }
+            if (updatedDonation && updatedDonation._id) {
+                await dataService.updateDonation(updatedDonation._id, updatedDonation);
+                setDonations((prevDonations) =>
+                    prevDonations.map((donation) =>
+                        donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
+                    )
+                );
+                setShowModal(false);
+            } else {
+                console.error('Error: No donation ID found');
+            }
         } catch (error) {
-          console.error('Error saving changes:', error);
+            console.error('Error saving changes:', error);
         }
-      };
+    };
+
     const handleCancelClick = () => {
         setShowModal(false);
     };
@@ -182,121 +168,250 @@ const Profile: React.FC = () => {
     if (!user) return <div className="loading">User not found</div>;
 
     return (
-        <div className="profile-page">
-            <div className="user-info">
-                <Avatar className='Avatar-profile' alt="Remy Sharp" src={user.image} />
-                <span className='profile-header'>שלום, {user.firstName} {user.lastName}</span>
-            </div>
-            <main className="profile-content">
-                <div className="rating-status" style={{ direction: "rtl" }}>
-                    דירוג משתמש: {user.rating ?? 0}
-                </div>
-                <div className="my-donations-title">
-                    התרומות שלי
-                </div>
+        <Container style={{ 
+            width: '100%', 
+            padding: 0, 
+            margin: 0, 
+            maxWidth: '100%' ,
+        }}>            {/* Greeting Section */}
+            <Box
+      sx={{
+        marginTop: '150px',
+        height:"500px",
+        position: 'relative',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between', 
+        background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
+        //249, 218, 120, 0.8)
+        // zIndex: -1, 
+        padding: '0 20px', 
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' // Adjust shadow here
+    }}
+>
+    {/* Logo */}
+    <Box
+        component="img"
+        src={whitelogo}
+        alt="whitelogo"
+        style={{
+            maxWidth: '500px',
+        }}
+        sx={{ 
+            marginLeft:'7px',
+            minWidth:'100px',
+            height: 'auto'
+        }}
+    />
 
-                <div className="search-bar">
-                    <input
-                        className='search-input'
-                        type="text"
-                        placeholder="חפש תרומה..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
+    {/* Text and Button */}
+    <Box
+        sx={{
+            marginBottom:'20px',
+            marginRight:'50px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            textAlign: 'right',
+            gap: 2, // Space between text and button
+        }}
+    >
+        {/* Center Text */}
+        <Typography variant="h3" sx={{ 
+            fontFamily: "'Assistant', sans-serif", 
+            fontWeight: 500, 
+            color: 'black',
+            mb: 2,
+        }}>
+          שלום {user.firstName} {user.lastName}
 
-                <div className="sort-section">
-                    <select
+        </Typography>
+      
+</Box>
+</Box>
+
+<Typography 
+            variant="h3" 
+            sx={{ 
+                mb: 2, 
+                fontFamily: 'Assistant', 
+                borderBottom: '3px solid #f9db78', 
+                textAlign: 'center',
+                padding: '20px',
+                width: 'fit-content', // Adjusts the width to the content
+                margin: '0 auto', // Centers the text within its container
+            }}
+        >
+            התרומות שלי
+        </Typography>
+
+            {/* Search Section */}
+            <Box my={4}>
+                <TextField
+                fullWidth
+                    variant="outlined"
+                    placeholder="חפש תרומה..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    InputProps={{
+                        startAdornment: <SearchIcon />,
+                    }}
+                    sx={{ direction: 'rtl',                        
+                     }}
+                />
+            </Box>
+
+            {/* Sort and Filter Section */}
+            <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
+                <Box display="flex" gap={2} flexWrap="wrap">
+                    <TextField
+                        select
+                        label="מיין לפי"
                         value={sortProperty}
                         onChange={(e) => handleSortChange(e.target.value as keyof Donation)}
-                    >   
+                        SelectProps={{
+                            native: true,
+                        }}
+                        variant="outlined"
+                        sx={{ direction: 'rtl' }}
+                    >
                         <option value="">מיין לפי</option>
                         <option value="category">קטגוריה</option>
                         <option value="quantity">כמות</option>
-                        <option value="condition">מצב הפריט</option>  {/* Updated */}
+                        <option value="condition">מצב הפריט</option>
                         <option value="status">סטטוס</option>
                         <option value="createdAt">תאריך יצירה</option>
                         <option value="updatedAt">תאריך עדכון</option>
-                    </select>
-                    <select
+                    </TextField>
+                    <TextField
+                        select
+                        label="סדר"
                         value={sortOrder}
                         onChange={(e) => handleSortOrderChange(e.target.value as 'asc' | 'desc')}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        variant="outlined"
+                        sx={{ direction: 'rtl' }}
                     >
                         <option value="asc">סדר עולה</option>
                         <option value="desc">סדר יורד</option>
-                    </select>
-                </div>
+                    </TextField>
+                </Box>
 
-                <div className="filter-section">
-                    {/* <h4>סינון לפי:</h4> */}
-                    <div className="filter-buttons">
-                        {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
-                            <button
-                                key={status}
-                                onClick={() => toggleFilter('status', status)}
-                                className={selectedFilters.status.includes(status) ? 'active' : ''}
-                            >
-                                {status}
-                            </button>
-                        ))}
-                        <button
-                            onClick={() => toggleFilter('approved', 'true')}
-                            className={selectedFilters.approved.includes('true') ? 'active' : ''}
-                        >
-                            מאושר
-                        </button>
-                        <button
-                            onClick={() => toggleFilter('approved', 'false')}
-                            className={selectedFilters.approved.includes('false') ? 'active' : ''}
-                        >
-                            לא מאושר
-                        </button>
-                    </div>
-                    <button className="reset-filters" onClick={resetFilters}>
+                <Box>
+                    <Button variant="outlined" startIcon={<ClearIcon />} onClick={resetFilters}>
                         הסר מסננים
-                    </button>
-                </div>
+                    </Button>
+                </Box>
+            </Box>
 
-                <div className="selected-filters">
-                    {selectedFilters.status.map(filter => (
-                        <span key={filter} onClick={() => removeFilter('status', filter)}>
-                            {filter} ✖
-                        </span>
-                    ))}
-                    {selectedFilters.approved.map(filter => (
-                        <span key={filter} onClick={() => removeFilter('approved', filter)}>
-                            {filter === 'true' ? 'מאושר' : 'לא מאושר'} ✖
-                        </span>
-                    ))}
-                </div>
+            {/* Quick Filters */}
+            <Box display="flex" justifyContent="center" gap={2} my={4} flexWrap="wrap">
+                {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
+                    <Button
+                        key={status}
+                        variant={selectedFilters.status.includes(status) ? 'contained' : 'outlined'}
+                        onClick={() => toggleFilter('status', status)}
+                    >
+                        {status}
+                    </Button>
+                ))}
+                <Button
+                    variant={selectedFilters.approved.includes('true') ? 'contained' : 'outlined'}
+                    onClick={() => toggleFilter('approved', 'true')}
+                >
+                    מאושר
+                </Button>
+                <Button
+                    variant={selectedFilters.approved.includes('false') ? 'contained' : 'outlined'}
+                    onClick={() => toggleFilter('approved', 'false')}
+                >
+                    לא מאושר
+                </Button>
+            </Box>
 
-                <div className="donations-list">
-                    {filteredDonations.length > 0 ? (
-                        filteredDonations.map((donation) => (
-                            <div
-                                key={donation._id}
-                                className={`donation-card ${getStatusClass(donation.status)}`}
+            {/* Selected Filters */}
+            <Box display="flex" flexWrap="wrap" gap={1} my={2}>
+                {selectedFilters.status.map(filter => (
+                    <Chip
+                        key={filter}
+                        label={filter}
+                        onDelete={() => removeFilter('status', filter)}
+                        deleteIcon={<ClearIcon />}
+                        sx={{ backgroundColor: '#f0ad4e', color: 'white' }}
+                    />
+                ))}
+                {selectedFilters.approved.map(filter => (
+                    <Chip
+                        key={filter}
+                        label={filter === 'true' ? 'מאושר' : 'לא מאושר'}
+                        onDelete={() => removeFilter('approved', filter)}
+                        deleteIcon={<ClearIcon />}
+                        sx={{ backgroundColor: '#f0ad4e', color: 'white' }}
+                    />
+                ))}
+            </Box>
+
+            {/* Donations List */}
+            <Grid container spacing={3} my={4}>
+                {filteredDonations.length > 0 ? (
+                    filteredDonations.map((donation) => (
+                        <Grid item xs={12} sm={6} md={4} key={donation._id}>
+                            <Card
+                                sx={{
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.3s ease-in-out',
+                                    '&:hover': {
+                                        transform: 'scale(1.05)',
+                                    },
+                                }}
                                 onClick={() => handleCardClick(donation)}
                             >
-                                <img src={donation.image} alt={donation.itemName} />
-                                <h5>{donation.itemName}</h5>
-                                <p>סטטוס: {donation.status}</p>
-                                <p>אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}</p>
-                            </div>
-
-                        ))
-                    ) : (
-                        <div className="no-donations-container">
-                            <p>לא נמצאו תרומות</p>
-                        </div>
-                    )}
-                </div>
-                {donations.length > itemsToShow && (
-                    <button className="show-more" onClick={handleShowMoreClick}>
-                        הצג עוד
-                    </button>
+                                <CardContent>
+                                    <img
+                                        src={donation.image}
+                                        alt={donation.itemName}
+                                        style={{
+                                            width: '100%',
+                                            height: '150px',
+                                            objectFit: 'cover',
+                                            borderRadius: '8px',
+                                        }}
+                                    />
+                                    <Typography variant="h6" my={2}>
+                                        {donation.itemName}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        סטטוס: {donation.status}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    ))
+                ) : (
+                    <Grid item xs={12}>
+                        <Typography variant="h6" align="center">
+                            לא נמצאו תרומות
+                        </Typography>
+                    </Grid>
                 )}
-            </main>
+            </Grid>
+
+            {donations.length > itemsToShow && (
+                <Box display="flex" justifyContent="center">
+                    <Button variant="contained" color="primary" onClick={handleShowMoreClick}>
+                        הצג עוד
+                    </Button>
+                </Box>
+            )}
 
             <DonationModal
                 show={showModal}
@@ -305,7 +420,7 @@ const Profile: React.FC = () => {
                 onEditClick={handleSaveChanges}
                 onDeleteClick={handleDeleteClick}
             />
-        </div>
+        </Container>
     );
 };
 

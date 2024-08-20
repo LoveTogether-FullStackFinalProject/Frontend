@@ -572,7 +572,7 @@ export default function UploadProduct() {
     sx={{ 
         mb: 2, 
         fontFamily: 'Assistant', 
-        borderBottom: '3px solid #f9db78', 
+        borderBottom: '3px solid #f9db78',  
         display: 'inline-block'
     }}
 >

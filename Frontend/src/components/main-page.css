@@ -64,6 +64,19 @@
   font-size: 1.2rem; 
   
 }
+.first-section-button-2 {
+  background-color: #f6ebc7da !important;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  margin-right: 50px; 
+  margin-top: 70px !important;
+  font-size: 1.2rem; 
+  
+}
 
 
 .first-section-button:hover {

@@ -14,7 +14,6 @@ import ManageRequestedDonations from './components/ManageRequestedDonations';
 import NewLiveDonation from './components/newLiveDonation';
 import ManageMainPageUsers from './components/ManageMainPageUsers';
 import EditRequestedProduct from './components/edit-requested-product';
-import ForgotPassword from './components/ForgotPassword '; // Adjust the path as necessary
 import {Navbar} from "./components//Navbar";
 import { useState } from 'react';
 import { User } from './services/types';

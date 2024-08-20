@@ -197,11 +197,13 @@ const Profile: React.FC = () => {
         alt="whitelogo"
         style={{
             maxWidth: '500px',
+            maxHeight:"300px"
         }}
         sx={{ 
             marginLeft:'7px',
             minWidth:'100px',
-            height: '100%'
+            minHeight:"50px"
+           
         }}
     />
 

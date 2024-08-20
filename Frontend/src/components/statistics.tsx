@@ -156,7 +156,7 @@ const Statistics = () => {
     : getTopN(aggregateData(selectedChart === 'requests' ? requests : products, xAxisField), 10);
 
   //const accessToken = localStorage.getItem('accessToken');
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -166,13 +166,13 @@ const Statistics = () => {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
-  }
+  // if (!isAdmin) {
+  //   return (
+  //     <div className="error-container">
+  //       <p>שגיאה: אינך מחובר בתור מנהל</p>
+  //     </div>
+  //   );
+  // }
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const CustomYAxisTick = ({ x = 0, y = 0, payload = { value: '' } }: { x?: number, y?: number, payload?: any }) => (
@@ -181,6 +181,7 @@ const Statistics = () => {
     </text>
   );
 
+  if(isAdmin){
   return (
 <Container className="statistics-page" dir="rtl">
   <Typography
@@ -341,6 +342,17 @@ const Statistics = () => {
       </Grid>
     </Container>
   );
-};
+
+
+}else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+
+} };
+
 
 export default Statistics;

@@ -376,19 +376,21 @@ const ManageDonationPage: React.FC = () => {
           aria-describedby="simple-modal-description"
         >
           <Box
-            sx={{
-              width: '400px',
-              margin: 'auto',
-              marginTop: '100px',
-              backgroundColor: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              textAlign: 'right',
-              direction: 'rtl',
-            }}
-          >
-            <Typography id="simple-modal-title" variant="h6" component="h2">
+    sx={{
+      width: '300px',
+      maxHeight: '80vh', // Set a max height for the modal
+      overflowY: 'auto', // Enable vertical scrolling if content overflows
+      margin: 'auto',
+      marginTop: '100px',
+      backgroundColor: 'white',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      textAlign: 'right',
+      direction: 'rtl',
+    }}
+  >
+            <Typography id="simple-modal-title" variant="h6" component="h2" style={{marginBottom:"10px",borderBottom: '3px solid #f9db78',width:"50%" }}>
               פרטי תרומה
             </Typography>
             {currentDonation && (

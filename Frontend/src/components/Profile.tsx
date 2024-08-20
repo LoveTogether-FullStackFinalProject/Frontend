@@ -414,6 +414,7 @@ const Profile: React.FC = () => {
             )}
 
             <DonationModal
+                
                 show={showModal}
                 onHide={handleCancelClick}
                 donation={selectedDonation}

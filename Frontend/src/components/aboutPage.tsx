@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './aboutPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-  Box,
-  Typography,
-  Button,
-  Avatar,
-//   CardContent,
-  Container,
-  IconButton,
-//   Card,
-} from '@mui/material';
+// import {
+//   Box,
+//   Typography,
+//   Button,
+//   Avatar,
+// //   CardContent,
+//   Container,
+//   IconButton,
+// //   Card,
+// } from '@mui/material';
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
@@ -18,7 +18,7 @@ import myVideo from '../assets/videos/fbvideo.mp4';
 import logo10 from '../assets/cooporates/logo10.jpg';
 import logo11 from '../assets/cooporates/logo11.jpg';
 import logo12 from '../assets/cooporates/logo12.jpg';
-import logo13 from '../assets/cooporates/logo13.jpg';
+// import logo13 from '../assets/cooporates/logo13.jpg';
 import img1 from '../assets/organizationImages/img1.jpg';
 import img2 from '../assets/organizationImages/img2.jpg';
 import img3 from '../assets/organizationImages/img3.jpg';

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-  Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, MenuItem, Alert, CircularProgress, createTheme, ThemeProvider
+  Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, MenuItem, CircularProgress, createTheme, ThemeProvider
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import dataService from '../services/data-service.ts';

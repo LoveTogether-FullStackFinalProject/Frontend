@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import dataService, { CanceledError } from "../services/data-service";
 import { DonorData } from './donorData';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+// import e from 'express';
 
 const AdminPage = () => {
   const [adminData, setAdminData] = useState<DonorData | null>(null);
@@ -34,7 +35,7 @@ const AdminPage = () => {
     navigate(path);
   };
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -45,14 +46,14 @@ const AdminPage = () => {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
-        {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
-      </div>
-    );
-  }
+  // if (!isAdmin) {
+  //   return (
+  //     <div className="error-container">
+  //       <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+  //       {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return <div className="error">Error: {error}</div>;
@@ -62,6 +63,7 @@ const AdminPage = () => {
     return <div className="loading">Loading...</div>;
   }
 
+  if(isAdmin){
   return (
     <div className="admin-page">
       <div className="background-section-text-center">
@@ -103,6 +105,18 @@ const AdminPage = () => {
       </div>
     </div>
   );
-};
+}
+else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+
+}
+}
+
+
 
 export default AdminPage;

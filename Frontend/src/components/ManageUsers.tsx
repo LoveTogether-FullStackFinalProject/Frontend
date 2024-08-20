@@ -40,7 +40,7 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null); 
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(true); 
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
@@ -182,7 +182,7 @@ const ManageUsers: React.FC = () => {
     return <div>No users found.</div>;
   }
   
-
+if(isAdmin){
   return (
     <div className="manage-users-page">
         <Typography 
@@ -382,6 +382,13 @@ const ManageUsers: React.FC = () => {
       </Modal>
     </div>
   );
-};
-
+}
+else{
+  return (
+    <div className="error-container">
+      <p>שגיאה: אינך מחובר בתור מנהל</p>
+    </div>
+  );
+}};
 export default ManageUsers;
+

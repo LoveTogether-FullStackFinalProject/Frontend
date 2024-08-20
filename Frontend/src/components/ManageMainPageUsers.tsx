@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './ManageMainPageUsers.css';  // Import the CSS file
 import dataService, { CanceledError } from "../services/data-service";
 import { DonorData } from './donorData';
-//import { useNavigate } from 'react-router-dom';
 import {
   Table,
   Dropdown,
@@ -23,8 +22,7 @@ const ManageMainPageUsers = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //const navigate = useNavigate();
+  
 
   useEffect(() => {
     const { req, abort } = dataService.getUsers();
@@ -78,25 +76,19 @@ const ManageMainPageUsers = () => {
     dataService.updateUser(donor._id, { isPublished: isPublished });
   };
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  useEffect(() => {
+  const [isAdmin, setIsAdmin] = useState(true);
+   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
-      dataService.getUser(userId).req.then((res) => {
+       dataService.getUser(userId).req.then((res) => {
         setIsAdmin(res.data.isAdmin);
         console.log("isAdmin:", res.data.isAdmin);
       });
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
-  }
 
+if(isAdmin){
   return (
     <div className="manage-users-page">
       <Typography 
@@ -203,6 +195,13 @@ const ManageMainPageUsers = () => {
       </Table> 
     </div>
   );
-};
+}else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+}};
 
 export default ManageMainPageUsers;

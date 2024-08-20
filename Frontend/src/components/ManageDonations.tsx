@@ -125,16 +125,7 @@ const ManageDonationPage: React.FC = () => {
     }
   };
 
-  // const formatDate = (dateString: string) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString('he-IL', {
-  //     year: 'numeric',
-  //     month: '2-digit',
-  //     day: '2-digit',
-  //     hour: '2-digit',
-  //     minute: '2-digit',
-  //   });
-  // };
+
 
   const handleDeleteClick = async (donation: Donation, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevents modal from opening
@@ -156,7 +147,7 @@ const ManageDonationPage: React.FC = () => {
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -166,14 +157,9 @@ const ManageDonationPage: React.FC = () => {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p style={{ fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
-  }
+ 
 
+  if(isAdmin){
   return (
     <>
       <Box className="manage-donations-page" sx={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
@@ -438,6 +424,13 @@ const ManageDonationPage: React.FC = () => {
       </Box>
     </>
   );
-};
+}else{
+  return (
+    <div className="error-container">
+      <p style={{ fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
+    </div>
+  );
+}};
+
 
 export default ManageDonationPage;

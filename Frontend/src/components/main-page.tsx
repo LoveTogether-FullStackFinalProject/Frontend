@@ -240,6 +240,10 @@ function MainPage() {
         }
     };
 
+    const handleButtonClickAnonymously = () => {
+          navigate('/uploadproduct');
+  };
+
     const handleDonationsVisibility = (isVisible: boolean) => {
         if (isVisible && !hasAnimatedDonations) {
             setHasAnimatedDonations(true);
@@ -359,15 +363,34 @@ function MainPage() {
 >
   לתרומה
 </Button>
+
+<Button
+  style={{
+    borderRadius: "100px",
+  }}
+  onClick={() => {
+    console.log('Button clicked');
+    handleButtonClickAnonymously();
+  }}
+  variant="contained"
+  className="first-section-button"
+  startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
+  sx={{
+    mt: 0,
+    px: 2, 
+    py: 1,
+    fontSize: '0.875rem',
+    backgroundColor: "white",
+    color: "black",
+  }}
+>
+  לתרומה ללא צורך בהרשמה 
+</Button>
+
 </Box>
 </Box>
 
-            
-    
-     
-       
-
-       
+              
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
     <Typography 

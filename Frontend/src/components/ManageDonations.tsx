@@ -286,6 +286,8 @@ const ManageDonationPage: React.FC = () => {
                       <MenuItem style={{direction:"rtl", textAlign:"right"}} value="נמסר בעמותה">נמסר בעמותה</MenuItem>
                       <MenuItem style={{direction:"rtl"}} value="ממתין לאיסוף">ממתין לאיסוף</MenuItem>
                       <MenuItem style={{direction:"rtl"}} value="נאסף">נאסף</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="הגיע לעמותה">הגיע לעמותה</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="טרם הגיע לעמותה">טרם הגיע לעמותה</MenuItem>
                     </Select>
                   </TableCell>
                   <TableCell>

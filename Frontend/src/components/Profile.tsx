@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Button, Container, Grid, TextField, Typography, Chip, Card, CardContent } from '@mui/material';
 import { Donation } from './donation';
@@ -173,7 +174,7 @@ const Profile: React.FC = () => {
             padding: 0, 
             margin: 0, 
             maxWidth: '100%' ,
-        }}>            {/* Greeting Section */}
+        }}>         
             <Box
       sx={{
         marginTop: '150px',
@@ -184,10 +185,8 @@ const Profile: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        //249, 218, 120, 0.8)
-        // zIndex: -1, 
         padding: '0 20px', 
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' // Adjust shadow here
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)'
     }}
 >
     {/* Logo */}
@@ -197,11 +196,13 @@ const Profile: React.FC = () => {
         alt="whitelogo"
         style={{
             maxWidth: '500px',
+            maxHeight:"300px"
         }}
         sx={{ 
             marginLeft:'7px',
             minWidth:'100px',
-            height: '100%'
+            minHeight:"50px"
+           
         }}
     />
 
@@ -239,27 +240,26 @@ const Profile: React.FC = () => {
                 borderBottom: '3px solid #f9db78', 
                 textAlign: 'center',
                 padding: '20px',
-                width: 'fit-content', // Adjusts the width to the content
-                margin: '0 auto', // Centers the text within its container
+                width: 'fit-content', 
+                margin: '0 auto', 
             }}
         >
             התרומות שלי
         </Typography>
 
             {/* Search Section */}
-            <Box my={4}>
-                <TextField
-                fullWidth
-                    variant="outlined"
-                    placeholder="חפש תרומה..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    InputProps={{
-                        startAdornment: <SearchIcon />,
-                    }}
-                    sx={{ direction: 'rtl',                        
-                     }}
-                />
+            <Box my={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+  <TextField
+    variant="outlined"
+    placeholder="חפש תרומה..."
+    style={{ width: "25%", textAlign: 'right' }}
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    InputProps={{
+      startAdornment: <SearchIcon />,
+    }}
+    sx={{ direction: 'rtl' }}
+  />
             </Box>
 
             {/* Sort and Filter Section */}

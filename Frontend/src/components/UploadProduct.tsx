@@ -140,6 +140,8 @@ export default function UploadProduct() {
   const onSubmit = async (data: FormData) => {
 
     try {
+      alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
+
       let imageUrl = '';
       if (data.image) {
         imageUrl = await uploadPhoto(data.image);

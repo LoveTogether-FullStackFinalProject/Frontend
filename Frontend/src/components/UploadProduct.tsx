@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {useEffect } from 'react';
-import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
+import { uploadPhoto, uploadProduct, uploadProductAnonymously } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
 
@@ -145,31 +145,38 @@ export default function UploadProduct() {
         imageUrl = await uploadPhoto(data.image);
       }
       const userId = localStorage.getItem('userID');
-      if (!userId) {
-        alert('User not logged in');
-        return;
-      }
+      // if (!userId) {
+      //   alert('User not logged in');
+      //   return;
+      // }
       console.log('status:', data.deliveryOption);
       const productData = {
         ...data,
         image: imageUrl,
-        donor: userId,
+        donor: userId ? userId : null,
         approvedByAdmin: false,
         status: data.deliveryOption,
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
-      await uploadProduct(productData);
-      navigate('/profile');
+      if(isLoggedIn){
+        await uploadProduct(productData);
+        navigate('/profile');
+      }
+      else{
+        console.log('uploadProductAnonymously');
+        await uploadProductAnonymously(productData);
+        navigate('/mainPage');
+      }
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
     }
   };
 
-  if (!isLoggedIn) {
-    navigate('/login');
-    return null;
-  }
+  // if (!isLoggedIn) {
+  //   navigate('/login');
+  //   return null;
+  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>

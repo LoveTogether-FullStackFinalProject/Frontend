@@ -53,7 +53,7 @@ const App = () => {
                 <Route path="/manageRequestedDonations" element={<ManageRequestedDonations />} />
                 <Route path="/manageMainPageUsers" element={<ManageMainPageUsers />} /> 
                 <Route path="/editRequestedProduct" element={<EditRequestedProduct />} /> 
-                <Route path="/forgotPassword" element={<ForgotPassword />} />                    
+                {/* <Route path="/forgotPassword" element={<ForgotPassword />} />                     */}
             </Routes>
         </Router>
 

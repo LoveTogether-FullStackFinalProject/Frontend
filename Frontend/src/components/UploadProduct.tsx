@@ -313,7 +313,7 @@ export default function UploadProduct() {
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר</MenuItem>
                 </TextField>
                 
               )}
@@ -353,39 +353,58 @@ export default function UploadProduct() {
                 }}
               />
             )}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="condition"
-              label="מצב הפריט"
-              {...register('condition')}
-              error={!!errors.condition}
-              helperText={errors.condition?.message}
-              InputLabelProps={{
-                sx: {
-                  right: 19,
-                  left: 'auto',
-                  transformOrigin: 'top right',
-                  '&.MuiInputLabel-shrink': {
-                    transform: 'translate(0, -10px) scale(0.85)',
-                    transformOrigin: 'top right',
-                  },
-                  '& .MuiFormLabel-asterisk': {
-                  display: 'none',
-                },
-                }
-              }}
-              InputProps={{
-                sx: { 
-                  textAlign: 'right', 
-                  direction: 'rtl',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    textAlign: 'right',
-                  },
-                }
-              }}
-            />
+          <Controller
+          
+  name="condition"
+  control={control}
+  render={({ field }) => (
+    <TextField
+    margin="normal"
+    label="מצב הפריט"
+      select
+      fullWidth
+      {...field}
+      error={!!errors.condition}
+      helperText={errors.condition?.message}
+      InputLabelProps={{
+        sx: {
+          right: 19,
+          left: 'auto',
+          transformOrigin: 'top right',
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -10px) scale(0.85)',
+            transformOrigin: 'top right',
+          },
+          '& .MuiFormLabel-asterisk': {
+            display: 'none',
+          },
+        }
+      }}
+      InputProps={{
+        sx: {
+          textAlign: 'right',
+          direction: 'rtl',
+          '& .MuiOutlinedInput-notchedOutline': {
+            textAlign: 'right',
+          },
+          '& .MuiSelect-icon': {
+            left: 0, // Move the arrow to the left
+            right: 'auto',
+          },
+          '& .MuiInputBase-input': {
+          textAlign: 'right', 
+          paddingRight: 0,   
+          marginRight: 0,     
+          },
+        }
+      }}
+    >
+      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="new">חדש</MenuItem>
+      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="used">משומש במצב טוב</MenuItem>
+    </TextField>
+  )}
+/>
+            
             {selectedCategory === 'מזון ושתייה' && (
               <TextField
                 margin="normal"

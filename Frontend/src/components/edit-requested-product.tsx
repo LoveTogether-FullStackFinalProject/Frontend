@@ -59,6 +59,7 @@ function EditRequestedProduct() {
 
   useEffect(() => {
     if (donation) {
+      setValue('customCategory', donation.customCategory);
       setValue('category', donation.category);
       setValue('itemName', donation.itemName);
       setValue('amount', donation.amount.toString());
@@ -202,6 +203,11 @@ function EditRequestedProduct() {
                   label="שם המוצר"
                   error={Boolean(errors.itemName)}
                   helperText={errors.itemName?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -241,6 +247,11 @@ function EditRequestedProduct() {
                   }}
                   error={Boolean(errors.category)}
                   helperText={errors.category?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -275,6 +286,45 @@ function EditRequestedProduct() {
 
 
                 </TextField>
+                {category === "אחר" && (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  label="הזן קטגוריה"
+                  {...register("customCategory")}
+                  error={!!errors.customCategory}
+                    helperText={errors.customCategory?.message}
+                    FormHelperTextProps={{
+                      sx: {
+                        marginLeft: '260px', 
+                      },
+                    }}
+                    sx={{ mt: 2 }}
+                    InputLabelProps={{
+                      sx: {
+                        right: 19,
+                        left: 'auto',
+                        transformOrigin: 'top right',
+                        '&.MuiInputLabel-shrink': {
+                          transform: 'translate(0, -10px) scale(0.75)',
+                          transformOrigin: 'top right',
+                        },
+                        '& .MuiFormLabel-asterisk': {
+                          display: 'none',
+                        },
+                      }
+                    }}
+                    InputProps={{
+                      sx: {
+                        textAlign: 'right',
+                        direction: 'rtl',
+                        '& .MuiOutlinedInput-notchedOutline': {
+                          textAlign: 'right',
+                        },
+                      }
+                    }}
+                />
+                  )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -285,6 +335,11 @@ function EditRequestedProduct() {
                   type="number"
                   error={Boolean(errors.amount) || Boolean(amountError)}
                   helperText={errors.amount?.message || amountError}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -318,6 +373,11 @@ function EditRequestedProduct() {
                   label="מצב המוצר"
                   error={Boolean(errors.itemCondition)}
                   helperText={errors.itemCondition?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -353,6 +413,11 @@ function EditRequestedProduct() {
                   rows={4}
                   error={Boolean(errors.description)}
                   helperText={errors.description?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '250px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,

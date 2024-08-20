@@ -401,8 +401,8 @@ export default function UploadProduct() {
         }
       }}
     >
-      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="new">חדש</MenuItem>
-      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="used">משומש במצב טוב</MenuItem>
+      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="חדש">חדש</MenuItem>
+      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="משומש במצב טוב">משומש במצב טוב</MenuItem>
     </TextField>
   )}
 />

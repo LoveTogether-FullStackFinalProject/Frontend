@@ -141,6 +141,11 @@ function UploadRequestedProduct() {
                   autoFocus
                   error={!!errors.itemName}
                   helperText={errors.itemName?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -185,6 +190,11 @@ function UploadRequestedProduct() {
                   }}
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -232,6 +242,11 @@ function UploadRequestedProduct() {
                     label="הזן קטגוריה"
                     error={!!errors.customCategory}
                     helperText={errors.customCategory?.message}
+                    FormHelperTextProps={{
+                      sx: {
+                        marginLeft: '270px', 
+                      },
+                    }}
                     sx={{ mt: 2 }}
                     InputLabelProps={{
                       sx: {
@@ -272,6 +287,11 @@ function UploadRequestedProduct() {
                   label="כמות"
                   error={!!errors.amount || !!amountError}
                   helperText={errors.amount?.message || amountError}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '280px', 
+                    },
+                  }}
                   type="number"
                   InputLabelProps={{
                     sx: {
@@ -308,6 +328,11 @@ function UploadRequestedProduct() {
                   label="מצב המוצר"
                   error={!!errors.itemCondition}
                   helperText={errors.itemCondition?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -333,6 +358,7 @@ function UploadRequestedProduct() {
                   }}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   {...register("description")}
@@ -343,6 +369,11 @@ function UploadRequestedProduct() {
                   label="תיאור"
                   error={!!errors.description}
                   helperText={errors.description?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '250px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,

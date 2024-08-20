@@ -317,6 +317,9 @@ function MainPage() {
 
     {/* Text and Button */}
     <Box
+    style={{
+      gap: "0px",
+    }}
         sx={{
             marginBottom:'20px',
             marginRight:'50px',
@@ -336,11 +339,12 @@ function MainPage() {
         }}>
             כמה קל לתרום היום
         </Typography>
-      
-        <Button
 
+
+        <Button
         style={{
             borderRadius:"100px",
+            marginBottom:"1px",
             
         }}
   onClick={() => {
@@ -373,12 +377,11 @@ function MainPage() {
     handleButtonClickAnonymously();
   }}
   variant="contained"
-  className="first-section-button"
+  className="first-section-button-2"
   startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
   sx={{
-    mt: 0,
-    px: 2, 
-    py: 1,
+    // px: 2, 
+    // py: 1,
     fontSize: '0.875rem',
     backgroundColor: "white",
     color: "black",

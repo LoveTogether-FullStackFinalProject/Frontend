@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState, useRef } from 'react';
-import { set, useForm } from 'react-hook-form';
+import {useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -55,7 +55,7 @@ function UploadRequestedProduct() {
 
   const selectImg = () => {
     fileInputRef.current?.click();
-    setErrorImg(false);
+    // setErrorImg(false);
   };
 
   const addNewProduct = async (data: FormData) => {

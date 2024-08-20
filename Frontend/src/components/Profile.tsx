@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Avatar, Box, Button, Container, Grid, TextField, Typography, Chip, Card, CardContent } from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Typography, Chip, Card, CardContent } from '@mui/material';
 import { Donation } from './donation';
 import { DonorData } from './donorData';
 import DonationModal from './DonationModal';

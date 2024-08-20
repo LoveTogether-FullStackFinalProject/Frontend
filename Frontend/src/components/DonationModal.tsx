@@ -63,10 +63,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                     <Form.Label>קטגוריה</Form.Label>
                                     <Form.Control as="select" name="category" value={editData.category} onChange={handleChange}>
                                         <option value="">בחר קטגוריה</option>
-                                        <option value="ביגוד">ביגוד</option>
-                                        <option value="הנעלה">הנעלה</option>
                                         <option value="ציוד לתינוקות">ציוד לתינוקות</option>
-                                        <option value="כלי בית">כלי בית</option>
                                         <option value="ריהוט">ריהוט</option>
                                         <option value="מזון ושתייה">מזון ושתייה</option>
                                         <option value="ספרים">ספרים</option>

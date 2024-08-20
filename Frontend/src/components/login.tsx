@@ -234,7 +234,7 @@ export default function SignIn() {
                 </div>
               </Grid>
 
-              <Grid item xs>
+              {/* <Grid item xs>
                 <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginRight: 150, marginTop: "20px" }}>
                   <Link
                     href="#"
@@ -247,7 +247,7 @@ export default function SignIn() {
                     שכחת את הסיסמה?
                   </Link>
                 </div>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </Box>

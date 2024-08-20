@@ -16,6 +16,7 @@ import {
 //   CardContent,
   Container,
   IconButton,
+  Grid,
 //   Card,
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
@@ -560,71 +561,84 @@ function MainPage() {
             {/* Section 4: Donations and Community Counters */}
           {/* Section 4: Donations and Community Counters */}
           <Box className="section-section-yellow" sx={{ marginTop: '50px', padding: '50px 0' }}>
-        <Typography 
-            variant="h3" 
-            sx={{ 
-                mb: 2, 
-                fontFamily: 'Assistant', 
-                borderBottom: '3px solid #f9db78', 
-                display: 'inline-block',
-                marginBottom: '50px',
-                fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
-            }}
-        >
-            אנחנו במספרים
-        </Typography>
+      <Typography 
+        variant="h3" 
+        sx={{ 
+          mb: 2, 
+          fontFamily: 'Assistant', 
+          borderBottom: '3px solid #f9db78', 
+          display: 'inline-block',
+          marginBottom: '50px',
+          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+          textAlign: 'center' // Ensures the title is centered on smaller screens
+        }}
+      >
+        אנחנו במספרים
+      </Typography>
 
-        <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: "15px", textAlign: "center" }}>
-            !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
-        </Typography>
+      <Typography 
+        variant="h4" 
+        sx={{ 
+          fontFamily: 'Assistant', 
+          padding: "15px", 
+          textAlign: "center",
+          fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.75rem' }, // Responsive font size
+        }}
+      >
+        !עד כה, התרומות שלכם עזרו למשפחות רבות בשנה האחרונה
+      </Typography>
 
-        <Box className="counter-box" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6, marginTop: '30px' }}>
-            <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
-                <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
-                    <div>
-                        <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
-                            <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
-                        </Typography>
-                        <VolunteerActivismIcon sx={{ fontSize: 50 }} />
-                        <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
-                            תרומות שנתרמו
-                        </Typography>
-                    </div>
-                </VisibilitySensor>
-            </Box>
+      <Grid 
+        container 
+        spacing={4} 
+        sx={{ 
+          marginTop: '30px', 
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Grid item xs={12} sm={6} md={4} sx={{ textAlign: 'center' }}>
+          <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
+            <div>
+              <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+                <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
+              </Typography>
+              <VolunteerActivismIcon sx={{ fontSize: { xs: 40, sm: 50 }, marginBottom: '8px' }} />
+              <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
+                תרומות שנתרמו
+              </Typography>
+            </div>
+          </VisibilitySensor>
+        </Grid>
 
-            <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
-                <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleUsersVisibility}>
-                    <div>
-                        <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
-                            <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
-                        </Typography>
-                        <GroupIcon sx={{ fontSize: 50 }} />
-                        <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
-                            תורמים בקהילה
-                        </Typography>
-                    </div>
-                </VisibilitySensor>
-            </Box>
+        <Grid item xs={12} sm={6} md={4} sx={{ textAlign: 'center' }}>
+          <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleUsersVisibility}>
+            <div>
+              <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+                <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
+              </Typography>
+              <GroupIcon sx={{ fontSize: { xs: 40, sm: 50 }, marginBottom: '8px' }} />
+              <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
+                תורמים בקהילה
+              </Typography>
+            </div>
+          </VisibilitySensor>
+        </Grid>
 
-            <Box sx={{ textAlign: 'center', minWidth: '120px' }}>
-    <VisibilitySensor
-        partialVisibility
-        offset={{ bottom: 200 }}
-        onChange={handlePartnersVisibility}
-    >
-        <div>
-            <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+        <Grid item xs={12} sm={6} md={4} sx={{ textAlign: 'center' }}>
+          <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handlePartnersVisibility}>
+            <div>
+              <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
                 <CountUp end={hasAnimatedPartners ? 18 : 0} duration={2} />
-            </Typography>
-            <BusinessCenterIcon sx={{ fontSize: 50 }} />
-            <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
+              </Typography>
+              <BusinessCenterIcon sx={{ fontSize: { xs: 40, sm: 50 }, marginBottom: '8px' }} />
+              <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 מוסדות ועסקים שותפים
-            </Typography>
-        </div>
-    </VisibilitySensor>
-</Box>
-        </Box>
+              </Typography>
+            </div>
+          </VisibilitySensor>
+        </Grid>
+      </Grid>
     </Box>
 
 

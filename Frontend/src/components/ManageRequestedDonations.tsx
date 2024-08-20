@@ -98,7 +98,7 @@ const ManageRequestedDonations: React.FC = () => {
       });
   };
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -108,14 +108,7 @@ const ManageRequestedDonations: React.FC = () => {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
-  }
-
+if(isAdmin){
   return (
     <div className="manage-donations-page">
       <Typography variant="h4" align="center" gutterBottom style={{ textDecoration: 'underline #f9db78', marginTop:"40px"}}>
@@ -314,6 +307,13 @@ const ManageRequestedDonations: React.FC = () => {
 
     </div>
   );
-};
+}else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+}}
 
 export default ManageRequestedDonations;

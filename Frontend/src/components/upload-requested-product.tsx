@@ -77,7 +77,7 @@ function UploadRequestedProduct() {
     navigate('/mainPage');
   };
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -88,27 +88,7 @@ function UploadRequestedProduct() {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center'
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            שגיאה: אינך מחובר בתור מנהל
-          </Typography>
-        </Box>
-      </Container>
-    );
-  }
-
+if(isAdmin){
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -455,6 +435,14 @@ function UploadRequestedProduct() {
       </Container>
     </ThemeProvider>
   );
+}else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+}
 }
 
 export default UploadRequestedProduct;

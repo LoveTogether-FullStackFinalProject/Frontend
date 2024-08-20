@@ -40,14 +40,12 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(true); 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(true); 
 
   const fetchData = async () => {
     const userId = localStorage.getItem('userID');
     if (!userId) {
       setIsAdmin(false);
-      setIsLoading(false);
       return;
     }
   
@@ -62,9 +60,7 @@ const ManageUsers: React.FC = () => {
       console.error("Error fetching data:", error);
       setIsAdmin(false);
       setError("Error fetching data. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
 
   useEffect(() => {
@@ -166,17 +162,8 @@ const ManageUsers: React.FC = () => {
 
   const sortedAndFilteredUsers = applySortAndFilter(users);
 
-  if (isLoading) {
-    return <div>טוען...</div>; // Or use a loading spinner component
-  }
-  
-  if (isAdmin === false) {
-    return (
-      <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
-  }
+ 
+
   
   if (users.length === 0) {
     return <div>No users found.</div>;
@@ -200,11 +187,6 @@ if(isAdmin){
         marginTop: "100px", 
         textDecoration: 'underline #f9db78',
         display: 'table',
-
-       
-        
-        
-        
     }}
 >
     ניהול יוזרים
@@ -238,11 +220,11 @@ if(isAdmin){
           style={{ 
             textDecoration: "none", 
             color: "white", 
-            backgroundColor: "#217346", // Green background color
-            padding: "10px 20px",       // Padding for the button
-            borderRadius: "5px",        // Rounded corners
-            display: "inline-flex",     // Align icon and text
-            alignItems: "center"        // Center icon and text vertically
+            backgroundColor: "#217346", 
+            padding: "10px 20px",       
+            borderRadius: "5px",        
+            display: "inline-flex",     
+            alignItems: "center"        
           }}
         >
           ייצוא לאקסל

@@ -6,6 +6,8 @@ import { requestedDonation } from "../services/upload-requested-product-service"
 import dataService, { CanceledError } from "../services/data-service";
 import { Link } from 'react-router-dom';
 import Nav from "react-bootstrap/Nav";
+import BitIcon from '../assets/bit.jpg'; 
+import PayboxIcon from '../assets/paybox.jpg';
 //import {  Button} from 'react-bootstrap';
 
 import {
@@ -13,6 +15,7 @@ import {
   Typography,
   Button,
   Avatar,
+  Grid,
 //   CardContent,
   Container,
   IconButton,
@@ -360,13 +363,125 @@ function MainPage() {
 </Button>
 </Box>
 </Box>
+<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '100px' }}>
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 2,
+            fontFamily: 'Assistant',
+            borderBottom: '3px solid #f9db78',
+            display: 'inline-block',
+          }}
+        >
+          דרכים נוספות לתרום
+        </Typography>
+
+        {/* Donation Methods Grids */}
+        <Grid container spacing={4} justifyContent="center" sx={{ marginTop: '30px' }}>
+          {/* Bit Donation */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Box
+              sx={{
+                textAlign: 'center',
+                padding: '30px',
+                boxShadow: 3,
+                borderRadius: '10px',
+                height: '100%',
+                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: 6,
+                },
+                '@media (max-width: 600px)': {
+                  padding: '20px',
+                },
+              }}
+            >
+              <img src={BitIcon} alt="Bit Icon" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
+              <Typography variant="h6" sx={{ fontFamily: 'Assistant' }}>
+                תרומה באמצעות אפליקציית ביט
+              </Typography>
+              <Typography variant="body1" sx={{ fontFamily: 'Assistant', marginTop: '10px' }}>
+                0506863121 למספר
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* Paybox Donation */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Box
+              sx={{
+                textAlign: 'center',
+                padding: '30px',
+                boxShadow: 3,
+                borderRadius: '10px',
+                height: '100%',
+                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: 6,
+                },
+                '@media (max-width: 600px)': {
+                  padding: '20px',
+                },
+              }}
+            >
+              <img src={PayboxIcon} alt="Paybox Icon" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
+              <Typography variant="h6" sx={{ fontFamily: 'Assistant' }}>
+                תרומה באמצעות אפליקציית Paybox
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                href="https://payboxapp.page.link/RfBHMQfuZ4dt5fsQ8"
+                sx={{ marginTop: '10px', backgroundColor: '#f9db78', fontFamily: 'Assistant' }}
+              >
+                להצטרפות לקבוצה
+              </Button>
+            </Box>
+          </Grid>
+
+          {/* Bank Transfer Donation */}
+          <Grid item xs={12} sm={6} md={4}>
+            <Box
+              sx={{
+                textAlign: 'center',
+                padding: '30px',
+                boxShadow: 3,
+                borderRadius: '10px',
+                height: '100%',
+                transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: 6,
+                },
+                '@media (max-width: 600px)': {
+                  padding: '20px',
+                },
+              }}
+            >
+              <Typography variant="h6" sx={{ fontFamily: 'Assistant', marginBottom: '20px' }}>
+                העברה בנקאית
+              </Typography>
+              <Typography variant="body2" sx={{ fontFamily: 'Assistant' }}>
+                בנק מרכנתיל (17)
+                <br />
+                סניף יהודה הנשיא (740)
+                <br />
+                חשבון 99004560
+                <br />
+                ע״ש ואהבתם ביחד
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+
+
 
             
     
-     
-       
-
-       
+    
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
     <Typography 

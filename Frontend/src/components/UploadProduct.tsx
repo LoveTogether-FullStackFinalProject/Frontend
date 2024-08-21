@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
+import SearchIcon from '@mui/icons-material/Search';
 // import Link from '@mui/material/Link';
 //import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -192,12 +193,17 @@ export default function UploadProduct() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <CloudUploadIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            תרמו כאן
-          </Typography>
+          <Typography 
+    variant="h3" 
+    sx={{ 
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        borderBottom: '3px solid #f9db78',  
+        display: 'inline-block'
+    }}
+>
+    !אני רוצה לתרום
+</Typography>
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -545,38 +551,64 @@ export default function UploadProduct() {
               />
             )}
  
-            <Button
-              variant="contained"
-              component="label"
-              fullWidth
-              sx={{ mt: 3, mb: 2 }}
-            >
-              העלאת תמונה
-              <input
-                type="file"
-                hidden
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </Button>
-            {errors.image && (
-                  <Alert severity="error" sx={{ mt: 2 , direction:"rtl"}}>
-                   יש להעלות תמונה של המוצר המבוקש
-                  </Alert>
-                )}
-            {imgPreview && (
-              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
-              </Box>
-            )}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              שלח
-            </Button>
+ <Button
+    variant="contained"
+    component="label"
+    fullWidth
+    sx={{
+        mt: 3,
+        mb: 2,
+        backgroundColor: '#f9db78',
+        color: '#000',
+        borderRadius: '25px',
+        padding: '10px 20px',
+        textTransform: 'none',
+        fontWeight: 'bold',
+        fontSize: '1rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+        '&:hover': {
+            backgroundColor: '#f7d062',
+        },
+    }}
+>
+    <SearchIcon sx={{ mr: 1 }} />
+    העלאת תמונה
+    <input
+        type="file"
+        hidden
+        accept="image/*"
+        onChange={handleImageChange}
+    />
+</Button>
+
+<Button
+    type="submit"
+    fullWidth
+    variant="contained"
+    sx={{
+        mt: 3,
+        mb: 2,
+        backgroundColor: '#f9db78',
+        color: '#000',
+        borderRadius: '30px',
+        padding: '12px 24px',
+        textTransform: 'none',
+        fontWeight: 'bold',
+        fontSize: '1.1rem',
+        boxShadow: '0 3px 7px rgba(0, 0, 0, 0.15)',
+        '&:hover': {
+            backgroundColor: '#f7d062',
+        },
+    }}
+>
+    שלח
+</Button>
+
+
+
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

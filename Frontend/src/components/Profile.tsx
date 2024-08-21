@@ -227,7 +227,12 @@ const Profile: React.FC = () => {
            {user.firstName} {user.lastName} ,שלום
 
         </Typography>
-      
+       {/* User Rating */}
+       <Box sx={{ textAlign: 'right', direction: 'rtl' }}>
+            <Typography variant="body1" sx={{ fontFamily: "'Assistant', sans-serif", color: 'black',  fontSize: '1.6em' }}>
+                דירוג משתמש: {user.rating ?? 0}
+            </Typography>
+        </Box>
 </Box>
 </Box>
 

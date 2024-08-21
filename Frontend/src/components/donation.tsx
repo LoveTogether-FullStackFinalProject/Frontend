@@ -18,7 +18,7 @@ export interface Donation{
   description: string;
   pickUpAddress: string;
   branch: string;
-  donor: User;
+  donor?: User;
   status: string; 
   approvedByAdmin?: string; 
   image: string;
@@ -42,7 +42,7 @@ function Donation({ donation }: DonationProps) {
         <p>Description: {donation.description}</p>
         <p>Pick Up Address: {donation.pickUpAddress}</p>
         <p>Branch: {donation.branch}</p>
-        <p>Donor name: {donation.donor.firstName}</p>
+        {/* <p>Donor name: {donation.donor.firstName}</p> */}
         <p>Status: {donation.status}</p>
         <p>Approved by admin: {donation.approvedByAdmin}</p>
         <p>Image: {donation.image}</p>

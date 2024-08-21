@@ -51,22 +51,19 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
     }
 
     return (
-        <Modal show={show} onHide={handleClose} dir="rtl">
+        <Modal show={show} onHide={handleClose} dir="rtl" style={{maxHeight: '100vh'}}>
             <Modal.Header closeButton />
             <Modal.Body>
                 <div className="row">
-                    <div className="col-md-6" style={{ textAlign: 'right' }}>
-                        <h4>פרטי התרומה:</h4>
+                    <div className="col-md-6" style={{ textAlign: 'right'}}>
+                        <h4 style={{borderBottom: '3px solid #f9db78',width:"45%"}}>פרטי התרומה:</h4>
                         {isEditing ? (
                             <Form>
                                 <Form.Group>
                                     <Form.Label>קטגוריה</Form.Label>
                                     <Form.Control as="select" name="category" value={editData.category} onChange={handleChange}>
                                         <option value="">בחר קטגוריה</option>
-                                        <option value="ביגוד">ביגוד</option>
-                                        <option value="הנעלה">הנעלה</option>
                                         <option value="ציוד לתינוקות">ציוד לתינוקות</option>
-                                        <option value="כלי בית">כלי בית</option>
                                         <option value="ריהוט">ריהוט</option>
                                         <option value="מזון ושתייה">מזון ושתייה</option>
                                         <option value="ספרים">ספרים</option>
@@ -142,7 +139,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                     </div>
                     <div className="col-md-6">
                         {editData.image && (
-                            <img src={editData.image} alt={editData.itemName} className="img-fluid" style={{ maxWidth: '100%', height: 'auto', borderRadius: '5px' }} />
+                            <img src={editData.image} alt={editData.itemName} className="img-fluid" style={{ maxWidth: '100%', maxHeight: '70%', borderRadius: '5px',marginTop:"5px" }} />
                         )}
                     </div>
                 </div>

@@ -125,16 +125,7 @@ const ManageDonationPage: React.FC = () => {
     }
   };
 
-  // const formatDate = (dateString: string) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString('he-IL', {
-  //     year: 'numeric',
-  //     month: '2-digit',
-  //     day: '2-digit',
-  //     hour: '2-digit',
-  //     minute: '2-digit',
-  //   });
-  // };
+
 
   const handleDeleteClick = async (donation: Donation, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevents modal from opening
@@ -156,7 +147,7 @@ const ManageDonationPage: React.FC = () => {
 
   const sortedAndFilteredDonations = applySortAndFilter(donations);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -166,14 +157,9 @@ const ManageDonationPage: React.FC = () => {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p style={{ fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
-  }
+ 
 
+  if(isAdmin){
   return (
     <>
       <Box className="manage-donations-page" sx={{ direction: 'rtl', textAlign: 'right', padding: '20px' }}>
@@ -182,11 +168,11 @@ const ManageDonationPage: React.FC = () => {
         </Typography>
         <Toolbar>
           <TextField
-            label="חפש תרומה"
             placeholder="חפש תרומה לפי שם פריט, קטגוריה, תיאור, סטטוס, שם התורם או סניף"
             variant="outlined"
             fullWidth
             margin="normal"
+            style={{width:"600px",marginLeft:"10px"}}
             value={filterText}
             onChange={handleInputChange}
             InputProps={{
@@ -201,7 +187,7 @@ const ManageDonationPage: React.FC = () => {
             data={donations}
             filename={"donations.csv"}
             className="btn btn-primary"
-            style={{ marginLeft: '20px', padding: '10px 20px', backgroundColor: '#f9db78', color: '#000', borderRadius: '5px', textDecoration: 'none' }}
+            style={{ marginLeft: '10px', padding: '10px 20px', backgroundColor: '#f9db78', color: '#000', borderRadius: '5px', textDecoration: 'none' }}
           >
             ייצוא ל-CSV
           </CSVLink>
@@ -210,7 +196,7 @@ const ManageDonationPage: React.FC = () => {
           <Table>
             <TableHead style={{ backgroundColor: '#f0e0ad' }}>
               <TableRow>
-                <TableCell style={{ width: '15%' }}>
+                <TableCell style={{ width: '15%',textAlign:"center" }}>
                   <TableSortLabel
                     active={orderBy === 'donor'}
                     direction={orderBy === 'donor' ? order : 'asc'}
@@ -219,7 +205,7 @@ const ManageDonationPage: React.FC = () => {
                     שם מלא
                   </TableSortLabel>
                 </TableCell>
-                <TableCell style={{ width: '15%' }}>
+                <TableCell style={{ width: '15%',textAlign:"center" }}>
                   <TableSortLabel
                     active={orderBy === 'itemName'}
                     direction={orderBy === 'itemName' ? order : 'asc'}
@@ -228,7 +214,7 @@ const ManageDonationPage: React.FC = () => {
                     שם הפריט
                   </TableSortLabel>
                 </TableCell>
-                <TableCell style={{ width: '15%' }}>
+                <TableCell style={{ width: '15%',textAlign:"center" }}>
                   <TableSortLabel
                     active={orderBy === 'category'}
                     direction={orderBy === 'category' ? order : 'asc'}
@@ -237,7 +223,7 @@ const ManageDonationPage: React.FC = () => {
                     קטגוריה
                   </TableSortLabel>
                 </TableCell>
-                <TableCell style={{ width: '20%' }}>
+                <TableCell style={{ width: '20%',textAlign:"center" }}>
                   <TableSortLabel
                     active={orderBy === 'description'}
                     direction={orderBy === 'description' ? order : 'asc'}
@@ -246,7 +232,7 @@ const ManageDonationPage: React.FC = () => {
                     תיאור
                   </TableSortLabel>
                 </TableCell>
-                <TableCell style={{ width: '10%' }}>
+                <TableCell style={{ width: '10%',textAlign:"center" }}>
                   <TableSortLabel
                     active={orderBy === 'status'}
                     direction={orderBy === 'status' ? order : 'asc'}
@@ -255,7 +241,7 @@ const ManageDonationPage: React.FC = () => {
                     סטטוס
                   </TableSortLabel>
                 </TableCell>
-                <TableCell style={{ width: '10%' }}>
+                <TableCell style={{ width: '10%',textAlign:"center" }}>
                   <TableSortLabel
                     active={orderBy === 'approvedByAdmin'}
                     direction={orderBy === 'approvedByAdmin' ? order : 'asc'}
@@ -271,10 +257,10 @@ const ManageDonationPage: React.FC = () => {
             <TableBody>
               {sortedAndFilteredDonations.map((donation) => (
                 <TableRow key={donation._id}>
-                  <TableCell>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</TableCell>
-                  <TableCell>{donation.itemName}</TableCell>
-                  <TableCell>{donation.category}</TableCell>
-                  <TableCell>{donation.description}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{donation.itemName}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{donation.category}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{donation.description}</TableCell>
                   <TableCell>
                     <Select
                       value={donation.status}
@@ -283,9 +269,11 @@ const ManageDonationPage: React.FC = () => {
                       variant="outlined"
                       sx={{ backgroundColor: '#f9f9f9' }}
                     >
-                      <MenuItem value="נמסר בעמותה">נמסר בעמותה</MenuItem>
-                      <MenuItem value="ממתין לאיסוף">ממתין לאיסוף</MenuItem>
-                      <MenuItem value="נאסף">נאסף</MenuItem>
+                      <MenuItem style={{direction:"rtl", textAlign:"right"}} value="נמסר בעמותה">נמסר בעמותה</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="ממתין לאיסוף">ממתין לאיסוף</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="נאסף">נאסף</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="הגיע לעמותה">הגיע לעמותה</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="טרם הגיע לעמותה">טרם הגיע לעמותה</MenuItem>
                     </Select>
                   </TableCell>
                   <TableCell>
@@ -296,8 +284,8 @@ const ManageDonationPage: React.FC = () => {
                       variant="outlined"
                       sx={{ backgroundColor: '#f9f9f9' }}
                     >
-                      <MenuItem value="true">מאושר</MenuItem>
-                      <MenuItem value="false">לא מאושר</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="true">מאושר</MenuItem>
+                      <MenuItem style={{direction:"rtl"}} value="false">לא מאושר</MenuItem>
                     </Select>
                   </TableCell>
                   <TableCell style={{ textAlign: 'center' }}>
@@ -374,19 +362,21 @@ const ManageDonationPage: React.FC = () => {
           aria-describedby="simple-modal-description"
         >
           <Box
-            sx={{
-              width: '400px',
-              margin: 'auto',
-              marginTop: '100px',
-              backgroundColor: 'white',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              textAlign: 'right',
-              direction: 'rtl',
-            }}
-          >
-            <Typography id="simple-modal-title" variant="h6" component="h2">
+    sx={{
+      width: '300px',
+      maxHeight: '80vh', // Set a max height for the modal
+      overflowY: 'auto', // Enable vertical scrolling if content overflows
+      margin: 'auto',
+      marginTop: '100px',
+      backgroundColor: 'white',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      textAlign: 'right',
+      direction: 'rtl',
+    }}
+  >
+            <Typography id="simple-modal-title" variant="h6" component="h2" style={{marginBottom:"10px",borderBottom: '3px solid #f9db78',width:"50%" }}>
               פרטי תרומה
             </Typography>
             {currentDonation && (
@@ -434,6 +424,13 @@ const ManageDonationPage: React.FC = () => {
       </Box>
     </>
   );
-};
+}else{
+  return (
+    <div className="error-container">
+      <p style={{ fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
+    </div>
+  );
+}};
+
 
 export default ManageDonationPage;

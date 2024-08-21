@@ -105,4 +105,10 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
     };
     return makeRequest(request);
   };
+
+
+  export const uploadProductAnonymously = async (productData: any) => {
+    return apiClient.post(`donation/upload-anonymously`, productData);
+
+  };
   

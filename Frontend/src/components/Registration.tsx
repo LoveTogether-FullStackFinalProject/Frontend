@@ -29,9 +29,14 @@ export let userID: string;
 const schema = z.object({
   firstName: z.string().min(2, "שם פרטי חייב להכיל לפחות 2 תווים"),
   lastName: z.string().min(2, "שם משפחה חייב להכיל לפחות 2 תווים"),
-  email: z.string().email("כתובת דואר אלקטרוני לא חוקית"),
+  //email: z.string().email("כתובת דואר אלקטרוני לא חוקית"),
+  email: z.string()
+  .refine((email) => email.includes("@"), "'@' כתובת דואר אלקטרוני חייבת להכיל את התו"),
   password: z.string().min(8, "הסיסמה חייבת להכיל לפחות 8 תווים"),
-  phoneNumber: z.string().length(10, "מספר הטלפון חייב להכיל 10 ספרות"),
+  //phoneNumber: z.string().length(10, "מספר הטלפון חייב להכיל 10 ספרות"),
+  phoneNumber: z.string()
+  .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+  .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),
   mainAddress: z.string().min(5, "כתובת ראשית חייבת להכיל לפחות 5 תווים"),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה').optional()
 });
@@ -65,6 +70,7 @@ export default function SignUp() {
       if (imgSrc) {
         imageUrl = await uploadPhoto(imgSrc);
       }
+
       const user = {
         ...data,
         isAdmin: false,
@@ -89,17 +95,16 @@ export default function SignUp() {
     } catch (err: any) {
       console.log("err: ", err);
       const errorMessage = err.response?.data;
+      setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
       if (errorMessage) {
-        if (errorMessage.includes("email already exists")) {
-          setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
-        } else if (errorMessage.includes("missing email or password")) {
-          setRegisterError("כתובת דואר אלקטרוני או סיסמה חסרים");
-        } else {
-          setRegisterError("שגיאה בהרשמה. נסו שוב מאוחר יותר.");
-        }
-      } else {
-        setRegisterError("שגיאה בהרשמה. נסו שוב מאוחר יותר.");
-      }
+        setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+        // if (errorMessage.includes("email already exists")) {
+        //   setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+        //   console.log("email already exists");
+        // } else if (errorMessage.includes("missing email or password")) {
+        //   setRegisterError("כתובת דואר אלקטרוני או סיסמה חסרים");
+        // }
+      } 
     }
   };
 
@@ -266,7 +271,7 @@ export default function SignUp() {
                   helperText={errors.email ? errors.email.message : ""}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '200px', 
+                      marginLeft: '140px', 
                     },
                   }}
                   InputLabelProps={{
@@ -332,7 +337,7 @@ export default function SignUp() {
                         textAlign: 'right',
                       },
                     }
-                  }}
+                  }} 
                 />
               </Grid>
               <Grid item xs={12}>
@@ -435,7 +440,7 @@ export default function SignUp() {
               </Grid>
             </Grid>
             {registerError && (
-              <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+              <Typography color="error" variant="body2" sx={{ mt: 1, marginLeft: "170px" }}>
                 {registerError}
               </Typography>
             )}
@@ -447,21 +452,24 @@ export default function SignUp() {
             >
               הרשמה
             </Button>
+
+            <div className="separator">
+              <hr />
+              <p>או</p>
+              <hr />
+            </div>
             <Grid container justifyContent="flex-end" style={{direction:"rtl"}}>
-              <Grid item style={{direction:"rtl", marginLeft: "130px"}}>
+              <Grid item style={{direction:"rtl", marginLeft: "120px"}}>
                 <Link href="/login" variant="body2" style={{ direction: "rtl"}}>
                   כבר יש לך חשבון? התחבר/י כאן
                 </Link>
               </Grid>
             </Grid>
           </Box>
+
           <Box sx={{ mt: 3 }}>
-          <div className="separator">
-                     <hr />
-                     <p>או</p>
-                     <hr />
-                 </div>
-            <Box sx={{ mt: 1, textAlign: 'center' }}>
+         
+            <Box sx={{ mt: 1, textAlign: 'center', mb: 4 }}>
               <GoogleLogin 
               width={"100%"}
                 onSuccess={onGoogleLoginSuccess}

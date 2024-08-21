@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState, useRef } from 'react';
-import { set, useForm } from 'react-hook-form';
+import {useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -55,7 +55,7 @@ function UploadRequestedProduct() {
 
   const selectImg = () => {
     fileInputRef.current?.click();
-    setErrorImg(false);
+    // setErrorImg(false);
   };
 
   const addNewProduct = async (data: FormData) => {
@@ -77,7 +77,7 @@ function UploadRequestedProduct() {
     navigate('/mainPage');
   };
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   useEffect(() => {
     const userId = localStorage.getItem('userID');
     if (userId) {
@@ -88,27 +88,7 @@ function UploadRequestedProduct() {
     }
   }, []);
 
-  if (!isAdmin) {
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center'
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            שגיאה: אינך מחובר בתור מנהל
-          </Typography>
-        </Box>
-      </Container>
-    );
-  }
-
+if(isAdmin){
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -141,6 +121,11 @@ function UploadRequestedProduct() {
                   autoFocus
                   error={!!errors.itemName}
                   helperText={errors.itemName?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -185,6 +170,11 @@ function UploadRequestedProduct() {
                   }}
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -217,15 +207,12 @@ function UploadRequestedProduct() {
                   }}
                 >
                 <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר</MenuItem>
                 </TextField>
                 {category === "אחר" && (
                   <TextField
@@ -235,6 +222,11 @@ function UploadRequestedProduct() {
                     label="הזן קטגוריה"
                     error={!!errors.customCategory}
                     helperText={errors.customCategory?.message}
+                    FormHelperTextProps={{
+                      sx: {
+                        marginLeft: '270px', 
+                      },
+                    }}
                     sx={{ mt: 2 }}
                     InputLabelProps={{
                       sx: {
@@ -275,6 +267,11 @@ function UploadRequestedProduct() {
                   label="כמות"
                   error={!!errors.amount || !!amountError}
                   helperText={errors.amount?.message || amountError}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '280px', 
+                    },
+                  }}
                   type="number"
                   InputLabelProps={{
                     sx: {
@@ -311,6 +308,11 @@ function UploadRequestedProduct() {
                   label="מצב המוצר"
                   error={!!errors.itemCondition}
                   helperText={errors.itemCondition?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '260px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -336,6 +338,7 @@ function UploadRequestedProduct() {
                   }}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   {...register("description")}
@@ -346,6 +349,11 @@ function UploadRequestedProduct() {
                   label="תיאור"
                   error={!!errors.description}
                   helperText={errors.description?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '250px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -427,6 +435,14 @@ function UploadRequestedProduct() {
       </Container>
     </ThemeProvider>
   );
+}else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+}
 }
 
 export default UploadRequestedProduct;

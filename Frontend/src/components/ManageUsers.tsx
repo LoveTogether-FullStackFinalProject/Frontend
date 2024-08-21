@@ -40,19 +40,33 @@ const ManageUsers: React.FC = () => {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof DonorData>('firstName');
   const [filter, setFilter] = useState<string>('');
+  const [isAdmin, setIsAdmin] = useState(true); 
+
+  const fetchData = async () => {
+    const userId = localStorage.getItem('userID');
+    if (!userId) {
+      setIsAdmin(false);
+      return;
+    }
+  
+    try {
+      const [userRes, usersRes] = await Promise.all([
+        dataService.getUser(userId).req,
+        dataService.getUsers().req
+      ]);
+      setIsAdmin(userRes.data.isAdmin);
+      setUsers(usersRes.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setIsAdmin(false);
+      setError("Error fetching data. Please try again.");
+    } 
+  };
 
   useEffect(() => {
-    const { req, abort } = dataService.getUsers();
-    req.then((res) => {
-      setUsers(res.data);
-    }).catch((err) => {
-      if (err instanceof CanceledError) return;
-      setError(err.message);
-    });
-    return () => {
-      abort();
-    };
+    fetchData();
   }, []);
+
 
   const deleteUser = (id: string) => {
     dataService.deleteUser(id)
@@ -148,24 +162,14 @@ const ManageUsers: React.FC = () => {
 
   const sortedAndFilteredUsers = applySortAndFilter(users);
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  useEffect(() => {
-    const userId = localStorage.getItem('userID');
-    if (userId) {
-      dataService.getUser(userId).req.then((res) => {
-        setIsAdmin(res.data.isAdmin);
-      });
-    }
-  }, []);
+ 
 
-  if (!isAdmin) {
-    return (
-      <div className="error-container">
-        <p>שגיאה: אינך מחובר בתור מנהל</p>
-      </div>
-    );
+  
+  if (users.length === 0) {
+    return <div>No users found.</div>;
   }
-
+  
+if(isAdmin){
   return (
     <div className="manage-users-page">
         <Typography 
@@ -183,11 +187,6 @@ const ManageUsers: React.FC = () => {
         marginTop: "100px", 
         textDecoration: 'underline #f9db78',
         display: 'table',
-
-       
-        
-        
-        
     }}
 >
     ניהול יוזרים
@@ -221,11 +220,11 @@ const ManageUsers: React.FC = () => {
           style={{ 
             textDecoration: "none", 
             color: "white", 
-            backgroundColor: "#217346", // Green background color
-            padding: "10px 20px",       // Padding for the button
-            borderRadius: "5px",        // Rounded corners
-            display: "inline-flex",     // Align icon and text
-            alignItems: "center"        // Center icon and text vertically
+            backgroundColor: "#217346", 
+            padding: "10px 20px",       
+            borderRadius: "5px",        
+            display: "inline-flex",     
+            alignItems: "center"        
           }}
         >
           ייצוא לאקסל
@@ -365,6 +364,13 @@ const ManageUsers: React.FC = () => {
       </Modal>
     </div>
   );
-};
-
+}
+else{
+  return (
+    <div className="error-container">
+      <p>שגיאה: אינך מחובר בתור מנהל</p>
+    </div>
+  );
+}};
 export default ManageUsers;
+

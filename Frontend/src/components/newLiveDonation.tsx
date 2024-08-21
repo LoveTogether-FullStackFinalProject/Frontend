@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import dataService from '../services/data-service';
+import { DonorData } from './donorData';
 
 const theme = createTheme();
 
@@ -60,7 +61,7 @@ const rightAlignedInputStyle = {
 };
 
 export default function NewLiveDonation() {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -72,14 +73,37 @@ export default function NewLiveDonation() {
     },
   });
 
-  useEffect(() => {
-    const userId = localStorage.getItem('userID');
-    if (userId) {
-      dataService.getUser(userId).req.then((res) => {
-        setIsAdmin(res.data.isAdmin);
-      });
-    }
-  }, []);
+const [users, setUsers] = useState<DonorData[]>([]);
+const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+const [isLoading, setIsLoading] = useState(true);
+
+const fetchData = async () => {
+  const userId = localStorage.getItem('userID');
+  if (!userId) {
+    setIsAdmin(false);
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const [userRes, usersRes] = await Promise.all([
+      dataService.getUser(userId).req,
+      dataService.getUsers().req
+    ]);
+    setIsAdmin(userRes.data.isAdmin);
+    setUsers(usersRes.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    setIsAdmin(false);
+    //setError("Error fetching data. Please try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
 
   const selectedCategory = watch('category');
 
@@ -122,26 +146,23 @@ export default function NewLiveDonation() {
     }
   };
 
-  if (!isAdmin) {
+  if (isLoading) {
+    return <div>טוען...</div>; 
+  }
+  
+  if (isAdmin === false) {
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            שגיאה: אינך מחובר בתור מנהל
-          </Typography>
-        </Box>
-      </Container>
+      <div className="error-container">
+        <p>שגיאה: אינך מחובר בתור מנהל</p>
+      </div>
     );
   }
-
+  
+  if (users.length === 0) {
+    return <div>No users found.</div>;
+  }
+  
+if(isAdmin){
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -227,15 +248,12 @@ export default function NewLiveDonation() {
                   {...field}
                 >
                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ביגוד">ביגוד</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="הנעלה">הנעלה</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="כלי בית">כלי בית</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
               <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
-              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר...</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר</MenuItem>
                 </TextField>
               )}
             />
@@ -377,4 +395,14 @@ export default function NewLiveDonation() {
       </Container>
     </ThemeProvider>
   );
+
+}else{
+  return (
+    <div className="error-container">
+      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
+      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
+    </div>
+  );
+
+}
 }

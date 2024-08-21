@@ -130,6 +130,33 @@
   margin: 0 auto;
 }
 
+/* Section Styling for "הסיפור שלנו" */
+.section-centered {
+  padding: 20px 0;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center; /* Center the text */
+  direction: rtl; /* Ensure RTL support for Hebrew text */
+}
+
+.section-centered h2 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #f9db78; /* Apply the same styling as other titles */
+  display: inline-block;
+}
+
+.section-centered p {
+  font-size: 1.6em;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 auto;
+  text-align: center; /* Ensure the content is centered */
+  font-family: 'Assistant', sans-serif; /* Ensure consistency with other sections */
+}
+
+
 /* Initiatives Section */
 .initiatives-section {
   padding: 50px 20px;

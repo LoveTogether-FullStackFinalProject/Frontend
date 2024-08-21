@@ -436,7 +436,7 @@ function MainPage() {
                 href="https://payboxapp.page.link/RfBHMQfuZ4dt5fsQ8"
                 sx={{ marginTop: '10px', backgroundColor: '#f9db78', fontFamily: 'Assistant' }}
               >
-                להצטרפות לקבוצה
+                 לתרומה
               </Button>
             </Box>
           </Grid>
@@ -476,11 +476,6 @@ function MainPage() {
           </Grid>
         </Grid>
       </Box>
-
-
-
-            
-    
     
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">

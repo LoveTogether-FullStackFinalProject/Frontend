@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import './aboutPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import {
-//   Box,
-//   Typography,
-//   Button,
-//   Avatar,
-// //   CardContent,
-//   Container,
-//   IconButton,
-// //   Card,
-// } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Avatar,
+//   CardContent,
+  Container,
+  IconButton,
+//   Card,
+} from '@mui/material';
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';

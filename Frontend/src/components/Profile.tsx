@@ -268,8 +268,8 @@ const Profile: React.FC = () => {
             </Box>
 
             {/* Sort and Filter Section */}
-            <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
-                <Box display="flex" gap={2} flexWrap="wrap">
+            <Box display="flex" justifyContent="flex-end" alignItems="center" flexWrap="wrap" gap={2}>
+                <Box display="flex" gap={2} flexWrap="wrap" justifyContent={"flex-end"}>
                     <TextField
                         select
                         label="מיין לפי"
@@ -281,7 +281,7 @@ const Profile: React.FC = () => {
                         variant="outlined"
                         sx={{ direction: 'rtl' }}
                     >
-                        <option value="">מיין לפי</option>
+                        <option value=""></option>
                         <option value="category">קטגוריה</option>
                         <option value="quantity">כמות</option>
                         <option value="condition">מצב הפריט</option>
@@ -305,15 +305,18 @@ const Profile: React.FC = () => {
                     </TextField>
                 </Box>
 
-                <Box>
-                    <Button variant="outlined" startIcon={<ClearIcon />} onClick={resetFilters}>
-                        הסר מסננים
-                    </Button>
-                </Box>
             </Box>
 
             {/* Quick Filters */}
             <Box display="flex" justifyContent="center" gap={2} my={4} flexWrap="wrap">
+            <Button
+                    variant="outlined"
+                    startIcon={<ClearIcon />}
+                    onClick={resetFilters}
+                    sx={{ order: -1 }} // This moves the button to the first position
+                >
+                    הסר מסננים
+                </Button>
                 {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
                     <Button
                         key={status}

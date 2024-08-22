@@ -15,7 +15,6 @@ import {
   Typography,
   Button,
   Avatar,
-  Grid,
 //   CardContent,
   Container,
   IconButton,
@@ -395,6 +394,74 @@ function MainPage() {
 
 </Box>
 </Box>
+   
+    {/* Section 2: Products We Need */}
+    <Box className="section-section-light">
+    <Typography 
+    variant="h3" 
+    sx={{ 
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        marginTop: "100px", 
+        borderBottom: '3px solid #f9db78', 
+        display: 'inline-block'
+    }}
+>
+    מוצרים שאנו צריכים
+</Typography>
+  {requests.length === 1 ? (
+    <Box sx={{ p: 1, textAlign: 'center',  }}>
+      <Box
+        component="img"
+        src={requests[0].image || person}
+        sx={{
+          width: '100px',
+          height: '100px',
+          objectFit: 'cover',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          display: 'block',
+          margin: '0 auto',
+        }}
+        onClick={() => handleProductClick(requests[0])}
+      />
+      <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold',fontFamily: 'Assistant' }}>
+        {requests[0].itemName}
+      </Typography>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        {requests[0].amount} :כמות מבוקשת
+      </Typography>
+    </Box>
+  ) : (
+    <Slider {...sliderSettings}>
+      {requests.map((request, index) => (
+        <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' ,marginTop:"50px",}}>
+          <Box
+            component="img"
+            src={request.image || person}
+            sx={{
+              width: '100px',
+              height: '100px',
+              objectFit: 'cover',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              display: 'block',
+              margin: '0 auto',
+            }}
+            onClick={() => handleProductClick(request)}
+          />
+          <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold',fontFamily: 'Assistant' }}>
+            {request.itemName}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {request.amount} :כמות מבוקשת
+          </Typography>
+        </Box>
+      ))}
+    </Slider>
+  )}
+</Box>
+
 <Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '100px' }}>
         <Typography
           variant="h3"
@@ -508,73 +575,6 @@ function MainPage() {
           </Grid>
         </Grid>
       </Box>
-   
-    {/* Section 2: Products We Need */}
-    <Box className="section-section-light">
-    <Typography 
-    variant="h3" 
-    sx={{ 
-        mb: 2, 
-        fontFamily: 'Assistant', 
-        marginTop: "100px", 
-        borderBottom: '3px solid #f9db78', 
-        display: 'inline-block'
-    }}
->
-    מוצרים שאנו צריכים
-</Typography>
-  {requests.length === 1 ? (
-    <Box sx={{ p: 1, textAlign: 'center',  }}>
-      <Box
-        component="img"
-        src={requests[0].image || person}
-        sx={{
-          width: '100px',
-          height: '100px',
-          objectFit: 'cover',
-          borderRadius: '50%',
-          overflow: 'hidden',
-          display: 'block',
-          margin: '0 auto',
-        }}
-        onClick={() => handleProductClick(requests[0])}
-      />
-      <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold',fontFamily: 'Assistant' }}>
-        {requests[0].itemName}
-      </Typography>
-      <Typography variant="body2" sx={{ mt: 1 }}>
-        {requests[0].amount} :כמות מבוקשת
-      </Typography>
-    </Box>
-  ) : (
-    <Slider {...sliderSettings}>
-      {requests.map((request, index) => (
-        <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' ,marginTop:"50px",}}>
-          <Box
-            component="img"
-            src={request.image || person}
-            sx={{
-              width: '100px',
-              height: '100px',
-              objectFit: 'cover',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              display: 'block',
-              margin: '0 auto',
-            }}
-            onClick={() => handleProductClick(request)}
-          />
-          <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold',fontFamily: 'Assistant' }}>
-            {request.itemName}
-          </Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            {request.amount} :כמות מבוקשת
-          </Typography>
-        </Box>
-      ))}
-    </Slider>
-  )}
-</Box>
 
          {/* Section 3: Leading Donors */}
          <Box className="section-section3-light" sx={{ mb: 5 ,fontFamily: 'Assistant'}}>

@@ -298,46 +298,7 @@ if(isAdmin){
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register("itemCondition")}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="itemCondition"
-                  label="מצב המוצר"
-                  error={!!errors.itemCondition}
-                  helperText={errors.itemCondition?.message}
-                  FormHelperTextProps={{
-                    sx: {
-                      marginLeft: '260px', 
-                    },
-                  }}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
-                      },
-                    }
-                  }}
-                />
-              </Grid>
+             
 
               <Grid item xs={12}>
                 <TextField

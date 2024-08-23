@@ -9,6 +9,8 @@ const baseURL =
       ? `https://${window.location.hostname}`
       : "http://localhost:3000";
 
+      console.log("baseURL is:", baseURL);
+
 const apiClient = axios.create({
    baseURL: baseURL
 });

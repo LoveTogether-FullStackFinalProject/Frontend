@@ -110,7 +110,8 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const uploadProductAnonymously = async (productData: any) => {
-    return apiClient.post(`donation/upload-anonymously`, productData);
-
+    const abortController = new AbortController();
+    const req= apiClient.post(`donation/upload-anonymously`, productData,{ signal: abortController.signal });
+    console.log("req is:",req);
+    return { req, abort: () => abortController.abort() };
   };
-  

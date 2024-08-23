@@ -39,7 +39,7 @@ const schema = z.object({
     const nextWeek = new Date();
     nextWeek.setDate(currentDate.getDate() + 7);
     return selectedDate > currentDate && selectedDate > nextWeek;
-  }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.').optional(),
+  }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום').optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
   pickupAddress: z.string().min(2, 'הכתובת חייבת להכיל לפחות 2 תווים').optional(),
   //branch: z.string().optional(),
@@ -240,8 +240,9 @@ export default function UploadProduct() {
               helperText={errors.itemName?.message}
               FormHelperTextProps={{
                 sx: {
-                  marginLeft: '180px', 
-                  minWidth: '100px',
+                  marginLeft: '220px', 
+                  width: '100%',
+                  //minWidth: '100px',
                 },
               }}
               InputLabelProps={{
@@ -280,7 +281,8 @@ export default function UploadProduct() {
               helperText={errors.quantity?.message}
               FormHelperTextProps={{
                 sx: {
-                  marginLeft: '200px', 
+                  marginLeft: '220px', 
+                  width: '100%',
                 },
               }}
               InputLabelProps={{
@@ -319,7 +321,8 @@ export default function UploadProduct() {
                   helperText={errors.category?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '290px', 
+                      marginLeft: '310px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -377,7 +380,8 @@ export default function UploadProduct() {
                 helperText={errors.customCategory?.message}
                 FormHelperTextProps={{
                   sx: {
-                    marginLeft: '110px', 
+                    marginLeft: '130px', 
+                    width: '100%',
                   },
                 }}
                 InputLabelProps={{
@@ -420,7 +424,7 @@ export default function UploadProduct() {
       helperText={errors.condition?.message}
       FormHelperTextProps={{
         sx: {
-          marginLeft: '270px', 
+          marginLeft: '350px', 
           width: '100%',
         },
       }}
@@ -475,7 +479,8 @@ export default function UploadProduct() {
                 error={!!errors.expirationDate}
                 FormHelperTextProps={{
                   sx: {
-                    marginLeft: '140px', 
+                    marginLeft: '180px',
+                    width: '100%', 
                   },
                 }}
                 helperText={errors.expirationDate?.message}
@@ -518,7 +523,8 @@ export default function UploadProduct() {
               helperText={errors.description?.message}
               FormHelperTextProps={{
                 sx: {
-                  marginLeft: '250px', 
+                  marginLeft: '290px', 
+                  width: '100%',
                 },
               }}
               InputLabelProps={{
@@ -587,7 +593,7 @@ export default function UploadProduct() {
                 helperText={errors.pickupAddress?.message}
                 FormHelperTextProps={{
                   sx: {
-                    marginLeft: '200px', 
+                    marginLeft: '230px', 
                     width: '100%',
                   },
                 }}

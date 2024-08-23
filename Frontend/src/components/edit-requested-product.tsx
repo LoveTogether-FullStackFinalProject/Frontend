@@ -15,7 +15,6 @@ const RequestedProductSchema = z.object({
   category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
   itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
-  itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
   image: z.string().url({ message: 'חובה לצרף תמונה' }).optional(),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
@@ -63,7 +62,6 @@ function EditRequestedProduct() {
       setValue('category', donation.category);
       setValue('itemName', donation.itemName);
       setValue('amount', donation.amount.toString());
-      setValue('itemCondition', donation.itemCondition);
       setValue('description', donation.description);
       setValue('image', donation.image);
       setCategory(donation.category);
@@ -365,44 +363,7 @@ function EditRequestedProduct() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register("itemCondition")}
-                  variant="outlined"
-                  fullWidth
-                  label="מצב המוצר"
-                  error={Boolean(errors.itemCondition)}
-                  helperText={errors.itemCondition?.message}
-                  FormHelperTextProps={{
-                    sx: {
-                      marginLeft: '260px', 
-                    },
-                  }}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
-                      },
-                    }
-                  }}
-                />
-              </Grid>
+             
               <Grid item xs={12}>
                 <TextField
                   {...register("description")}
@@ -443,7 +404,19 @@ function EditRequestedProduct() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{alignItems:'center'}}>
+              {imgSrc && (
+  <Avatar
+    src={URL.createObjectURL(imgSrc)}
+    sx={{ width: 200, height: 200, mb: 2, mx: 'auto' }} // Added mx: 'auto' to center horizontally
+  />
+)}
+{donation.image && !imgSrc && (
+  <Avatar
+    src={donation.image}
+    sx={{ width: 200, height: 200, mb: 2, mx: 'auto' }} // Added mx: 'auto' to center horizontally
+  />
+)}
                 <Button
                   variant="outlined"
                   fullWidth
@@ -460,7 +433,7 @@ function EditRequestedProduct() {
                   ref={fileInputRef}
                   onChange={imgSelected}
                 />
-                {imgSrc && (
+                {/* {imgSrc && (
                   <Box
                     sx={{
                       display: 'flex',
@@ -476,7 +449,7 @@ function EditRequestedProduct() {
                       style={{ maxWidth: '100%', maxHeight: '100%' }}
                     />
                   </Box>
-                )}
+                )} */}
               </Grid>
               <Grid item xs={12}>
                 <Button

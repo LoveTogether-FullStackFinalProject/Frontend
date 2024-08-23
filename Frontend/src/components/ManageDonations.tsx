@@ -396,9 +396,9 @@ const ManageDonationPage: React.FC = () => {
                 <Typography variant="body1" sx={{ marginBottom: '10px' }}>
                   <strong>כמות:</strong> {currentDonation.quantity}
                 </Typography>
-                {currentDonation.pickUpAddress && (
+                {currentDonation.status === 'ממתין לאיסוף' && (
                   <Typography variant="body1" sx={{ marginBottom: '10px' }}>
-                    <strong>כתובת לאיסוף:</strong> {currentDonation.pickUpAddress}
+                    <strong>כתובת לאיסוף:</strong> {currentDonation.pickupAddress}
                   </Typography>
                 )}
                 <Typography variant="body1" sx={{ marginBottom: '10px' }}>

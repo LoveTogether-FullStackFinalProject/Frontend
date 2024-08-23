@@ -1,7 +1,6 @@
 //import axios from 'axios';
 import apiClient from "./api-client";
 import { AxiosError, AxiosResponse } from "axios";
-
 // Comment out or keep for future use
 // export const uploadPhoto = async (file: File) => {
 //     const formData = new FormData();
@@ -91,6 +90,7 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
   }
 };
   
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    export const uploadProduct = async (productData: any) => {
     const request = () => {
       const accessToken = localStorage.getItem("accessToken");
@@ -107,8 +107,10 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
   };
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const uploadProductAnonymously = async (productData: any) => {
-    return apiClient.post(`donation/upload-anonymously`, productData);
-
+    const abortController = new AbortController();
+    const req= apiClient.post(`/donation/upload-anonymously`, productData,{ signal: abortController.signal});
+    console.log("req is:",req);
+    return { req, abort: () => abortController.abort() };
   };
-  

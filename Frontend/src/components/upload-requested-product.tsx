@@ -17,7 +17,6 @@ const RequestedProductSchema = z.object({
   category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
   itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
-  itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
   image: z.string().url({ message: 'חובה לצרף תמונה' }),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
@@ -123,7 +122,8 @@ if(isAdmin){
                   helperText={errors.itemName?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '280px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -172,7 +172,8 @@ if(isAdmin){
                   helperText={errors.category?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '280px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -224,7 +225,8 @@ if(isAdmin){
                     helperText={errors.customCategory?.message}
                     FormHelperTextProps={{
                       sx: {
-                        marginLeft: '270px', 
+                        marginLeft: '280px', 
+                        width: '100%',
                       },
                     }}
                     sx={{ mt: 2 }}
@@ -269,7 +271,8 @@ if(isAdmin){
                   helperText={errors.amount?.message || amountError}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '280px', 
+                      marginLeft: '300px', 
+                      width: '100%',
                     },
                   }}
                   type="number"
@@ -298,46 +301,7 @@ if(isAdmin){
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register("itemCondition")}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="itemCondition"
-                  label="מצב המוצר"
-                  error={!!errors.itemCondition}
-                  helperText={errors.itemCondition?.message}
-                  FormHelperTextProps={{
-                    sx: {
-                      marginLeft: '260px', 
-                    },
-                  }}
-                  InputLabelProps={{
-                    sx: {
-                      right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
-                      },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
-                      },
-                    }
-                  }}
-                  InputProps={{
-                    sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
-                      },
-                    }
-                  }}
-                />
-              </Grid>
+             
 
               <Grid item xs={12}>
                 <TextField
@@ -351,7 +315,8 @@ if(isAdmin){
                   helperText={errors.description?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '250px', 
+                      marginLeft: '260px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{

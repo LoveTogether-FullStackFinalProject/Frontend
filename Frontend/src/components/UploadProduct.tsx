@@ -641,44 +641,55 @@ export default function UploadProduct() {
 </Button>
 
 {showSnackbarMessage && (
-    <Snackbar
-      open={open}
-      autoHideDuration={null}
-      message={
-        <Typography
-          variant="body1"
-          component="span"
-          sx={{
-            mr: 50,
-            ml: 60,
-            width: '50%',
-            fontWeight: 'bold',
-            color: 'white',
-          }}
-        >
-          {snackbarMessage}
-        </Typography>
-      }
-      action={
-        <IconButton
-          size="small"
-          aria-label="close"
-          color="inherit"
-          onClick={handleClose}
-          sx={{
-            color: 'white',
-          }}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      }
-      sx={{
-     
-        borderRadius: '4px',
-        padding: '5px',
-      }}
-    />
+  <Snackbar
+    open={open}
+    autoHideDuration={null}
+    message={
+      <Typography
+        variant="body1"
+        component="span"
+        sx={{
+          width: {
+            xs: '80%', // Width for extra small screens
+            sm: '70%', // Width for small screens
+            md: '60%', // Width for medium screens
+            lg: '50%', // Width for large screens
+          },
+          mx: 'auto', // Center the message horizontally
+          fontWeight: 'bold',
+          color: 'white',
+        }}
+      >
+        {snackbarMessage}
+      </Typography>
+    }
+    action={
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+        sx={{
+          color: 'white',
+        }}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    }
+    sx={{
+      borderRadius: '4px',
+      padding: '5px',
+      width: {
+        xs: '90%', // Width for extra small screens
+        sm: '80%', // Width for small screens
+        md: '70%', // Width for medium screens
+        lg: '60%', // Width for large screens
+      },
+      mx: 'auto', // Center the Snackbar horizontally
+    }}
+  />
 )}
+
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

@@ -82,12 +82,10 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>מצב הפריט</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="condition"
-                                        value={editData.condition}
-                                        onChange={handleChange}
-                                    />
+                                    <Form.Control as="select" name="condition" value={editData.condition} onChange={handleChange}>
+                                        <option value="חדש">חדש</option>
+                                        <option value="משומש במצב טוב">משומש במצב טוב</option>
+                                    </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>תיאור</Form.Label>

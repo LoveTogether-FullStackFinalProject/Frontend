@@ -404,7 +404,19 @@ function EditRequestedProduct() {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{alignItems:'center'}}>
+              {imgSrc && (
+  <Avatar
+    src={URL.createObjectURL(imgSrc)}
+    sx={{ width: 200, height: 200, mb: 2, mx: 'auto' }} // Added mx: 'auto' to center horizontally
+  />
+)}
+{donation.image && !imgSrc && (
+  <Avatar
+    src={donation.image}
+    sx={{ width: 200, height: 200, mb: 2, mx: 'auto' }} // Added mx: 'auto' to center horizontally
+  />
+)}
                 <Button
                   variant="outlined"
                   fullWidth
@@ -421,7 +433,7 @@ function EditRequestedProduct() {
                   ref={fileInputRef}
                   onChange={imgSelected}
                 />
-                {imgSrc && (
+                {/* {imgSrc && (
                   <Box
                     sx={{
                       display: 'flex',
@@ -437,7 +449,7 @@ function EditRequestedProduct() {
                       style={{ maxWidth: '100%', maxHeight: '100%' }}
                     />
                   </Box>
-                )}
+                )} */}
               </Grid>
               <Grid item xs={12}>
                 <Button

@@ -222,7 +222,7 @@ export default function UploadProduct() {
         mb: 2, 
         fontFamily: 'Assistant', 
         borderBottom: '3px solid #f9db78',  
-        display: 'inline-block'
+        //display: 'inline-block'
     }}
 >
     !אני רוצה לתרום
@@ -241,6 +241,7 @@ export default function UploadProduct() {
               FormHelperTextProps={{
                 sx: {
                   marginLeft: '180px', 
+                  minWidth: '100px',
                 },
               }}
               InputLabelProps={{
@@ -416,7 +417,7 @@ export default function UploadProduct() {
       fullWidth
       {...field}
       error={!!errors.condition}
-      helperText={"יש לבחור את מצב הפריט"}
+      helperText={errors.condition?.message}
       FormHelperTextProps={{
         sx: {
           marginLeft: '270px', 

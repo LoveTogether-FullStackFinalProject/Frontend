@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+//import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 // import Link from '@mui/material/Link';
 //import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+//import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,10 +18,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {useEffect } from 'react';
+import {useEffect,useState} from 'react';
 import { uploadPhoto, uploadProduct, uploadProductAnonymously } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
+import { IconButton, Snackbar } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const defaultTheme = createTheme();
 
@@ -30,7 +32,7 @@ const schema = z.object({
   quantity: z.number().gt(0, 'כמות הפריט חייבת להיות יותר מ-0'),
   category: z.string().min(1, 'יש לבחור קטגוריה'),
   customCategory: z.string().min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים').optional(),
-  condition: z.string().min(2, 'מצב הפריט חייב להכיל לפחות 2 תווים'),
+  condition: z.string().min(1, { message: 'יש לבחור קטגוריה' }),
   expirationDate: z.string().refine((dateString) => {
     const selectedDate = new Date(dateString);
     const currentDate = new Date();
@@ -50,6 +52,26 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
+  const [showSnackbarMessage, setSnackbarMessage] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const snackbarMessage = "!תרומתך נקלטה במערכת. תודה רבה";
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+    if(isLoggedIn){
+      navigate('/profile');
+    }
+    else{
+      navigate('/mainPage');
+    }
+  };
   //const [pickUpAddress, setPickUpAddress] = React.useState<string>("");
   //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
@@ -101,7 +123,7 @@ export default function UploadProduct() {
       setValue('category', request.category);
       setValue('itemName', request.itemName);
       setValue('quantity', request.amount.toString());
-      setValue('condition', request.itemCondition);
+      //setValue('condition', request.itemCondition);
       setValue('description', request.description);
     }
   }, [request, setValue]);
@@ -141,7 +163,7 @@ export default function UploadProduct() {
   const onSubmit = async (data: FormData) => {
 
     try {
-      alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
+      //alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
 
       let imageUrl = '';
       if (data.image) {
@@ -163,13 +185,14 @@ export default function UploadProduct() {
       };
       if(isLoggedIn){
         await uploadProduct(productData);
-        navigate('/profile');
+        //navigate('/profile');
       }
       else{
         console.log('uploadProductAnonymously');
         await uploadProductAnonymously(productData);
-        navigate('/mainPage');
+        //navigate('/mainPage');
       }
+      setSnackbarMessage(true);
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
@@ -199,7 +222,7 @@ export default function UploadProduct() {
         mb: 2, 
         fontFamily: 'Assistant', 
         borderBottom: '3px solid #f9db78',  
-        display: 'inline-block'
+        //display: 'inline-block'
     }}
 >
     !אני רוצה לתרום
@@ -215,6 +238,12 @@ export default function UploadProduct() {
               {...register('itemName')}
               error={!!errors.itemName}
               helperText={errors.itemName?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '180px', 
+                  minWidth: '100px',
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -249,6 +278,11 @@ export default function UploadProduct() {
               {...register('quantity', { valueAsNumber: true })}
               error={!!errors.quantity}
               helperText={errors.quantity?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '200px', 
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -283,6 +317,11 @@ export default function UploadProduct() {
                   label="קטגוריה"
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '290px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -336,6 +375,11 @@ export default function UploadProduct() {
                 {...register('customCategory')}
                 error={!!errors.customCategory}
                 helperText={errors.customCategory?.message}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '110px', 
+                  },
+                }}
                 InputLabelProps={{
                   sx: {
                     right: 19,
@@ -374,6 +418,12 @@ export default function UploadProduct() {
       {...field}
       error={!!errors.condition}
       helperText={errors.condition?.message}
+      FormHelperTextProps={{
+        sx: {
+          marginLeft: '270px', 
+          width: '100%',
+        },
+      }}
       InputLabelProps={{
         sx: {
           right: 19,
@@ -423,6 +473,11 @@ export default function UploadProduct() {
                 type="date"
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '140px', 
+                  },
+                }}
                 helperText={errors.expirationDate?.message}
                 InputLabelProps={{
                   shrink: true,
@@ -461,6 +516,11 @@ export default function UploadProduct() {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '250px', 
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -525,6 +585,12 @@ export default function UploadProduct() {
                 {...register('pickupAddress')}
                 error={!!errors.pickupAddress}
                 helperText={errors.pickupAddress?.message}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '200px', 
+                    width: '100%',
+                  },
+                }}
                 InputLabelProps={{
                   sx: {
                     right: 16,
@@ -583,11 +649,21 @@ export default function UploadProduct() {
         onChange={handleImageChange}
     />
 </Button>
-
+{errors.image && (
+                  <Alert severity="error" sx={{ mt: 2 , direction:"rtl"}}>
+                   יש להעלות תמונה של המוצר המבוקש
+                  </Alert>
+ )}
+{imgPreview && (
+              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+              </Box>
+)}
 <Button
     type="submit"
     fullWidth
     variant="contained"
+    onClick={handleClick}
     sx={{
         mt: 3,
         mb: 2,
@@ -607,7 +683,55 @@ export default function UploadProduct() {
     שלח
 </Button>
 
-
+{showSnackbarMessage && (
+  <Snackbar
+    open={open}
+    autoHideDuration={null}
+    message={
+      <Typography
+        variant="body1"
+        component="span"
+        sx={{
+          width: {
+            xs: '80%', // Width for extra small screens
+            sm: '70%', // Width for small screens
+            md: '60%', // Width for medium screens
+            lg: '50%', // Width for large screens
+          },
+          mx: 'auto', // Center the message horizontally
+          fontWeight: 'bold',
+          color: 'white',
+        }}
+      >
+        {snackbarMessage}
+      </Typography>
+    }
+    action={
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+        sx={{
+          color: 'white',
+        }}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    }
+    sx={{
+      borderRadius: '4px',
+      padding: '5px',
+      width: {
+        xs: '90%',
+        sm: '80%', 
+        md: '70%',
+        lg: '60%', 
+      },
+      mx: 'auto',
+    }}
+  />
+)}
 
           </Box>
         </Box>

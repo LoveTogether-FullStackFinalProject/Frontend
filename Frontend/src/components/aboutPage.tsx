@@ -4,11 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Box,
   Typography,
-  Button,
-  Avatar,
+  //Button,
+  //Avatar,
 //   CardContent,
   Container,
-  IconButton,
+  //IconButton,
 //   Card,
 } from '@mui/material';
 import socialFrezzer from '../assets/socialFrezzer.png';

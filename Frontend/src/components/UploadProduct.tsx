@@ -11,6 +11,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import successGif from '../assets/success.gif';
+import arrowDownGif from '../assets/arrowDown.gif';
+arrowDownGif
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -47,7 +54,8 @@ export default function UploadProduct() {
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
   const [pickupAddress, setPickupAddress] = React.useState<string>('');
   const [showPickupAddressInput, setShowPickupAddressInput] = React.useState<boolean>(false);
-  
+  const [dialogOpen, setDialogOpen] =React.useState(false);
+  const [dialogMessage, setDialogMessage] = React.useState<string>('');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -112,18 +120,19 @@ export default function UploadProduct() {
   const selectedDeliveryOption = watch('deliveryOption');
   const selectedCategory = watch('category');
 
-
   useEffect(() => {
     if (selectedDeliveryOption === 'ממתין לאיסוף') {
       setShowPickupAddressInput(true);
-      setValue('pickupAddress', pickupAddress);
+      const address = localStorage.getItem('userAddress') || ''; // Use an empty string as a fallback
+      setValue('pickupAddress', address);
       trigger('pickupAddress');
     } else {
       setShowPickupAddressInput(false);
-      setValue('pickupAddress', '');
+      setValue('pickupAddress', ''); // Reset the pickupAddress when the option is not selected
       trigger('pickupAddress');
     }
-  }, [selectedDeliveryOption, setValue, trigger, pickupAddress]);
+  }, [selectedDeliveryOption, setValue, trigger]);
+  
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -140,12 +149,11 @@ export default function UploadProduct() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
-
       let imageUrl = '';
       if (data.image) {
         imageUrl = await uploadPhoto(data.image);
       }
+
       const userId = localStorage.getItem('userID');
       const productData = {
         ...data,
@@ -155,18 +163,27 @@ export default function UploadProduct() {
         status: data.deliveryOption,
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
+
       if (isLoggedIn) {
         await uploadProduct(productData);
-        navigate('/profile');
       } else {
         await uploadProductAnonymously(productData);
-        navigate('/mainPage');
       }
+
+      setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
+      setDialogOpen(true);
     } catch (error) {
       console.error('Error uploading product:', error);
-      alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      setDialogOpen(true);
     }
-  };
+};
+
+const handleDialogClose = () => {
+  setDialogOpen(false);
+  navigate(isLoggedIn ? '/profile' : '/mainPage');
+};
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -592,6 +609,46 @@ export default function UploadProduct() {
               שלח
             </Button>
           </Box>
+          <Dialog
+  open={dialogOpen}
+  onClose={handleDialogClose}
+  aria-labelledby="alert-dialog-title"
+  aria-describedby="alert-dialog-description"
+  sx={{ direction: 'rtl' }} // RTL formatting for Hebrew
+>
+  <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center' }}>
+    <Typography
+      variant="h4"
+      component="div"
+      sx={{
+        color: '#f9db78', // Matching button color from UploadProduct page
+        fontWeight: 'bold',
+        mb: 1,
+      }}
+    >
+      תודה!
+    </Typography>
+    <Typography variant="h6" component="div" sx={{ color: '#000', mb: 2 }}>
+      תרומתך התקבלה בהצלחה
+    </Typography>
+  </DialogTitle>
+  <DialogContent>
+    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+      <img src={successGif} alt="Arrow Down" style={{ width: '50px' }} />
+    </Box>
+    <Typography  variant="h6" sx={{ textAlign: 'center', color: '#666', mt: 2 }}>
+      התרומה תעבור לאישור מנהל ותוצג בעמוד החשבון שלך
+    </Typography>
+  </DialogContent>
+  <DialogActions sx={{ justifyContent: 'center', color: '#f9db78' }}>
+    <Button onClick={handleDialogClose} variant="contained" color="primary" autoFocus>
+      סגור
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
+
         </Box>
       </Container>
     </ThemeProvider>

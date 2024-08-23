@@ -17,7 +17,6 @@ const RequestedProductSchema = z.object({
   category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
   itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
   amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
-  itemCondition: z.string().min(1, { message: 'חובה להכניס מצב מוצר' }),
   description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
   image: z.string().url({ message: 'חובה לצרף תמונה' }),
   customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()

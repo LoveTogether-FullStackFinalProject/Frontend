@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 // import Link from '@mui/material/Link';
 //import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+//import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,10 +18,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {useEffect } from 'react';
+import {useEffect,useState} from 'react';
 import { uploadPhoto, uploadProduct, uploadProductAnonymously } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
+import { IconButton, Snackbar } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const defaultTheme = createTheme();
 
@@ -50,6 +52,26 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
+  const [showSnackbarMessage, setSnackbarMessage] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const snackbarMessage = "!תרומתך נקלטה במערכת. תודה רבה";
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+    if(isLoggedIn){
+      navigate('/profile');
+    }
+    else{
+      navigate('/mainPage');
+    }
+  };
   //const [pickUpAddress, setPickUpAddress] = React.useState<string>("");
   //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
@@ -141,7 +163,7 @@ export default function UploadProduct() {
   const onSubmit = async (data: FormData) => {
 
     try {
-      alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
+      //alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
 
       let imageUrl = '';
       if (data.image) {
@@ -163,13 +185,14 @@ export default function UploadProduct() {
       };
       if(isLoggedIn){
         await uploadProduct(productData);
-        navigate('/profile');
+        //navigate('/profile');
       }
       else{
         console.log('uploadProductAnonymously');
         await uploadProductAnonymously(productData);
-        navigate('/mainPage');
+        //navigate('/mainPage');
       }
+      setSnackbarMessage(true);
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
@@ -583,11 +606,21 @@ export default function UploadProduct() {
         onChange={handleImageChange}
     />
 </Button>
-
+{errors.image && (
+                  <Alert severity="error" sx={{ mt: 2 , direction:"rtl"}}>
+                   יש להעלות תמונה של המוצר המבוקש
+                  </Alert>
+ )}
+{imgPreview && (
+              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+              </Box>
+)}
 <Button
     type="submit"
     fullWidth
     variant="contained"
+    onClick={handleClick}
     sx={{
         mt: 3,
         mb: 2,
@@ -607,8 +640,45 @@ export default function UploadProduct() {
     שלח
 </Button>
 
-
-
+{showSnackbarMessage && (
+    <Snackbar
+      open={open}
+      autoHideDuration={null}
+      message={
+        <Typography
+          variant="body1"
+          component="span"
+          sx={{
+            mr: 50,
+            ml: 60,
+            width: '50%',
+            fontWeight: 'bold',
+            color: 'white',
+          }}
+        >
+          {snackbarMessage}
+        </Typography>
+      }
+      action={
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+          sx={{
+            color: 'white',
+          }}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      }
+      sx={{
+     
+        borderRadius: '4px',
+        padding: '5px',
+      }}
+    />
+)}
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

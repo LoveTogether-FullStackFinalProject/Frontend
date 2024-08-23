@@ -117,6 +117,9 @@ export default function UploadProduct() {
         console.error('Error fetching user data:', error);
       }
     }
+    else{
+      setValue('pickupAddress', '.');
+    }
   };
   
   useEffect(() => {

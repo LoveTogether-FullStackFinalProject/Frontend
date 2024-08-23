@@ -32,7 +32,7 @@ const schema = z.object({
   quantity: z.number().gt(0, 'כמות הפריט חייבת להיות יותר מ-0'),
   category: z.string().min(1, 'יש לבחור קטגוריה'),
   customCategory: z.string().min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים').optional(),
-  condition: z.string().min(2, 'מצב הפריט חייב להכיל לפחות 2 תווים'),
+  condition: z.string().min(1, { message: 'יש לבחור קטגוריה' }),
   expirationDate: z.string().refine((dateString) => {
     const selectedDate = new Date(dateString);
     const currentDate = new Date();
@@ -123,7 +123,7 @@ export default function UploadProduct() {
       setValue('category', request.category);
       setValue('itemName', request.itemName);
       setValue('quantity', request.amount.toString());
-      setValue('condition', request.itemCondition);
+      //setValue('condition', request.itemCondition);
       setValue('description', request.description);
     }
   }, [request, setValue]);
@@ -238,6 +238,11 @@ export default function UploadProduct() {
               {...register('itemName')}
               error={!!errors.itemName}
               helperText={errors.itemName?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '180px', 
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -272,6 +277,11 @@ export default function UploadProduct() {
               {...register('quantity', { valueAsNumber: true })}
               error={!!errors.quantity}
               helperText={errors.quantity?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '200px', 
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -306,6 +316,11 @@ export default function UploadProduct() {
                   label="קטגוריה"
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '290px', 
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -359,6 +374,11 @@ export default function UploadProduct() {
                 {...register('customCategory')}
                 error={!!errors.customCategory}
                 helperText={errors.customCategory?.message}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '110px', 
+                  },
+                }}
                 InputLabelProps={{
                   sx: {
                     right: 19,
@@ -396,7 +416,13 @@ export default function UploadProduct() {
       fullWidth
       {...field}
       error={!!errors.condition}
-      helperText={errors.condition?.message}
+      helperText={"יש לבחור את מצב הפריט"}
+      FormHelperTextProps={{
+        sx: {
+          marginLeft: '270px', 
+          width: '100%',
+        },
+      }}
       InputLabelProps={{
         sx: {
           right: 19,
@@ -446,6 +472,11 @@ export default function UploadProduct() {
                 type="date"
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '140px', 
+                  },
+                }}
                 helperText={errors.expirationDate?.message}
                 InputLabelProps={{
                   shrink: true,
@@ -484,6 +515,11 @@ export default function UploadProduct() {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '250px', 
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -548,6 +584,12 @@ export default function UploadProduct() {
                 {...register('pickupAddress')}
                 error={!!errors.pickupAddress}
                 helperText={errors.pickupAddress?.message}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '200px', 
+                    width: '100%',
+                  },
+                }}
                 InputLabelProps={{
                   sx: {
                     right: 16,
@@ -680,12 +722,12 @@ export default function UploadProduct() {
       borderRadius: '4px',
       padding: '5px',
       width: {
-        xs: '90%', // Width for extra small screens
-        sm: '80%', // Width for small screens
-        md: '70%', // Width for medium screens
-        lg: '60%', // Width for large screens
+        xs: '90%',
+        sm: '80%', 
+        md: '70%',
+        lg: '60%', 
       },
-      mx: 'auto', // Center the Snackbar horizontally
+      mx: 'auto',
     }}
   />
 )}

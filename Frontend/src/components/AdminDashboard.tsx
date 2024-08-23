@@ -1,15 +1,16 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom';
-import dataService, { CanceledError } from "../services/data-service";
+import dataService, { CanceledError } from '../services/data-service';
 import { DonorData } from './donorData';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-// import e from 'express';
 
 const AdminPage = () => {
   const [adminData, setAdminData] = useState<DonorData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null); // Initialize as null to represent an unknown state
   const userId = localStorage.getItem('userID');
 
   useEffect(() => {
@@ -19,12 +20,16 @@ const AdminPage = () => {
         const userResponse = await req;
         if (userResponse.data.isAdmin) {
           setAdminData(userResponse.data);
+          setIsAdmin(true); // Set admin status to true
         } else {
-          setError('User is not an admin');
+          setIsAdmin(false); // Set admin status to false if the user is not an admin
         }
       } catch (err) {
         if (err instanceof CanceledError) return;
         setError(err instanceof Error ? err.message : String(err));
+        setIsAdmin(false); // Set admin status to false if there is an error
+      } finally {
+        setIsLoading(false); // Set loading to false after fetching data
       }
     };
 
@@ -35,88 +40,72 @@ const AdminPage = () => {
     navigate(path);
   };
 
-  const [isAdmin, setIsAdmin] = useState(true);
-  useEffect(() => {
-    const userId = localStorage.getItem('userID');
-    if (userId) {
-      dataService.getUser(userId).req.then((res) => {
-        setIsAdmin(res.data.isAdmin);
-        console.log("isAdmin:", res.data.isAdmin);
-      });
-    }
-  }, []);
+  // Handle the scenario where the admin check is still in progress
+  if (isLoading) {
+    return <div className="loading">Loading...</div>;
+  }
 
-  // if (!isAdmin) {
-  //   return (
-  //     <div className="error-container">
-  //       <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
-  //       {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
-  //     </div>
-  //   );
-  // }
+  // Handle the scenario where the user is confirmed not to be an admin
+  if (isAdmin === false) {
+    return (
+      <div className="error-container">
+        <p style={{ fontFamily: 'Assistant' }}>שגיאה: אינך מחובר בתור מנהל</p>
+      </div>
+    );
+  }
 
+  // Handle the scenario where there was an error fetching user data
   if (error) {
     return <div className="error">Error: {error}</div>;
   }
 
+  // Handle the scenario where admin data is not yet available
   if (!adminData) {
     return <div className="loading">Loading...</div>;
   }
 
-  if(isAdmin){
+  // Render the admin page when the user is confirmed as an admin
   return (
     <div className="admin-page">
       <div className="background-section-text-center">
         <h1 className="admin-title">ניהול ובקרה</h1>
       </div>
       <div className="cards-container">
-        <div className="card1" onClick={() => handleButtonClick('/')}>
+        <div className="card" onClick={() => handleButtonClick('/')}>
           <i className="fas fa-home card-icon"></i>
           <p>עמוד הבית</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/manageDonations')}>
+        <div className="card" onClick={() => handleButtonClick('/manageDonations')}>
           <i className="fas fa-hand-holding-heart card-icon"></i>
           <p>נהל תרומות</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/statistics')}>
+        <div className="card" onClick={() => handleButtonClick('/statistics')}>
           <i className="fas fa-chart-line card-icon"></i>
           <p>דוחות נתונים</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/manageUsers')}>
+        <div className="card" onClick={() => handleButtonClick('/manageUsers')}>
           <i className="fas fa-users card-icon"></i>
           <p>נהל יוזרים</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/uploadRequestedProduct')}>
+        <div className="card" onClick={() => handleButtonClick('/uploadRequestedProduct')}>
           <i className="fas fa-upload card-icon"></i>
           <p>העלאת בקשת פריט</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/manageRequestedDonations')}>
+        <div className="card" onClick={() => handleButtonClick('/manageRequestedDonations')}>
           <i className="fas fa-clipboard-list card-icon"></i>
           <p>נהל תרומות שהעמותה מבקשת</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/manageMainPageUsers')}>
+        <div className="card" onClick={() => handleButtonClick('/manageMainPageUsers')}>
           <i className="fas fa-users-cog card-icon"></i>
           <p>נהל הצגת תורמים בעמוד הראשי</p>
         </div>
-        <div className="card1" onClick={() => handleButtonClick('/newLiveDonation')}>
+        <div className="card" onClick={() => handleButtonClick('/newLiveDonation')}>
           <i className="fas fa-donate card-icon"></i>
-          <p>תרומה חדשה שהגיעה לעמותה</p>
+          <p>תרומה חדשה</p>
         </div>
       </div>
     </div>
   );
-}
-else{
-  return (
-    <div className="error-container">
-      <p style={{fontFamily: 'Assistant'}}>שגיאה: אינך מחובר בתור מנהל</p>
-      {/* <button style={{fontFamily: 'Assistant'}} onClick={() => navigate('/mainPage')} className="error-button">התחבר בתור מנהל</button> */}
-    </div>
-  );
-
-}
-}
-
-
+};
 
 export default AdminPage;

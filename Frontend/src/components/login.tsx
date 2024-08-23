@@ -42,7 +42,7 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     const email: string = data.get('email') as string;
     const password: string = data.get('password') as string;
-
+  
     if (email && password) {
       try {
         const res = await postLogIn(email, password);
@@ -50,17 +50,20 @@ export default function SignIn() {
           localStorage.setItem('userID', res._id);
           localStorage.setItem('accessToken', res.accessToken!);
           localStorage.setItem('refreshToken', res.refreshToken!);
-          window.dispatchEvent(new Event('authChange'));
-
+  
           const userId = localStorage.getItem('userID');
           if (userId) {
             const { data } = await dataService.getUser(userId).req;
+            localStorage.setItem('userAddress', data.mainAddress); // Store the user's address
+  
             if (data.isAdmin) {
               navigate('/adminDashboard');
             } else {
               navigate('/mainPage');
             }
           }
+  
+          window.dispatchEvent(new Event('authChange'));
         }
       } catch (err) {
         setLoginError('שם משתמש או סיסמה לא נכונים');
@@ -69,6 +72,7 @@ export default function SignIn() {
       setLoginError('אנא הכנס/י שם משתמש וסיסמה');
     }
   };
+  
 
   const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
     try {

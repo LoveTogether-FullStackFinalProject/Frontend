@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import './aboutPage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import {
-//   Box,
-//   Typography,
-//   Button,
-//   Avatar,
-// //   CardContent,
-//   Container,
-//   IconButton,
-// //   Card,
-// } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Avatar,
+//   CardContent,
+  Container,
+  IconButton,
+//   Card,
+} from '@mui/material';
 import socialFrezzer from '../assets/socialFrezzer.png';
 import socialMarket from '../assets/socialMarket.png';
 import socialCoats from '../assets/coats.png';
@@ -75,12 +75,44 @@ const AboutPage = () => {
           <p className="about-registration">ע.ר 580776359</p>
         </div>
       </div>
+
+        <Box component="section" className="section-centered" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
+        <Container>
+          <Typography
+            variant="h3"
+            sx={{
+              mb: 2,
+              fontFamily: 'Assistant',
+              borderBottom: '3px solid #f9db78',
+              display: 'inline-block',
+            }}
+          >
+            הסיפור שלנו
+          </Typography>
+          <Typography variant="body1" className="initiative-text" sx={{ textAlign: 'center', marginTop: '20px' }}>
+            עמותת "ואהבתם ביחד" נוסדה מתוך חזון להעניק סיוע ותמיכה לאוכלוסיות נזקקות באשדוד והסביבה.
+            העמותה מפעילה מגוון יוזמות חברתיות ייחודיות, ביניהן המכולת החברתית, המקרר השיתופי,
+            תיק לכל ילד וקיר המעילים, במטרה לספק פתרונות מידיים ויעילים לצרכים הבסיסיים של משפחות נזקקות.
+          </Typography>
+        </Container>
+      </Box>
+
       <section className="initiatives-section">
         <div className="initiative-item">
           <img src={logo10} alt="המכולת החברתית" className="initiative-image" />
           <div className="initiative-content">
-            <h2 className="initiative-title">המכולת החברתית</h2>
-            <p className="initiative-text">
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 2,
+              fontFamily: 'Assistant',
+              borderBottom: '3px solid #f9db78',
+              display: 'inline-block',
+            }}
+          >
+            המכולת החברתית
+          </Typography>            
+          <p className="initiative-text">
               המכולת החברתית הראשונה באשדוד הוקמה במטרה לספק מצרכים בסיסיים ללא תשלום למעוטי יכולת. תושבים ובעלי עסקים מוזמנים לתרום מצרכים חיוניים, אותם יוכלו הנזקקים לקחת בכמות מוגדרת וקבועה. המכולת מופעלת על ידי מתנדבים ומתנדבות מסורים אשר דואגים למלא את המדפים באופן שוטף ולסייע למי שצריך.
             </p>
           </div>
@@ -89,7 +121,17 @@ const AboutPage = () => {
         <div className="initiative-item">
           <img src={logo12} alt="המקרר השיתופי" className="initiative-image" />
           <div className="initiative-content">
-            <h2 className="initiative-title">המקרר השיתופי</h2>
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 2,
+              fontFamily: 'Assistant',
+              borderBottom: '3px solid #f9db78',
+              display: 'inline-block',
+            }}
+          >
+            המקרר השיתופי
+          </Typography>
             <p className="initiative-text">
               המקרר השיתופי הראשון באשדוד ממוקם ברחוב דוד המלך, ומהווה מקום בו תושבים יכולים להניח מוצרי מזון באריזתם המקורית, המיועדים למי שזקוק להם. המקרר פתוח 24/7 ונגיש לכל דורש, המאפשר סיוע דיסקרטי ובלתי מתווך לאלו הזקוקים לו ביותר.
             </p>
@@ -99,8 +141,18 @@ const AboutPage = () => {
         <div className="initiative-item">
           <img src={logo11} alt="יוזמות נוספות" className="initiative-image" />
           <div className="initiative-content">
-            <h2 className="initiative-title">יוזמות נוספות</h2>
-            <p className="initiative-text">
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 2,
+              fontFamily: 'Assistant',
+              borderBottom: '3px solid #f9db78',
+              display: 'inline-block',
+            }}
+          >
+            יוזמות נוספות
+          </Typography>
+           <p className="initiative-text">
               בין היוזמות הנוספות של העמותה ניתן למצוא את מיזם "תיק לכל ילד", במסגרתו נתרמים מאות ילקוטים וציוד לימוד למשפחות נזקקות, פרויקט "קיר המעילים" שמזמין את הציבור לתרום מעילים עבור אלו שזקוקים להם, וחלוקת סלי מזון למשפחות נזקקות בחגים ובמהלך השנה.
             </p>
           </div>

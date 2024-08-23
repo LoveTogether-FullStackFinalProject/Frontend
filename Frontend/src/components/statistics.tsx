@@ -148,7 +148,6 @@ const Statistics = () => {
   const topProducts = getTopN(aggregateData(products, 'itemName'), 5);
   const topRequests = getTopN(aggregateData(requests, 'itemName'), 5);
   const topUsers = getTopN(aggregateData(products, 'donor', true), 5);
-  const topBranches = getTopN(aggregateData(products, 'branch'), 5);
   const topCategories = getTopN(aggregateData(products, 'category'), 5);
 
   const chartData = selectedChart === 'users'
@@ -208,7 +207,6 @@ const Statistics = () => {
           <TableRow>
             <TableCell style={{ textAlign: 'right' }}>פריטים הכי נתרמים</TableCell>
             <TableCell style={{ textAlign: 'right' }}>משתמשים הכי תורמים</TableCell>
-            <TableCell style={{ textAlign: 'right' }}>סניפים עם הכי הרבה תרומות</TableCell>
             <TableCell style={{ textAlign: 'right' }}>קטגוריות הכי נתרמות</TableCell>
           </TableRow>
         </TableHead>
@@ -220,9 +218,6 @@ const Statistics = () => {
               </TableCell>
               <TableCell style={{ textAlign: 'right' }}>
                 {topUsers[index]?.name && `${topUsers[index].name} (${topUsers[index].count} תרומות)`}
-              </TableCell>
-              <TableCell style={{ textAlign: 'right' }}>
-                {topBranches[index]?.name && `${topBranches[index].name} (${topBranches[index].count} תרומות)`}
               </TableCell>
               <TableCell style={{ textAlign: 'right' }}>
                 {topCategories[index]?.name && `${topCategories[index].name} (${topCategories[index].count} תרומות)`}

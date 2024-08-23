@@ -228,7 +228,12 @@ const Profile: React.FC = () => {
            {user.firstName} {user.lastName} ,שלום
 
         </Typography>
-      
+       {/* User Rating */}
+       <Box sx={{ textAlign: 'right', direction: 'rtl' }}>
+            <Typography variant="body1" sx={{ fontFamily: "'Assistant', sans-serif", color: 'black',  fontSize: '1.6em' }}>
+                דירוג משתמש: {user.rating ?? 0}
+            </Typography>
+        </Box>
 </Box>
 </Box>
 
@@ -341,12 +346,57 @@ const Profile: React.FC = () => {
 </Box>
 
 
+            {/* Sort and Filter Section */}
+            <Box display="flex" justifyContent="flex-end" alignItems="center" flexWrap="wrap" gap={2}>
+                <Box display="flex" gap={2} flexWrap="wrap" justifyContent={"flex-end"}>
+                    <TextField
+                        select
+                        label="מיין לפי"
+                        value={sortProperty}
+                        onChange={(e) => handleSortChange(e.target.value as keyof Donation)}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        variant="outlined"
+                        sx={{ direction: 'rtl' }}
+                    >
+                        <option value=""></option>
+                        <option value="category">קטגוריה</option>
+                        <option value="quantity">כמות</option>
+                        <option value="condition">מצב הפריט</option>
+                        <option value="status">סטטוס</option>
+                        <option value="createdAt">תאריך יצירה</option>
+                        <option value="updatedAt">תאריך עדכון</option>
+                    </TextField>
+                    <TextField
+                        select
+                        label="סדר"
+                        value={sortOrder}
+                        onChange={(e) => handleSortOrderChange(e.target.value as 'asc' | 'desc')}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        variant="outlined"
+                        sx={{ direction: 'rtl' }}
+                    >
+                        <option value="asc">סדר עולה</option>
+                        <option value="desc">סדר יורד</option>
+                    </TextField>
+                </Box>
+
+            </Box>
 
             {/* Quick Filters */}
             <Box display="flex" justifyContent="center" gap={2} my={4} flexWrap="wrap">
-            <Button  variant="outlined" startIcon={<ClearIcon />} onClick={resetFilters}>
-                הסר מסננים
-            </Button>
+            <Button
+                    variant="outlined"
+                    startIcon={<ClearIcon />}
+                    onClick={resetFilters}
+                    sx={{ order: -1 }} // This moves the button to the first position
+                >
+                    הסר מסננים
+                </Button>
+
                 {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
                     <Button
                         key={status}

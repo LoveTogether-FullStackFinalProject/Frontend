@@ -122,7 +122,8 @@ if(isAdmin){
                   helperText={errors.itemName?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '280px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -171,7 +172,8 @@ if(isAdmin){
                   helperText={errors.category?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '280px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -223,7 +225,8 @@ if(isAdmin){
                     helperText={errors.customCategory?.message}
                     FormHelperTextProps={{
                       sx: {
-                        marginLeft: '270px', 
+                        marginLeft: '280px', 
+                        width: '100%',
                       },
                     }}
                     sx={{ mt: 2 }}
@@ -268,7 +271,8 @@ if(isAdmin){
                   helperText={errors.amount?.message || amountError}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '280px', 
+                      marginLeft: '300px', 
+                      width: '100%',
                     },
                   }}
                   type="number"
@@ -311,7 +315,8 @@ if(isAdmin){
                   helperText={errors.description?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '250px', 
+                      marginLeft: '260px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{

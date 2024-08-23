@@ -203,7 +203,8 @@ function EditRequestedProduct() {
                   helperText={errors.itemName?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '280px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -247,7 +248,8 @@ function EditRequestedProduct() {
                   helperText={errors.category?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '280px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -294,7 +296,8 @@ function EditRequestedProduct() {
                     helperText={errors.customCategory?.message}
                     FormHelperTextProps={{
                       sx: {
-                        marginLeft: '260px', 
+                        marginLeft: '280px', 
+                        width: '100%',
                       },
                     }}
                     sx={{ mt: 2 }}
@@ -335,7 +338,8 @@ function EditRequestedProduct() {
                   helperText={errors.amount?.message || amountError}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '260px', 
+                      marginLeft: '290px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -376,7 +380,8 @@ function EditRequestedProduct() {
                   helperText={errors.description?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '250px', 
+                      marginLeft: '270px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{

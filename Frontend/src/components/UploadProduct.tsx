@@ -24,6 +24,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
 import { IconButton, Snackbar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import dataService from "../services/data-service";
 
 const defaultTheme = createTheme();
 
@@ -41,7 +42,7 @@ const schema = z.object({
     return selectedDate > currentDate && selectedDate > nextWeek;
   }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום').optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
-  pickupAddress: z.string().min(2, 'הכתובת חייבת להכיל לפחות 2 תווים').optional(),
+  pickupAddress: z.string().min(1, 'הכתובת חייבת להכיל לפחות תו אחד').optional(),
   //branch: z.string().optional(),
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
   deliveryOption: z.string().min(1, 'יש לבחור אפשרות מסירה'),
@@ -83,18 +84,7 @@ export default function UploadProduct() {
   const category = queryParams.get('category') || '';
   const amount = queryParams.get('amount') || '';
 
-  // const fetchUserData = async () => {
-  //   const userId = localStorage.getItem('userID');
-  //   if (userId) {
-  //     try {
-  //       const { data } = await dataService.getUser(userId).req;
-  //       setPickUpAddress(data.mainAddress);
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     }
-  //   }
-  // };
-  // fetchUserData();
+
 
   const {
     register,
@@ -114,6 +104,28 @@ export default function UploadProduct() {
 
     },
   });
+
+  const fetchUserData = async () => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      try {
+        const { data } = await dataService.getUser(userId).req;
+        console.log('data', data);
+        //return data;
+        setValue('pickupAddress', data.mainAddress);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+    else{
+      setValue('pickupAddress', '.');
+    }
+  };
+  
+  useEffect(() => {
+    fetchUserData();
+  }, [setValue]);
+
 
   const { request } = location.state || {};
   useEffect(() => {
@@ -161,10 +173,11 @@ export default function UploadProduct() {
   };
 
   const onSubmit = async (data: FormData) => {
+    if(selectedDeliveryOption != 'ממתין לאיסוף'){
+      fetchUserData();
+    }
 
     try {
-      //alert('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
-
       let imageUrl = '';
       if (data.image) {
         imageUrl = await uploadPhoto(data.image);
@@ -593,7 +606,7 @@ export default function UploadProduct() {
                 helperText={errors.pickupAddress?.message}
                 FormHelperTextProps={{
                   sx: {
-                    marginLeft: '230px', 
+                    marginLeft: '210px', 
                     width: '100%',
                   },
                 }}
@@ -699,12 +712,12 @@ export default function UploadProduct() {
         component="span"
         sx={{
           width: {
-            xs: '80%', // Width for extra small screens
-            sm: '70%', // Width for small screens
-            md: '60%', // Width for medium screens
-            lg: '50%', // Width for large screens
+            xs: '80%', 
+            sm: '70%',
+            md: '60%',
+            lg: '50%', 
           },
-          mx: 'auto', // Center the message horizontally
+          mx: 'auto', 
           fontWeight: 'bold',
           color: 'white',
         }}

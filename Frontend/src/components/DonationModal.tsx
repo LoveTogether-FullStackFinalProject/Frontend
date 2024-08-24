@@ -47,8 +47,6 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
 
         if (name === 'quantity' && Number(value) < 1) {
             setErrorQuantity('כמות חייבת להיות לפחות 1');
-        } else {
-            setErrorQuantity('');
         }
         if (name === 'description' && value.length < 1) {
             setErrorDescription('תיאור חייב להיות לפחות תו אחד');

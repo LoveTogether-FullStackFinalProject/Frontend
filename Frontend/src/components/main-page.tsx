@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Nav from "react-bootstrap/Nav";
 import BitIcon from '../assets/bit.jpg'; 
 import PayboxIcon from '../assets/paybox.jpg';
+import certificate from '../assets/certificate.png';
 //import {  Button} from 'react-bootstrap';
 
 import {
@@ -395,6 +396,90 @@ function MainPage() {
 </Box>
 </Box>
    
+<Box component="section" className="section-centered" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
+  <Container>
+    <Typography
+      variant="h3"
+      sx={{
+        mb: 2,
+        fontFamily: 'Assistant',
+        borderBottom: '3px solid #f9db78',
+        display: 'inline-block',
+        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+      }}
+    >
+      מי אנחנו
+    </Typography>
+    <Typography variant="body1" className="initiative-text" sx={{ textAlign: 'center', marginTop: '20px' }}>
+    עמותת ואהבתם ביחד (ע.ר 580776359) מסייעת לאוכלוסיות נזקקות ומפעילה בין היתר את המכולת החברתית, המקרר השיתופי, תיק לכל ילד וקיר המעילים
+    </Typography>
+    <Typography variant="body1" sx={{ textAlign: 'center', marginTop: '20px' }}>
+      <a 
+        href="/about" 
+        style={{ 
+          textDecoration: 'none', 
+          color: '#f9db78', 
+          fontWeight: 'bold',
+          display: 'inline-block',
+          padding: '10px 15px',
+          borderRadius: '25px',
+          transition: 'background-color 0.3s, color 0.3s',
+          cursor: 'pointer'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#f9db78';
+          e.currentTarget.style.color = '#000';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'transparent';
+          e.currentTarget.style.color = '#f9db78';
+        }}
+      >
+        קראו עוד על העמותה והפרוייקטים שלנו!
+      </a>
+    </Typography>
+    <Box sx={{ textAlign: 'center', marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  <a
+    href="https://drive.google.com/uc?export=download&id=1pO9bFF9XEohfEIcIeTfJopYfFSUN4w43"
+    download="תעודת רישום העמותה.pdf"
+    style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      textDecoration: 'none', 
+      color: 'inherit' 
+    }}
+    className="hover-effect"
+  >
+    <img
+      src={certificate}
+      alt="תעודת רישום העמותה"
+      style={{ 
+        width: '50px', 
+        height: '50px', 
+        marginRight: '10px', 
+        cursor: 'pointer' 
+      }} 
+    />
+    <Typography
+      variant="body1"
+      sx={{ 
+        color: '#333', 
+        fontWeight: 'bold', 
+        fontSize: '1.2rem', 
+        textDecoration: 'none', 
+        cursor: 'pointer', 
+        textAlign: 'center' 
+      }}
+    >
+      תעודת רישום העמותה
+    </Typography>
+  </a>
+</Box>
+
+  </Container>
+</Box>
+
+
     {/* Section 2: Products We Need */}
     <Box className="section-section-light">
     <Typography 
@@ -498,7 +583,7 @@ function MainPage() {
             >
               <img src={BitIcon} alt="Bit Icon" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
               <Typography variant="h6" sx={{ fontFamily: 'Assistant' }}>
-                תרומה באמצעות אפליקציית ביט
+               bit תרומה באמצעות אפליקציית ביט
               </Typography>
               <Typography variant="body1" sx={{ fontFamily: 'Assistant', marginTop: '10px' }}>
                 0506863121 למספר
@@ -527,7 +612,7 @@ function MainPage() {
             >
               <img src={PayboxIcon} alt="Paybox Icon" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
               <Typography variant="h6" sx={{ fontFamily: 'Assistant' }}>
-                תרומה באמצעות אפליקציית Paybox
+              Paybox תרומה באמצעות אפליקציית פייבוקס
               </Typography>
               <Button
                 variant="contained"
@@ -648,6 +733,8 @@ function MainPage() {
       color: 'inherit', // Link color
       '&:hover': {
         textDecoration: 'underline', // Underline on hover
+        cursor: 'pointer' // Ensure cursor changes to pointer
+
       },
       fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
     }}

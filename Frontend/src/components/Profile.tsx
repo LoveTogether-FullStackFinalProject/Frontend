@@ -165,6 +165,27 @@ const Profile: React.FC = () => {
         setSearchQuery('');
     };
 
+    useEffect(() => {
+        if (user) {
+          const newRating = updateRating(donations.length);
+          dataService.updateUserData(user._id, { rating: newRating });
+        }
+      }, [donations]);
+
+   function updateRating(donations: number) {
+        if (donations >= 20) {
+          return "1";
+        } else if (donations >= 15) {
+          return "2";
+        } else if (donations >= 10) {
+          return "3";
+        } else if (donations >= 5) {
+          return "4";
+        } else {
+          return "0";
+        }
+      }
+
     if (loading) return <div className="loading">Loading...</div>;
     if (!user) return <div className="loading">User not found</div>;
 
@@ -380,7 +401,7 @@ const Profile: React.FC = () => {
                                 }}
                                 onClick={() => handleCardClick(donation)}
                             >
-                                <CardContent>
+                                <CardContent  sx={{ direction: 'rtl', textAlign: 'right' }}>
                                     <img
                                         src={donation.image}
                                         alt={donation.itemName}

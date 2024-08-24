@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Box from '@mui/material/Box';
-
+import dataService, { CanceledError } from "../services/data-service";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -19,7 +19,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import successGif from '../assets/success.gif';
 import arrowDownGif from '../assets/arrowDown.gif';
-arrowDownGif
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -716,56 +715,6 @@ const handleDialogClose = () => {
     </Button>
   </DialogActions>
 </Dialog>
-
-{showSnackbarMessage && (
-  <Snackbar
-    open={open}
-    autoHideDuration={null}
-    message={
-      <Typography
-        variant="body1"
-        component="span"
-        sx={{
-          width: {
-            xs: '80%', 
-            sm: '70%',
-            md: '60%',
-            lg: '50%', 
-          },
-          mx: 'auto', 
-          fontWeight: 'bold',
-          color: 'white',
-        }}
-      >
-        {snackbarMessage}
-      </Typography>
-    }
-    action={
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-        sx={{
-          color: 'white',
-        }}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    }
-    sx={{
-      borderRadius: '4px',
-      padding: '5px',
-      width: {
-        xs: '90%',
-        sm: '80%', 
-        md: '70%',
-        lg: '60%', 
-      },
-      mx: 'auto',
-    }}
-  />
-)}
 
         </Box>
       </Container>

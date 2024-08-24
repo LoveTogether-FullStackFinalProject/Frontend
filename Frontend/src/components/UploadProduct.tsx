@@ -218,7 +218,7 @@ export default function UploadProduct() {
       setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
       setDialogOpen(true);
     }
-};
+
 
 const handleDialogClose = () => {
   setDialogOpen(false);

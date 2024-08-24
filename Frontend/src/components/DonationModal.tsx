@@ -138,7 +138,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                     <Form.Label>כתובת לאיסוף</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        name="pickupAddress"  // Ensure this matches the state property name exactly
+                                        name="pickupAddress"
                                         value={editData.pickupAddress}
                                         onChange={handleChange}
                                     />

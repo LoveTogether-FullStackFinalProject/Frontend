@@ -371,7 +371,7 @@ const Profile: React.FC = () => {
             {/* Sort and Filter Section */}
             <Box display="flex" justifyContent="flex-end" alignItems="center" flexWrap="wrap" gap={2}>
                 <Box display="flex" gap={2} flexWrap="wrap" justifyContent={"flex-end"}>
-                    <TextField
+                    {/* <TextField
                         select
                         label="מיין לפי"
                         value={sortProperty}
@@ -403,7 +403,7 @@ const Profile: React.FC = () => {
                     >
                         <option value="asc">סדר עולה</option>
                         <option value="desc">סדר יורד</option>
-                    </TextField>
+                    </TextField> */}
                 </Box>
 
             </Box>

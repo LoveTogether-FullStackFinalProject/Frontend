@@ -58,9 +58,9 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
-  const [showSnackbarMessage, setSnackbarMessage] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const snackbarMessage = "!תרומתך נקלטה במערכת. תודה רבה";
+  const [dialogOpen, setDialogOpen] =React.useState(false);
+  const [dialogMessage, setDialogMessage] = React.useState<string>('');
 
   const handleClick = () => {
     setOpen(true);

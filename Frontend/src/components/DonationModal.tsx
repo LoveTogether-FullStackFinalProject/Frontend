@@ -131,15 +131,15 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         />
                                     </Form.Group>
                                 )}                    
-                                {editData.status === 'ממתין לאיסוף' && (
-                                    <Form.Group>
-                                        <Form.Label>כתובת לאיסוף</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="pickUpAddress"
-                                            value={editData.pickupAddress}
-                                            onChange={handleChange}
-                                        />
+                               {editData.status === 'ממתין לאיסוף' && (
+                                <Form.Group>
+                                    <Form.Label>כתובת לאיסוף</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="pickupAddress"
+                                        value={editData.pickupAddress}
+                                        onChange={handleChange}
+                                    />
                                     </Form.Group>
                                 )}
                             </Form>

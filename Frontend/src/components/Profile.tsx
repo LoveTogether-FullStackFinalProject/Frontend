@@ -274,19 +274,98 @@ const Profile: React.FC = () => {
         </Typography>
 
             {/* Search Section */}
-            <Box my={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+  <Box my={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
   <TextField
     variant="outlined"
     placeholder="חפש תרומה..."
-    style={{ width: "25%", textAlign: 'right' }}
+    style={{ width: "20%"}}
     value={searchQuery}
     onChange={(e) => setSearchQuery(e.target.value)}
     InputProps={{
       startAdornment: <SearchIcon />,
     }}
-    sx={{ direction: 'rtl' }}
+    sx={{ direction: 'rtl', 
+          minWidth:'300px',
+    }}
   />
-            </Box>
+   
+  
+
+ {/* Sort and Filter Section */}
+<Box display="flex" justifyContent="center" gap={2} width="100%" mt={2}>
+  <TextField
+    select
+    value={sortProperty}
+    onChange={(e) => handleSortChange(e.target.value as keyof Donation)}
+    SelectProps={{
+      native: true,
+      sx: {
+        textAlign: 'right',
+        direction: 'rtl',
+        '& .MuiSelect-icon': {
+          left: 0, // Move the arrow to the left
+          right: 'unset', // Remove the right alignment to avoid conflict
+        },
+        '& .MuiInputBase-input': {
+          textAlign: 'center',
+        },
+      }
+    }}
+    variant="outlined"
+    sx={{
+      width: {
+        xs: "80%", // 80% width on extra-small screens (phones)
+        sm: "50%", // 50% width on small screens (tablets)
+        md: "20%", // 20% width on medium screens (desktops)
+        lg: "10%", // 10% width on large screens (large desktops)
+      },
+      alignContent: 'center',
+      direction: 'rtl',
+      '& .MuiOutlinedInput-notchedOutline': {
+        textAlign: 'right',
+      },
+    }}
+  >
+    <option value="">מיין לפי</option>
+    <option value="category">קטגוריה</option>
+    <option value="quantity">כמות</option>
+    <option value="condition">מצב הפריט</option>
+    <option value="status">סטטוס</option>
+    <option value="createdAt">תאריך יצירה</option>
+    <option value="updatedAt">תאריך עדכון</option>
+  </TextField>
+    
+  <TextField
+    select
+    value={sortOrder}
+    onChange={(e) => handleSortOrderChange(e.target.value as 'asc' | 'desc')}
+    SelectProps={{
+      native: true,
+    }}
+    variant="outlined"
+    sx={{
+      width: {
+        xs: "80%", // 80% width on extra-small screens
+        sm: "50%", // 50% width on small screens
+        md: "20%", // 20% width on medium screens
+        lg: "10%", // 10% width on large screens
+      },
+      alignContent: 'center',
+      direction: 'rtl',
+      '& .MuiOutlinedInput-notchedOutline': {
+        textAlign: 'center',
+      },
+      '& .MuiInputBase-input': {
+        textAlign: 'center',
+      },
+    }}
+  >
+    <option value="asc">סדר עולה</option>
+    <option value="desc">סדר יורד</option>
+  </TextField>
+</Box>
+</Box>
+
 
             {/* Sort and Filter Section */}
             <Box display="flex" justifyContent="flex-end" alignItems="center" flexWrap="wrap" gap={2}>
@@ -338,6 +417,7 @@ const Profile: React.FC = () => {
                 >
                     הסר מסננים
                 </Button>
+
                 {['ממתין לאיסוף', 'נאסף', 'הגיע לעמותה', 'טרם הגיע לעמותה', 'נמסר בעמותה'].map(status => (
                     <Button
                         key={status}
@@ -381,6 +461,7 @@ const Profile: React.FC = () => {
                         sx={{ backgroundColor: '#f0ad4e', color: 'white' }}
                     />
                 ))}
+                
             </Box>
 
             {/* Donations List */}

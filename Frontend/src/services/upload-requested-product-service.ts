@@ -6,9 +6,7 @@ export interface requestedDonation{
     _id?: string;
     itemName: string;
     category: string;
-    // productType: string; 
     amount: number;
-    itemCondition: string;
     expirationDate?: string;
     description: string;
     image?: string;

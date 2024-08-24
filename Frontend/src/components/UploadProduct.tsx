@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -6,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import Box from '@mui/material/Box';
+
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -26,6 +28,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
 import SearchIcon from '@mui/icons-material/Search';
 
+
 const defaultTheme = createTheme();
 
 const schema = z.object({
@@ -33,16 +36,17 @@ const schema = z.object({
   quantity: z.number().gt(0, 'כמות הפריט חייבת להיות יותר מ-0'),
   category: z.string().min(1, 'יש לבחור קטגוריה'),
   customCategory: z.string().min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים').optional(),
-  condition: z.string().min(2, 'מצב הפריט חייב להכיל לפחות 2 תווים'),
+  condition: z.string().min(1, { message: 'יש לבחור קטגוריה' }),
   expirationDate: z.string().refine((dateString) => {
     const selectedDate = new Date(dateString);
     const currentDate = new Date();
     const nextWeek = new Date();
     nextWeek.setDate(currentDate.getDate() + 7);
     return selectedDate > currentDate && selectedDate > nextWeek;
-  }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום.').optional(),
+  }, 'תאריך התפוגה חייב להיות לפחות שבוע מהיום').optional(),
   description: z.string().min(1, 'תיאור חייב להיות מוגדר'),
   pickupAddress: z.string().optional(),
+
   image: z.any().refine((file) => file instanceof File, 'יש להעלות תמונה'),
   deliveryOption: z.string().min(1, 'יש לבחור אפשרות מסירה'),
 });
@@ -57,12 +61,14 @@ export default function UploadProduct() {
   const [dialogOpen, setDialogOpen] =React.useState(false);
   const [dialogMessage, setDialogMessage] = React.useState<string>('');
 
+
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const productName = queryParams.get('productName') || '';
   const category = queryParams.get('category') || '';
   const amount = queryParams.get('amount') || '';
+
 
   const {
     register,
@@ -82,6 +88,28 @@ export default function UploadProduct() {
     },
   });
 
+  const fetchUserData = async () => {
+    const userId = localStorage.getItem('userID');
+    if (userId) {
+      try {
+        const { data } = await dataService.getUser(userId).req;
+        console.log('data', data);
+        //return data;
+        setValue('pickupAddress', data.mainAddress);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+    else{
+      setValue('pickupAddress', '.');
+    }
+  };
+  
+  useEffect(() => {
+    fetchUserData();
+  }, [setValue]);
+
+
   const { request } = location.state || {};
 
   useEffect(() => {
@@ -90,7 +118,7 @@ export default function UploadProduct() {
       setValue('category', request.category);
       setValue('itemName', request.itemName);
       setValue('quantity', request.amount.toString());
-      setValue('condition', request.itemCondition);
+      //setValue('condition', request.itemCondition);
       setValue('description', request.description);
     }
   }, [request, setValue]);
@@ -148,6 +176,7 @@ export default function UploadProduct() {
   };
 
   const onSubmit = async (data: FormData) => {
+
     try {
       let imageUrl = '';
       if (data.image) {
@@ -172,6 +201,7 @@ export default function UploadProduct() {
 
       setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
       setDialogOpen(true);
+
     } catch (error) {
       console.error('Error uploading product:', error);
       setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
@@ -208,6 +238,7 @@ const handleDialogClose = () => {
           >
             !אני רוצה לתרום
           </Typography>
+
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -219,6 +250,13 @@ const handleDialogClose = () => {
               {...register('itemName')}
               error={!!errors.itemName}
               helperText={errors.itemName?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '220px', 
+                  width: '100%',
+                  //minWidth: '100px',
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -253,6 +291,12 @@ const handleDialogClose = () => {
               {...register('quantity', { valueAsNumber: true })}
               error={!!errors.quantity}
               helperText={errors.quantity?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '220px', 
+                  width: '100%',
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -287,6 +331,12 @@ const handleDialogClose = () => {
                   label="קטגוריה"
                   error={!!errors.category}
                   helperText={errors.category?.message}
+                  FormHelperTextProps={{
+                    sx: {
+                      marginLeft: '310px', 
+                      width: '100%',
+                    },
+                  }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
@@ -339,6 +389,12 @@ const handleDialogClose = () => {
                 {...register('customCategory')}
                 error={!!errors.customCategory}
                 helperText={errors.customCategory?.message}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '130px', 
+                    width: '100%',
+                  },
+                }}
                 InputLabelProps={{
                   sx: {
                     right: 19,
@@ -414,6 +470,7 @@ const handleDialogClose = () => {
                 </TextField>
               )}
             />
+
             {selectedCategory === 'מזון ושתייה' && (
               <TextField
                 margin="normal"
@@ -424,6 +481,12 @@ const handleDialogClose = () => {
                 type="date"
                 {...register('expirationDate')}
                 error={!!errors.expirationDate}
+                FormHelperTextProps={{
+                  sx: {
+                    marginLeft: '180px',
+                    width: '100%', 
+                  },
+                }}
                 helperText={errors.expirationDate?.message}
                 InputLabelProps={{
                   shrink: true,
@@ -462,6 +525,12 @@ const handleDialogClose = () => {
               {...register('description')}
               error={!!errors.description}
               helperText={errors.description?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '290px', 
+                  width: '100%',
+                },
+              }}
               InputLabelProps={{
                 sx: {
                   right: 19,
@@ -615,6 +684,7 @@ const handleDialogClose = () => {
   aria-labelledby="alert-dialog-title"
   aria-describedby="alert-dialog-description"
   sx={{ direction: 'rtl' }} // RTL formatting for Hebrew
+
 >
   <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center' }}>
     <Typography
@@ -647,7 +717,55 @@ const handleDialogClose = () => {
   </DialogActions>
 </Dialog>
 
-
+{showSnackbarMessage && (
+  <Snackbar
+    open={open}
+    autoHideDuration={null}
+    message={
+      <Typography
+        variant="body1"
+        component="span"
+        sx={{
+          width: {
+            xs: '80%', 
+            sm: '70%',
+            md: '60%',
+            lg: '50%', 
+          },
+          mx: 'auto', 
+          fontWeight: 'bold',
+          color: 'white',
+        }}
+      >
+        {snackbarMessage}
+      </Typography>
+    }
+    action={
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+        sx={{
+          color: 'white',
+        }}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    }
+    sx={{
+      borderRadius: '4px',
+      padding: '5px',
+      width: {
+        xs: '90%',
+        sm: '80%', 
+        md: '70%',
+        lg: '60%', 
+      },
+      mx: 'auto',
+    }}
+  />
+)}
 
         </Box>
       </Container>

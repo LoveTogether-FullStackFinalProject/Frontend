@@ -16,7 +16,7 @@ export interface Donation{
   condition: string;
   expirationDate: Date;
   description: string;
-  pickUpAddress: string;
+  pickupAddress: string;
   branch: string;
   donor?: User;
   status: string; 
@@ -40,7 +40,7 @@ function Donation({ donation }: DonationProps) {
         <p>Amount: {donation.quantity}</p>
         <p>Item Condition: {donation.condition}</p>
         <p>Description: {donation.description}</p>
-        <p>Pick Up Address: {donation.pickUpAddress}</p>
+        <p>Pick Up Address: {donation.pickupAddress}</p>
         <p>Branch: {donation.branch}</p>
         {/* <p>Donor name: {donation.donor.firstName}</p> */}
         <p>Status: {donation.status}</p>

@@ -82,12 +82,10 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>מצב הפריט</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        name="condition"
-                                        value={editData.condition}
-                                        onChange={handleChange}
-                                    />
+                                    <Form.Control as="select" name="condition" value={editData.condition} onChange={handleChange}>
+                                        <option value="חדש">חדש</option>
+                                        <option value="משומש במצב טוב">משומש במצב טוב</option>
+                                    </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>תיאור</Form.Label>
@@ -109,13 +107,13 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         />
                                     </Form.Group>
                                 )}                    
-                                {editData.pickUpAddress && (
+                                {editData.status === 'ממתין לאיסוף' && (
                                     <Form.Group>
                                         <Form.Label>כתובת לאיסוף</Form.Label>
                                         <Form.Control
                                             type="text"
                                             name="pickUpAddress"
-                                            value={editData.pickUpAddress}
+                                            value={editData.pickupAddress}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -131,8 +129,8 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                     <p><strong>תאריך תפוגה:</strong> {new Date(editData.expirationDate).toLocaleDateString()}</p>
                                 )}
                                 <p><strong>סטטוס:</strong> {editData.status}</p>
-                                {editData.pickUpAddress && (
-                                    <p><strong>כתובת לאיסוף:</strong> {editData.pickUpAddress}</p>
+                                {editData.status === 'ממתין לאיסוף' && (
+                                    <p><strong>כתובת לאיסוף:</strong> {editData.pickupAddress}</p>
                                 )}
                             </>
                         )}

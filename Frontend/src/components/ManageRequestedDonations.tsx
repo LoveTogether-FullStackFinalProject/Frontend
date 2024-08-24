@@ -71,7 +71,6 @@ const ManageRequestedDonations: React.FC = () => {
       .filter(donation =>
         donation.category.toLowerCase().includes(filter.toLowerCase()) ||
         donation.itemName.toLowerCase().includes(filter.toLowerCase()) ||
-        donation.itemCondition.toLowerCase().includes(filter.toLowerCase()) ||
         donation.description.toLowerCase().includes(filter.toLowerCase()) ||
         donation.amount.toString().includes(filter.toLowerCase())
       )
@@ -157,13 +156,7 @@ if(isAdmin){
                 </TableSortLabel>
               </TableCell>
               <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'itemCondition'}
-                  direction={orderBy === 'itemCondition' ? order : 'asc'}
-                  onClick={() => handleRequestSort('itemCondition')}
-                >
-                  מצב המוצר
-                </TableSortLabel>
+                
               </TableCell>
               <TableCell>
                 <TableSortLabel
@@ -193,7 +186,6 @@ if(isAdmin){
               <TableRow key={donation._id}>
                 <TableCell>{donation.customCategory || donation.category}</TableCell>
                 <TableCell>{donation.itemName}</TableCell>
-                <TableCell>{donation.itemCondition}</TableCell>
                 <TableCell>{donation.description}</TableCell>
                 <TableCell>{donation.amount}</TableCell>
                 <TableCell>
@@ -281,9 +273,7 @@ if(isAdmin){
                 <Typography variant="body1" sx={{ marginBottom: '10px' }}>
                   <strong>תיאור:</strong> {currentDonation.description}
                 </Typography>
-                <Typography variant="body1" sx={{ marginBottom: '10px' }}>
-                  <strong>מצב:</strong> {currentDonation.itemCondition}
-                </Typography>
+                
                 <Typography variant="body1" sx={{ marginBottom: '10px' }}>
                   <strong>כמות:</strong> {currentDonation.amount}
                 </Typography>

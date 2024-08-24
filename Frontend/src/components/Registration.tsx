@@ -168,7 +168,8 @@ export default function SignUp() {
                   helperText={errors.firstName ? errors.firstName.message : ""}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '200px', 
+                      marginLeft: '210px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -208,7 +209,8 @@ export default function SignUp() {
                   helperText={errors.lastName ? errors.lastName.message : ""}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '180px', 
+                      marginLeft: '200px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -248,7 +250,8 @@ export default function SignUp() {
                   helperText={errors.email ? errors.email.message : ""}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '140px', 
+                      marginLeft: '150px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -289,7 +292,8 @@ export default function SignUp() {
                   helperText={errors.password ? errors.password.message : ""}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '190px', 
+                      marginLeft: '210px',
+                      width: '100%', 
                     },
                   }}
                   InputLabelProps={{
@@ -329,7 +333,8 @@ export default function SignUp() {
                   helperText={errors.phoneNumber ? errors.phoneNumber.message : ""}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '200px', 
+                      marginLeft: '210px', 
+                      width: '100%',
                     },
                   }}
                   InputLabelProps={{
@@ -369,7 +374,8 @@ export default function SignUp() {
             helperText={errors.mainAddress ? errors.mainAddress.message : ""}
             FormHelperTextProps={{
               sx: {
-                marginLeft: '170px', 
+                marginLeft: '180px', 
+                width: '100%',
               },
             }}
             InputLabelProps={{

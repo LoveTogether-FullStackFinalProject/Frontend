@@ -311,12 +311,14 @@ if(isAdmin){
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '90%', // responsive width
-            maxWidth: 500, // max width for larger screens
+            width: '90%', // Responsive width
+            maxWidth: 500, // Max width for larger screens
             bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
             borderRadius: 1,
+            textAlign: 'right', // Align text and form elements to the right
+            direction: 'rtl', // Set RTL direction for the content
           }}
         >
           <Typography id="edit-user-modal-title" variant="h6" component="h2">
@@ -361,6 +363,7 @@ if(isAdmin){
             עדכן משתמש
           </Button>
         </Box>
+
       </Modal>
     </div>
   );

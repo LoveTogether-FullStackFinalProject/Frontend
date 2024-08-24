@@ -167,23 +167,24 @@ const Profile: React.FC = () => {
 
     useEffect(() => {
         if (user) {
+          console.log("הדירוג שלי: ", user.rating);
+          console.log("מספר התרומות שלי: ", donations.length);
           const newRating = updateRating(donations.length);
+
           dataService.updateUserData(user._id, { rating: newRating });
         }
       }, [donations]);
 
    function updateRating(donations: number) {
-        if (donations >= 20) {
-          return "1";
-        } else if (donations >= 15) {
-          return "2";
+        if (donations >= 15) {
+          return "⭐⭐⭐⭐⭐";
         } else if (donations >= 10) {
-          return "3";
+          return "⭐⭐⭐⭐";
         } else if (donations >= 5) {
-          return "4";
+          return "⭐⭐⭐";
         } else {
-          return "0";
-        }
+          return "⭐";
+        } 
       }
 
     if (loading) return <div className="loading">Loading...</div>;
@@ -251,7 +252,7 @@ const Profile: React.FC = () => {
         </Typography>
        {/* User Rating */}
        <Box sx={{ textAlign: 'right', direction: 'rtl' }}>
-            <Typography variant="body1" sx={{ fontFamily: "'Assistant', sans-serif", color: 'black',  fontSize: '1.6em' }}>
+            <Typography variant="body1" sx={{ fontFamily: "'Assistant', sans-serif", color: 'black',  fontSize: '1.6em' }}>   
                 דירוג משתמש: {user.rating ?? 0}
             </Typography>
         </Box>

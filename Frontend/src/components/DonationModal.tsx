@@ -13,6 +13,9 @@ interface DonationModalProps {
 const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, onEditClick, onDeleteClick }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState<Donation | null>(null);
+    const [errorQuantity, setErrorQuantity] = useState('');
+    const [errorDescription, setErrorDescription] = useState('');
+    const [errorCategory, setErrorCategory] = useState('');
 
     useEffect(() => {
         setEditData(donation);
@@ -28,6 +31,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
     };
 
     const handleSave = () => {
+        if (errorQuantity || errorDescription || errorCategory) {
+            return;
+        }
         if (editData) {
             onEditClick(editData);
             setIsEditing(false);
@@ -38,6 +44,22 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setEditData(prev => prev ? { ...prev, [name]: value } : null);
+
+        if (name === 'quantity' && Number(value) < 1) {
+            setErrorQuantity('כמות חייבת להיות לפחות 1');
+        } else {
+            setErrorQuantity('');
+        }
+        if (name === 'description' && value.length < 1) {
+            setErrorDescription('תיאור חייב להיות לפחות תו אחד');
+        } else {
+            setErrorDescription('');
+        }
+        if (name === 'category' && value==='') {
+            setErrorCategory('חובה לבחור קטגוריה');
+        } else {
+            setErrorCategory('');
+        }
     };
 
     const handleClose = () => {
@@ -70,6 +92,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         <option value="צעצועים">צעצועים</option>
                                         <option value="אחר">אחר</option>
                                     </Form.Control>
+                                    {errorCategory && <div style={{ color: 'red' }}>{errorCategory}</div>}
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>כמות</Form.Label>
@@ -78,7 +101,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         name="quantity"
                                         value={editData.quantity}
                                         onChange={handleChange}
+                                        min={1}
                                     />
+                                     {errorQuantity && <div style={{ color: 'red' }}>{errorQuantity}</div>}
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>מצב הפריט</Form.Label>
@@ -95,6 +120,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ show, onHide, donation, o
                                         value={editData.description}
                                         onChange={handleChange}
                                     />
+                                      {errorDescription && <div style={{ color: 'red' }}>{errorDescription}</div>}
                                 </Form.Group>
                                 {editData.category === 'מזון ושתייה' && (
                                     <Form.Group>

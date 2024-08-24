@@ -66,24 +66,47 @@ export default function SignUp() {
 
   const registerUserHandler = async (data: FormData) => {
     try {
-      navigate('/mainPage');
-    } catch (err) {
-      console.log("err: ", err);
-    
-      if (err instanceof Error) {
-        // Handle known error shape
-        const errorMessage = (err as any).response?.data;
-        setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
-        if (errorMessage) {
-          setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
-        } 
-      } else {
-        // Handle unexpected error shapes
-        setRegisterError("An unexpected error occurred");
+      let imageUrl = '';
+      if (imgSrc) {
+        imageUrl = await uploadPhoto(imgSrc);
       }
+
+      const user = {
+        ...data,
+        isAdmin: false,
+        rating: 0,
+        image: imageUrl
+      };
+      const res = await registerUser(user);
+      userID = res._id ?? '';
+
+      if (res.accessToken) {
+        localStorage.setItem('accessToken', res.accessToken);
+      }
+      if (res.refreshToken) {
+        localStorage.setItem('refreshToken', res.refreshToken);
+      }
+      localStorage.setItem('userID', userID);
+
+      window.dispatchEvent(new Event('authChange'));
+
+      navigate('/mainPage');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.log("err: ", err);
+      const errorMessage = err.response?.data;
+      setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+      if (errorMessage) {
+        setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+        // if (errorMessage.includes("email already exists")) {
+        //   setRegisterError("כתובת דואר אלקטרוני כבר קיימת במערכת");
+        //   console.log("email already exists");
+        // } else if (errorMessage.includes("missing email or password")) {
+        //   setRegisterError("כתובת דואר אלקטרוני או סיסמה חסרים");
+        // }
+      } 
     }
-  }
-  
+  };
 
   const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
     try {
@@ -466,4 +489,3 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
-

@@ -219,12 +219,12 @@ export default function UploadProduct() {
       setDialogOpen(true);
     }
 
-
-const handleDialogClose = () => {
-  setDialogOpen(false);
-  navigate(isLoggedIn ? '/profile' : '/mainPage');
-};
   };
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    navigate(isLoggedIn ? '/profile' : '/mainPage');
+  };
+  
 
   // if (!isLoggedIn) {
   //   navigate('/login');

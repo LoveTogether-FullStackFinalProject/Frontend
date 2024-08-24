@@ -23,12 +23,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {useEffect,useState} from 'react';
+import {useEffect} from 'react';
 import { uploadPhoto, uploadProduct, uploadProductAnonymously } from '../services/uploadProductService';
 import MenuItem from '@mui/material/MenuItem';
 import Alert from '@mui/material/Alert';
-import { IconButton, Snackbar } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+// import { IconButton, Snackbar } from '@mui/material';
+// import CloseIcon from '@mui/icons-material/Close';
 import dataService from "../services/data-service";
 
 const defaultTheme = createTheme();
@@ -58,26 +58,26 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] =React.useState(false);
-  const [dialogMessage, setDialogMessage] = React.useState<string>('');
+  // const [dialogMessage, setDialogMessage] = React.useState<string>('');
 
-  const handleClick = () => {
-    setOpen(true);
-  };
+  // const handleClick = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-    if(isLoggedIn){
-      navigate('/profile');
-    }
-    else{
-      navigate('/mainPage');
-    }
-  };
+  // const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setOpen(false);
+  //   if(isLoggedIn){
+  //     navigate('/profile');
+  //   }
+  //   else{
+  //     navigate('/mainPage');
+  //   }
+  // };
   //const [pickUpAddress, setPickUpAddress] = React.useState<string>("");
   //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
@@ -207,7 +207,7 @@ export default function UploadProduct() {
           // navigate('/profile');
         } else {
           console.log('Uploading product anonymously...');
-          const { req, abort } = await uploadProductAnonymously(productData);
+          const { req} = await uploadProductAnonymously(productData);
           console.log("Request successful:", req);
           // navigate('/mainPage');
         }
@@ -215,12 +215,12 @@ export default function UploadProduct() {
         console.error("Error occurred during upload:", error);
       }
       
-      setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
+      // setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
       setDialogOpen(true);
 
     } catch (error) {
       console.error('Error uploading product:', error);
-      setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      // setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
       setDialogOpen(true);
     }
 

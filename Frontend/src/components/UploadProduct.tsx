@@ -210,11 +210,20 @@ export default function UploadProduct() {
         await uploadProductAnonymously(productData);
         //navigate('/mainPage');
       }
-      setSnackbarMessage(true);
+      setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
+      setDialogOpen(true);
+
     } catch (error) {
       console.error('Error uploading product:', error);
-      alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      setDialogOpen(true);
     }
+};
+
+const handleDialogClose = () => {
+  setDialogOpen(false);
+  navigate(isLoggedIn ? '/profile' : '/mainPage');
+};
   };
 
   // if (!isLoggedIn) {

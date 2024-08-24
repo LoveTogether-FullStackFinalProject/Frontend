@@ -739,9 +739,18 @@ function MainPage() {
       fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
     }}
   >
-    <Nav.Link as={Link} to="/about" style={{ textDecoration: 'none', color: 'inherit' }}>
-      קראו עוד על הפרוייקטים שלנו
-    </Nav.Link>
+    
+    <Nav.Link
+  as={Link}
+  to="/about"
+  style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+  onClick={(e) => {
+    e.preventDefault(); // Prevent default scroll behavior
+    window.location.href = "/about"; // Redirect to the top of the About page
+  }}
+>
+  קראו עוד על הפרוייקטים שלנו
+</Nav.Link>
   </Typography>
 </Box>
 <Box className="section-section-light">

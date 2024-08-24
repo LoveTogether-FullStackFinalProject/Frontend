@@ -66,3 +66,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+/* global styles for all clickable elements */
+a, button, .hover-effect, .MuiIconButton-root, .MuiButtonBase-root, .MuiAvatar-root {
+  cursor: pointer;
+}

@@ -1,6 +1,11 @@
 .App {
   height: 100%;
 }  
+/* global styles for all clickable elements */
+a, button, .hover-effect, .MuiIconButton-root, .MuiButtonBase-root, .MuiAvatar-root {
+  cursor: pointer;
+}
+
 
 /* 
 

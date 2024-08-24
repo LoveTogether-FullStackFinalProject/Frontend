@@ -201,15 +201,20 @@ export default function UploadProduct() {
         status: data.deliveryOption,
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
-      if(isLoggedIn){
-        await uploadProduct(productData);
-        //navigate('/profile');
+      try {
+        if (isLoggedIn) {
+          await uploadProduct(productData);
+          // navigate('/profile');
+        } else {
+          console.log('Uploading product anonymously...');
+          const { req, abort } = await uploadProductAnonymously(productData);
+          console.log("Request successful:", req);
+          // navigate('/mainPage');
+        }
+      } catch (error) {
+        console.error("Error occurred during upload:", error);
       }
-      else{
-        console.log('uploadProductAnonymously');
-        await uploadProductAnonymously(productData);
-        //navigate('/mainPage');
-      }
+      
       setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
       setDialogOpen(true);
 

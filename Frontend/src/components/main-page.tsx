@@ -297,9 +297,6 @@ function MainPage() {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        //249, 218, 120, 0.8)
-        // zIndex: -1, 
-        padding: '0 20px', 
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' // Adjust shadow here
     }}
 >
@@ -324,7 +321,9 @@ function MainPage() {
       gap: "0px",
     }}
         sx={{
-            marginBottom:'20px',
+          fontFamily: "'Assistant', sans-serif",
+            
+            marginBottom:'50px',
             marginRight:'50px',
             display: 'flex',
             flexDirection: 'column',
@@ -335,10 +334,12 @@ function MainPage() {
     >
         {/* Center Text */}
         <Typography variant="h3" sx={{ 
+          variant: 'h6',
+          fontSize: '2rem',
             fontFamily: "'Assistant', sans-serif", 
             fontWeight: 500, 
             color: 'black',
-            mb: 2,
+            mb: 0,
         }}>
             כמה קל לתרום היום
         </Typography>
@@ -364,8 +365,6 @@ function MainPage() {
     // textTransform: 'none', 
     backgroundColor: "white", 
     color: "black", 
-    // borderRadius: "8px",
-    // boxShadow:"5px",
   }}
 >
   לתרומה
@@ -383,8 +382,6 @@ function MainPage() {
   className="first-section-button-2"
   startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
   sx={{
-    // px: 2, 
-    // py: 1,
     fontSize: '0.875rem',
     backgroundColor: "white",
     color: "black",

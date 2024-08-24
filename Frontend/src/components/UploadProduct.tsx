@@ -678,34 +678,68 @@ export default function UploadProduct() {
                 <img src={imgPreview} alt="תמונה נבחרת" style={{ maxWidth: '100%', maxHeight: '200px' }} />
               </Box>
 )}
-<Button
-    type="submit"
-    fullWidth
-    variant="contained"
-    onClick={handleClick}
-    sx={{
-        mt: 3,
-        mb: 2,
-        backgroundColor: '#f9db78',
-        color: '#000',
-        borderRadius: '30px',
-        padding: '12px 24px',
-        textTransform: 'none',
-        fontWeight: 'bold',
-        fontSize: '1.1rem',
-        boxShadow: '0 3px 7px rgba(0, 0, 0, 0.15)',
-        '&:hover': {
-            backgroundColor: '#f7d062',
-        },
-        
-    }}
->
-    שלח
-</Button>
-
-
-
+   <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                  mt: 3,
+                  mb: 2,
+                  backgroundColor: '#f9db78',
+                  color: '#000',
+                  borderRadius: '30px',
+                  padding: '12px 24px',
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem',
+                  boxShadow: '0 3px 7px rgba(0, 0, 0, 0.15)',
+                  '&:hover': {
+                      backgroundColor: '#f7d062',
+                  },
+              }}
+            >
+              שלח
+            </Button>
           </Box>
+          <Dialog
+  open={dialogOpen}
+  onClose={handleDialogClose}
+  aria-labelledby="alert-dialog-title"
+  aria-describedby="alert-dialog-description"
+  sx={{ direction: 'rtl' }} // RTL formatting for Hebrew
+
+>
+  <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center' }}>
+    <Typography
+      variant="h4"
+      component="div"
+      sx={{
+        color: '#f9db78', // Matching button color from UploadProduct page
+        fontWeight: 'bold',
+        mb: 1,
+      }}
+    >
+      תודה!
+    </Typography>
+    <Typography variant="h6" component="div" sx={{ color: '#000', mb: 2 }}>
+      תרומתך התקבלה בהצלחה
+    </Typography>
+  </DialogTitle>
+  <DialogContent>
+    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+      <img src={successGif} alt="Arrow Down" style={{ width: '50px' }} />
+    </Box>
+    <Typography  variant="h6" sx={{ textAlign: 'center', color: '#666', mt: 2 }}>
+      התרומה תעבור לאישור מנהל ותוצג בעמוד החשבון שלך
+    </Typography>
+  </DialogContent>
+  <DialogActions sx={{ justifyContent: 'center', color: '#f9db78' }}>
+    <Button onClick={handleDialogClose} variant="contained" color="primary" autoFocus>
+      סגור
+    </Button>
+  </DialogActions>
+</Dialog>
+
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>

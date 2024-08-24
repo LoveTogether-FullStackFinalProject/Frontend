@@ -706,8 +706,10 @@ const handleDialogClose = () => {
       <img src={successGif} alt="Arrow Down" style={{ width: '50px' }} />
     </Box>
     <Typography  variant="h6" sx={{ textAlign: 'center', color: '#666', mt: 2 }}>
-      התרומה תעבור לאישור מנהל ותוצג בעמוד החשבון שלך
-    </Typography>
+    {isLoggedIn 
+    ? 'התרומה תעבור לאישור מנהל ותוצג בעמוד החשבון שלך'
+    : 'התרומה תעבור לאישור מנהל'
+  }    </Typography>
   </DialogContent>
   <DialogActions sx={{ justifyContent: 'center', color: '#f9db78' }}>
     <Button onClick={handleDialogClose} variant="contained" color="primary" autoFocus>

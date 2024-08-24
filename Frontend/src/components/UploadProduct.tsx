@@ -582,74 +582,75 @@ export default function UploadProduct() {
             :אפשרות מסירה
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Controller
-              name="deliveryOption"
-              control={control}
-              render={({ field }) => (
-                <RadioGroup {...field} sx={{ textAlign: 'right'}}>
-                <FormControlLabel
-                  value="ממתין לאיסוף"
-                  control={<Radio />}
-                  label="אשמח שיאספו ממני את התרומה"
-                  labelPlacement="start"
-                />
-                <FormControlLabel
-                  value="טרם הגיע לעמותה"
-                  control={<Radio />}
-                  label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד" 
-                  labelPlacement="start"
-                  sx={{ justifyContent: 'flex-end' }}
-                />
-              </RadioGroup>
-              )}
+          <Controller
+    name="deliveryOption"
+    control={control}
+    render={({ field }) => (
+      <RadioGroup {...field} sx={{ textAlign: 'right' }}>
+        <Box>
+          <FormControlLabel
+            value="ממתין לאיסוף"
+            control={<Radio />}
+            label="אשמח שיאספו ממני את התרומה"
+            labelPlacement="start"
+          />
+          {selectedDeliveryOption === 'ממתין לאיסוף' && (
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="pickupAddress"
+              label="כתובת לאיסוף"
+              {...register('pickupAddress')}
+              error={!!errors.pickupAddress}
+              helperText={errors.pickupAddress?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '210px',
+                  width: '100%',
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  right: 16,
+                  left: 'auto',
+                  transformOrigin: 'top right',
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(0, -10px) scale(0.85)',
+                    transformOrigin: 'top right',
+                  },
+                  '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                },
+              }}
+              InputProps={{
+                sx: {
+                  textAlign: 'right',
+                  direction: 'rtl',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    textAlign: 'right',
+                  },
+                },
+              }}
             />
+          )}
+        </Box>
+        <FormControlLabel
+          value="טרם הגיע לעמותה"
+          control={<Radio />}
+          label=" אמסור את התרומה לעמותה בעצמי לכתובת: קיבוץ גלויות 1, אשדוד"
+          labelPlacement="start"
+          sx={{ justifyContent: 'flex-end' }}
+        />
+      </RadioGroup>
+    )}
+  />
           </Box>
 
             {errors.deliveryOption && (
               <Alert severity="error" style={{direction :"rtl"}}>יש לבחור אפשרות מסירה</Alert>
             )}
-            {selectedDeliveryOption === 'ממתין לאיסוף' && (
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="pickupAddress"
-                label="כתובת לאיסוף"
-                {...register('pickupAddress')}
-                error={!!errors.pickupAddress}
-                helperText={errors.pickupAddress?.message}
-                FormHelperTextProps={{
-                  sx: {
-                    marginLeft: '210px', 
-                    width: '100%',
-                  },
-                }}
-                InputLabelProps={{
-                  sx: {
-                    right: 16,
-                    left: 'auto',
-                    transformOrigin: 'top right',
-                    '&.MuiInputLabel-shrink': {
-                      transform: 'translate(0, -10px) scale(0.85)',
-                      transformOrigin: 'top right',
-                    },
-                    '& .MuiFormLabel-asterisk': {
-                    display: 'none',
-                  },
-                  }
-                }}
-                InputProps={{
-                  sx: { 
-                    textAlign: 'right', 
-                    direction: 'rtl',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      textAlign: 'right',
-                    },
-                  }
-                }}
-              />
-            )}
- 
  <Button
     variant="contained"
     component="label"

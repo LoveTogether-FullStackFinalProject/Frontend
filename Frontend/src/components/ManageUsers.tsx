@@ -130,7 +130,7 @@ const ManageUsers: React.FC = () => {
         user.firstName.toLowerCase().includes(filter.toLowerCase()) ||
         user.lastName.toLowerCase().includes(filter.toLowerCase()) ||
         user.email.toLowerCase().includes(filter.toLowerCase()) ||
-        (user.address && user.address.toLowerCase().includes(filter.toLowerCase())) ||
+        (user.mainAddress && user.mainAddress.toLowerCase().includes(filter.toLowerCase())) ||
         user.phoneNumber.includes(filter)
       )
       .sort((a, b) => {
@@ -153,7 +153,7 @@ const ManageUsers: React.FC = () => {
       firstName: u.firstName,
       lastName: u.lastName,
       email: u.email,
-      address: u.address,
+      address: u.mainAddress,
       phoneNumber: u.phoneNumber,
       rating: u.rating,
     }));
@@ -235,7 +235,7 @@ if(isAdmin){
       <Table className="table-users">
           <TableHead className="table-head">
             <TableRow>
-              {['email', 'firstName', 'lastName', 'address', 'phoneNumber', 'rating'].map((column) => (
+              {['email', 'firstName', 'lastName', 'mainAddress', 'phoneNumber', 'rating'].map((column) => (
                 <TableCell key={column} className="rtl-table-col" style={{textAlign:"center"}}>
                   <TableSortLabel
                     active={orderBy === column}
@@ -245,7 +245,7 @@ if(isAdmin){
                     {column === 'email' && 'אימייל'}
                     {column === 'firstName' && 'שם פרטי'}
                     {column === 'lastName' && 'שם משפחה'}
-                    {column === 'address' && 'כתובת'}
+                    {column === 'mainAddress' && 'כתובת'}
                     {column === 'phoneNumber' && 'מספר טלפון'}
                     {column === 'rating' && 'דירוג'}
                   </TableSortLabel>
@@ -261,7 +261,7 @@ if(isAdmin){
                 <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.email}</TableCell>
                 <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.firstName}</TableCell>
                 <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.lastName}</TableCell>
-                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.address}</TableCell>
+                <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.mainAddress}</TableCell>
                 <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.phoneNumber}</TableCell>
                 <TableCell className="rtl-table" style={{textAlign:"center"}}>{user.rating}</TableCell>
                 <TableCell className="rtl-table" style={{textAlign:"center"}}>
@@ -347,8 +347,8 @@ if(isAdmin){
             fullWidth
             label="כתובת"
             margin="normal"
-            value={updatedUser.address || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, address: e.target.value })}
+            value={updatedUser.mainAddress || ''}
+            onChange={(e) => setUpdatedUser({ ...updatedUser, mainAddress: e.target.value })}
           />
           <TextField
             fullWidth

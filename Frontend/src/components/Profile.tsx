@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
     const [donations, setDonations] = useState<Donation[]>([]);
     const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
     const [loading, setLoading] = useState(true);
-    const [itemsToShow, setItemsToShow] = useState(4);
+    const [itemsToShow, setItemsToShow] = useState(6);
     const [showModal, setShowModal] = useState(false);
     const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -92,7 +92,7 @@ const Profile: React.FC = () => {
     };
 
     const handleShowMoreClick = () => {
-        setItemsToShow(itemsToShow + 4);
+        setItemsToShow(itemsToShow + 6);
     };
 
     const toggleFilter = (type: 'status' | 'approved', value: string) => {

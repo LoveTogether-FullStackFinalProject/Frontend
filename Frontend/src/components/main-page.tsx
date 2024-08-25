@@ -6,6 +6,7 @@ import { requestedDonation } from "../services/upload-requested-product-service"
 import dataService, { CanceledError } from "../services/data-service";
 import { Link } from 'react-router-dom';
 import Nav from "react-bootstrap/Nav";
+import InstagramSection from './instagramSection';
 import BitIcon from '../assets/bit.jpg'; 
 import PayboxIcon from '../assets/paybox.jpg';
 import certificate from '../assets/certificate.png';
@@ -34,9 +35,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
-import value from '../assets/value.gif;
-import teamWork from './../assets/teamwork.gif;
-import agreement from './../assets/agreement.gif;
+import valueGif from '../assets/value.gif';
+import teamworkGif from '../assets/teamwork.gif';
+import agreementGif from '../assets/agreement.gif';
 import logo from '../assets/cooporates/logo.jpg';
 import logo1 from '../assets/cooporates/logo1.jpg';
 import logo2 from '../assets/cooporates/logo2.jpg';
@@ -791,7 +792,7 @@ function MainPage() {
 
             {/* Section 4: Donations and Community Counters */}
           {/* Section 4: Donations and Community Counters */}
-          <Box className="section-section-yellow" sx={{ marginTop: '50px', padding: '50px 0' }}>
+          <Box className="section-counters" sx={{ marginTop: '50px', padding: '50px 0' }}>
       <Typography 
         variant="h3" 
         sx={{ 
@@ -834,7 +835,7 @@ function MainPage() {
               <Typography variant="h3" sx={{  mb: 1 }}>
                 <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
               </Typography>
-              <img src={value} alt="Value" style={{ width: 50, height: 50, marginBottom: '8px' }} />
+              <img src={valueGif} alt="Value" style={{ width: 70, height: 70, marginBottom: '8px' }} />
               <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 תרומות שנתרמו
               </Typography>
@@ -848,7 +849,7 @@ function MainPage() {
               <Typography variant="h3" sx={{  mb: 1 }}>
                 <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
               </Typography>
-              <img src={teamWork} alt="Teamwork" style={{ width: 50, height: 50, marginBottom: '8px' }} />
+              <img src={teamworkGif}  className="img-gif" alt="Teamwork" style={{ width: 70, height: 70, marginBottom: '8px' }} />
               <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 תורמים בקהילה
               </Typography>
@@ -862,7 +863,7 @@ function MainPage() {
               <Typography variant="h3" sx={{ mb: 1 }}>
                 <CountUp end={hasAnimatedPartners ? 18 : 0} duration={2} />
               </Typography>
-              <img src={agreement} alt="Partnership" style={{ width: 50, height: 50, marginBottom: '8px' }} />
+              <img src={agreementGif} alt="Partnership" style={{ width: 70, height: 70, marginBottom: '8px' }} />
               <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 מוסדות ועסקים שותפים
               </Typography>
@@ -871,12 +872,9 @@ function MainPage() {
         </Grid>
       </Grid>
     </Box>
-
-
-
+    <InstagramSection />
         </Container>
     );
 
     }
-
 export default MainPage;

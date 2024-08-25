@@ -149,6 +149,14 @@
   text-align: center !important;
 }
 
+.section-counters {
+  margin-bottom: 50px;
+  border-radius: 10px;
+  min-height: 300px; 
+  margin-top: 150px;
+  text-align: center !important;
+}
+
 
 
 
@@ -190,6 +198,12 @@
 .slider-3d .slick-next {
   right: -50px;
   
+}
+
+.img-gif {
+  background: linear-gradient(135deg, rgba(249, 218, 120, 0.8) 0%, rgba(245, 245, 245, 0.8) 100%);
+  width: 50px; /* or your desired size */
+  height: 50px; /* or your desired size */
 }
 
 .hover-effect {

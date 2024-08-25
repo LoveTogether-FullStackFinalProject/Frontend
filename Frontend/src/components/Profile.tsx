@@ -13,142 +13,91 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import './Profile.css'; // Keeping the custom styles
 
+// Define the validation schema
+const userSchema = z.object({
+  firstName: z.string().min(2, "שם פרטי חייב להכיל לפחות 2 תווים"),
+  lastName: z.string().min(2, "שם משפחה חייב להכיל לפחות 2 תווים"),
+  email: z.string().email("'@' כתובת דואר אלקטרוני חייבת להכיל את התו"),
+  phoneNumber: z.string()
+    .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+    .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),
+  mainAddress: z.string().min(5, "כתובת ראשית חייבת להכיל לפחות 5 תווים"),
+});
+
 const Profile: React.FC = () => {
-    const [user, setUser] = useState<DonorData | null>(null);
-    const [donations, setDonations] = useState<Donation[]>([]);
-    const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [itemsToShow, setItemsToShow] = useState(6);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedFilters, setSelectedFilters] = useState<{ status: string[]; approved: string[] }>({ status: [], approved: [] });
-    const [sortProperty, setSortProperty] = useState<keyof Donation | ''>('');
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [user, setUser] = useState<DonorData | null>(null);
+  const [donations, setDonations] = useState<Donation[]>([]);
+  const [filteredDonations, setFilteredDonations] = useState<Donation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [itemsToShow, setItemsToShow] = useState(6);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState<{ status: string[]; approved: string[] }>({ status: [], approved: [] });
+  const [sortProperty, setSortProperty] = useState<keyof Donation | ''>('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [editUserModalOpen, setEditUserModalOpen] = useState(false);
 
-    const userId = localStorage.getItem('userID');
+  const userId = localStorage.getItem('userID');
 
-    const fetchData = useCallback(async () => {
-        try {
-            const { req: userReq } = dataService.getUser(userId!);
-            const userResponse = await userReq;
-            setUser(userResponse.data);
+  const fetchData = useCallback(async () => {
+    try {
+      const { req: userReq } = dataService.getUser(userId!);
+      const userResponse = await userReq;
+      setUser(userResponse.data);
 
-            const { req: donationsReq } = dataService.getDonationsByUser(userId!);
-            const donationsResponse = await donationsReq;
-            setDonations(donationsResponse.data);
-            setFilteredDonations(donationsResponse.data);
-        } catch (error) {
-            if (error instanceof CanceledError) return;
-            console.error('Error fetching data:', error);
-        } finally {
-            setLoading(false);
-        }
-    }, [userId]);
+      const { req: donationsReq } = dataService.getDonationsByUser(userId!);
+      const donationsResponse = await donationsReq;
+      setDonations(donationsResponse.data);
+      setFilteredDonations(donationsResponse.data);
+    } catch (error) {
+      if (error instanceof CanceledError) return;
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-    useEffect(() => {
-        applyFilters();
-    }, [donations, searchQuery, selectedFilters, itemsToShow, sortProperty, sortOrder]);
+  useEffect(() => {
+    applyFilters();
+  }, [donations, searchQuery, selectedFilters, itemsToShow, sortProperty, sortOrder]);
 
-    const applyFilters = () => {
-        let filtered = donations;
+  const applyFilters = () => {
+    let filtered = donations;
 
-        if (searchQuery) {
-            filtered = filtered.filter(donation =>
-                donation.itemName.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        }
+    if (searchQuery) {
+      filtered = filtered.filter(donation =>
+        donation.itemName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
-        if (selectedFilters.status.length > 0) {
-            filtered = filtered.filter(donation =>
-                selectedFilters.status.includes(donation.status)
-            );
-        }
+    if (selectedFilters.status.length > 0) {
+      filtered = filtered.filter(donation =>
+        selectedFilters.status.includes(donation.status)
+      );
+    }
 
-        if (selectedFilters.approved.length > 0) {
-            filtered = filtered.filter(donation =>
-                selectedFilters.approved.includes(String(donation.approvedByAdmin))
-            );
-        }
+    if (selectedFilters.approved.length > 0) {
+      filtered = filtered.filter(donation =>
+        selectedFilters.approved.includes(String(donation.approvedByAdmin))
+      );
+    }
 
-        if (sortProperty) {
-            filtered.sort((a, b) => {
-                const aValue = a[sortProperty];
-                const bValue = b[sortProperty];
+    if (sortProperty) {
+      filtered.sort((a, b) => {
+        const aValue = a[sortProperty];
+        const bValue = b[sortProperty];
 
-                if (typeof aValue === 'string' && typeof bValue === 'string') {
-                    return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-                } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-                    return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-                } else if (aValue instanceof Date && bValue instanceof Date) {
-                    return sortOrder === 'asc' ? aValue.getTime() - bValue.getTime() : bValue.getTime() - aValue.getTime();
-                }
-                return 0;
-            });
-        }
-
-        setFilteredDonations(filtered.slice(0, itemsToShow));
-    };
-
-    const handleShowMoreClick = () => {
-        setItemsToShow(itemsToShow + 6);
-    };
-
-    const toggleFilter = (type: 'status' | 'approved', value: string) => {
-        setSelectedFilters(prevFilters => {
-            const newFilters = { ...prevFilters };
-            if (newFilters[type].includes(value)) {
-                newFilters[type] = newFilters[type].filter(f => f !== value);
-            } else {
-                newFilters[type].push(value);
-            }
-            return newFilters;
-        });
-    };
-
-    const removeFilter = (type: 'status' | 'approved', value: string) => {
-        setSelectedFilters(prevFilters => {
-            const newFilters = { ...prevFilters };
-            newFilters[type] = newFilters[type].filter(f => f !== value);
-            return newFilters;
-        });
-    };
-
-    const handleDeleteClick = async (donationId: string): Promise<void> => {
-        try {
-            await dataService.deleteDonation(donationId);
-            setDonations(donations.filter((donation) => donation._id !== donationId));
-            setFilteredDonations(filteredDonations.filter((donation) => donation._id !== donationId));
-        } catch (error) {
-            console.error('Error deleting donation:', error);
-        }
-    };
-
-    const handleCardClick = (donation: Donation) => {
-        setSelectedDonation(donation);
-        setShowModal(true);
-    };
-
-    const handleSaveChanges = async (updatedDonation: Donation) => {
-        try {
-            if (updatedDonation && updatedDonation._id) {
-                await dataService.updateDonation(updatedDonation._id, updatedDonation);
-                setDonations((prevDonations) =>
-                    prevDonations.map((donation) =>
-                        donation._id === updatedDonation._id ? { ...donation, ...updatedDonation } : donation
-                    )
-                );
-                setShowModal(false);
-            } else {
-                console.error('Error: No donation ID found');
-            }
-        } catch (error) {
-            console.error('Error saving changes:', error);
-
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+        } else if (aValue instanceof Date && bValue instanceof Date) {
+          return sortOrder === 'asc' ? aValue.getTime() - bValue.getTime() : bValue.getTime() - aValue.getTime();
         }
         return 0;
       });
@@ -158,7 +107,7 @@ const Profile: React.FC = () => {
   };
 
   const handleShowMoreClick = () => {
-    setItemsToShow(itemsToShow + 4);
+    setItemsToShow(itemsToShow + 6);
   };
 
   const toggleFilter = (type: 'status' | 'approved', value: string) => {

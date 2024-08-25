@@ -29,11 +29,9 @@ export let userID: string;
 const schema = z.object({
   firstName: z.string().min(2, "שם פרטי חייב להכיל לפחות 2 תווים"),
   lastName: z.string().min(2, "שם משפחה חייב להכיל לפחות 2 תווים"),
-  //email: z.string().email("כתובת דואר אלקטרוני לא חוקית"),
   email: z.string()
   .refine((email) => email.includes("@"), "'@' כתובת דואר אלקטרוני חייבת להכיל את התו"),
   password: z.string().min(8, "הסיסמה חייבת להכיל לפחות 8 תווים"),
-  //phoneNumber: z.string().length(10, "מספר הטלפון חייב להכיל 10 ספרות"),
   phoneNumber: z.string()
   .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
   .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),

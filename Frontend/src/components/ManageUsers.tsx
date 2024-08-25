@@ -297,74 +297,187 @@ if(isAdmin){
         </Alert>
       </Snackbar>
 
-      {/* Modal for editing users */}
-
-      <Modal
-        open={editModalOpen}
-        onClose={handleCloseEditModal}
-        aria-labelledby="edit-user-modal-title"
-        aria-describedby="edit-user-modal-description"
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '90%', // Responsive width
-            maxWidth: 500, // Max width for larger screens
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 1,
-            textAlign: 'right', // Align text and form elements to the right
-            direction: 'rtl', // Set RTL direction for the content
-          }}
-        >
-          <Typography id="edit-user-modal-title" variant="h6" component="h2">
-            עריכת משתמש
-          </Typography>
-          <TextField
-            fullWidth
-            label="שם פרטי"
-            margin="normal"
-            value={updatedUser.firstName || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, firstName: e.target.value })}
-          />
-          <TextField
-            fullWidth
-            label="שם משפחה"
-            margin="normal"
-            value={updatedUser.lastName || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, lastName: e.target.value })}
-          />
-          <TextField
-            fullWidth
-            label="אימייל"
-            margin="normal"
-            value={updatedUser.email || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, email: e.target.value })}
-          />
-          <TextField
-            fullWidth
-            label="כתובת"
-            margin="normal"
-            value={updatedUser.mainAddress || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, mainAddress: e.target.value })}
-          />
-          <TextField
-            fullWidth
-            label="מספר טלפון"
-            margin="normal"
-            value={updatedUser.phoneNumber || ''}
-            onChange={(e) => setUpdatedUser({ ...updatedUser, phoneNumber: e.target.value })}
-          />
-          <Button variant="contained" color="primary" fullWidth onClick={handleUpdateUser}>
-            עדכן משתמש
-          </Button>
-        </Box>
-
-      </Modal>
+     {/* Modal for editing users */}
+<Modal
+  open={editModalOpen}
+  onClose={handleCloseEditModal}
+  aria-labelledby="edit-user-modal-title"
+  aria-describedby="edit-user-modal-description"
+>
+  <Box
+    sx={{
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '90%', // Responsive width
+      maxWidth: 500, // Max width for larger screens
+      bgcolor: 'background.paper',
+      boxShadow: 24,
+      p: 4,
+      borderRadius: 1,
+      textAlign: 'right', // Align text and form elements to the right
+      direction: 'rtl', // Set RTL direction for the content
+    }}
+  >
+    <Typography id="edit-user-modal-title" variant="h6" component="h2">
+      עריכת משתמש
+    </Typography>
+    <TextField
+      fullWidth
+      label="שם פרטי"
+      margin="normal"
+      value={updatedUser.firstName || ''}
+      onChange={(e) => setUpdatedUser({ ...updatedUser, firstName: e.target.value })}
+      InputLabelProps={{
+        sx: {
+          right: 19,
+          left: 'auto',
+          transformOrigin: 'top right',
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -10px) scale(0.75)',
+            transformOrigin: 'top right',
+          },
+          '& .MuiFormLabel-asterisk': {
+            display: 'none',
+          },
+        },
+      }}
+      InputProps={{
+        sx: {
+          textAlign: 'right',
+          direction: 'rtl',
+          '& .MuiOutlinedInput-notchedOutline': {
+            textAlign: 'right',
+          },
+        },
+      }}
+    />
+    <TextField
+      fullWidth
+      label="שם משפחה"
+      margin="normal"
+      value={updatedUser.lastName || ''}
+      onChange={(e) => setUpdatedUser({ ...updatedUser, lastName: e.target.value })}
+      InputLabelProps={{
+        sx: {
+          right: 19,
+          left: 'auto',
+          transformOrigin: 'top right',
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -10px) scale(0.75)',
+            transformOrigin: 'top right',
+          },
+          '& .MuiFormLabel-asterisk': {
+            display: 'none',
+          },
+        },
+      }}
+      InputProps={{
+        sx: {
+          textAlign: 'right',
+          direction: 'rtl',
+          '& .MuiOutlinedInput-notchedOutline': {
+            textAlign: 'right',
+          },
+        },
+      }}
+    />
+    <TextField
+      fullWidth
+      label="אימייל"
+      margin="normal"
+      value={updatedUser.email || ''}
+      onChange={(e) => setUpdatedUser({ ...updatedUser, email: e.target.value })}
+      InputLabelProps={{
+        sx: {
+          right: 19,
+          left: 'auto',
+          transformOrigin: 'top right',
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -10px) scale(0.75)',
+            transformOrigin: 'top right',
+          },
+          '& .MuiFormLabel-asterisk': {
+            display: 'none',
+          },
+        },
+      }}
+      InputProps={{
+        sx: {
+          textAlign: 'right',
+          direction: 'rtl',
+          '& .MuiOutlinedInput-notchedOutline': {
+            textAlign: 'right',
+          },
+        },
+      }}
+    />
+    <TextField
+      fullWidth
+      label="כתובת"
+      margin="normal"
+      value={updatedUser.mainAddress || ''}
+      onChange={(e) => setUpdatedUser({ ...updatedUser, mainAddress: e.target.value })}
+      InputLabelProps={{
+        sx: {
+          right: 19,
+          left: 'auto',
+          transformOrigin: 'top right',
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -10px) scale(0.75)',
+            transformOrigin: 'top right',
+          },
+          '& .MuiFormLabel-asterisk': {
+            display: 'none',
+          },
+        },
+      }}
+      InputProps={{
+        sx: {
+          textAlign: 'right',
+          direction: 'rtl',
+          '& .MuiOutlinedInput-notchedOutline': {
+            textAlign: 'right',
+          },
+        },
+      }}
+    />
+    <TextField
+      fullWidth
+      label="מספר טלפון"
+      margin="normal"
+      value={updatedUser.phoneNumber || ''}
+      onChange={(e) => setUpdatedUser({ ...updatedUser, phoneNumber: e.target.value })}
+      InputLabelProps={{
+        sx: {
+          right: 19,
+          left: 'auto',
+          transformOrigin: 'top right',
+          '&.MuiInputLabel-shrink': {
+            transform: 'translate(0, -10px) scale(0.75)',
+            transformOrigin: 'top right',
+          },
+          '& .MuiFormLabel-asterisk': {
+            display: 'none',
+          },
+        },
+      }}
+      InputProps={{
+        sx: {
+          textAlign: 'right',
+          direction: 'rtl',
+          '& .MuiOutlinedInput-notchedOutline': {
+            textAlign: 'right',
+          },
+        },
+      }}
+    />
+    <Button variant="contained" color="primary" fullWidth onClick={handleUpdateUser}>
+      עדכן משתמש
+    </Button>
+  </Box>
+</Modal>
     </div>
   );
 }

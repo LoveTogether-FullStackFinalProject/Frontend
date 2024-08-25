@@ -465,56 +465,79 @@ const Profile: React.FC = () => {
                 
             </Box>
 
-            {/* Donations List */}
             <Grid container spacing={3} my={4}>
-                {filteredDonations.length > 0 ? (
-                    filteredDonations.map((donation) => (
-                        <Grid item xs={12} sm={6} md={4} key={donation._id}>
-                            <Card
-                                sx={{
-                                    height: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    cursor: 'pointer',
-                                    transition: 'transform 0.3s ease-in-out',
-                                    '&:hover': {
-                                        transform: 'scale(1.05)',
-                                    },
-                                }}
-                                onClick={() => handleCardClick(donation)}
-                            >
-                                <CardContent  sx={{ direction: 'rtl', textAlign: 'right' }}>
-                                    <img
-                                        src={donation.image}
-                                        alt={donation.itemName}
-                                        style={{
-                                            width: '100%',
-                                            height: '150px',
-                                            objectFit: 'cover',
-                                            borderRadius: '8px',
-                                        }}
-                                    />
-                                    <Typography variant="h6" my={2}>
-                                        {donation.itemName}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        סטטוס: {donation.status}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))
-                ) : (
-                    <Grid item xs={12}>
-                        <Typography variant="h6" align="center">
-                            לא נמצאו תרומות
-                        </Typography>
-                    </Grid>
-                )}
-            </Grid>
+  {filteredDonations.length > 0 ? (
+    filteredDonations.map((donation) => (
+      <Grid item xs={12} sm={6} md={4} key={donation._id}>
+        <Card
+          sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            cursor: 'pointer',
+            transition: 'transform 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+            },
+          }}
+          onClick={() => handleCardClick(donation)}
+        >
+          <div
+            style={{
+              flex: '1 0 auto', // Allows this section to grow and fill available space
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '10px', // Optional: Adds padding around the image
+              overflow: 'hidden',
+            }}
+          >
+            <img
+              src={donation.image}
+              alt={donation.itemName}
+              style={{
+                width: '100%',
+                maxWidth: '300px', // Adjust as needed
+                height: 'auto', // Maintain aspect ratio
+                objectFit: 'contain', // Ensure the entire image is visible
+                borderRadius: '8px',
+              }}
+            />
+          </div>
+          <CardContent
+            sx={{
+              flex: '0 0 auto', // Ensures this section doesn't grow, stays at the bottom
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              textAlign: 'center',
+              direction: 'rtl',
+              padding: '16px',
+            }}
+          >
+            <Typography variant="h6" my={2}>
+              {donation.itemName}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              סטטוס: {donation.status}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              אושר על ידי מנהל: {donation.approvedByAdmin === 'true' ? "כן" : "לא"}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    ))
+  ) : (
+    <Grid item xs={12}>
+      <Typography variant="h6" align="center">
+        לא נמצאו תרומות
+      </Typography>
+    </Grid>
+  )}
+</Grid>
+
 
             {donations.length > itemsToShow && (
                 <Box display="flex" justifyContent="center">

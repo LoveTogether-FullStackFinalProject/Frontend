@@ -297,7 +297,7 @@ function MainPage() {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' // Adjust shadow here
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
     }}
 >
     {/* Logo */}
@@ -333,9 +333,11 @@ function MainPage() {
         }}
     >
         {/* Center Text */}
-        <Typography variant="h3" sx={{ 
-          variant: 'h6',
-          fontSize: '2rem',
+        <Typography variant="h2" 
+        
+        sx={{ 
+          variant:"h6" ,
+          fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.5rem' },
             fontFamily: "'Assistant', sans-serif", 
             fontWeight: 500, 
             color: 'black',
@@ -385,6 +387,7 @@ function MainPage() {
     fontSize: '0.875rem',
     backgroundColor: "white",
     color: "black",
+    minWidth: "140px",
   }}
 >
   לתרומה ללא צורך בהרשמה 
@@ -544,7 +547,7 @@ function MainPage() {
   )}
 </Box>
 
-<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '100px' }}>
+<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '150px' }}>
         <Typography
           variant="h3"
           sx={{
@@ -659,13 +662,13 @@ function MainPage() {
       </Box>
 
          {/* Section 3: Leading Donors */}
-         <Box className="section-section3-light" sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
+         <Box className="section-section3-light"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
          <Typography 
         variant="h3" 
         sx={{ 
         mb: 2, 
         fontFamily: 'Assistant', 
-        marginTop: "140px", 
+        marginTop: "150px", 
         borderBottom: '3px solid #f9db78', 
         display: 'inline-block'
         

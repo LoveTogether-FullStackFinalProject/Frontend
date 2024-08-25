@@ -34,6 +34,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
+import value from '../assets/value.gif;
+import teamWork from './../assets/teamwork.gif;
+import agreement from './../assets/agreement.gif;
 import logo from '../assets/cooporates/logo.jpg';
 import logo1 from '../assets/cooporates/logo1.jpg';
 import logo2 from '../assets/cooporates/logo2.jpg';
@@ -828,10 +831,10 @@ function MainPage() {
         <Grid item xs={12} sm={6} md={4} sx={{ textAlign: 'center' }}>
           <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleDonationsVisibility}>
             <div>
-              <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+              <Typography variant="h3" sx={{  mb: 1 }}>
                 <CountUp end={hasAnimatedDonations ? totalDonations : 0} duration={2} />
               </Typography>
-              <VolunteerActivismIcon sx={{ fontSize: { xs: 40, sm: 50 }, marginBottom: '8px' }} />
+              <img src={value} alt="Value" style={{ width: 50, height: 50, marginBottom: '8px' }} />
               <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 תרומות שנתרמו
               </Typography>
@@ -842,10 +845,10 @@ function MainPage() {
         <Grid item xs={12} sm={6} md={4} sx={{ textAlign: 'center' }}>
           <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handleUsersVisibility}>
             <div>
-              <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+              <Typography variant="h3" sx={{  mb: 1 }}>
                 <CountUp end={hasAnimatedUsers ? users.length : 0} duration={2} />
               </Typography>
-              <GroupIcon sx={{ fontSize: { xs: 40, sm: 50 }, marginBottom: '8px' }} />
+              <img src={teamWork} alt="Teamwork" style={{ width: 50, height: 50, marginBottom: '8px' }} />
               <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 תורמים בקהילה
               </Typography>
@@ -856,10 +859,10 @@ function MainPage() {
         <Grid item xs={12} sm={6} md={4} sx={{ textAlign: 'center' }}>
           <VisibilitySensor partialVisibility offset={{ bottom: 200 }} onChange={handlePartnersVisibility}>
             <div>
-              <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 1 }}>
+              <Typography variant="h3" sx={{ mb: 1 }}>
                 <CountUp end={hasAnimatedPartners ? 18 : 0} duration={2} />
               </Typography>
-              <BusinessCenterIcon sx={{ fontSize: { xs: 40, sm: 50 }, marginBottom: '8px' }} />
+              <img src={agreement} alt="Partnership" style={{ width: 50, height: 50, marginBottom: '8px' }} />
               <Typography variant="h6" sx={{ mt: 1, whiteSpace: 'nowrap', textAlign: 'center' }}>
                 מוסדות ועסקים שותפים
               </Typography>

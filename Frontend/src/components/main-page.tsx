@@ -301,10 +301,7 @@ function MainPage() {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        //249, 218, 120, 0.8)
-        // zIndex: -1, 
-        padding: '0 20px', 
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)' // Adjust shadow here
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
     }}
 >
     {/* Logo */}
@@ -328,7 +325,9 @@ function MainPage() {
       gap: "0px",
     }}
         sx={{
-            marginBottom:'20px',
+          fontFamily: "'Assistant', sans-serif",
+            
+            marginBottom:'50px',
             marginRight:'50px',
             display: 'flex',
             flexDirection: 'column',
@@ -338,11 +337,15 @@ function MainPage() {
         }}
     >
         {/* Center Text */}
-        <Typography variant="h3" sx={{ 
+        <Typography variant="h2" 
+        
+        sx={{ 
+          variant:"h6" ,
+          fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.5rem' },
             fontFamily: "'Assistant', sans-serif", 
             fontWeight: 500, 
             color: 'black',
-            mb: 2,
+            mb: 0,
         }}>
             כמה קל לתרום היום
         </Typography>
@@ -368,8 +371,6 @@ function MainPage() {
     // textTransform: 'none', 
     backgroundColor: "white", 
     color: "black", 
-    // borderRadius: "8px",
-    // boxShadow:"5px",
   }}
 >
   לתרומה
@@ -387,11 +388,10 @@ function MainPage() {
   className="first-section-button-2"
   startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
   sx={{
-    // px: 2, 
-    // py: 1,
     fontSize: '0.875rem',
     backgroundColor: "white",
     color: "black",
+    minWidth: "140px",
   }}
 >
   לתרומה ללא צורך בהרשמה 
@@ -551,7 +551,7 @@ function MainPage() {
   )}
 </Box>
 
-<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '100px' }}>
+<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '150px' }}>
         <Typography
           variant="h3"
           sx={{
@@ -666,13 +666,13 @@ function MainPage() {
       </Box>
 
          {/* Section 3: Leading Donors */}
-         <Box className="section-section3-light" sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
+         <Box className="section-section3-light"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
          <Typography 
         variant="h3" 
         sx={{ 
         mb: 2, 
         fontFamily: 'Assistant', 
-        marginTop: "140px", 
+        marginTop: "150px", 
         borderBottom: '3px solid #f9db78', 
         display: 'inline-block'
         
@@ -743,9 +743,18 @@ function MainPage() {
       fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' },
     }}
   >
-    <Nav.Link as={Link} to="/about" style={{ textDecoration: 'none', color: 'inherit' }}>
-      קראו עוד על הפרוייקטים שלנו
-    </Nav.Link>
+    
+    <Nav.Link
+  as={Link}
+  to="/about"
+  style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}
+  onClick={(e) => {
+    e.preventDefault(); // Prevent default scroll behavior
+    window.location.href = "/about"; // Redirect to the top of the About page
+  }}
+>
+  קראו עוד על הפרוייקטים שלנו
+</Nav.Link>
   </Typography>
 </Box>
 <Box className="section-section-light">

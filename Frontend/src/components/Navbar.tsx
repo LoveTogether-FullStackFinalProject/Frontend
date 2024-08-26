@@ -8,7 +8,8 @@ import logoutServiece from '../services/logout-serviece';
 import './Navbar.css';
 import { User } from '../services/types';
 import logo from '../assets/logoWithoutBackground.png';
-
+import facebookLogo from '../assets/facebookLogo.png';
+import instagramLogo from '../assets/instagramLogo.png';
 interface NavbarProps {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -86,6 +87,15 @@ export function Navbar({ setUser }: NavbarProps) {
       expand="md"
       expanded={expanded} // Set the expanded state
     >
+      <div className="social-media">
+        <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
+          <img src={facebookLogo} alt="Facebook" />
+        </a>
+        <a href="https://www.instagram.com/veahavtem_beyahad/" target="_blank" rel="noopener noreferrer">
+          <img src={instagramLogo} alt="Instagram" />
+        </a>
+      </div>
+
       <Container fluid>
         <BootstrapNavbar.Toggle 
           aria-controls="basic-navbar-nav" 

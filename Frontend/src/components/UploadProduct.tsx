@@ -38,7 +38,7 @@ const schema = z.object({
   quantity: z.number().gt(0, 'כמות הפריט חייבת להיות יותר מ-0'),
   category: z.string().min(1, 'יש לבחור קטגוריה'),
   customCategory: z.string().min(2, 'קטגוריה מותאמת אישית חייבת להכיל לפחות 2 תווים').optional(),
-  condition: z.string().min(1, { message: 'יש לבחור קטגוריה' }),
+  condition: z.string().min(1, { message: 'יש לבחור מצב לפריט' }),
   expirationDate: z.string().refine((dateString) => {
     const selectedDate = new Date(dateString);
     const currentDate = new Date();

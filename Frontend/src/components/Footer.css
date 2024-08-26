@@ -30,7 +30,7 @@ html, body {
   margin: 0;
 }
 
-.social-media {
+/* .social-media {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -40,4 +40,4 @@ html, body {
 .social-media img {
   width: 24px;
   height: 24px;
-}
+} */

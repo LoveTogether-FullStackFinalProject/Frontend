@@ -32,6 +32,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
+
 import logoTransparent from '../assets/logo_transparent.png';
 import valueGif from '../assets/value.gif';
 import teamworkGif from '../assets/teamwork.gif';
@@ -321,20 +322,20 @@ function MainPage() {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)', // Adjust shadow here
     }}
 >
     {/* Logo */}
     <Box
         component="img"
-        src={whitelogo}
-        alt="whitelogo"
+        src={logoTransparent}
+        alt="logoTransparent"
         className="animated-image"
         style={{
-            maxWidth: '500px',
+            maxWidth: '400px',
         }}
         sx={{ 
-            marginLeft:'7px',
+            marginLeft:'20px',
             minWidth:'100px',
             height: 'auto'
         }}
@@ -352,14 +353,12 @@ function MainPage() {
             marginBottom:'50px',
             marginRight:'50px',
 
-        
-
-            sx={{ 
               maxWidth: { xs: '150px', sm: '200px', md: '400px' },
                marginLeft: '20px',
               height: 'auto',
-            }}
-          />
+        }}
+        >
+
     
           {/* Text and Button */}
           <Box
@@ -413,6 +412,8 @@ function MainPage() {
             </Button>
           </Box>
         </Box>
+        </Box>
+
 
    
 <Box component="section" className="section-centered animated-section" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
@@ -421,7 +422,7 @@ function MainPage() {
       variant="h3"
       sx={{
         mb: 2,
-        fontFamily: 'Assistant',
+        fontFamily: "'Assistant', sans-serif" ,
         borderBottom: '3px solid #f9db78',
         display: 'inline-block',
         fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
@@ -505,7 +506,9 @@ function MainPage() {
     variant="h3" 
     sx={{ 
         mb: 2, 
-        fontFamily: 'Assistant', 
+        fontFamily: "'Assistant', sans-serif" ,
+        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+
         marginTop: "100px", 
         borderBottom: '3px solid #f9db78', 
         display: 'inline-block'
@@ -571,7 +574,8 @@ function MainPage() {
           variant="h3"
           sx={{
             mb: 2,
-            fontFamily: 'Assistant',
+            fontFamily: "'Assistant', sans-serif" ,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
             borderBottom: '3px solid #f9db78',
             display: 'inline-block',
           }}
@@ -601,10 +605,11 @@ function MainPage() {
               }}
             >
               <img src={BitIcon} alt="Bit Icon" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
-              <Typography variant="h6" sx={{ fontFamily: 'Assistant' }}>
+              <Typography variant="h6" sx={{fontFamily: "'Assistant', sans-serif" ,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '1.5rem' } }}>
                bit תרומה באמצעות אפליקציית ביט
               </Typography>
-              <Typography variant="body1" sx={{ fontFamily: 'Assistant', marginTop: '10px' }}>
+              <Typography variant="body1" sx={{ fontFamily: "'Assistant', sans-serif", marginTop: '10px' }}>
                 0506863121 למספר
               </Typography>
             </Box>
@@ -614,6 +619,8 @@ function MainPage() {
           <Grid item xs={12} sm={6} md={4}>
             <Box
               sx={{
+                 fontFamily: "'Assistant', sans-serif" ,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                 textAlign: 'center',
                 padding: '30px',
                 boxShadow: 3,
@@ -630,14 +637,15 @@ function MainPage() {
               }}
             >
               <img src={PayboxIcon} alt="Paybox Icon" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
-              <Typography variant="h6" sx={{ fontFamily: 'Assistant' }}>
+              <Typography variant="h6" sx={{ fontFamily: "'Assistant', sans-serif" ,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '1.5rem' } }}>
               Paybox תרומה באמצעות אפליקציית פייבוקס
               </Typography>
               <Button
                 variant="contained"
                 color="primary"
                 href="https://payboxapp.page.link/RfBHMQfuZ4dt5fsQ8"
-                sx={{ marginTop: '10px', backgroundColor: '#f9db78', fontFamily: 'Assistant' }}
+                sx={{ marginTop: '10px', backgroundColor: '#f9db78', }}
               >
                  לתרומה
               </Button>
@@ -663,10 +671,11 @@ function MainPage() {
                 },
               }}
             >
-              <Typography variant="h6" sx={{ fontFamily: 'Assistant', marginBottom: '20px' }}>
+              <Typography variant="h6" sx={{  fontFamily: "'Assistant', sans-serif" ,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' }, marginBottom: '20px' }}>
                 העברה בנקאית
               </Typography>
-              <Typography variant="body2" sx={{ fontFamily: 'Assistant' }}>
+              <Typography variant="body2" sx={{ fontFamily: "'Assistant', sans-serif" }}>
                 בנק מרכנתיל (17)
                 <br />
                 סניף יהודה הנשיא (740)
@@ -686,7 +695,7 @@ function MainPage() {
         variant="h3" 
         sx={{ 
         mb: 2, 
-        fontFamily: 'Assistant', 
+        fontFamily: "'Assistant', sans-serif", 
         marginTop: "150px", 
         borderBottom: '3px solid #f9db78', 
         display: 'inline-block'
@@ -729,7 +738,7 @@ function MainPage() {
     variant="h3" 
     sx={{ 
       mb: 2, 
-      fontFamily: 'Assistant', 
+      fontFamily: "'Assistant', sans-serif",
       borderBottom: '3px solid #f9db78', 
       display: 'inline-block',
       marginBottom: '50px',
@@ -748,7 +757,7 @@ function MainPage() {
     variant="h5" 
     sx={{ 
       mt: 4, 
-      fontFamily: 'Assistant', 
+      fontFamily: "'Assistant', sans-serif",
       color: 'inherit', // Link color
       '&:hover': {
         textDecoration: 'underline', // Underline on hover
@@ -777,7 +786,7 @@ function MainPage() {
     variant="h3" 
     sx={{ 
       mb: 2, 
-      fontFamily: 'Assistant', 
+      fontFamily: "'Assistant', sans-serif", 
       borderBottom: '3px solid #f9db78', 
       display: 'inline-block',
       marginBottom: '50px',
@@ -821,7 +830,7 @@ function MainPage() {
         variant="h3" 
         sx={{ 
           mb: 2, 
-          fontFamily: 'Assistant', 
+          fontFamily: "'Assistant', sans-serif",
           borderBottom: '3px solid #f9db78', 
           display: 'inline-block',
           marginBottom: '50px',
@@ -835,7 +844,7 @@ function MainPage() {
       <Typography 
         variant="h4" 
         sx={{ 
-          fontFamily: 'Assistant', 
+          fontFamily: "'Assistant', sans-serif", 
           padding: "15px", 
           textAlign: "center",
           fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.75rem' }, // Responsive font size

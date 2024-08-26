@@ -77,13 +77,13 @@
 }
 
 
-.logoimg {
+.animated-image {
   transition: transform 0.3s ease-in-out;
   animation: pulse 2s infinite;
 
 }
 
-.logoimg:hover {
+.animated-image:hover {
   transform: scale(1.1);
 
 }

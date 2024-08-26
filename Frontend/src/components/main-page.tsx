@@ -31,7 +31,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
-import whitelogo from '../assets/whiteLogo.png';
+// import whitelogo from '../assets/whiteLogo.png';
 import logoTransparent from '../assets/logo_transparent.png';
 import valueGif from '../assets/value.gif';
 import teamworkGif from '../assets/teamwork.gif';
@@ -327,14 +327,14 @@ function MainPage() {
     {/* Logo */}
     <Box
         component="img"
-        src={whitelogo}
-        alt="whitelogo"
+        src={logoTransparent}
+        alt="logoTransparent"
         className="animated-image"
         style={{
-            maxWidth: '500px',
+            maxWidth: '400px',
         }}
         sx={{ 
-            marginLeft:'7px',
+            marginLeft:'20px',
             minWidth:'100px',
             height: 'auto'
         }}
@@ -346,15 +346,11 @@ function MainPage() {
     style={{
       gap: "0px",
     }}
-        sx={{
-          fontFamily: "'Assistant', sans-serif",
-            
-            marginBottom:'50px',
-            marginRight:'50px',
-
         
-
             sx={{ 
+              fontFamily: "'Assistant', sans-serif",
+              marginBottom:'50px',
+              marginRight:'50px',
               maxWidth: { xs: '150px', sm: '200px', md: '400px' },
                marginLeft: '20px',
               height: 'auto',

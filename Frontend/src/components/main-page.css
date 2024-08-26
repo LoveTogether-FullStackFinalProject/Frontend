@@ -75,6 +75,19 @@
   font-size: 1.2rem; 
   
 }
+
+
+.logoimg {
+  transition: transform 0.3s ease-in-out;
+  animation: pulse 2s infinite;
+
+}
+
+.logoimg:hover {
+  transform: scale(1.1);
+
+}
+
 .first-section-button-2 {
   background-color: #f9db7836 !important;
   color: #000;

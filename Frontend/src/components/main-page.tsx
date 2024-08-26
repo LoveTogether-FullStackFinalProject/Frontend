@@ -320,7 +320,8 @@ function MainPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between', 
-        background: 'linear-gradient(180deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
+        background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
+
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
     }}
 >

@@ -25,9 +25,6 @@ import {
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import VisibilitySensor from 'react-visibility-sensor';
-import GroupIcon from '@mui/icons-material/Group';
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 
 import Slider from "react-slick";
@@ -35,6 +32,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
 import whitelogo from '../assets/whiteLogo.png';
+import logoTransparent from '../assets/logo_transparent.png';
 import valueGif from '../assets/value.gif';
 import teamworkGif from '../assets/teamwork.gif';
 import agreementGif from '../assets/agreement.gif';
@@ -247,10 +245,7 @@ function MainPage() {
         }
     };
 
-    const handleButtonClickAnonymously = () => {
-          navigate('/uploadproduct');
-  };
-
+  
     const handleDonationsVisibility = (isVisible: boolean) => {
         if (isVisible && !hasAnimatedDonations) {
             setHasAnimatedDonations(true);
@@ -281,124 +276,94 @@ function MainPage() {
     const totalDonations = Object.values(counts).reduce((acc, count) => acc + count, 0);
 
     return (
-        <Container style={{ 
-            width: '100%', 
-            padding: 0, 
-            margin: 0, 
-            maxWidth: '100%' ,
-        }}>
-            {/* Section 1: Logo and Main CTA */}
-            {/* Background Gradient Container */}
-            {/* Background */}
-            
-            <Box
-      sx={{
-        marginTop: '150px',
-        height:"500px",
-        position: 'relative',
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between', 
-        background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
-    }}
->
-    {/* Logo */}
-    <Box
-        component="img"
-        src={whitelogo}
-        alt="whitelogo"
-        style={{
-            maxWidth: '500px',
-        }}
-        sx={{ 
-            marginLeft:'7px',
-            minWidth:'100px',
-            height: 'auto'
-        }}
-    />
-
-    {/* Text and Button */}
-    <Box
-    style={{
-      gap: "0px",
-    }}
-        sx={{
-          fontFamily: "'Assistant', sans-serif",
-            
-            marginBottom:'50px',
-            marginRight:'50px',
+      <Container style={{ 
+        width: '100%', 
+        padding: 0, 
+        margin: 0, 
+        maxWidth: '100%',
+      }}>
+        {/* Main Section */}
+        <Box
+          sx={{
+            marginTop: '150px',
+            height: "500px",
+            position: 'relative',
+            width: '100%',
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            textAlign: 'right',
-            gap: 2, // Space between text and button
-        }}
-    >
-        {/* Center Text */}
-        <Typography variant="h2" 
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'linear-gradient(182deg, rgba(249, 230, 185, 0.8) 30%, rgba(245, 245, 244, 0.5) 100%)',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
+            borderRadius: '15px',
+            padding: '20px',
+          }}
+        >
+          {/* Logo */}
+          <Box
+          className='logoimg'
+            component="img"
+            src={logoTransparent}
+            alt="whitelogo"
         
-        sx={{ 
-          variant:"h6" ,
-          fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.5rem' },
-            fontFamily: "'Assistant', sans-serif", 
-            fontWeight: 500, 
-            color: 'black',
-            mb: 0,
-        }}>
-            כמה קל לתרום היום
-        </Typography>
-
-
-        <Button
-        style={{
-            borderRadius:"100px",
-            marginBottom:"1px",
-            
-        }}
-  onClick={() => {
-    console.log('Button clicked');
-    handleButtonClick();
-  }}
-  variant="contained"
-  className="first-section-button"
-  startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
-  sx={{ 
-    px: 4, 
-    py: 2, 
-    fontSize: '1rem', 
-    // textTransform: 'none', 
-    backgroundColor: "white", 
-    color: "black", 
-  }}
->
-  לתרומה
-</Button>
-
-<Button
-  style={{
-    borderRadius: "100px",
-  }}
-  onClick={() => {
-    console.log('Button clicked');
-    handleButtonClickAnonymously();
-  }}
-  variant="contained"
-  className="first-section-button-2"
-  startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
-  sx={{
-    fontSize: '0.875rem',
-    backgroundColor: "white",
-    color: "black",
-    minWidth: "140px",
-  }}
->
-  לתרומה ללא צורך בהרשמה 
-</Button>
-
-</Box>
-</Box>
+            sx={{ 
+              maxWidth: { xs: '150px', sm: '200px', md: '400px' },
+               marginLeft: '20px',
+              height: 'auto',
+            }}
+          />
+    
+          {/* Text and Button */}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              textAlign: 'right',
+              marginRight: '50px',
+              gap: 4, 
+            }}
+          >
+            {/* Center Text */}
+            <Typography 
+              variant="h2" 
+              sx={{ 
+                fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.5rem' },
+                fontFamily: "'Assistant', sans-serif", 
+                fontWeight: 550, 
+                marginBottom: "40px",
+                color: 'black',
+                mb: 2,
+              }}
+            >
+              כמה קל לתרום היום
+            </Typography>
+    
+            <Button
+              onClick={() => {
+                console.log('Button clicked');
+                handleButtonClick();
+              }}
+              variant="contained"
+              sx={{ 
+                px: 4, 
+                py: 2, 
+                fontSize: '1rem', 
+                borderRadius: "50px",
+                backgroundColor: "#f9db78", 
+                border: "55px  #f9db78",
+                color: "black", 
+                '&:hover': {
+                  backgroundColor: '#f9db78',
+                  color: 'black',
+                },
+                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
+              }}
+              startIcon={<i className="fa fa-chevron-left" style={{ fontSize: "20px" }}></i>}
+            >
+              לתרומה
+            </Button>
+          </Box>
+        </Box>
    
 <Box component="section" className="section-centered" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
   <Container>

@@ -441,63 +441,7 @@ export default function UploadProduct() {
                 }}
               />
             )}
-          <Controller
           
-  name="condition"
-  control={control}
-  render={({ field }) => (
-    <TextField
-    margin="normal"
-    label="מצב הפריט"
-      select
-      fullWidth
-      {...field}
-      error={!!errors.condition}
-      helperText={errors.condition?.message}
-      FormHelperTextProps={{
-        sx: {
-          marginLeft: '350px', 
-          width: '100%',
-        },
-      }}
-      InputLabelProps={{
-        sx: {
-          right: 19,
-          left: 'auto',
-          transformOrigin: 'top right',
-          '&.MuiInputLabel-shrink': {
-            transform: 'translate(0, -10px) scale(0.85)',
-            transformOrigin: 'top right',
-          },
-          '& .MuiFormLabel-asterisk': {
-            display: 'none',
-          },
-        }
-      }}
-      InputProps={{
-        sx: {
-          textAlign: 'right',
-          direction: 'rtl',
-          '& .MuiOutlinedInput-notchedOutline': {
-            textAlign: 'right',
-          },
-          '& .MuiSelect-icon': {
-            left: 0, // Move the arrow to the left
-            right: 'auto',
-          },
-          '& .MuiInputBase-input': {
-          textAlign: 'right', 
-          paddingRight: 0,   
-          marginRight: 0,     
-          },
-        }
-      }}
-    >
-      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="חדש">חדש</MenuItem>
-      <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="משומש במצב טוב">משומש במצב טוב</MenuItem>
-    </TextField>
-  )}
-/>
             
             {selectedCategory === 'מזון ושתייה' && (
               <TextField
@@ -542,6 +486,64 @@ export default function UploadProduct() {
                 }}
               />
             )}
+
+        <Controller
+          
+          name="condition"
+          control={control}
+          render={({ field }) => (
+            <TextField
+            margin="normal"
+            label="מצב הפריט"
+              select
+              fullWidth
+              {...field}
+              error={!!errors.condition}
+              helperText={errors.condition?.message}
+              FormHelperTextProps={{
+                sx: {
+                  marginLeft: '350px', 
+                  width: '100%',
+                },
+              }}
+              InputLabelProps={{
+                sx: {
+                  right: 19,
+                  left: 'auto',
+                  transformOrigin: 'top right',
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(0, -10px) scale(0.85)',
+                    transformOrigin: 'top right',
+                  },
+                  '& .MuiFormLabel-asterisk': {
+                    display: 'none',
+                  },
+                }
+              }}
+              InputProps={{
+                sx: {
+                  textAlign: 'right',
+                  direction: 'rtl',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    textAlign: 'right',
+                  },
+                  '& .MuiSelect-icon': {
+                    left: 0, // Move the arrow to the left
+                    right: 'auto',
+                  },
+                  '& .MuiInputBase-input': {
+                  textAlign: 'right', 
+                  paddingRight: 0,   
+                  marginRight: 0,     
+                  },
+                }
+              }}
+            >
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="חדש">חדש</MenuItem>
+              <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="משומש במצב טוב">משומש במצב טוב</MenuItem>
+            </TextField>
+          )}
+        />
             <TextField
               margin="normal"
               required

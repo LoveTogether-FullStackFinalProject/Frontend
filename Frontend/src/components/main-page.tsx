@@ -31,7 +31,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import person from './../assets/person.png';
-// import whitelogo from '../assets/whiteLogo.png';
+import whitelogo from '../assets/whiteLogo.png';
+
 import logoTransparent from '../assets/logo_transparent.png';
 import valueGif from '../assets/value.gif';
 import teamworkGif from '../assets/teamwork.gif';
@@ -321,7 +322,7 @@ function MainPage() {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)', // Adjust shadow here
     }}
 >
     {/* Logo */}
@@ -346,16 +347,18 @@ function MainPage() {
     style={{
       gap: "0px",
     }}
-        
-            sx={{ 
-              fontFamily: "'Assistant', sans-serif",
-              marginBottom:'50px',
-              marginRight:'50px',
+        sx={{
+          fontFamily: "'Assistant', sans-serif",
+            
+            marginBottom:'50px',
+            marginRight:'50px',
+
               maxWidth: { xs: '150px', sm: '200px', md: '400px' },
                marginLeft: '20px',
               height: 'auto',
-            }}
-          />
+        }}
+        >
+
     
           {/* Text and Button */}
           <Box
@@ -409,6 +412,8 @@ function MainPage() {
             </Button>
           </Box>
         </Box>
+        </Box>
+
 
    
 <Box component="section" className="section-centered animated-section" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>

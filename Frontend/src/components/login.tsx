@@ -224,7 +224,19 @@ export default function SignIn() {
 
             <Grid container>
               <Grid item>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 130 }}>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 110,  }}>
+                  <Link
+                    href="#"
+                    variant="body2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate('/uploadProduct');
+                    }}
+                  >
+                    {"המשך כאורח"}
+                  </Link>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 110,marginTop:"15px" }}>
                   <Link
                     href="#"
                     variant="body2"

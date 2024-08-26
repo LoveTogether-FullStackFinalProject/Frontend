@@ -103,6 +103,8 @@ export function Navbar({ setUser }: NavbarProps) {
               </div>
             ) : (
               <div className='navLink'>
+                <Nav.Link as={Link} to="/uploadProduct" onClick={handleClose} >שלום אורח</Nav.Link>
+                <span style={{ margin: "0 -15px" }}>|</span>
                 <Nav.Link as={Link} to="/login" onClick={handleClose}>התחבר</Nav.Link>
                 <Nav.Link as={Link} to="/registration" onClick={handleClose}>הירשם</Nav.Link>
               </div>

@@ -321,7 +321,7 @@ function MainPage() {
         alignItems: 'center',
         justifyContent: 'space-between', 
         background: 'linear-gradient(135deg, rgba(249, 230, 167, 0.8) 10%, rgba(245, 245, 244, 0.5) 100%)',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)' // Adjust shadow here
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)', // Adjust shadow here
     }}
 >
     {/* Logo */}
@@ -352,14 +352,11 @@ function MainPage() {
             marginBottom:'50px',
             marginRight:'50px',
 
-        
-
-            sx={{ 
               maxWidth: { xs: '150px', sm: '200px', md: '400px' },
                marginLeft: '20px',
               height: 'auto',
-            }}
-          />
+        }}
+        >
     
           {/* Text and Button */}
           <Box
@@ -412,6 +409,7 @@ function MainPage() {
               לתרומה
             </Button>
           </Box>
+        </Box>
         </Box>
 
    

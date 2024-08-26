@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Grid, Link, Container } from '@mui/material';
-
+import './main-page.css'; // Import the CSS file
 import logo from '../assets/logoorg.jpg';
 import img1 from '../assets/organizationImages/img1.jpg';
 import img2 from '../assets/organizationImages/img2.jpg';
@@ -27,114 +27,117 @@ const images = [
 ];
 
 function InstagramSection() {
-  return (
-    <Container sx={{ marginTop: '50px', textAlign: 'center' }}>
-      <style>
-        {`
-          @keyframes rotate {
-            0% {
-              transform: rotate(0deg);
+    return (
+      <Container className="animated-section" sx={{ marginTop: '50px', textAlign: 'center' }}>
+        <style>
+          {`
+            @keyframes rotate {
+              0% {
+                transform: rotate(0deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
             }
-            100% {
-              transform: rotate(360deg);
+  
+            .rotating-ring {
+              position: absolute;
+              top: -5px;
+              left: -5px;
+              width: 160px;
+              height: 160px;
+              border-radius: 50%;
+              border: 5px solid transparent;
+              border-top: 5px solid #f09433;
+              border-right: 5px solid #e6683c;
+              border-bottom: 5px solid #dc2743;
+              border-left: 5px solid #cc2366;
+              animation: rotate 2s linear infinite;
+              cursor: pointer; /* Ensure cursor is a pointer */
             }
-          }
-
-          .rotating-ring {
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 5px solid transparent;
-            border-top: 5px solid #f09433;
-            border-right: 5px solid #e6683c;
-            border-bottom: 5px solid #dc2743;
-            border-left: 5px solid #cc2366;
-            animation: rotate 2s linear infinite;
-            cursor: pointer; /* Ensure cursor is a pointer */
-          }
-        `}
-      </style>
-      <Link href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank">
-        <Box 
-          sx={{ position: 'relative', display: 'inline-block' }}
-        >
-          <Box className="rotating-ring" />
+          `}
+        </style>
+        <Link href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank">
           <Box 
-            component="img"
-            src={logo} 
-            alt="Organization Logo"
-            sx={{
-              width: '150px',
-              height: '150px',
-              borderRadius: '50%', 
-              marginBottom: '20px',
-              cursor: 'pointer',
-            }}
-          />
-        </Box>
-      </Link>
-
-      <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: '15px', textAlign: 'center' }}>
-        <Link 
-          href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
-          target="_blank"
-          sx={{
-            color: 'inherit', 
-            textDecoration: 'none',
-          }}
-        >
-          עקבו אחרינו
-        </Link>
-      </Typography>
-      <Typography variant="h4" sx={{ fontFamily: 'Assistant' }}>
-        <Link 
-          href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
-          target="_blank"
-          sx={{
-            color: 'inherit', 
-            textDecoration: 'none',
-            '&:hover': {
-              textDecoration: 'underline',
-            }
-          }}
-        >
-          veahavtem_beyahad@
-        </Link>
-      </Typography>
-
-
-
-      <Grid 
-        container 
-        spacing={2} 
-        sx={{ 
-          marginTop: '30px', 
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {images.map((image, index) => (
-          <Grid item xs={6} sm={4} md={3} key={index}>
+            sx={{ position: 'relative', display: 'inline-block' }}
+          >
+            <Box className="rotating-ring" />
             <Box 
               component="img"
-              src={image}
-              alt={`Instagram Image ${index + 1}`}
+              src={logo} 
+              alt="Organization Logo"
+              className="animated-image"
               sx={{
-                width: '100%', 
-                height: '200px',
-                borderRadius: '10px',
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
-                objectFit: 'cover'
+                width: '150px',
+                height: '150px',
+                borderRadius: '50%', 
+                marginBottom: '20px',
+                cursor: 'pointer',
               }}
             />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
-}
-
-export default InstagramSection;
+          </Box>
+        </Link>
+  
+        <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: '15px', textAlign: 'center' }}>
+          <Link 
+            href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
+            target="_blank"
+            sx={{
+              color: 'inherit', 
+              textDecoration: 'none',
+            }}
+            className="animated-section"
+          >
+            עקבו אחרינו
+          </Link>
+        </Typography>
+        <Typography variant="h4" sx={{ fontFamily: 'Assistant' }}>
+          <Link 
+            href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
+            target="_blank"
+            sx={{
+              color: 'inherit', 
+              textDecoration: 'none',
+              '&:hover': {
+                textDecoration: 'underline',
+              }
+            }}
+            className="animated-section"
+          >
+            veahavtem_beyahad@
+          </Link>
+        </Typography>
+  
+        <Grid 
+          container 
+          spacing={2} 
+          className="animated-section"
+          sx={{ 
+            marginTop: '30px', 
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {images.map((image, index) => (
+            <Grid item xs={6} sm={4} md={3} key={index} className="animated-card">
+              <Box 
+                component="img"
+                src={image}
+                alt={`Instagram Image ${index + 1}`}
+                className="animated-image"
+                sx={{
+                  width: '100%', 
+                  height: '200px',
+                  borderRadius: '10px',
+                  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+                  objectFit: 'cover'
+                }}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    );
+  }
+  
+  export default InstagramSection;

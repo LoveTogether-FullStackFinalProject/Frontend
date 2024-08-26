@@ -194,6 +194,29 @@ function MainPage() {
     }, []);
 
     useEffect(() => {
+      const sections = document.querySelectorAll(
+          '.animated-section, .animated-card, .animated-image'
+      );
+
+      const options = {
+          threshold: 0.3,
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  observer.unobserve(entry.target);
+              }
+          });
+      }, options);
+
+      sections.forEach(section => {
+          observer.observe(section);
+      });
+  }, []);
+
+    useEffect(() => {
         const { req, abort } = dataService.getUsers();
         req.then((res) => {
             setUsers(res.data);
@@ -292,6 +315,7 @@ function MainPage() {
             {/* Background */}
             
             <Box
+              className="animated-section"
       sx={{
         marginTop: '150px',
         height:"500px",
@@ -309,6 +333,7 @@ function MainPage() {
         component="img"
         src={whitelogo}
         alt="whitelogo"
+        className="animated-image"
         style={{
             maxWidth: '500px',
         }}
@@ -321,6 +346,7 @@ function MainPage() {
 
     {/* Text and Button */}
     <Box
+         className="animated-section"
     style={{
       gap: "0px",
     }}
@@ -340,7 +366,7 @@ function MainPage() {
         <Typography variant="h2" 
         
         sx={{ 
-          variant:"h6" ,
+          variant:"h6",
           fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.5rem' },
             fontFamily: "'Assistant', sans-serif", 
             fontWeight: 500, 
@@ -400,7 +426,7 @@ function MainPage() {
 </Box>
 </Box>
    
-<Box component="section" className="section-centered" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
+<Box component="section" className="section-centered animated-section" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
   <Container>
     <Typography
       variant="h3"
@@ -442,7 +468,7 @@ function MainPage() {
         קראו עוד על העמותה והפרוייקטים שלנו!
       </a>
     </Typography>
-    <Box sx={{ textAlign: 'center', marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Box className="animated-section"  sx={{ textAlign: 'center', marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
   <a
     href="https://drive.google.com/uc?export=download&id=1pO9bFF9XEohfEIcIeTfJopYfFSUN4w43"
     download="תעודת רישום העמותה.pdf"
@@ -485,7 +511,7 @@ function MainPage() {
 
 
     {/* Section 2: Products We Need */}
-    <Box className="section-section-light">
+    <Box className="section-section-light animated-section">
     <Typography 
     variant="h3" 
     sx={{ 
@@ -551,7 +577,7 @@ function MainPage() {
   )}
 </Box>
 
-<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '150px' }}>
+<Box className="section-section-light animated-section" sx={{ textAlign: 'center', marginTop: '150px' }}>
         <Typography
           variant="h3"
           sx={{
@@ -666,7 +692,7 @@ function MainPage() {
       </Box>
 
          {/* Section 3: Leading Donors */}
-         <Box className="section-section3-light"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
+         <Box className="section-section3-light animated-section"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
          <Typography 
         variant="h3" 
         sx={{ 
@@ -709,7 +735,7 @@ function MainPage() {
         )}
 </Box>
 
-<Box className="section-partners" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
+<Box className="section-partners animated-section" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
   <Typography 
     variant="h3" 
     sx={{ 
@@ -801,7 +827,7 @@ function MainPage() {
 
             {/* Section 4: Donations and Community Counters */}
           {/* Section 4: Donations and Community Counters */}
-          <Box className="section-counters" sx={{ marginTop: '50px', padding: '50px 0' }}>
+          <Box className="section-counters animated-section" sx={{ marginTop: '50px', padding: '50px 0' }}>
       <Typography 
         variant="h3" 
         sx={{ 

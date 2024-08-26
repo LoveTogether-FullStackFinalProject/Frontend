@@ -58,7 +58,7 @@ export function Navbar({ setUser }: NavbarProps) {
     setUserId(null);
     setToken(null);
     setIsAdmin(false);
-    setUser(null); // Update the user state on logout
+    setUser(null); 
     window.dispatchEvent(new Event('authChange'));
   }
 

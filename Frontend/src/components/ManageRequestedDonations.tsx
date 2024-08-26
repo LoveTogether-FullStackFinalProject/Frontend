@@ -155,9 +155,7 @@ if(isAdmin){
                   שם המוצר
                 </TableSortLabel>
               </TableCell>
-              <TableCell>
-                
-              </TableCell>
+             
               <TableCell>
                 <TableSortLabel
                   active={orderBy === 'description'}

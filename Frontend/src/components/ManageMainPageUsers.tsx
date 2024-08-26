@@ -53,7 +53,7 @@ const ManageMainPageUsers = () => {
       .filter(donor => 
         donor.firstName.toLowerCase().includes(filter.toLowerCase()) ||
         donor.lastName.toLowerCase().includes(filter.toLowerCase()) ||
-        donor.rating.toString().includes(filter.toLowerCase())
+        (donor.rating ?? '').toString().includes(filter.toLowerCase())
       )
       .sort((a, b) => {
         if (a[orderBy] === undefined || b[orderBy] === undefined) return 0;

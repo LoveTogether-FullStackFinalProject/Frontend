@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import { Box, Typography, Grid, Link, Container } from '@mui/material';
 import './main-page.css'; // Import the CSS file
 import logo from '../assets/logoorg.jpg';

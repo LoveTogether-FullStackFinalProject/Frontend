@@ -139,18 +139,20 @@ const ManageUsers: React.FC = () => {
   const applySortAndFilter = (data: DonorData[]) => {
     return data
       .filter(user =>
-        user.firstName.toLowerCase().includes(filter.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(filter.toLowerCase()) ||
-        user.email.toLowerCase().includes(filter.toLowerCase()) ||
-        (user.mainAddress && user.mainAddress.toLowerCase().includes(filter.toLowerCase())) ||
-        user.phoneNumber.includes(filter)
+        user.firstName?.toLowerCase().includes(filter.toLowerCase()) ||
+        user.lastName?.toLowerCase().includes(filter.toLowerCase()) ||
+        user.email?.toLowerCase().includes(filter.toLowerCase()) ||
+        (user.mainAddress && user.mainAddress?.toLowerCase().includes(filter.toLowerCase())) ||
+        user.phoneNumber?.includes(filter)
       )
       .sort((a, b) => {
         if (orderBy === 'rating') {
-          return (order === 'asc' ? 1 : -1) * (parseInt(a[orderBy]) - parseInt(b[orderBy]));
+          const aRating = a[orderBy] ? parseInt(a[orderBy] as string) : 0;
+          const bRating = b[orderBy] ? parseInt(b[orderBy] as string) : 0;
+          return (order === 'asc' ? 1 : -1) * (aRating - bRating);
         } else {
-          const aValue = a[orderBy];
-          const bValue = b[orderBy];
+          const aValue = a[orderBy as keyof DonorData];
+          const bValue = b[orderBy as keyof DonorData];
 
           if (aValue && bValue && aValue < bValue) return order === 'asc' ? -1 : 1;
           if (aValue && bValue && aValue > bValue) return order === 'asc' ? 1 : -1;

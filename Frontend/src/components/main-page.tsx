@@ -191,28 +191,6 @@ function MainPage() {
         };
     }, []);
 
-    useEffect(() => {
-      const sections = document.querySelectorAll(
-          '.animated-section, .animated-card, .animated-image'
-      );
-
-      const options = {
-          threshold: 0.3,
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                  entry.target.classList.add('visible');
-                  observer.unobserve(entry.target);
-              }
-          });
-      }, options);
-
-      sections.forEach(section => {
-          observer.observe(section);
-      });
-  }, []);
 
     useEffect(() => {
         const { req, abort } = dataService.getUsers();
@@ -311,7 +289,6 @@ function MainPage() {
             {/* Background */}
             
             <Box
-              className="animated-section"
       sx={{
         marginTop: '150px',
         height:"500px",
@@ -330,7 +307,6 @@ function MainPage() {
         component="img"
         src={logoTransparent}
         alt="logoTransparent"
-        className="animated-image"
         style={{
             maxWidth: '400px',
         }}
@@ -343,7 +319,6 @@ function MainPage() {
 
     {/* Text and Button */}
     <Box
-         className="animated-section"
     style={{
       gap: "0px",
     }}
@@ -412,7 +387,7 @@ function MainPage() {
         </Box>
 
    
-<Box component="section" className="section-centered animated-section" sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
+<Box component="section" className="section-centered " sx={{ marginTop: { xs: '20px', sm: '50px' } }}>
   <Container>
     <Typography
       variant="h3"
@@ -454,7 +429,7 @@ function MainPage() {
         קראו עוד על העמותה והפרוייקטים שלנו!
       </a>
     </Typography>
-    <Box className="animated-section"  sx={{ textAlign: 'center', marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Box  sx={{ textAlign: 'center', marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
   <a
     href="https://drive.google.com/uc?export=download&id=1pO9bFF9XEohfEIcIeTfJopYfFSUN4w43"
     download="תעודת רישום העמותה.pdf"
@@ -497,7 +472,7 @@ function MainPage() {
 
 
     {/* Section 2: Products We Need */}
-    <Box className="section-section-light animated-section">
+    <Box className="section-section-light ">
     <Typography 
     variant="h3" 
     sx={{ 
@@ -565,7 +540,7 @@ function MainPage() {
   )}
 </Box>
 
-<Box className="section-section-light animated-section" sx={{ textAlign: 'center', marginTop: '150px' }}>
+<Box className="section-section-light" sx={{ textAlign: 'center', marginTop: '150px' }}>
         <Typography
           variant="h3"
           sx={{
@@ -686,7 +661,7 @@ function MainPage() {
       </Box>
 
          {/* Section 3: Leading Donors */}
-         <Box className="section-section3-light animated-section"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
+         <Box className="section-section3-light"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
          <Typography 
         variant="h3" 
         sx={{ 
@@ -729,7 +704,7 @@ function MainPage() {
         )}
 </Box>
 
-<Box className="section-partners animated-section" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
+<Box className="section-partners" sx={{ marginTop: { xs: '40px', sm: '60px', md: '80px' }, textAlign: 'center' }}>
   <Typography 
     variant="h3" 
     sx={{ 
@@ -821,7 +796,7 @@ function MainPage() {
 
             {/* Section 4: Donations and Community Counters */}
           {/* Section 4: Donations and Community Counters */}
-          <Box className="section-counters animated-section" sx={{ marginTop: '50px', padding: '50px 0' }}>
+          <Box className="section-counters " sx={{ marginTop: '50px', padding: '50px 0' }}>
       <Typography 
         variant="h3" 
         sx={{ 

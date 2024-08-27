@@ -58,8 +58,9 @@ function EditRequestedProduct() {
 
   useEffect(() => {
     if (donation) {
-      setValue('customCategory', donation.customCategory);
+      console.log("category", donation.category);
       setValue('category', donation.category);
+      setValue('customCategory', donation.customCategory);
       setValue('itemName', donation.itemName);
       setValue('amount', donation.amount.toString());
       setValue('description', donation.description);
@@ -279,7 +280,7 @@ function EditRequestedProduct() {
                   <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
                   <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
                   <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתיה">מזון ושתיה</MenuItem>
+                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
                   <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
                   <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
                   <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר</MenuItem>

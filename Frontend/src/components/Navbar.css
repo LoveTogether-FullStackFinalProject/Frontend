@@ -3,7 +3,7 @@ body {
   background-color: #ffff;
 }
 
-.navbar-container {
+.navbar-container1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,7 +12,7 @@ body {
   position: relative; /* Ensure the logo is fixed relative to the navbar container */
 }
 
-.navLink {
+.navLink1 {
   margin-right: 20px;
   color: black;
   font-family: 'Assistant', -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Arimo, Open Sans, sans-serif;
@@ -43,18 +43,18 @@ body {
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .navbar-container {
+  .navbar-container1 {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .navLink {
+  
+  .navLink1 {
     flex-direction: column;
     align-items: flex-start;
     display: none; /* Hide menu by default on mobile */
   }
 
-  .navLink.open {
+  .navLink1.open {
     display: flex; /* Show menu when open class is added */
   }
 
@@ -66,7 +66,7 @@ body {
     z-index: 1000;
   }
 
-  .navbar-toggler {
+  .navbar-toggler1 {
     display: block; /* Ensure hamburger menu is visible */
     margin-left: auto; /* Align hamburger menu to the right */
     border: none;
@@ -81,7 +81,7 @@ body {
     margin-left: auto;
   }
 
-  .navLink span {
+  .navLink1 span {
     display: none; /* Hide separators */
   }
 
@@ -94,7 +94,7 @@ body {
     justify-content: flex-start; /* Align icons to the left */
   }
 
-  .navbar-toggler-icon {
+  .navbar-toggler-icon1 {
     color: black; /* Set icon color for visibility */
   }
 }

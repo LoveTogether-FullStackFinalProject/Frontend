@@ -104,7 +104,7 @@ export function Navbar({ setUser }: NavbarProps) {
               </a>
             </div>
             {isLoggedIn ? (
-              <div className='navLink'>
+              <div className={`navLink1 ${expanded ? 'open' : ''}`}>
                 <Nav.Link as={Link} to="/mainPage" onClick={() => { handleLogout(); handleClose(); }}>התנתק</Nav.Link>
                 {isAdmin && <Nav.Link as={Link} to="/adminDashboard" onClick={handleClose}>ניהול</Nav.Link>}
                 <Nav.Link as={Link} to="/uploadproduct" onClick={handleClose}>תרמו כאן</Nav.Link>
@@ -112,7 +112,7 @@ export function Navbar({ setUser }: NavbarProps) {
                 <Nav.Link as={Link} to="/profile" onClick={handleClose}>החשבון שלי</Nav.Link>
               </div>
             ) : (
-              <div className='navLink'>
+              <div className={`navLink1 ${expanded ? 'open' : ''}`}>
                 <Nav.Link as={Link} to="/uploadProduct" onClick={handleClose}>שלום אורח</Nav.Link>
                 <span style={{ margin: "0 -15px" }}>|</span>
                 <Nav.Link as={Link} to="/login" onClick={handleClose}>התחבר</Nav.Link>

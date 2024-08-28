@@ -661,7 +661,7 @@ function MainPage() {
       </Box>
 
          {/* Section 3: Leading Donors */}
-         <Box className="section-section3-light"  sx={{ mb: 5 ,fontFamily: 'Assistant'}}>
+         <Box className="section-section3-light"  sx={{ mb: 5 ,fontFamily: 'Assistant',textAlign:'center',alignItems:'center'}}>
          <Typography 
         variant="h3" 
         sx={{ 
@@ -669,7 +669,9 @@ function MainPage() {
         fontFamily: "'Assistant', sans-serif", 
         marginTop: "150px", 
         borderBottom: '3px solid #f9db78', 
-        display: 'inline-block'
+        display: 'inline-block',
+        textAlign: 'center',
+        alignItems: 'center',
         
     }}
 >
@@ -677,26 +679,26 @@ function MainPage() {
 </Typography>
     {numUsers === 1 ? (
             users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
-                <Box key={index} sx={{ p: 1, textAlign: 'center' }}>
+                <Box key={index} sx={{ p: 1, textAlign: 'center' ,alignItems:'center'}}>
                     <Avatar
                         src={user.image || person}
                         alt={user.firstName + ' ' + user.lastName}
-                        sx={{ width: 100, height: 100, mx: 'auto', my: 2 }}
+                        sx={{ width: 100, height: 100, mx: 'auto', my: 2,textAlign:'center' }}
                     />
-                    <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+                    <Typography style={{textAlign:'center'}} variant="h6">{user.firstName} {user.lastName}</Typography>
                     <Typography variant="body2">תורם מוביל</Typography>
                 </Box>
             ))
         ) : (
             <Slider {...sliderSettings}>
                 {users.filter(user => user.rating === "⭐⭐⭐⭐⭐" && user.isPublished).map((user, index) => (
-                    <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant' }}>
+                    <Box key={index} sx={{ p: 1, textAlign: 'center',fontFamily: 'Assistant',alignItems:'center' }}>
                         <Avatar
                             src={user.image || person}
                             alt={user.firstName + ' ' + user.lastName}
                             sx={{ width: 100, height: 100, mx: 'auto', my: 2,fontFamily: 'Assistant' }}
                         />
-                        <Typography variant="h6" style={{fontFamily: 'Assistant'}}>{user.firstName} {user.lastName}</Typography>
+                        <Typography variant="h6" style={{fontFamily: 'Assistant',alignItems:'center',textAlign:'center'}}>{user.firstName} {user.lastName}</Typography>
                         <Typography variant="body2">תורם מוביל</Typography>
                     </Box>
                 ))}

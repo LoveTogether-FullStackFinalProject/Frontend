@@ -82,7 +82,7 @@ const AboutPage = () => {
             variant="h3"
             sx={{
               mb: 2,
-              fontFamily: 'Assistant',
+              fontFamily: "'Assistant', sans-serif",
               borderBottom: '3px solid #f9db78',
               display: 'inline-block',
             }}
@@ -105,7 +105,7 @@ const AboutPage = () => {
             variant="h4"
             sx={{
               mb: 2,
-              fontFamily: 'Assistant',
+              fontFamily: "'Assistant', sans-serif",
               borderBottom: '3px solid #f9db78',
               display: 'inline-block',
             }}
@@ -125,7 +125,7 @@ const AboutPage = () => {
             variant="h4"
             sx={{
               mb: 2,
-              fontFamily: 'Assistant',
+              fontFamily: "'Assistant', sans-serif",
               borderBottom: '3px solid #f9db78',
               display: 'inline-block',
             }}
@@ -145,7 +145,7 @@ const AboutPage = () => {
             variant="h4"
             sx={{
               mb: 2,
-              fontFamily: 'Assistant',
+              fontFamily: "'Assistant', sans-serif",
               borderBottom: '3px solid #f9db78',
               display: 'inline-block',
             }}

@@ -95,7 +95,13 @@ export function Navbar({ setUser }: NavbarProps) {
         />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <div className="social-media">
+            <div className="social-media"
+             style={{ 
+              position: 'absolute', // Positions the div absolutely on the page
+              left: '0',           // Aligns the div to the left edge of the page
+               marginLeft: '15px', 
+               display: 'flex',
+            }}>
               <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
                 <img src={facebookLogo} alt="Facebook" />
               </a>

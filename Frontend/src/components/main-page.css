@@ -3,6 +3,19 @@
 }
 
 
+
+
+.animated-section, .animated-card, .animated-image {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animated-section.visible, .animated-card.visible, .animated-image.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section {
   text-align: center;
   width: 100%; 
@@ -68,6 +81,18 @@
   margin-top: 70px !important;
   font-size: 1.2rem; 
   
+}
+
+
+.animated-image {
+  transition: transform 0.3s ease-in-out;
+  animation: pulse 2s infinite;
+
+}
+
+.animated-image:hover {
+  transform: scale(1.1);
+
 }
 
 .first-section-button-2 {

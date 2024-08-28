@@ -33,7 +33,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding-right: 20px; /* Move social media icons closer to nav links */
+  padding-right: 430px; /* Move social media icons closer to nav links */
 }
 
 .social-media img {

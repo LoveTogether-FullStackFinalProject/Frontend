@@ -84,14 +84,14 @@ function InstagramSection() {
             target="_blank"
             sx={{
               color: 'inherit', 
-              textDecoration: 'none',
+              textDecoration: 'none'
             }}
             className="animated-section"
           >
             עקבו אחרינו
           </Link>
         </Typography>
-        <Typography variant="h4" sx={{ fontFamily: 'Assistant' }}>
+        <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: '15px', textAlign: 'center' }}>
           <Link 
             href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
             target="_blank"
@@ -100,11 +100,13 @@ function InstagramSection() {
               textDecoration: 'none',
               '&:hover': {
                 textDecoration: 'underline',
-              }
+              },
+              textAlign: 'center',
+              mr: '15px'
             }}
             className="animated-section"
           >
-            veahavtem_beyahad@
+            @veahavtem_beyahad
           </Link>
         </Typography>
   

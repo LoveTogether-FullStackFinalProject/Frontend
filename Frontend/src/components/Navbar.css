@@ -33,7 +33,8 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding-right: 20px; /* Move social media icons closer to nav links */
+  /* padding-right: 450px; */
+
 }
 
 .social-media img {
@@ -56,6 +57,7 @@ body {
 
   .navLink1.open {
     display: flex; /* Show menu when open class is added */
+    margin-bottom: 50px;
   }
 
   .logo-image {
@@ -86,6 +88,8 @@ body {
   }
 
   .social-media {
+    margin-bottom: 10px;
+    bottom: 0; /* Align social media icons to the bottom */
     padding-left: 0; /* Align social media icons correctly */
     margin-top: 10px; /* Add space above icons */
     order: -1; /* Move social media to the top */

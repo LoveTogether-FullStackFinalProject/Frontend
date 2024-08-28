@@ -243,13 +243,15 @@ function MainPage() {
     }, []);
 
     const handleProductClick = (request:requestedDonation ) => {
-        const accessToken = localStorage.getItem('accessToken');
-        if (accessToken) {
-            console.log("request is" ,request);
-            navigate('/uploadproduct', { state: { request } });
- } else {
-            navigate('/login');
-        }
+      console.log("request is" ,request);
+      navigate('/uploadproduct', { state: { request } });
+//         const accessToken = localStorage.getItem('accessToken');
+//         if (accessToken) {
+//             console.log("request is" ,request);
+//             navigate('/uploadproduct', { state: { request } });
+//  } else {
+//             navigate('/login');
+//         }
     }
 
     const handlePartnersVisibility = (isVisible: boolean) => {

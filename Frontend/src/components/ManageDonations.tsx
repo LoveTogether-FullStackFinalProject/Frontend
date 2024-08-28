@@ -257,7 +257,7 @@ const ManageDonationPage: React.FC = () => {
             <TableBody>
               {sortedAndFilteredDonations.map((donation) => (
                 <TableRow key={donation._id}>
-                  <TableCell style={{textAlign:"center"}}>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'לא צויין'}</TableCell>
+                  <TableCell style={{textAlign:"center"}}>{donation.donor ? `${donation.donor.firstName} ${donation.donor.lastName}` : 'נתרם ע"י אורח'}</TableCell>
                   <TableCell style={{textAlign:"center"}}>{donation.itemName}</TableCell>
                   <TableCell style={{textAlign:"center"}}>{donation.category}</TableCell>
                   <TableCell style={{textAlign:"center"}}>{donation.description}</TableCell>

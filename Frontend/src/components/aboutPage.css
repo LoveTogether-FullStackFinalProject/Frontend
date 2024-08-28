@@ -33,6 +33,7 @@
   height: 100%;
   z-index: -1;
   object-fit: cover;
+  pointer-events: none; /* Prevents interaction with the video */
 }
 
 /* Styling for the Overlay Text */
@@ -155,7 +156,6 @@
   text-align: center; /* Ensure the content is centered */
   font-family: 'Assistant', sans-serif; /* Ensure consistency with other sections */
 }
-
 
 /* Initiatives Section */
 .initiatives-section {

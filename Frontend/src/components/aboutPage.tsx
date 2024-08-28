@@ -66,7 +66,7 @@ const AboutPage = () => {
   return (
     <div className="about-page">
        <div className="videoTitle">
-        <video autoPlay muted loop className="vidBack">
+       <video autoPlay muted loop playsInline className="vidBack">
           <source src={myVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>

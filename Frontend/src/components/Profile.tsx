@@ -274,14 +274,17 @@ const Profile: React.FC = () => {
           }}
         >
           {/* Center Text */}
-          <Typography variant="h3" sx={{ 
-            fontFamily: "'Assistant', sans-serif", 
-            fontWeight: 500, 
-            color: 'black',
-            mb: 2,
-          }}>
-            {user.firstName} {user.lastName} ,שלום
-          </Typography>
+          <Typography
+            variant="h3"
+            sx={{
+                fontFamily: "'Assistant', sans-serif",
+                fontWeight: 500,
+                color: 'black',
+                mb: 2,
+            }}
+            >
+            שלום, {user.firstName} {user.lastName}
+            </Typography>
           {/* User Rating */}
           <Box sx={{ textAlign: 'right', direction: 'rtl' }}>
             <Typography variant="body1" sx={{ fontFamily: "'Assistant', sans-serif", color: 'black',  fontSize: '1.6em' }}>   

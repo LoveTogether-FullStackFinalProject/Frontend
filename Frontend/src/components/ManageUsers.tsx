@@ -147,19 +147,29 @@ const ManageUsers: React.FC = () => {
       )
       .sort((a, b) => {
         if (orderBy === 'rating') {
-          const aRating = a[orderBy] ? parseInt(a[orderBy] as string) : 0;
-          const bRating = b[orderBy] ? parseInt(b[orderBy] as string) : 0;
+          // Function to determine the sorting value for each user
+          const getRatingValue = (user: DonorData) => {
+            if (!user.rating) return -1; // Treat null or undefined as the lowest value
+            if (user.rating === '0') return 0; // Treat '0' as next higher value
+            return user.rating.length; // Star ratings: more stars means a higher value
+          };
+  
+          const aRating = getRatingValue(a);
+          const bRating = getRatingValue(b);
+  
+          // Sort by rating value; higher ratings first
           return (order === 'asc' ? 1 : -1) * (aRating - bRating);
         } else {
           const aValue = a[orderBy as keyof DonorData];
           const bValue = b[orderBy as keyof DonorData];
-
+  
           if (aValue && bValue && aValue < bValue) return order === 'asc' ? -1 : 1;
           if (aValue && bValue && aValue > bValue) return order === 'asc' ? 1 : -1;
           return 0;
         }
       });
   };
+  
 
   const handleExport = () => {
     const csvData = users.map((u) => ({

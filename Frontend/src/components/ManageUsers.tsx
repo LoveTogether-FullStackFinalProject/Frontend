@@ -21,7 +21,12 @@ import {
   Toolbar,
   InputAdornment,
   Tooltip,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
+import { Controller } from "react-hook-form";
 import { Edit, Delete, Search } from "@mui/icons-material";
 import { CSVLink } from "react-csv";
 import { z } from "zod";
@@ -44,6 +49,8 @@ const schema = z.object({
     .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
     .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),
   mainAddress: z.string().min(5, "כתובת ראשית חייבת להכיל לפחות 5 תווים"),
+  isAdmin: z.boolean()
+  
 });
 
 type Order = "asc" | "desc";
@@ -202,6 +209,7 @@ const ManageUsers: React.FC = () => {
   const sortedAndFilteredUsers = applySortAndFilter(users);
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -580,6 +588,43 @@ const ManageUsers: React.FC = () => {
                 },
               }}
             />
+            <FormControl fullWidth margin="normal">
+            <InputLabel
+              sx={{
+                right: 32,
+                left: "auto",
+                transformOrigin: "top right",
+              }}
+            >
+              הרשאות משתמש
+            </InputLabel>
+            <Controller
+              name="isAdmin"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  value={field.value ? "true" : "false"}
+                  onChange={(e) => field.onChange(e.target.value === "true")}
+                  label="הרשאות משתמש"
+                  sx={{
+                    textAlign: "right",
+                    direction: "rtl",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      textAlign: "right",
+                    },
+                    "& .MuiSelect-icon": {
+                      right: "unset",
+                      left: "7px",
+                    },
+                  }}
+                >
+                  <MenuItem value="true" sx={{ textAlign: "right", direction: "rtl"}}>מנהל</MenuItem>
+                  <MenuItem value="false" sx={{ textAlign: "right", direction: "rtl"}}>משתמש רגיל</MenuItem>
+                </Select>
+              )}
+            />
+          </FormControl>
             <Button type="submit" variant="contained" color="primary" fullWidth>
               עדכן משתמש
             </Button>

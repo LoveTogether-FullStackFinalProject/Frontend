@@ -9,6 +9,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { uploadPhoto, uploadProduct } from '../services/uploadProductService';
 import dataService from '../services/data-service';
+import successGif from '../assets/success.gif';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import SearchIcon from '@mui/icons-material/Search';
 import { DonorData } from './donorData';
 
 const theme = createTheme();

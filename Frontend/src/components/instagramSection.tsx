@@ -1,36 +1,53 @@
 //import React from 'react';
-import { Box, Typography, Grid, Link, Container } from '@mui/material';
-import './main-page.css'; // Import the CSS file
-import logo from '../assets/logoorg.jpg';
-import img1 from '../assets/organizationImages/img1.jpg';
-import img2 from '../assets/organizationImages/img2.jpg';
-import img3 from '../assets/organizationImages/img3.jpg';
-import img4 from '../assets/organizationImages/img4.jpg';
-import img5 from '../assets/organizationImages/img5.jpg';
-import img6 from '../assets/organizationImages/img6.jpg';
-import img7 from '../assets/organizationImages/img7.jpg';
-import img8 from '../assets/organizationImages/img8.jpg';
-import img9 from '../assets/organizationImages/img9.jpg';
-import img10 from '../assets/organizationImages/img10.jpg';
-import img11 from '../assets/organizationImages/img11.jpg';
-import img12 from '../assets/organizationImages/img12.jpg';
-import img13 from '../assets/organizationImages/img13.jpg';
-import img14 from '../assets/organizationImages/img14.jpg';
-import img15 from '../assets/organizationImages/img15.jpg';
-import img16 from '../assets/organizationImages/img16.jpg';
-import img17 from '../assets/organizationImages/img17.jpg';
+import { Box, Typography, Grid, Link, Container } from "@mui/material";
+import "./main-page.css"; // Import the CSS file
+import logo from "../assets/logoorg.jpg";
+import img1 from "../assets/organizationImages/img1.jpg";
+import img2 from "../assets/organizationImages/img2.jpg";
+import img3 from "../assets/organizationImages/img3.jpg";
+import img4 from "../assets/organizationImages/img4.jpg";
+import img5 from "../assets/organizationImages/img5.jpg";
+import img6 from "../assets/organizationImages/img6.jpg";
+import img7 from "../assets/organizationImages/img7.jpg";
+import img8 from "../assets/organizationImages/img8.jpg";
+import img9 from "../assets/organizationImages/img9.jpg";
+import img10 from "../assets/organizationImages/img10.jpg";
+import img11 from "../assets/organizationImages/img11.jpg";
+import img12 from "../assets/organizationImages/img12.jpg";
+import img13 from "../assets/organizationImages/img13.jpg";
+import img14 from "../assets/organizationImages/img14.jpg";
+import img15 from "../assets/organizationImages/img15.jpg";
+import img16 from "../assets/organizationImages/img16.jpg";
+import img17 from "../assets/organizationImages/img17.jpg";
 
 const images = [
-  img1, img2, img3, img4, img5, img6, img7,
-  img8, img9, img10, img11, img12, img13, img14,
-  img15, img16, img17
+  img1,
+  img2,
+  img3,
+  img4,
+  img5,
+  img6,
+  img7,
+  img8,
+  img9,
+  img10,
+  img11,
+  img12,
+  img13,
+  img14,
+  img15,
+  img16,
+  img17,
 ];
 
 function InstagramSection() {
-    return (
-      <Container className="animated-section" sx={{ marginTop: '50px', textAlign: 'center' }}>
-        <style>
-          {`
+  return (
+    <Container
+      className="animated-section"
+      sx={{ marginTop: "50px", textAlign: "center" }}
+    >
+      <style>
+        {`
             @keyframes rotate {
               0% {
                 transform: rotate(0deg);
@@ -56,90 +73,97 @@ function InstagramSection() {
               cursor: pointer; /* Ensure cursor is a pointer */
             }
           `}
-        </style>
-        <Link href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" target="_blank">
-          <Box 
-            sx={{ position: 'relative', display: 'inline-block' }}
-          >
-            <Box className="rotating-ring" />
-            <Box 
+      </style>
+      <Link
+        href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr"
+        target="_blank"
+      >
+        <Box sx={{ position: "relative", display: "inline-block" }}>
+          <Box className="rotating-ring" />
+          <Box
+            component="img"
+            src={logo}
+            alt="Organization Logo"
+            className="animated-image"
+            sx={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "50%",
+              marginBottom: "20px",
+              cursor: "pointer",
+            }}
+          />
+        </Box>
+      </Link>
+
+      <Typography
+        variant="h4"
+        sx={{ fontFamily: "Assistant", padding: "15px", textAlign: "center" }}
+      >
+        <Link
+          href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr"
+          target="_blank"
+          sx={{
+            color: "inherit",
+            textDecoration: "none",
+          }}
+          className="animated-section"
+        >
+          עקבו אחרינו
+        </Link>
+      </Typography>
+      <Typography
+        variant="h4"
+        sx={{ fontFamily: "Assistant", padding: "15px", textAlign: "center" }}
+      >
+        <Link
+          href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr"
+          target="_blank"
+          sx={{
+            color: "inherit",
+            textDecoration: "none",
+            "&:hover": {
+              textDecoration: "underline",
+            },
+            textAlign: "center",
+            mr: "15px",
+          }}
+          className="animated-section"
+        >
+          @veahavtem_beyahad
+        </Link>
+      </Typography>
+
+      <Grid
+        container
+        spacing={2}
+        className="animated-section"
+        sx={{
+          marginTop: "30px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {images.map((image, index) => (
+          <Grid item xs={6} sm={4} md={3} key={index} className="animated-card">
+            <Box
               component="img"
-              src={logo} 
-              alt="Organization Logo"
+              src={image}
+              alt={`Instagram Image ${index + 1}`}
               className="animated-image"
               sx={{
-                width: '150px',
-                height: '150px',
-                borderRadius: '50%', 
-                marginBottom: '20px',
-                cursor: 'pointer',
+                width: "100%",
+                height: "200px",
+                borderRadius: "10px",
+                boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                objectFit: "cover",
               }}
             />
-          </Box>
-        </Link>
-  
-        <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: '15px', textAlign: 'center' }}>
-          <Link 
-            href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
-            target="_blank"
-            sx={{
-              color: 'inherit', 
-              textDecoration: 'none'
-            }}
-            className="animated-section"
-          >
-            עקבו אחרינו
-          </Link>
-        </Typography>
-        <Typography variant="h4" sx={{ fontFamily: 'Assistant', padding: '15px', textAlign: 'center' }}>
-          <Link 
-            href="https://www.instagram.com/veahavtem_beyahad/?igshid=MzMyNGUyNmU2YQ%3D%3D&utm_source=qr" 
-            target="_blank"
-            sx={{
-              color: 'inherit', 
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-              textAlign: 'center',
-              mr: '15px'
-            }}
-            className="animated-section"
-          >
-            @veahavtem_beyahad
-          </Link>
-        </Typography>
-  
-        <Grid 
-          container 
-          spacing={2} 
-          className="animated-section"
-          sx={{ 
-            marginTop: '30px', 
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {images.map((image, index) => (
-            <Grid item xs={6} sm={4} md={3} key={index} className="animated-card">
-              <Box 
-                component="img"
-                src={image}
-                alt={`Instagram Image ${index + 1}`}
-                className="animated-image"
-                sx={{
-                  width: '100%', 
-                  height: '200px',
-                  borderRadius: '10px',
-                  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
-                  objectFit: 'cover'
-                }}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    );
-  }
-  
-  export default InstagramSection;
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
+}
+
+export default InstagramSection;

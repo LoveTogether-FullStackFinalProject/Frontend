@@ -1,13 +1,17 @@
 .admin-page {
- 
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background: rgb(169,169,169);
-  background: linear-gradient(90deg, rgba(213, 209, 209, 0.896) 5%, rgba(249,218,120,1) 62%, rgba(245,245,245,1) 100%);
+  background: rgb(169, 169, 169);
+  background: linear-gradient(
+    90deg,
+    rgba(213, 209, 209, 0.896) 5%,
+    rgba(249, 218, 120, 1) 62%,
+    rgba(245, 245, 245, 1) 100%
+  );
   /* background-attachment: fixed; */
   display: flex;
   flex-direction: column;
@@ -26,8 +30,7 @@
   align-items: center;
 }
 
-
-.background-section-text-center{
+.background-section-text-center {
   margin-top: 15px;
 }
 .admin-title {
@@ -70,7 +73,6 @@
   gap: 20px;
   width: 100%;
   padding: 20px;
-  
 }
 
 .card1 {
@@ -115,6 +117,6 @@
 }
 
 .error-button {
-  background-color: #F9DA78;
+  background-color: #f9da78;
   margin-top: 20px;
 }

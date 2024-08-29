@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { Donation } from './donation';
+import React, { useState, useEffect } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import { Donation } from "./donation";
 
 interface DonationModalProps {
   show: boolean;
@@ -20,17 +20,22 @@ const DonationModal: React.FC<DonationModalProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Donation | null>(null);
   const [errors, setErrors] = useState({
-    quantity: '',
-    description: '',
-    category: '',
-    pickupAddress: '',
+    quantity: "",
+    description: "",
+    category: "",
+    pickupAddress: "",
   });
 
   useEffect(() => {
     setEditData(donation);
     if (!show) {
       setIsEditing(false);
-      setErrors({ quantity: '', description: '', category: '', pickupAddress: '' });
+      setErrors({
+        quantity: "",
+        description: "",
+        category: "",
+        pickupAddress: "",
+      });
     }
   }, [donation, show]);
 
@@ -44,7 +49,12 @@ const DonationModal: React.FC<DonationModalProps> = ({
   };
 
   const handleSave = () => {
-    if (errors.quantity || errors.description || errors.category || errors.pickupAddress) {
+    if (
+      errors.quantity ||
+      errors.description ||
+      errors.category ||
+      errors.pickupAddress
+    ) {
       return;
     }
     if (editData) {
@@ -55,7 +65,9 @@ const DonationModal: React.FC<DonationModalProps> = ({
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
     setEditData((prev) => (prev ? { ...prev, [name]: value } : null));
@@ -63,23 +75,25 @@ const DonationModal: React.FC<DonationModalProps> = ({
     // Validation logic
     const updatedErrors = { ...errors };
 
-    if (name === 'quantity') {
-      updatedErrors.quantity = Number(value) < 1 ? 'כמות חייבת להיות לפחות 1' : '';
+    if (name === "quantity") {
+      updatedErrors.quantity =
+        Number(value) < 1 ? "כמות חייבת להיות לפחות 1" : "";
     }
 
-    if (name === 'description') {
-      updatedErrors.description = value.trim().length < 1 ? 'תיאור חייב להיות לפחות תו אחד' : '';
+    if (name === "description") {
+      updatedErrors.description =
+        value.trim().length < 1 ? "תיאור חייב להיות לפחות תו אחד" : "";
     }
 
-    if (name === 'category') {
-      updatedErrors.category = value === '' ? 'חובה לבחור קטגוריה' : '';
+    if (name === "category") {
+      updatedErrors.category = value === "" ? "חובה לבחור קטגוריה" : "";
     }
 
-    if (name === 'pickupAddress') {
+    if (name === "pickupAddress") {
       updatedErrors.pickupAddress =
-        editData?.status === 'ממתין לאיסוף' && value.trim().length < 1
-          ? 'כתובת לאיסוף היא שדה חובה'
-          : '';
+        editData?.status === "ממתין לאיסוף" && value.trim().length < 1
+          ? "כתובת לאיסוף היא שדה חובה"
+          : "";
     }
 
     setErrors(updatedErrors);
@@ -88,7 +102,12 @@ const DonationModal: React.FC<DonationModalProps> = ({
   const handleClose = () => {
     setIsEditing(false);
     setEditData(donation);
-    setErrors({ quantity: '', description: '', category: '', pickupAddress: '' });
+    setErrors({
+      quantity: "",
+      description: "",
+      category: "",
+      pickupAddress: "",
+    });
     onHide();
   };
 
@@ -97,12 +116,19 @@ const DonationModal: React.FC<DonationModalProps> = ({
   }
 
   return (
-    <Modal show={show} onHide={handleClose} dir="rtl" style={{ maxHeight: '100vh' }}>
+    <Modal
+      show={show}
+      onHide={handleClose}
+      dir="rtl"
+      style={{ maxHeight: "100vh" }}
+    >
       <Modal.Header closeButton />
       <Modal.Body>
         <div className="row">
-          <div className="col-md-6" style={{ textAlign: 'right' }}>
-            <h4 style={{ borderBottom: '3px solid #f9db78', width: '45%' }}>פרטי התרומה:</h4>
+          <div className="col-md-6" style={{ textAlign: "right" }}>
+            <h4 style={{ borderBottom: "3px solid #f9db78", width: "45%" }}>
+              פרטי התרומה:
+            </h4>
             {isEditing ? (
               <Form>
                 <Form.Group>
@@ -121,7 +147,9 @@ const DonationModal: React.FC<DonationModalProps> = ({
                     <option value="צעצועים">צעצועים</option>
                     <option value="אחר">אחר</option>
                   </Form.Control>
-                  {errors.category && <div style={{ color: 'red' }}>{errors.category}</div>}
+                  {errors.category && (
+                    <div style={{ color: "red" }}>{errors.category}</div>
+                  )}
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>כמות</Form.Label>
@@ -132,7 +160,9 @@ const DonationModal: React.FC<DonationModalProps> = ({
                     onChange={handleChange}
                     min={1}
                   />
-                  {errors.quantity && <div style={{ color: 'red' }}>{errors.quantity}</div>}
+                  {errors.quantity && (
+                    <div style={{ color: "red" }}>{errors.quantity}</div>
+                  )}
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>מצב הפריט</Form.Label>
@@ -154,9 +184,11 @@ const DonationModal: React.FC<DonationModalProps> = ({
                     value={editData.description}
                     onChange={handleChange}
                   />
-                  {errors.description && <div style={{ color: 'red' }}>{errors.description}</div>}
+                  {errors.description && (
+                    <div style={{ color: "red" }}>{errors.description}</div>
+                  )}
                 </Form.Group>
-                {editData.category === 'מזון ושתייה' && (
+                {editData.category === "מזון ושתייה" && (
                   <Form.Group>
                     <Form.Label>תאריך תפוגה</Form.Label>
                     <Form.Control
@@ -164,14 +196,16 @@ const DonationModal: React.FC<DonationModalProps> = ({
                       name="expirationDate"
                       value={
                         editData.expirationDate
-                          ? new Date(editData.expirationDate).toISOString().split('T')[0]
-                          : ''
+                          ? new Date(editData.expirationDate)
+                              .toISOString()
+                              .split("T")[0]
+                          : ""
                       }
                       onChange={handleChange}
                     />
                   </Form.Group>
                 )}
-                {editData.status === 'ממתין לאיסוף' && (
+                {editData.status === "ממתין לאיסוף" && (
                   <Form.Group>
                     <Form.Label>כתובת לאיסוף</Form.Label>
                     <Form.Control
@@ -181,7 +215,7 @@ const DonationModal: React.FC<DonationModalProps> = ({
                       onChange={handleChange}
                     />
                     {errors.pickupAddress && (
-                      <div style={{ color: 'red' }}>{errors.pickupAddress}</div>
+                      <div style={{ color: "red" }}>{errors.pickupAddress}</div>
                     )}
                   </Form.Group>
                 )}
@@ -200,16 +234,17 @@ const DonationModal: React.FC<DonationModalProps> = ({
                 <p>
                   <strong>תיאור:</strong> {editData.description}
                 </p>
-                {editData.category === 'מזון ושתייה' && editData.expirationDate && (
-                  <p>
-                    <strong>תאריך תפוגה:</strong>{' '}
-                    {new Date(editData.expirationDate).toLocaleDateString()}
-                  </p>
-                )}
+                {editData.category === "מזון ושתייה" &&
+                  editData.expirationDate && (
+                    <p>
+                      <strong>תאריך תפוגה:</strong>{" "}
+                      {new Date(editData.expirationDate).toLocaleDateString()}
+                    </p>
+                  )}
                 <p>
                   <strong>סטטוס:</strong> {editData.status}
                 </p>
-                {editData.status === 'ממתין לאיסוף' && (
+                {editData.status === "ממתין לאיסוף" && (
                   <p>
                     <strong>כתובת לאיסוף:</strong> {editData.pickupAddress}
                   </p>
@@ -224,10 +259,10 @@ const DonationModal: React.FC<DonationModalProps> = ({
                 alt={editData.itemName}
                 className="img-fluid"
                 style={{
-                  maxWidth: '100%',
-                  maxHeight: '70%',
-                  borderRadius: '5px',
-                  marginTop: '5px',
+                  maxWidth: "100%",
+                  maxHeight: "70%",
+                  borderRadius: "5px",
+                  marginTop: "5px",
                 }}
               />
             )}

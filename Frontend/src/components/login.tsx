@@ -1,30 +1,35 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { postLogIn, googleSignin } from "../services/login-service";
-import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import dataService from "../services/data-service.ts";
-import './login.css';
+import "./login.css";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {/* Copyright © Your Website {new Date().getFullYear()} */}
     </Typography>
   );
@@ -40,49 +45,50 @@ export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email: string = data.get('email') as string;
-    const password: string = data.get('password') as string;
-  
+    const email: string = data.get("email") as string;
+    const password: string = data.get("password") as string;
+
     if (email && password) {
       try {
         const res = await postLogIn(email, password);
         if (res._id) {
-          localStorage.setItem('userID', res._id);
-          localStorage.setItem('accessToken', res.accessToken!);
-          localStorage.setItem('refreshToken', res.refreshToken!);
-  
-          const userId = localStorage.getItem('userID');
+          localStorage.setItem("userID", res._id);
+          localStorage.setItem("accessToken", res.accessToken!);
+          localStorage.setItem("refreshToken", res.refreshToken!);
+
+          const userId = localStorage.getItem("userID");
           if (userId) {
             const { data } = await dataService.getUser(userId).req;
-            localStorage.setItem('userAddress', data.mainAddress); // Store the user's address
-  
+            localStorage.setItem("userAddress", data.mainAddress); // Store the user's address
+
             if (data.isAdmin) {
-              navigate('/adminDashboard');
+              navigate("/adminDashboard");
             } else {
-              navigate('/mainPage');
+              navigate("/mainPage");
             }
           }
-  
-          window.dispatchEvent(new Event('authChange'));
+
+          window.dispatchEvent(new Event("authChange"));
         }
       } catch (err) {
-        setLoginError('שם משתמש או סיסמה לא נכונים');
+        setLoginError("שם משתמש או סיסמה לא נכונים");
       }
     } else {
-      setLoginError('אנא הכנס/י שם משתמש וסיסמה');
+      setLoginError("אנא הכנס/י שם משתמש וסיסמה");
     }
   };
-  
 
-  const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
+  const onGoogleLoginSuccess = async (
+    credentialResponse: CredentialResponse
+  ) => {
     try {
       const res = await googleSignin(credentialResponse);
       if (res._id) {
-        localStorage.setItem('userID', res._id);
-        localStorage.setItem('accessToken', res.accessToken!);
-        localStorage.setItem('refreshToken', res.refreshToken!);
-        window.dispatchEvent(new Event('authChange'));
-        navigate('/mainPage');
+        localStorage.setItem("userID", res._id);
+        localStorage.setItem("accessToken", res.accessToken!);
+        localStorage.setItem("refreshToken", res.refreshToken!);
+        window.dispatchEvent(new Event("authChange"));
+        navigate("/mainPage");
       }
     } catch (e) {
       console.log(e);
@@ -93,12 +99,17 @@ export default function SignIn() {
     setPasswordVisible(!passwordVisible);
   };
 
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
     return (
       <div className="already-logged-in">
         <p>שגיאה: הינך כבר מחובר/ת לאתר</p>
-        <button onClick={() => navigate('/mainPage')} className="btn btn-primary">עברו לעמוד הראשי</button>
+        <button
+          onClick={() => navigate("/mainPage")}
+          className="btn btn-primary"
+        >
+          עברו לעמוד הראשי
+        </button>
       </div>
     );
   }
@@ -111,18 +122,24 @@ export default function SignIn() {
           sx={{
             marginTop: 15,
             marginBottom: 55,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             התחברות
           </Typography>
-          <Box component="form" style={{ direction: "rtl" }} onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            style={{ direction: "rtl" }}
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -135,25 +152,25 @@ export default function SignIn() {
               InputLabelProps={{
                 sx: {
                   right: 19,
-                  left: 'auto',
-                  transformOrigin: 'top right',
-                  '&.MuiInputLabel-shrink': {
-                    transform: 'translate(0, -10px) scale(0.85)',
-                    transformOrigin: 'top right',
+                  left: "auto",
+                  transformOrigin: "top right",
+                  "&.MuiInputLabel-shrink": {
+                    transform: "translate(0, -10px) scale(0.85)",
+                    transformOrigin: "top right",
                   },
-                  '& .MuiFormLabel-asterisk': {
-                    display: 'none',
+                  "& .MuiFormLabel-asterisk": {
+                    display: "none",
                   },
-                }
+                },
               }}
               InputProps={{
                 sx: {
-                  textAlign: 'right',
-                  direction: 'rtl',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    textAlign: 'right',
+                  textAlign: "right",
+                  direction: "rtl",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    textAlign: "right",
                   },
-                }
+                },
               }}
             />
 
@@ -163,45 +180,48 @@ export default function SignIn() {
               fullWidth
               name="password"
               label="סיסמא"
-              type={passwordVisible ? 'text' : 'password'}
+              type={passwordVisible ? "text" : "password"}
               id="password"
               autoComplete="current-password"
               InputLabelProps={{
                 sx: {
                   right: 19,
-                  left: 'auto',
-                  transformOrigin: 'top right',
-                  '&.MuiInputLabel-shrink': {
-                    transform: 'translate(0, -10px) scale(0.85)',
-                    transformOrigin: 'top right',
+                  left: "auto",
+                  transformOrigin: "top right",
+                  "&.MuiInputLabel-shrink": {
+                    transform: "translate(0, -10px) scale(0.85)",
+                    transformOrigin: "top right",
                   },
-                  '& .MuiFormLabel-asterisk': {
-                    display: 'none',
+                  "& .MuiFormLabel-asterisk": {
+                    display: "none",
                   },
-                }
+                },
               }}
               InputProps={{
                 sx: {
-                  textAlign: 'right',
-                  direction: 'rtl',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    textAlign: 'right',
+                  textAlign: "right",
+                  direction: "rtl",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    textAlign: "right",
                   },
                 },
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton
-                      onClick={togglePasswordVisibility}
-                      edge="end"
-                    >
+                    <IconButton onClick={togglePasswordVisibility} edge="end">
                       {passwordVisible ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
               }}
             />
 
-            {loginError && <p style={{ color: 'red', fontSize: '14px', marginLeft: '150px' }}>{loginError}</p>}
+            {loginError && (
+              <p
+                style={{ color: "red", fontSize: "14px", marginLeft: "150px" }}
+              >
+                {loginError}
+              </p>
+            )}
 
             <Button
               type="submit"
@@ -224,25 +244,40 @@ export default function SignIn() {
 
             <Grid container>
               <Grid item>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 110,  }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: 110,
+                  }}
+                >
                   <Link
                     href="#"
                     variant="body2"
                     onClick={(e) => {
                       e.preventDefault();
-                      navigate('/uploadProduct');
+                      navigate("/uploadProduct");
                     }}
                   >
                     {"המשך כאורח"}
                   </Link>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 110,marginTop:"15px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: 110,
+                    marginTop: "15px",
+                  }}
+                >
                   <Link
                     href="#"
                     variant="body2"
                     onClick={(e) => {
                       e.preventDefault();
-                      navigate('/registration');
+                      navigate("/registration");
                     }}
                   >
                     {"אין לך משתמש? הירשמ/י כאן"}

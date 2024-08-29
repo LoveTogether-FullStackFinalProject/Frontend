@@ -1,6 +1,6 @@
 /* General About Page Styling */
 .about-page {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 0;
   padding: 0;
@@ -154,7 +154,7 @@
   line-height: 1.6;
   margin: 0 auto;
   text-align: center; /* Ensure the content is centered */
-  font-family: 'Assistant', sans-serif; /* Ensure consistency with other sections */
+  font-family: "Assistant", sans-serif; /* Ensure consistency with other sections */
 }
 
 /* Initiatives Section */

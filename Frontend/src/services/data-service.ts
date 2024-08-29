@@ -1,9 +1,9 @@
-import apiClient, { CanceledError } from './api-client';
-import { Donation } from '../components/donation';
-import { DonorData } from '../components/donorData'
+import apiClient, { CanceledError } from "./api-client";
+import { Donation } from "../components/donation";
+import { DonorData } from "../components/donorData";
 import { requestedDonation } from "../services/upload-requested-product-service";
 //import { Donation } from '../components/userDonation';
-import logoutServiece from './logout-serviece';
+import logoutServiece from "./logout-serviece";
 import { AxiosError, AxiosResponse } from "axios";
 
 // const AdminID = "668567c7bd9e16d610a11718";
@@ -11,11 +11,11 @@ import { AxiosError, AxiosResponse } from "axios";
 export { CanceledError };
 
 const makeRequest = async (request: () => Promise<AxiosResponse>) => {
-  console.log("request is:",request);
+  console.log("request is:", request);
   console.log(1);
   try {
     const response = await request();
-    console.log("response is:",response);
+    console.log("response is:", response);
     return response;
   } catch (axiosError: unknown) {
     if (axiosError instanceof AxiosError && axiosError.response) {
@@ -25,21 +25,24 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
       if (axiosError.response.status === 401) {
         console.log(3);
         const refreshToken = localStorage.getItem("refreshToken");
-       if (!refreshToken) {
-        throw new Error("No refresh token found");
-       }
-       console.log("going to refreshToken:");
-        const refreshResponse = await apiClient.get('auth/refreshToken', { 
+        if (!refreshToken) {
+          throw new Error("No refresh token found");
+        }
+        console.log("going to refreshToken:");
+        const refreshResponse = await apiClient.get("auth/refreshToken", {
           headers: {
-            'Authorization': `Bearer ${refreshToken}`
+            Authorization: `Bearer ${refreshToken}`,
           },
-       });
+        });
 
         if (refreshResponse.status === 200) {
-          localStorage.setItem('accessToken',refreshResponse.data.accessToken);
-          localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
-          console.log("new access token:",refreshResponse.data.accessToken);
-          console.log("new refresh token:",refreshResponse.data.refreshToken);
+          localStorage.setItem("accessToken", refreshResponse.data.accessToken);
+          localStorage.setItem(
+            "refreshToken",
+            refreshResponse.data.refreshToken
+          );
+          console.log("new access token:", refreshResponse.data.accessToken);
+          console.log("new refresh token:", refreshResponse.data.refreshToken);
           console.log("going to request");
           return request();
         }
@@ -50,38 +53,47 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
 
 const getDonations = () => {
   const abortController = new AbortController();
-  const req = apiClient.get<Donation[]>('/donation/donations', { signal: abortController.signal });
+  const req = apiClient.get<Donation[]>("/donation/donations", {
+    signal: abortController.signal,
+  });
   return { req, abort: () => abortController.abort() };
 };
 
 const getRequestedProducts = () => {
   const abortController = new AbortController();
-  const req = apiClient.get<requestedDonation[]>('/requestedDonation/rdonations', { signal: abortController.signal });
+  const req = apiClient.get<requestedDonation[]>(
+    "/requestedDonation/rdonations",
+    { signal: abortController.signal }
+  );
   return { req, abort: () => abortController.abort() };
 };
 
 const getUsers = () => {
   const abortController = new AbortController();
-  const req = apiClient.get<DonorData[]>('/donor', { signal: abortController.signal });
+  const req = apiClient.get<DonorData[]>("/donor", {
+    signal: abortController.signal,
+  });
   return { req, abort: () => abortController.abort() };
 };
 
 const getUser = (userId: string) => {
   const abortController = new AbortController();
-  const req = apiClient.get(`/donor/${userId}`, { signal: abortController.signal });
+  const req = apiClient.get(`/donor/${userId}`, {
+    signal: abortController.signal,
+  });
   return { req, abort: () => abortController.abort() };
 };
 
 const updateUser = (userId: string, data: Partial<DonorData>) => {
   const request = () => {
     const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-      console.log("accessToken in request:",accessToken);
-    return apiClient.put(`/donor/${userId}`,data,{
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+    console.log("accessToken in request:", accessToken);
+    return apiClient.put(`/donor/${userId}`, data, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   };
@@ -94,9 +106,9 @@ const deleteUser = (userId: string) => {
     if (!accessToken) {
       throw new Error("No access token found");
     }
-    return apiClient.delete(`/donor/${userId}`,{
+    return apiClient.delete(`/donor/${userId}`, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   };
@@ -106,13 +118,13 @@ const deleteUser = (userId: string) => {
 const updateDonation = async (donationId: string, data: Donation) => {
   const request = () => {
     const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
 
-    return apiClient.put(`/donation/update/${donationId}`, data,{
+    return apiClient.put(`/donation/update/${donationId}`, data, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   };
@@ -125,9 +137,9 @@ const deleteDonation = async (donationId: string) => {
     if (!accessToken) {
       throw new Error("No access token found");
     }
-    return apiClient.delete(`/donation/delete/${donationId}`,{
+    return apiClient.delete(`/donation/delete/${donationId}`, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   };
@@ -136,7 +148,9 @@ const deleteDonation = async (donationId: string) => {
 
 const getDonationsByUser = (userId: string) => {
   const abortController = new AbortController();
-  const req = apiClient.get<Donation[]>(`/donation/user/${userId}`, { signal: abortController.signal });
+  const req = apiClient.get<Donation[]>(`/donation/user/${userId}`, {
+    signal: abortController.signal,
+  });
   return { req, abort: () => abortController.abort() };
 };
 
@@ -144,13 +158,13 @@ const updateUserData = async (userId: string, data: Partial<DonorData>) => {
   console.log("updateUserData");
   const request = () => {
     const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-      console.log("accessToken in request:",accessToken);
-    return apiClient.put(`/donor/${userId}`, data,{
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+    console.log("accessToken in request:", accessToken);
+    return apiClient.put(`/donor/${userId}`, data, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   };
@@ -159,27 +173,33 @@ const updateUserData = async (userId: string, data: Partial<DonorData>) => {
 
 export const logout = () => {
   logoutServiece.postLogout();
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-  localStorage.removeItem('userID');
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("userID");
 };
 
 // export const getAdmin = () => {
 //   return getUser(AdminID);
 // }
 
-
-const updateRequestedDonation = async (donationId: string,data: Partial<requestedDonation> ) => {
+const updateRequestedDonation = async (
+  donationId: string,
+  data: Partial<requestedDonation>
+) => {
   const request = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       throw new Error("No access token found");
     }
-    return apiClient.put(`/requestedDonation/rdonation/update/${donationId}`, data,{
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      },
-    });
+    return apiClient.put(
+      `/requestedDonation/rdonation/update/${donationId}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   };
   return makeRequest(request);
 };
@@ -190,11 +210,14 @@ const deleteRequestedDonation = async (donationId: string) => {
     if (!accessToken) {
       throw new Error("No access token found");
     }
-    return apiClient.delete(`/requestedDonation/rdonation/delete/${donationId}`,{
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      },
-    });
+    return apiClient.delete(
+      `/requestedDonation/rdonation/delete/${donationId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   };
   return makeRequest(request);
 };
@@ -214,7 +237,7 @@ const updateUserPassword = async (userId: string, newPassword: string) => {
       { password: newPassword }, // Add new password in the request body
       {
         headers: {
-          'Authorization': `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -225,18 +248,32 @@ const updateUserPassword = async (userId: string, newPassword: string) => {
 
 const sendResetPasswordEmail = async (email: string) => {
   try {
-    const response = await apiClient.post('/auth/forgot-password', { email });
+    const response = await apiClient.post("/auth/forgot-password", { email });
     return response.data;
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data?.message || 'Failed to send reset password email.');
+      throw new Error(
+        error.response?.data?.message || "Failed to send reset password email."
+      );
     } else {
-      throw new Error('Failed to send reset password email.');
+      throw new Error("Failed to send reset password email.");
     }
   }
 };
 
- 
-
-
-export default { getUser, getUsers, updateUser, deleteUser, getDonations, getDonationsByUser, updateDonation, deleteDonation, getRequestedProducts, updateUserData, updateRequestedDonation, deleteRequestedDonation, updateUserPassword, sendResetPasswordEmail };
+export default {
+  getUser,
+  getUsers,
+  updateUser,
+  deleteUser,
+  getDonations,
+  getDonationsByUser,
+  updateDonation,
+  deleteDonation,
+  getRequestedProducts,
+  updateUserData,
+  updateRequestedDonation,
+  deleteRequestedDonation,
+  updateUserPassword,
+  sendResetPasswordEmail,
+};

@@ -10,35 +10,42 @@ export interface IDonor {
   isAdmin?: boolean;
 }
 
-export const postLogIn = async (email: string, password: string): Promise<IDonor> => {
+export const postLogIn = async (
+  email: string,
+  password: string
+): Promise<IDonor> => {
   return new Promise<IDonor>((resolve, reject) => {
     console.log("email: " + email);
     console.log("password: " + password);
-    apiClient.post<IDonor>("auth/login", { email, password })
+    apiClient
+      .post<IDonor>("auth/login", { email, password })
       .then((response) => {
         if (response.data._id) {
-          localStorage.setItem('userID', response.data._id);
+          localStorage.setItem("userID", response.data._id);
         }
         resolve(response.data);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         reject(error);
       });
   });
-}
+};
 
 export const googleSignin = (credentialResponse: CredentialResponse) => {
   return new Promise<IDonor>((resolve, reject) => {
-    apiClient.post("auth/googleSignIn", credentialResponse).then((response) => {
-      if (response.data._id) {
-        localStorage.setItem('userID', response.data._id);
-      }
-      resolve(response.data);
-    }).catch((error) => {
-      reject(error);
-    });
+    apiClient
+      .post("auth/googleSignIn", credentialResponse)
+      .then((response) => {
+        if (response.data._id) {
+          localStorage.setItem("userID", response.data._id);
+        }
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
-}
-
+};
 
 // export const googleSignin = async (credentialResponse: any) => {
 //   try {
@@ -49,18 +56,23 @@ export const googleSignin = (credentialResponse: CredentialResponse) => {
 //   }
 // };
 
-export const newPassword = async (email: string, password: string): Promise<IDonor> => {
+export const newPassword = async (
+  email: string,
+  password: string
+): Promise<IDonor> => {
   return new Promise<IDonor>((resolve, reject) => {
     console.log("email: " + email);
     console.log("password: " + password);
-    apiClient.post<IDonor>("auth/newPassword", { email, password })
+    apiClient
+      .post<IDonor>("auth/newPassword", { email, password })
       .then((response) => {
         if (response.data._id) {
-          localStorage.setItem('userID', response.data._id);
+          localStorage.setItem("userID", response.data._id);
         }
         resolve(response.data);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         reject(error);
       });
   });
-}
+};

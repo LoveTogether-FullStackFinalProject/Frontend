@@ -1,128 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap");
 
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Rubik', Arial, sans-serif;
-    background-color: #f8f9fa;
-    direction: rtl;
-    height: 100%;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", Arial, sans-serif;
+  background-color: #f8f9fa;
+  direction: rtl;
+  height: 100%;
 }
 
 .upload-product-container {
-    max-width: none;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-    display: flex;
-    flex-direction: row;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: row;
 }
 .upload-product-form {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
 .form-section {
-    flex: 0 0 auto;
-    width: 300px;
-    padding: 0 10px;
+  flex: 0 0 auto;
+  width: 300px;
+  padding: 0 10px;
 }
 
 .upload-product-title {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 36px;
-    font-weight: 700;
-    color: #333;
-    font-family: 'Rubik', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    position: relative;
-    padding-bottom: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #333;
+  font-family: "Rubik", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  padding-bottom: 15px;
 }
 
 .upload-product-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background-color: #F9DA78;
-    border-radius: 2px;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: #f9da78;
+  border-radius: 2px;
 }
 
-.form-control, .form-select {
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.form-control,
+.form-select {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-control:focus, .form-select:focus {
-    border-color: #F9DA78;
-    box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
+.form-control:focus,
+.form-select:focus {
+  border-color: #f9da78;
+  box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
 }
 .form-check {
-    padding-right: 1.8em;
-    padding-left: 0;
-    margin-bottom: 0.5em;
-    position: relative;
+  padding-right: 1.8em;
+  padding-left: 0;
+  margin-bottom: 0.5em;
+  position: relative;
 }
 
 .form-check-input[type="radio"] {
-    width: 1.2em;
-    height: 1.2em;
-    border: 2px solid #333;
-    background-color: #fff;
-    margin-top: 0.2em;
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid #333;
+  background-color: #fff;
+  margin-top: 0.2em;
 }
 
 .form-check-input[type="radio"]:not(:checked) {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .form-check-input[type="radio"]:checked {
-    background-color: #F9DA78;
-    border-color: #F9DA78;
+  background-color: #f9da78;
+  border-color: #f9da78;
 }
 
 .form-check-input[type="radio"]:focus {
-    box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
-    border-color: #F9DA78;
+  box-shadow: 0 0 0 0.25rem rgba(249, 218, 120, 0.25);
+  border-color: #f9da78;
 }
 
 .form-check-label {
-    margin-right: 1.5em;
-    display: block;
+  margin-right: 1.5em;
+  display: block;
 }
-  
 
 .btn-primary {
-    background-color: #F9DA78;
-    border-color: #F9DA78;
-    color: #333;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+  background-color: #f9da78;
+  border-color: #f9da78;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.btn-primary:hover, .btn-primary:focus {
-    background-color: #f0c854;
-    border-color: #f0c854;
-    color: #333;
-    transform: translateY(-2px);
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #f0c854;
+  border-color: #f0c854;
+  color: #333;
+  transform: translateY(-2px);
 }
 
 .img-preview {
-    max-width: 100px;
-    max-height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 10px;
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 10px;
 }

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
-import dataService from '../services/data-service';
-import logoutServiece from '../services/logout-serviece';
-import './Navbar.css';
-import { User } from '../services/types';
-import logo from '../assets/logoWithoutBackground.png';
-import facebookLogo from '../assets/facebookLogo.png';
-import instagramLogo from '../assets/instagramLogo.png';
+import dataService from "../services/data-service";
+import logoutServiece from "../services/logout-serviece";
+import "./Navbar.css";
+import { User } from "../services/types";
+import logo from "../assets/logoWithoutBackground.png";
+import facebookLogo from "../assets/facebookLogo.png";
+import instagramLogo from "../assets/instagramLogo.png";
 
 interface NavbarProps {
   user: User | null;
@@ -61,7 +61,7 @@ export function Navbar({ setUser }: NavbarProps) {
     setToken(null);
     setIsAdmin(false);
     setUser(null);
-    window.dispatchEvent(new Event('authChange'));
+    window.dispatchEvent(new Event("authChange"));
   }
 
   const isLoggedIn = userId && token;
@@ -74,7 +74,7 @@ export function Navbar({ setUser }: NavbarProps) {
     <BootstrapNavbar
       style={{
         fontFamily: "Rubik, sans-serif",
-        backgroundColor: 'white',
+        backgroundColor: "white",
         boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
         position: "fixed",
         top: 0,
@@ -95,34 +95,73 @@ export function Navbar({ setUser }: NavbarProps) {
         />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <div className="social-media"
-             style={{ 
-              position: 'absolute', // Positions the div absolutely on the page
-              left: '0',           // Aligns the div to the left edge of the page
-               marginLeft: '15px', 
-               display: 'flex',
-            }}>
-              <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
+            <div
+              className="social-media"
+              style={{
+                position: "absolute", // Positions the div absolutely on the page
+                left: "0", // Aligns the div to the left edge of the page
+                marginLeft: "15px",
+                display: "flex",
+              }}
+            >
+              <a
+                href="https://www.facebook.com/veahavtembeyahad/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={facebookLogo} alt="Facebook" />
               </a>
-              <a href="https://www.instagram.com/veahavtem_beyahad/" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.instagram.com/veahavtem_beyahad/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={instagramLogo} alt="Instagram" />
               </a>
             </div>
             {isLoggedIn ? (
-              <div className={`navLink1 ${expanded ? 'open' : ''}`}>
-                <Nav.Link as={Link} to="/mainPage" onClick={() => { handleLogout(); handleClose(); }}>התנתק</Nav.Link>
-                {isAdmin && <Nav.Link as={Link} to="/adminDashboard" onClick={handleClose}>ניהול</Nav.Link>}
-                <Nav.Link as={Link} to="/uploadproduct" onClick={handleClose}>תרמו כאן</Nav.Link>
-                <Nav.Link as={Link} to="/about" onClick={handleClose}>על העמותה</Nav.Link>
-                <Nav.Link as={Link} to="/profile" onClick={handleClose}>החשבון שלי</Nav.Link>
+              <div className={`navLink1 ${expanded ? "open" : ""}`}>
+                <Nav.Link
+                  as={Link}
+                  to="/mainPage"
+                  onClick={() => {
+                    handleLogout();
+                    handleClose();
+                  }}
+                >
+                  התנתק
+                </Nav.Link>
+                {isAdmin && (
+                  <Nav.Link
+                    as={Link}
+                    to="/adminDashboard"
+                    onClick={handleClose}
+                  >
+                    ניהול
+                  </Nav.Link>
+                )}
+                <Nav.Link as={Link} to="/uploadproduct" onClick={handleClose}>
+                  תרמו כאן
+                </Nav.Link>
+                <Nav.Link as={Link} to="/about" onClick={handleClose}>
+                  על העמותה
+                </Nav.Link>
+                <Nav.Link as={Link} to="/profile" onClick={handleClose}>
+                  החשבון שלי
+                </Nav.Link>
               </div>
             ) : (
-              <div className={`navLink1 ${expanded ? 'open' : ''}`}>
-                <Nav.Link as={Link} to="/uploadProduct" onClick={handleClose}>שלום אורח</Nav.Link>
+              <div className={`navLink1 ${expanded ? "open" : ""}`}>
+                <Nav.Link as={Link} to="/uploadProduct" onClick={handleClose}>
+                  שלום אורח
+                </Nav.Link>
                 <span style={{ margin: "0 -15px" }}>|</span>
-                <Nav.Link as={Link} to="/login" onClick={handleClose}>התחבר</Nav.Link>
-                <Nav.Link as={Link} to="/registration" onClick={handleClose}>הירשם</Nav.Link>
+                <Nav.Link as={Link} to="/login" onClick={handleClose}>
+                  התחבר
+                </Nav.Link>
+                <Nav.Link as={Link} to="/registration" onClick={handleClose}>
+                  הירשם
+                </Nav.Link>
               </div>
             )}
           </Nav>

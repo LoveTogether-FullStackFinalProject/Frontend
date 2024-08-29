@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 // import facebookLogo from '../assets/facebookLogo.png';
 // import instagramLogo from '../assets/instagramLogo.png';
-import './Footer.css';
+import "./Footer.css";
 
 const Footer: React.FC = () => {
   return (
@@ -20,7 +20,6 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
 
 // import React from 'react';
 // import { Box, Typography, Link, Container, IconButton } from '@mui/material';
@@ -44,12 +43,12 @@ export default Footer;
 //       }}
 //     >
 //       <Container maxWidth="lg">
-       
+
 //         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 1 }}>
 //           <IconButton component={Link} href="https://facebook.com" target="_blank" aria-label="Facebook" sx={{ color: 'white' }}>
 //             <Facebook />
 //           </IconButton>
-         
+
 //           <IconButton component={Link} href="https://instagram.com" target="_blank" aria-label="Instagram" sx={{ color: 'white' }}>
 //             <Instagram />
 //           </IconButton>

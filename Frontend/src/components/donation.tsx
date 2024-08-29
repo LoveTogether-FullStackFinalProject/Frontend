@@ -1,17 +1,17 @@
 interface User {
-    firstName: string;
-    lastName: string;
-    email: string;
-    address: string;
-    phoneNumber: string;
-    rating: string;
-    image: string;
-  }
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  phoneNumber: string;
+  rating: string;
+  image: string;
+}
 
-export interface Donation{
+export interface Donation {
   _id: string;
   category: string;
-  itemName: string; 
+  itemName: string;
   quantity: number;
   condition: string;
   expirationDate: Date;
@@ -19,35 +19,32 @@ export interface Donation{
   pickupAddress: string;
   branch: string;
   donor?: User;
-  status: string; 
-  approvedByAdmin?: string; 
+  status: string;
+  approvedByAdmin?: string;
   image: string;
   createdAt: string;
-
 }
 
-
-
 interface DonationProps {
-    donation: Donation
+  donation: Donation;
 }
 
 function Donation({ donation }: DonationProps) {
-    return (
+  return (
     <div>
-        <p>Category: {donation.category}</p>
-        <p>Donation Type: {donation.itemName}</p>
-        <p>Amount: {donation.quantity}</p>
-        <p>Item Condition: {donation.condition}</p>
-        <p>Description: {donation.description}</p>
-        <p>Pick Up Address: {donation.pickupAddress}</p>
-        <p>Branch: {donation.branch}</p>
-        {/* <p>Donor name: {donation.donor.firstName}</p> */}
-        <p>Status: {donation.status}</p>
-        <p>Approved by admin: {donation.approvedByAdmin}</p>
-        <p>Image: {donation.image}</p>
+      <p>Category: {donation.category}</p>
+      <p>Donation Type: {donation.itemName}</p>
+      <p>Amount: {donation.quantity}</p>
+      <p>Item Condition: {donation.condition}</p>
+      <p>Description: {donation.description}</p>
+      <p>Pick Up Address: {donation.pickupAddress}</p>
+      <p>Branch: {donation.branch}</p>
+      {/* <p>Donor name: {donation.donor.firstName}</p> */}
+      <p>Status: {donation.status}</p>
+      <p>Approved by admin: {donation.approvedByAdmin}</p>
+      <p>Image: {donation.image}</p>
     </div>
-    )
+  );
 }
 
-export default Donation
+export default Donation;

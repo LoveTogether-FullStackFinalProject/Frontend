@@ -23,22 +23,25 @@ import { AxiosError, AxiosResponse } from "axios";
 // }
 
 export const uploadPhoto = async (photo: File) => {
-    return new Promise<string>((resolve, reject) => {
-        console.log("Uploading photo..." + photo)
-        const formData = new FormData();
-        if (photo) {
-            formData.append("file", photo);
-            apiClient.post("/photos/upload", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            }).then(res => {
-                console.log(res);
-                resolve(res.data.url);
-            }).catch(err => {
-                console.log(err);
-                reject(err);
-            });
-        }
-    });
+  return new Promise<string>((resolve, reject) => {
+    console.log("Uploading photo..." + photo);
+    const formData = new FormData();
+    if (photo) {
+      formData.append("file", photo);
+      apiClient
+        .post("/photos/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          console.log(res);
+          resolve(res.data.url);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    }
+  });
 };
 
 // export const uploadProduct = async (productData: any) => {
@@ -51,13 +54,12 @@ export const uploadPhoto = async (photo: File) => {
 //     }
 // };
 
-
 const makeRequest = async (request: () => Promise<AxiosResponse>) => {
-  console.log("request is:",request);
+  console.log("request is:", request);
   console.log(1);
   try {
     const response = await request();
-    console.log("response is:",response);
+    console.log("response is:", response);
     return response;
   } catch (axiosError: unknown) {
     if (axiosError instanceof AxiosError && axiosError.response) {
@@ -67,21 +69,24 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
       if (axiosError.response.status === 401) {
         console.log(3);
         const refreshToken = localStorage.getItem("refreshToken");
-       if (!refreshToken) {
-        throw new Error("No refresh token found");
-       }
-       console.log("going to refreshToken:");
-        const refreshResponse = await apiClient.get('auth/refreshToken', { 
+        if (!refreshToken) {
+          throw new Error("No refresh token found");
+        }
+        console.log("going to refreshToken:");
+        const refreshResponse = await apiClient.get("auth/refreshToken", {
           headers: {
-            'Authorization': `Bearer ${refreshToken}`
+            Authorization: `Bearer ${refreshToken}`,
           },
-       });
+        });
 
         if (refreshResponse.status === 200) {
-          localStorage.setItem('accessToken',refreshResponse.data.accessToken);
-          localStorage.setItem("refreshToken", refreshResponse.data.refreshToken);
-          console.log("new access token:",refreshResponse.data.accessToken);
-          console.log("new refresh token:",refreshResponse.data.refreshToken);
+          localStorage.setItem("accessToken", refreshResponse.data.accessToken);
+          localStorage.setItem(
+            "refreshToken",
+            refreshResponse.data.refreshToken
+          );
+          console.log("new access token:", refreshResponse.data.accessToken);
+          console.log("new refresh token:", refreshResponse.data.refreshToken);
           console.log("going to request");
           return request();
         }
@@ -89,28 +94,29 @@ const makeRequest = async (request: () => Promise<AxiosResponse>) => {
     }
   }
 };
-  
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-   export const uploadProduct = async (productData: any) => {
-    const request = () => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) {
-        throw new Error("No access token found");
-      }
-      return apiClient.post(`/donation/upload`, productData,{
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        },
-      });
-    };
-    return makeRequest(request);
-  };
 
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export const uploadProductAnonymously = async (productData: any) => {
-    const abortController = new AbortController();
-    const req= apiClient.post(`/donation/upload-anonymously`, productData,{ signal: abortController.signal});
-    console.log("req is:",req);
-    return { req, abort: () => abortController.abort() };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const uploadProduct = async (productData: any) => {
+  const request = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      throw new Error("No access token found");
+    }
+    return apiClient.post(`/donation/upload`, productData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
+  return makeRequest(request);
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const uploadProductAnonymously = async (productData: any) => {
+  const abortController = new AbortController();
+  const req = apiClient.post(`/donation/upload-anonymously`, productData, {
+    signal: abortController.signal,
+  });
+  console.log("req is:", req);
+  return { req, abort: () => abortController.abort() };
+};

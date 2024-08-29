@@ -17,9 +17,10 @@
   min-width: 650px;
 }
 
-.rtl-table-col, .rtl-table {
+.rtl-table-col,
+.rtl-table {
   direction: rtl;
-  font-family: 'Assistant', sans-serif;
+  font-family: "Assistant", sans-serif;
 }
 
 .rtl-table-col {
@@ -33,8 +34,6 @@
   background-color: #5c04e9;
 }
 
-
-
 .csv-link {
   background-color: #217346;
   color: #ffffff;
@@ -42,13 +41,13 @@
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
-  font-family: 'Assistant', sans-serif;
+  font-family: "Assistant", sans-serif;
   margin-left: 500px;
   margin-right: 50px;
   border-radius: 20px;
 }
 
-.fas fa-file-excel{
+.fas fa-file-excel {
   text-align: center;
 }
 
@@ -72,7 +71,8 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .rtl-table-col, .rtl-table {
+  .rtl-table-col,
+  .rtl-table {
     padding: 8px;
     font-size: 0.875rem;
   }
@@ -98,7 +98,8 @@
 }
 
 @media (max-width: 480px) {
-  .rtl-table-col, .rtl-table {
+  .rtl-table-col,
+  .rtl-table {
     padding: 4px;
     font-size: 0.75rem;
   }

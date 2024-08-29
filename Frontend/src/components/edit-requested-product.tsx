@@ -1,23 +1,40 @@
-import { ChangeEvent, useEffect, useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { ChangeEvent, useEffect, useState, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import {
-  Avatar, Button, CssBaseline, TextField, Grid, Box, Typography, Container, MenuItem, CircularProgress, createTheme, ThemeProvider
-} from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import dataService from '../services/data-service.ts';
-import requestedProduectService from '../services/upload-requested-product-service';
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  MenuItem,
+  CircularProgress,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import dataService from "../services/data-service.ts";
+import requestedProduectService from "../services/upload-requested-product-service";
 
 // Define schema
 const RequestedProductSchema = z.object({
-  category: z.string().min(1, { message: 'חובה להכניס קטגוריה' }),
-  itemName: z.string().min(1, { message: 'חובה להכניס שם מוצר' }),
-  amount: z.string().min(1, { message: 'חובה להכניס כמות' }).transform(parseFloat),
-  description: z.string().min(1, { message: 'חובה להכניס תיאור מוצר' }),
-  image: z.string().url({ message: 'חובה לצרף תמונה' }).optional(),
-  customCategory: z.string().min(1, { message: 'חובה להכניס קטגוריה' }).optional()
+  category: z.string().min(1, { message: "חובה להכניס קטגוריה" }),
+  itemName: z.string().min(1, { message: "חובה להכניס שם מוצר" }),
+  amount: z
+    .string()
+    .min(1, { message: "חובה להכניס כמות" })
+    .transform(parseFloat),
+  description: z.string().min(1, { message: "חובה להכניס תיאור מוצר" }),
+  image: z.string().url({ message: "חובה לצרף תמונה" }).optional(),
+  customCategory: z
+    .string()
+    .min(1, { message: "חובה להכניס קטגוריה" })
+    .optional(),
 });
 
 type FormData = z.infer<typeof RequestedProductSchema>;
@@ -26,14 +43,20 @@ type FormData = z.infer<typeof RequestedProductSchema>;
 const theme = createTheme();
 
 function EditRequestedProduct() {
-  const { register, clearErrors, handleSubmit, formState: { errors }, setValue } = useForm<FormData>({
-    resolver: zodResolver(RequestedProductSchema)
+  const {
+    register,
+    clearErrors,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<FormData>({
+    resolver: zodResolver(RequestedProductSchema),
   });
   const navigate = useNavigate();
   const [imgSrc, setImgSrc] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [category, setCategory] = useState<string>('');
-  const [amountError, setAmountError] = useState<string>('');
+  const [category, setCategory] = useState<string>("");
+  const [amountError, setAmountError] = useState<string>("");
   const location = useLocation();
   const { donation } = location.state || {};
   const [isAdmin, setIsAdmin] = useState(false);
@@ -41,13 +64,13 @@ function EditRequestedProduct() {
 
   useEffect(() => {
     const checkAdminStatus = async () => {
-      const userId = localStorage.getItem('userID');
+      const userId = localStorage.getItem("userID");
       if (userId) {
         try {
           const res = await dataService.getUser(userId).req;
           setIsAdmin(res.data.isAdmin);
         } catch (error) {
-          console.error('Error checking admin status:', error);
+          console.error("Error checking admin status:", error);
         }
       }
       setLoading(false);
@@ -59,19 +82,19 @@ function EditRequestedProduct() {
   useEffect(() => {
     if (donation) {
       console.log("category", donation.category);
-      setValue('category', donation.category);
-      setValue('customCategory', donation.customCategory);
-      setValue('itemName', donation.itemName);
-      setValue('amount', donation.amount.toString());
-      setValue('description', donation.description);
-      setValue('image', donation.image);
+      setValue("category", donation.category);
+      setValue("customCategory", donation.customCategory);
+      setValue("itemName", donation.itemName);
+      setValue("amount", donation.amount.toString());
+      setValue("description", donation.description);
+      setValue("image", donation.image);
       setCategory(donation.category);
     }
   }, [donation, setValue]);
 
   useEffect(() => {
     if (imgSrc) {
-      setValue('image', URL.createObjectURL(imgSrc));
+      setValue("image", URL.createObjectURL(imgSrc));
     }
   }, [imgSrc, setValue]);
 
@@ -87,10 +110,10 @@ function EditRequestedProduct() {
 
   const editProduct = async (data: FormData) => {
     if (data.amount < 1) {
-      setAmountError('כמות חייבת להיות גדולה מ-0');
+      setAmountError("כמות חייבת להיות גדולה מ-0");
       return;
     } else {
-      setAmountError('');
+      setAmountError("");
     }
 
     let url;
@@ -102,12 +125,15 @@ function EditRequestedProduct() {
 
     const product = {
       ...data,
-      image: url
+      image: url,
     };
 
-    const res = await requestedProduectService.editRequestedProduct(donation._id, product);
+    const res = await requestedProduectService.editRequestedProduct(
+      donation._id,
+      product
+    );
     console.log("editRequestedProduct", res);
-    navigate('/mainPage');
+    navigate("/mainPage");
   };
 
   if (loading) {
@@ -116,16 +142,16 @@ function EditRequestedProduct() {
         <CssBaseline />
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '50vh',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "50vh",
             mt: 8,
             p: 2,
-            border: '1px solid',
-            borderColor: 'black',
-            bgcolor: 'white'
+            border: "1px solid",
+            borderColor: "black",
+            bgcolor: "white",
           }}
         >
           <CircularProgress />
@@ -140,16 +166,16 @@ function EditRequestedProduct() {
         <CssBaseline />
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '50vh',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "50vh",
             mt: 8,
             p: 2,
-            border: '1px solid',
-            borderColor: 'black',
-            bgcolor: 'white'
+            border: "1px solid",
+            borderColor: "black",
+            bgcolor: "white",
           }}
         >
           <Typography variant="h6" color="textPrimary">
@@ -158,7 +184,7 @@ function EditRequestedProduct() {
           <Button
             variant="contained"
             color="warning"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
             sx={{ mt: 2 }}
           >
             התחבר בתור מנהל
@@ -176,12 +202,12 @@ function EditRequestedProduct() {
           sx={{
             marginTop: 10,
             marginBottom: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <CloudUploadIcon />
           </Avatar>
           <Typography component="h1" variant="h5" className="form-title">
@@ -204,32 +230,32 @@ function EditRequestedProduct() {
                   helperText={errors.itemName?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '280px', 
-                      width: '100%',
+                      marginLeft: "280px",
+                      width: "100%",
                     },
                   }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
+                      left: "auto",
+                      transformOrigin: "top right",
+                      "&.MuiInputLabel-shrink": {
+                        transform: "translate(0, -10px) scale(0.75)",
+                        transformOrigin: "top right",
                       },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
+                      "& .MuiFormLabel-asterisk": {
+                        display: "none",
                       },
-                    }
+                    },
                   }}
                   InputProps={{
                     sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
+                      textAlign: "right",
+                      direction: "rtl",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        textAlign: "right",
                       },
-                    }
+                    },
                   }}
                 />
               </Grid>
@@ -249,84 +275,117 @@ function EditRequestedProduct() {
                   helperText={errors.category?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '280px', 
-                      width: '100%',
+                      marginLeft: "280px",
+                      width: "100%",
                     },
                   }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
+                      left: "auto",
+                      transformOrigin: "top right",
+                      "&.MuiInputLabel-shrink": {
+                        transform: "translate(0, -10px) scale(0.75)",
+                        transformOrigin: "top right",
                       },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
+                      "& .MuiFormLabel-asterisk": {
+                        display: "none",
                       },
-                    }
+                    },
                   }}
                   InputProps={{
                     sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
+                      textAlign: "right",
+                      direction: "rtl",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        textAlign: "right",
                       },
-                    }
+                    },
                   }}
                 >
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="">בחר קטגוריה</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ציוד לתינוקות">ציוד לתינוקות</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ריהוט">ריהוט</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="מזון ושתייה">מזון ושתייה</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="ספרים">ספרים</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="צעצועים">צעצועים</MenuItem>
-                  <MenuItem sx={{ textAlign: 'right', direction: 'rtl' }} value="אחר">אחר</MenuItem>
-
-
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value=""
+                  >
+                    בחר קטגוריה
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value="ציוד לתינוקות"
+                  >
+                    ציוד לתינוקות
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value="ריהוט"
+                  >
+                    ריהוט
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value="מזון ושתייה"
+                  >
+                    מזון ושתייה
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value="ספרים"
+                  >
+                    ספרים
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value="צעצועים"
+                  >
+                    צעצועים
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ textAlign: "right", direction: "rtl" }}
+                    value="אחר"
+                  >
+                    אחר
+                  </MenuItem>
                 </TextField>
                 {category === "אחר" && (
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  label="הזן קטגוריה"
-                  {...register("customCategory")}
-                  error={!!errors.customCategory}
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    label="הזן קטגוריה"
+                    {...register("customCategory")}
+                    error={!!errors.customCategory}
                     helperText={errors.customCategory?.message}
                     FormHelperTextProps={{
                       sx: {
-                        marginLeft: '280px', 
-                        width: '100%',
+                        marginLeft: "280px",
+                        width: "100%",
                       },
                     }}
                     sx={{ mt: 2 }}
                     InputLabelProps={{
                       sx: {
                         right: 19,
-                        left: 'auto',
-                        transformOrigin: 'top right',
-                        '&.MuiInputLabel-shrink': {
-                          transform: 'translate(0, -10px) scale(0.75)',
-                          transformOrigin: 'top right',
+                        left: "auto",
+                        transformOrigin: "top right",
+                        "&.MuiInputLabel-shrink": {
+                          transform: "translate(0, -10px) scale(0.75)",
+                          transformOrigin: "top right",
                         },
-                        '& .MuiFormLabel-asterisk': {
-                          display: 'none',
+                        "& .MuiFormLabel-asterisk": {
+                          display: "none",
                         },
-                      }
+                      },
                     }}
                     InputProps={{
                       sx: {
-                        textAlign: 'right',
-                        direction: 'rtl',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          textAlign: 'right',
+                        textAlign: "right",
+                        direction: "rtl",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          textAlign: "right",
                         },
-                      }
+                      },
                     }}
-                />
-                  )}
+                  />
+                )}
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -339,36 +398,36 @@ function EditRequestedProduct() {
                   helperText={errors.amount?.message || amountError}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '290px', 
-                      width: '100%',
+                      marginLeft: "290px",
+                      width: "100%",
                     },
                   }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
+                      left: "auto",
+                      transformOrigin: "top right",
+                      "&.MuiInputLabel-shrink": {
+                        transform: "translate(0, -10px) scale(0.75)",
+                        transformOrigin: "top right",
                       },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
+                      "& .MuiFormLabel-asterisk": {
+                        display: "none",
                       },
-                    }
+                    },
                   }}
                   InputProps={{
                     sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
+                      textAlign: "right",
+                      direction: "rtl",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        textAlign: "right",
                       },
-                    }
+                    },
                   }}
                 />
               </Grid>
-             
+
               <Grid item xs={12}>
                 <TextField
                   {...register("description")}
@@ -381,48 +440,48 @@ function EditRequestedProduct() {
                   helperText={errors.description?.message}
                   FormHelperTextProps={{
                     sx: {
-                      marginLeft: '270px', 
-                      width: '100%',
+                      marginLeft: "270px",
+                      width: "100%",
                     },
                   }}
                   InputLabelProps={{
                     sx: {
                       right: 19,
-                      left: 'auto',
-                      transformOrigin: 'top right',
-                      '&.MuiInputLabel-shrink': {
-                        transform: 'translate(0, -10px) scale(0.75)',
-                        transformOrigin: 'top right',
+                      left: "auto",
+                      transformOrigin: "top right",
+                      "&.MuiInputLabel-shrink": {
+                        transform: "translate(0, -10px) scale(0.75)",
+                        transformOrigin: "top right",
                       },
-                      '& .MuiFormLabel-asterisk': {
-                        display: 'none',
+                      "& .MuiFormLabel-asterisk": {
+                        display: "none",
                       },
-                    }
+                    },
                   }}
                   InputProps={{
                     sx: {
-                      textAlign: 'right',
-                      direction: 'rtl',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        textAlign: 'right',
+                      textAlign: "right",
+                      direction: "rtl",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        textAlign: "right",
                       },
-                    }
+                    },
                   }}
                 />
               </Grid>
-              <Grid item xs={12} style={{alignItems:'center'}}>
-              {imgSrc && (
-  <Avatar
-    src={URL.createObjectURL(imgSrc)}
-    sx={{ width: 200, height: 200, mb: 2, mx: 'auto' }} // Added mx: 'auto' to center horizontally
-  />
-)}
-{donation.image && !imgSrc && (
-  <Avatar
-    src={donation.image}
-    sx={{ width: 200, height: 200, mb: 2, mx: 'auto' }} // Added mx: 'auto' to center horizontally
-  />
-)}
+              <Grid item xs={12} style={{ alignItems: "center" }}>
+                {imgSrc && (
+                  <Avatar
+                    src={URL.createObjectURL(imgSrc)}
+                    sx={{ width: 200, height: 200, mb: 2, mx: "auto" }} // Added mx: 'auto' to center horizontally
+                  />
+                )}
+                {donation.image && !imgSrc && (
+                  <Avatar
+                    src={donation.image}
+                    sx={{ width: 200, height: 200, mb: 2, mx: "auto" }} // Added mx: 'auto' to center horizontally
+                  />
+                )}
                 <Button
                   variant="outlined"
                   fullWidth

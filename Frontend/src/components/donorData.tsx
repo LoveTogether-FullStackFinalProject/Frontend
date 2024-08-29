@@ -3,9 +3,9 @@ export interface DonorData {
   firstName: string;
   lastName: string;
   email: string;
-  password: string; 
+  password: string;
   phoneNumber: string;
-  mainAddress: string; 
+  mainAddress: string;
   isAdmin: boolean;
   isPublished?: boolean;
   image: string;

@@ -197,7 +197,7 @@ function MainPage() {
       );
 
       const options = {
-          threshold: 0.3,
+          threshold: 0.2,
       };
 
       const observer = new IntersectionObserver((entries, observer) => {

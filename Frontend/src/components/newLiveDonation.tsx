@@ -110,6 +110,11 @@ const fetchData = async () => {
   }
 };
 
+const handleDialogClose = () => {
+  setDialogOpen(false);
+  navigate('/manageDonations');
+};
+
 useEffect(() => {
   fetchData();
 }, []);

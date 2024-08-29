@@ -84,6 +84,7 @@ export default function NewLiveDonation() {
 const [users, setUsers] = useState<DonorData[]>([]);
 const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 const [isLoading, setIsLoading] = useState(true);
+const [dialogOpen, setDialogOpen] = useState(false);
 
 const fetchData = async () => {
   const userId = localStorage.getItem('userID');

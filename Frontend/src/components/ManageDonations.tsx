@@ -182,7 +182,7 @@ const ManageDonationPage: React.FC = () => {
           </Typography>
           <Toolbar>
             <TextField
-              placeholder="חפש תרומה לפי שם פריט, קטגוריה, תיאור, סטטוס, שם התורם או סניף"
+              placeholder="חפש תרומה לפי שם פריט, קטגוריה, תיאור, סטטוס או שם התורם"
               variant="outlined"
               fullWidth
               margin="normal"

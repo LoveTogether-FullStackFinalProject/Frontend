@@ -476,14 +476,38 @@ if(isAdmin){
               ref={fileInputRef}
               onChange={handleImageChange}
             />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={selectImg}
-            >
-              בחר תמונה
-            </Button>
+              <Button
+    variant="contained"
+    component="label"
+    fullWidth
+    sx={{
+        mt: 3,
+        mb: 2,
+        backgroundColor: '#f9db78',
+        color: '#000',
+        borderRadius: '25px',
+        padding: '10px 20px',
+        textTransform: 'none',
+        fontWeight: 'bold',
+        fontSize: '1rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+        '&:hover': {
+            backgroundColor: '#f7d062',
+        },
+    }}
+>
+    <SearchIcon sx={{ mr: 1 }} />
+    העלאת תמונה
+    <input
+        type="file"
+        hidden
+        accept="image/*"
+        onChange={handleImageChange}
+    />
+</Button>
             {errors.image && errors.image.message && (
             <Alert severity="error" sx={{ mt: 2 ,direction:"rtl"}}>
             {errors.image.message as string} {/* Explicitly cast to string */}

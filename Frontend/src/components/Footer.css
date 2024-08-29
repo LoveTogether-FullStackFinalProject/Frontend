@@ -2,24 +2,24 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%; /* Ensure the body takes up the full height */
+  height: 100%;
 }
 
 #root {
-  min-height: 100%; /* Adjust the root element if using React */
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .content {
-  flex: 1; /* Allow the content area to grow and take up available space */
+  flex: 1;
 }
 
 .footer {
   background-color: #000000d3;
   color: rgb(255, 255, 255);
   text-align: center;
-  padding: 15px 0; /* Reduced padding to minimize height */
+  padding: 5px 0;
   box-shadow: 0 -2px 5px rgba(37, 36, 36, 0.421);
   box-sizing: border-box;
   position: relative; /* Default position */
@@ -28,14 +28,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Space between elements */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .footer p {
   margin: 0;
-  padding: 0 5px; /* Adjust padding for spacing */
-  white-space: nowrap; /* Prevent line breaks in text */
+  padding: 0 5px;
+  white-space: nowrap;
 }
 
 .footer .contact-item {
@@ -46,10 +46,28 @@ body {
 
 .footer .contact-item .MuiIconButton-root {
   color: rgb(255, 255, 255);
-  padding: 0; /* Remove extra padding */
+  padding: 0;
   transition: color 0.3s;
 }
 
 .footer .contact-item .MuiIconButton-root:hover {
-  color: #f9db78; /* Adds a hover effect */
+  color: #f9db78;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .footer p,
+  .footer .contact-item {
+    font-size: 0.875rem;
+  }
+
+  .footer .contact-item {
+    justify-content: center;
+  }
 }

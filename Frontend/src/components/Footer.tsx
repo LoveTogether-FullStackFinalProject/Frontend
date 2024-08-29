@@ -1,64 +1,37 @@
 import React from "react";
-// import facebookLogo from '../assets/facebookLogo.png';
-// import instagramLogo from '../assets/instagramLogo.png';
-import "./Footer.css";
+import { Box, Typography, Link, IconButton } from '@mui/material';
+import { WhatsApp, Email } from '@mui/icons-material';
+import "./Footer.css"; 
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer">
-      {/* <div className="social-media">
-        <a href="https://www.facebook.com/veahavtembeyahad/" target="_blank" rel="noopener noreferrer">
-          <img src={facebookLogo} alt="Facebook" />
-        </a>
-        <a href="https://www.instagram.com/veahavtem_beyahad/" target="_blank" rel="noopener noreferrer">
-          <img src={instagramLogo} alt="Instagram" />
-        </a>
-      </div> */}
-      <p>עמותת ואהבתם ביחד &copy; {new Date().getFullYear()}</p>
-    </footer>
+    <Box component="footer" className="footer">
+      {/* Copyright Information */}
+      <Typography variant="body2">
+        &copy; {new Date().getFullYear()} עמותת ואהבתם ביחד
+      </Typography>
+      
+      {/* Contact Section */}
+      {/* WhatsApp Contact */}
+      <Box className="contact-item">
+        <IconButton component={Link} href="https://wa.me/0556842412" target="_blank" aria-label="WhatsApp">
+          <WhatsApp />
+        </IconButton>
+        <Typography variant="body2">055-6842412</Typography>
+      </Box>
+
+      {/* Email Contact */}
+      <Box className="contact-item">
+        <IconButton component={Link} href="mailto:info@ve-be.org" aria-label="Email">
+          <Email />
+        </IconButton>
+        <Typography variant="body2">info@ve-be.org</Typography>
+      </Box>
+      <Typography variant="body2" sx={{ padding: '0 10px' }}>
+    :ליצירת קשר
+      </Typography>
+    </Box>
   );
 };
 
 export default Footer;
-
-// import React from 'react';
-// import { Box, Typography, Link, Container, IconButton } from '@mui/material';
-// import { Facebook,  Instagram } from '@mui/icons-material';
-
-// const Footer = () => {
-//   return (
-//     <Box
-//       component="footer"
-//       sx={{
-//         backgroundColor: '#000000d3',
-//         color: 'white',
-//         textAlign: 'center',
-//         py: 2,
-//         position: 'static',
-//         bottom: 0,
-//         left: 0,
-//         width: '100%',
-//         boxShadow: '0 -2px 5px rgba(37, 36, 36, 0.421)',
-//         zIndex: 1300,  // Ensure it stays above other components
-//       }}
-//     >
-//       <Container maxWidth="lg">
-
-//         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 1 }}>
-//           <IconButton component={Link} href="https://facebook.com" target="_blank" aria-label="Facebook" sx={{ color: 'white' }}>
-//             <Facebook />
-//           </IconButton>
-
-//           <IconButton component={Link} href="https://instagram.com" target="_blank" aria-label="Instagram" sx={{ color: 'white' }}>
-//             <Instagram />
-//           </IconButton>
-//         </Box>
-//         <Typography variant="body2" sx={{ mb: 1 }}>
-//           &copy; {new Date().getFullYear()} עמותת ואהבתם ביחד
-//         </Typography>
-//       </Container>
-//     </Box>
-//   );
-// };
-
-// export default Footer;

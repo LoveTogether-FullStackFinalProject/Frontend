@@ -19,26 +19,37 @@ body {
   background-color: #000000d3;
   color: rgb(255, 255, 255);
   text-align: center;
-  padding: 10px 0;
+  padding: 15px 0; /* Reduced padding to minimize height */
   box-shadow: 0 -2px 5px rgba(37, 36, 36, 0.421);
   box-sizing: border-box;
   position: relative; /* Default position */
   bottom: 0;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Space between elements */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 .footer p {
   margin: 0;
+  padding: 0 5px; /* Adjust padding for spacing */
+  white-space: nowrap; /* Prevent line breaks in text */
 }
 
-/* .social-media {
+.footer .contact-item {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 10px 0;
+  align-items: center;
+  gap: 5px; /* Space between icon and text */
 }
 
-.social-media img {
-  width: 24px;
-  height: 24px;
-} */
+.footer .contact-item .MuiIconButton-root {
+  color: rgb(255, 255, 255);
+  padding: 0; /* Remove extra padding */
+  transition: color 0.3s;
+}
+
+.footer .contact-item .MuiIconButton-root:hover {
+  color: #f9db78; /* Adds a hover effect */
+}

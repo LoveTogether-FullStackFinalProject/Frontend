@@ -154,9 +154,7 @@ useEffect(() => {
         category: data.category === 'אחר' ? data.customCategory : data.category,
       };
       await uploadProduct(productData);
-      console.log('productData:', productData);
-      alert('התרומה נוספה בהצלחה');
-      navigate('/manageDonations');
+      setDialogOpen(true);
     } catch (error) {
       console.error('Error uploading product:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);

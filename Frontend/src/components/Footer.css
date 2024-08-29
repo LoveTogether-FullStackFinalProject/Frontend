@@ -19,7 +19,7 @@ body {
   background-color: #000000d3;
   color: rgb(255, 255, 255);
   text-align: center;
-  padding: 5px 0;
+  padding: 15px 0;
   box-shadow: 0 -2px 5px rgba(37, 36, 36, 0.421);
   box-sizing: border-box;
   position: relative; /* Default position */

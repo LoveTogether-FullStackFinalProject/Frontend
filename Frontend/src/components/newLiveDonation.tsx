@@ -190,12 +190,16 @@ if(isAdmin){
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <CloudUploadIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            הוסף תרומה חדשה
-          </Typography>
+            <Typography 
+    variant="h3" 
+    sx={{ 
+        mb: 2, 
+        fontFamily: 'Assistant', 
+        borderBottom: '3px solid #f9db78',  
+    }}
+>
+   הוסף תרומה חדשה
+</Typography>
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"

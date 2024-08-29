@@ -522,12 +522,59 @@ if(isAdmin){
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              הוסף תרומה
-            </Button>
-          </Box>
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: '#f9db78',
+                color: '#000',
+                borderRadius: '30px',
+                padding: '12px 24px',
+                textTransform: 'none',
+                fontWeight: 'bold',
+                fontSize: '1.1rem',
+                boxShadow: '0 3px 7px rgba(0, 0, 0, 0.15)',
+                '&:hover': {
+                    backgroundColor: '#f7d062',
+                },
+            }}
+          >
+            הוסף תרומה
+          </Button>
+        </Box>
+        <Dialog
+open={dialogOpen}
+onClose={handleDialogClose}
+aria-labelledby="alert-dialog-title"
+aria-describedby="alert-dialog-description"
+sx={{ direction: 'rtl' }}
+>
+<DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center' }}>
+  <Typography
+    variant="h4"
+    component="div"
+    sx={{
+      color: '#f9db78',
+      fontWeight: 'bold',
+      mb: 1,
+    }}
+  >
+    תודה!
+  </Typography>
+  <Typography variant="h6" component="div" sx={{ color: '#000', mb: 2 }}>
+    תרומתך התקבלה בהצלחה
+  </Typography>
+</DialogTitle>
+<DialogContent>
+  <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+    <img src={successGif} alt="Arrow Down" style={{ width: '50px' }} />
+  </Box>
+</DialogContent>
+<DialogActions sx={{ justifyContent: 'center', color: '#f9db78' }}>
+  <Button onClick={handleDialogClose} variant="contained" color="primary" autoFocus>
+    סגור
+  </Button>
+</DialogActions>
+</Dialog>
         </Box>
       </Container>
     </ThemeProvider>

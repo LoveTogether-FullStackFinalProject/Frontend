@@ -207,10 +207,21 @@ function EditRequestedProduct() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <CloudUploadIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" className="form-title">
+          </Avatar> */}
+          <Typography component="h1" variant="h3" className="form-title"
+           sx={{
+            align: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            mb: 2,
+            fontFamily: "'Assitant' ,sans-serif",
+            marginTop: "50px",
+            textDecoration: "underline #f9db78",
+            display: "table",
+          }}
+          >
             עריכת מוצר המבוקש לתרומה
           </Typography>
           <Box

@@ -879,9 +879,12 @@ const DonationModal: React.FC<DonationModalProps> = ({
             </Button>
           )
         )}
-        <Button variant="danger" onClick={() => handleDelete(editData._id)}>
-          מחק
-        </Button>
+         {(editData.approvedByAdmin === "false" || isAdmin) &&
+        !["הגיע לעמותה", "נאסף", "נמסר בעמותה"].includes(editData.status) && (
+          <Button variant="danger" onClick={() => handleDelete(editData._id)}>
+            מחק
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

@@ -221,12 +221,17 @@ export default function NewLiveDonation() {
             <Typography
               variant="h3"
               sx={{
+                align: "center",
+                justifyContent: "center",
+                textAlign: "center",
                 mb: 2,
-                fontFamily: "Assistant",
-                borderBottom: "3px solid #f9db78",
+                fontFamily: "'Assitant' ,sans-serif",
+                marginTop: "45px",
+                textDecoration: "underline #f9db78",
+                display: "table",
               }}
             >
-              הוסף תרומה חדשה
+              הוסף תרומה חדשה שהגיעה לעמותה
             </Typography>
             <Box
               component="form"

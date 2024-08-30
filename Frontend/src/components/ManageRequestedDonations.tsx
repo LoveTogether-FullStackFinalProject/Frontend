@@ -118,7 +118,7 @@ const ManageRequestedDonations: React.FC = () => {
     return (
       <div className="manage-donations-page">
         <Typography
-          variant="h4"
+          variant="h3"
           align="center"
           gutterBottom
           style={{ textDecoration: "underline #f9db78", marginTop: "40px" }}

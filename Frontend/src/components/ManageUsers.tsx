@@ -236,7 +236,7 @@ const ManageUsers: React.FC = () => {
           justifyContent: "center",
           textAlign: "center",
           mb: 2,
-          fontFamily: "Assistant",
+          fontFamily: "'Assitant' ,sans-serif",
           marginTop: "100px",
           textDecoration: "underline #f9db78",
           display: "table",

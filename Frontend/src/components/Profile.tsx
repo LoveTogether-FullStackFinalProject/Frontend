@@ -270,7 +270,7 @@ const Profile: React.FC = () => {
       <Box
         sx={{
           marginTop: "150px",
-          height: "300px",
+          height: "450px",
           position: "relative",
           width: "100%",
           display: "flex",

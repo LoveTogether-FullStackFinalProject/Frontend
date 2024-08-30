@@ -94,17 +94,18 @@ const ManageMainPageUsers = () => {
       <div className="manage-users-page">
         <Typography
           variant="h3"
-          style={{
-            alignItems: "center",
-          }}
+          // style={{
+          //   alignItems: "center",
+          // }}
           sx={{
+            textAlign: "center",
             align: "center",
             mb: 2,
-            fontFamily: "Assistant",
-            marginTop: "100px",
+            fontFamily: "'Assitant' ,sans-serif",
+            marginTop: "70px",
             borderBottom: "3px solid #f9db78",
             display: "inline-block",
-            marginRight: "35%",
+            marginRight: "25%",
           }}
         >
           ניהול הצגת יוזרים בעמוד הראשי

@@ -11,6 +11,13 @@
   overflow-x: auto;
 }
 
+.table-container thead th {
+  background-color: #f0e0ad !important;
+  padding: 12px 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .table {
   direction: rtl;
   margin-top: 50px;
@@ -31,7 +38,7 @@
 }
 
 .table-head {
-  background-color: #5c04e9;
+  background-color: grey;
 }
 
 .csv-link {
@@ -67,6 +74,10 @@
   margin-top: 100px;
   padding: 20px;
   border: 1px solid black;
+}
+
+.table-row {
+  background-color: #c12b2b !important;
 }
 
 /* Responsive adjustments */
@@ -123,3 +134,5 @@
     font-size: 0.75rem;
   }
 }
+
+

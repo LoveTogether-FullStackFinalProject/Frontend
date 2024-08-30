@@ -255,7 +255,7 @@ export default function UploadProduct() {
             variant="h3"
             sx={{
               mb: 2,
-              fontFamily: "Assistant",
+              fontFamily: "'Assitant' ,sans-serif",
               borderBottom: "3px solid #f9db78",
               //display: 'inline-block'
             }}

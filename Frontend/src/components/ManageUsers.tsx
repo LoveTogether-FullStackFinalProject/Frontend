@@ -201,7 +201,7 @@ const ManageUsers: React.FC = () => {
       email: u.email,
       address: u.mainAddress,
       phoneNumber: u.phoneNumber,
-      rating: u.rating,
+      rating: u.rating 
     }));
     return csvData;
   };
@@ -236,7 +236,7 @@ const ManageUsers: React.FC = () => {
           justifyContent: "center",
           textAlign: "center",
           mb: 2,
-          fontFamily: "Assistant",
+          fontFamily: "'Assitant' ,sans-serif",
           marginTop: "100px",
           textDecoration: "underline #f9db78",
           display: "table",
@@ -287,9 +287,9 @@ const ManageUsers: React.FC = () => {
           {error}
         </Typography>
       )}
-      <TableContainer component={Paper} className="table-container-color">
-        <Table className="table-users">
-          <TableHead className="table-head">
+      <TableContainer component={Paper} className="table-container">
+        <Table>
+        <TableHead>
             <TableRow>
               {[
                 "email",
@@ -359,7 +359,7 @@ const ManageUsers: React.FC = () => {
                   className="rtl-table"
                   style={{ textAlign: "center" }}
                 >
-                  {user.rating}
+                  {user.rating ?? 0}
                 </TableCell>
                 <TableCell
                   className="rtl-table"
@@ -442,7 +442,7 @@ const ManageUsers: React.FC = () => {
               helperText={errors.firstName?.message}
               InputLabelProps={{
                 sx: {
-                  right: 19,
+                  right: 15,
                   left: "auto",
                   transformOrigin: "top right",
                   "&.MuiInputLabel-shrink": {
@@ -473,7 +473,7 @@ const ManageUsers: React.FC = () => {
               helperText={errors.lastName?.message}
               InputLabelProps={{
                 sx: {
-                  right: 19,
+                  right: 15,
                   left: "auto",
                   transformOrigin: "top right",
                   "&.MuiInputLabel-shrink": {
@@ -504,7 +504,7 @@ const ManageUsers: React.FC = () => {
               helperText={errors.email?.message}
               InputLabelProps={{
                 sx: {
-                  right: 19,
+                  right: 15,
                   left: "auto",
                   transformOrigin: "top right",
                   "&.MuiInputLabel-shrink": {
@@ -535,7 +535,7 @@ const ManageUsers: React.FC = () => {
               helperText={errors.mainAddress?.message}
               InputLabelProps={{
                 sx: {
-                  right: 19,
+                  right: 15,
                   left: "auto",
                   transformOrigin: "top right",
                   "&.MuiInputLabel-shrink": {
@@ -566,7 +566,7 @@ const ManageUsers: React.FC = () => {
               helperText={errors.phoneNumber?.message}
               InputLabelProps={{
                 sx: {
-                  right: 19,
+                  right: 15,
                   left: "auto",
                   transformOrigin: "top right",
                   "&.MuiInputLabel-shrink": {
@@ -591,7 +591,7 @@ const ManageUsers: React.FC = () => {
             <FormControl fullWidth margin="normal">
             <InputLabel
               sx={{
-                right: 32,
+                right: 30,
                 left: "auto",
                 transformOrigin: "top right",
               }}

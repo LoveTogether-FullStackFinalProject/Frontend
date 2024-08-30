@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 import {
-  Avatar,
   Button,
   CssBaseline,
   TextField,
@@ -12,7 +11,7 @@ import {
   MenuItem,
   Alert,
 } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+//import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -159,9 +158,9 @@ export default function NewLiveDonation() {
     }
   };
 
-  const selectImg = () => {
-    fileInputRef.current?.click();
-  };
+  // const selectImg = () => {
+  //   fileInputRef.current?.click();
+  // };
 
   const onSubmit = async (data: FormData) => {
     console.log("data:", data);
@@ -222,12 +221,17 @@ export default function NewLiveDonation() {
             <Typography
               variant="h3"
               sx={{
+                align: "center",
+                justifyContent: "center",
+                textAlign: "center",
                 mb: 2,
-                fontFamily: "Assistant",
-                borderBottom: "3px solid #f9db78",
+                fontFamily: "'Assitant' ,sans-serif",
+                marginTop: "45px",
+                textDecoration: "underline #f9db78",
+                display: "table",
               }}
             >
-              הוסף תרומה חדשה
+              הוסף תרומה חדשה שהגיעה לעמותה
             </Typography>
             <Box
               component="form"

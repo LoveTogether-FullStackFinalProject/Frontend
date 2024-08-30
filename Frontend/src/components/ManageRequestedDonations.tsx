@@ -118,7 +118,7 @@ const ManageRequestedDonations: React.FC = () => {
     return (
       <div className="manage-donations-page">
         <Typography
-          variant="h4"
+          variant="h3"
           align="center"
           gutterBottom
           style={{ textDecoration: "underline #f9db78", marginTop: "40px" }}
@@ -127,8 +127,8 @@ const ManageRequestedDonations: React.FC = () => {
         </Typography>
         <Toolbar>
           <TextField
-            label="חפש תרומה"
-            placeholder="חפש תרומה לפי קטגוריה, שם מוצר, מצב, תיאור, כמות"
+          style={{right: '0px'}}
+            placeholder="חפש תרומה לפי פרטיה  "
             variant="outlined"
             fullWidth
             margin="normal"
@@ -140,6 +140,9 @@ const ManageRequestedDonations: React.FC = () => {
                   <Search />
                 </InputAdornment>
               ),
+            }}
+            sx={{
+              maxWidth: '300px', 
             }}
           />
         </Toolbar>

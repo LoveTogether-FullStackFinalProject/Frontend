@@ -173,10 +173,14 @@ const ManageDonationPage: React.FC = () => {
           sx={{ direction: "rtl", textAlign: "right", padding: "20px" }}
         >
           <Typography
-            variant="h4"
+            variant="h3"
             align="center"
             gutterBottom
-            sx={{ marginBottom: "30px" }}
+            sx={{ 
+              marginBottom: "30px",
+              fontFamily: "'Assitant' ,sans-serif",
+              textDecoration: "underline #f9db78",
+             }}
           >
             ניהול תרומות
           </Typography>
@@ -353,7 +357,19 @@ const ManageDonationPage: React.FC = () => {
                         }
                         fullWidth
                         variant="outlined"
-                        sx={{ backgroundColor: "#f9f9f9" }}
+                        sx={{
+                          backgroundColor: "#f9f9f9",
+                          '& .MuiSelect-select': {
+                            textAlign: "right",
+                            paddingRight: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'flex-end',
+                          },
+                          '& .MuiSelect-icon': {
+                            right: '8px',
+                          },
+                        }}
                       >
                         <MenuItem style={{ direction: "rtl" }} value="true">
                           מאושר

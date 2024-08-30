@@ -681,7 +681,7 @@ const UserEditModal: React.FC<{
             helperText={errors.firstName?.message}
             InputLabelProps={{
               sx: {
-                right: 19,
+                right: 15,
                 left: "auto",
                 transformOrigin: "top right",
                 "&.MuiInputLabel-shrink": {
@@ -712,7 +712,7 @@ const UserEditModal: React.FC<{
             helperText={errors.lastName?.message}
             InputLabelProps={{
               sx: {
-                right: 19,
+                right: 15,
                 left: "auto",
                 transformOrigin: "top right",
                 "&.MuiInputLabel-shrink": {
@@ -743,7 +743,7 @@ const UserEditModal: React.FC<{
             helperText={errors.email?.message}
             InputLabelProps={{
               sx: {
-                right: 19,
+                right: 15,
                 left: "auto",
                 transformOrigin: "top right",
                 "&.MuiInputLabel-shrink": {
@@ -774,7 +774,7 @@ const UserEditModal: React.FC<{
             helperText={errors.mainAddress?.message}
             InputLabelProps={{
               sx: {
-                right: 19,
+                right: 15,
                 left: "auto",
                 transformOrigin: "top right",
                 "&.MuiInputLabel-shrink": {
@@ -805,7 +805,7 @@ const UserEditModal: React.FC<{
             helperText={errors.phoneNumber?.message}
             InputLabelProps={{
               sx: {
-                right: 19,
+                right: 15,
                 left: "auto",
                 transformOrigin: "top right",
                 "&.MuiInputLabel-shrink": {

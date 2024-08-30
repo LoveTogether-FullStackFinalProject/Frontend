@@ -346,7 +346,7 @@ const Profile: React.FC = () => {
         variant="h3"
         sx={{
           mb: 2,
-          fontFamily: "Assistant",
+          fontFamily: "'Assitant' ,sans-serif",
           borderBottom: "3px solid #f9db78",
           textAlign: "center",
           padding: "20px",

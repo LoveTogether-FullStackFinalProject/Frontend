@@ -384,6 +384,8 @@ const ManageDonationPage: React.FC = () => {
                         color="primary"
                         onClick={() => {
                           setCurrentDonation(donation);
+                          console.log("donation",donation)
+                          console.log("donation.donorPhone",donation.donorPhone)
                           setShowModal(true);
                         }}
                       >
@@ -511,6 +513,12 @@ const ManageDonationPage: React.FC = () => {
                   <Typography variant="body1" sx={{ marginBottom: "10px" }}>
                     <strong>סטטוס:</strong> {currentDonation.status}
                   </Typography>
+                  {currentDonation.donorPhone !== '0123456789' &&  currentDonation.donorPhone &&(
+                    <Typography variant="body1" sx={{ marginBottom: "10px" }}>
+                      {/* console.log(currentDonation.phoneNumber) */}
+                      <strong>מספר טלפון:</strong> {currentDonation.donorPhone}
+                    </Typography>
+                  )}
                   {currentDonation.image && (
                     <div style={{ textAlign: "center", marginTop: "20px" }}>
                       <img

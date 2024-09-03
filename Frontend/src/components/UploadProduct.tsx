@@ -67,6 +67,7 @@ const schema = z.object({
   phoneNumber: z
     .string()
     .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+    .regex(/^\d+$/, "מספר הטלפון חייב להכיל רק ספרות")
     .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0")
     .optional(), 
 });
@@ -133,7 +134,7 @@ export default function UploadProduct() {
         console.log("data", data);
         //return data;
         setValue("pickupAddress", data.mainAddress);
-        setValue("phoneNumber", '0123456789');
+        setValue("phoneNumber", '0000000000');
         //setValue("phoneNumber", data.phoneNumber);
       } catch (error) {
         console.error("Error fetching user data:", error);

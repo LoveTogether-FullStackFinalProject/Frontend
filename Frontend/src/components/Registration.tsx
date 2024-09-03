@@ -37,6 +37,7 @@ const schema = z.object({
   phoneNumber: z
     .string()
     .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+    .regex(/^\d+$/, "מספר הטלפון חייב להכיל רק ספרות")
     .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),
   mainAddress: z.string().min(5, "כתובת ראשית חייבת להכיל לפחות 5 תווים"),
   image: z

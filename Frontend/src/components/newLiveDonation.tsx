@@ -43,7 +43,7 @@ const schema = z.object({
       const selectedDate = new Date(dateString);
       const currentDate = new Date();
       const nextWeek = new Date();
-      nextWeek.setDate(currentDate.getDate() + 7);
+      nextWeek.setDate(currentDate.getDate() + 6);
       return selectedDate > currentDate && selectedDate > nextWeek;
     }, "תאריך התפוגה חייב להיות לפחות שבוע מהיום")
     .optional(),
@@ -427,7 +427,7 @@ export default function NewLiveDonation() {
                     },
                   }}
                   inputProps={{
-                    min: new Date(new Date().setDate(new Date().getDate() + 8)).toISOString().split("T")[0],
+                    min: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0],
                   }}
                 />
               )}

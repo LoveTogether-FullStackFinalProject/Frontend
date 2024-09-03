@@ -52,7 +52,7 @@ const schema = z.object({
       const selectedDate = new Date(dateString);
       const currentDate = new Date();
       const nextWeek = new Date();
-      nextWeek.setDate(currentDate.getDate() + 7);
+      nextWeek.setDate(currentDate.getDate() + 6);
       return selectedDate > currentDate && selectedDate > nextWeek;
     }, "תאריך התפוגה חייב להיות לפחות שבוע מהיום")
     .optional(),
@@ -534,7 +534,7 @@ export default function UploadProduct() {
                   },
                 }}
                 inputProps={{
-                  min: new Date(new Date().setDate(new Date().getDate() + 8)).toISOString().split("T")[0],
+                  min: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0],
                 }}
               />
             )}
@@ -734,49 +734,48 @@ export default function UploadProduct() {
               </Alert>
             )}
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="phoneNumber"
-            label="מספר טלפון ליצירת קשר"
-            {...register("phoneNumber")}
-            error={!!errors.phoneNumber}
-            helperText={errors.phoneNumber?.message}
-            FormHelperTextProps={{
-              sx: {
-                marginLeft: "220px",
-                width: "100%",
-              },
-            }}
-            InputLabelProps={{
-              sx: {
-                right: 14,
-                left: "auto",
-                transformOrigin: "top right",
-                "&.MuiInputLabel-shrink": {
-                  transform: "translate(0, -10px) scale(0.85)",
-                  transformOrigin: "top right",
-                },
-                "& .MuiFormLabel-asterisk": {
-                  display: "none",
-                },
-              },
-            }}
-            InputProps={{
-              sx: {
-                textAlign: "right",
-                direction: "rtl",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  textAlign: "right",
-                },
-              },
-            }}
-            sx={{
-              display: isLoggedIn ? "none" : "block",
-            }}
-          />
-
+<TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="phoneNumber"
+                    label="מספר טלפון ליצירת קשר"
+                    {...register("phoneNumber")}
+                    error={!!errors.phoneNumber}
+                    helperText={errors.phoneNumber?.message}
+                    FormHelperTextProps={{
+                      sx: {
+                        marginLeft: "230px",
+                        width: "100%",
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        right: 14,
+                        left: "auto",
+                        transformOrigin: "top right",
+                        "&.MuiInputLabel-shrink": {
+                          transform: "translate(0, -10px) scale(0.85)",
+                          transformOrigin: "top right",
+                        },
+                        "& .MuiFormLabel-asterisk": {
+                          display: "none",
+                        },
+                      },
+                    }}
+                    InputProps={{
+                      sx: {
+                        textAlign: "right",
+                        direction: "rtl",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          textAlign: "right",
+                        },
+                      },
+                    }}
+                    sx={{
+                      display: isLoggedIn ? "none" : "block",
+                    }}
+                  />
 
 
             <Button

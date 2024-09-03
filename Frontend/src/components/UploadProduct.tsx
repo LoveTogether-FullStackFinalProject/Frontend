@@ -533,6 +533,9 @@ export default function UploadProduct() {
                     },
                   },
                 }}
+                inputProps={{
+                  min: new Date(new Date().setDate(new Date().getDate() + 8)).toISOString().split("T")[0],
+                }}
               />
             )}
 

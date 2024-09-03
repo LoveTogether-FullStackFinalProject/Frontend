@@ -513,7 +513,7 @@ const ManageDonationPage: React.FC = () => {
                   <Typography variant="body1" sx={{ marginBottom: "10px" }}>
                     <strong>סטטוס:</strong> {currentDonation.status}
                   </Typography>
-                  {currentDonation.donorPhone !== '0123456789' &&  currentDonation.donorPhone &&(
+                  {currentDonation.donorPhone !== '0000000000' &&  currentDonation.donorPhone &&(
                     <Typography variant="body1" sx={{ marginBottom: "10px" }}>
                       <strong>מספר טלפון ליצירת קשר:</strong> {currentDonation.donorPhone}
                     </Typography>

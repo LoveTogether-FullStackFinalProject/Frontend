@@ -52,6 +52,7 @@ const schema = z.object({
   donorPhone: z
     .string()
     .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+    .regex(/^\d+$/, "מספר הטלפון חייב להכיל רק ספרות")
     .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),
   image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
 });
@@ -547,7 +548,7 @@ export default function NewLiveDonation() {
                 helperText={errors.donorPhone?.message}
                 FormHelperTextProps={{
                   sx: {
-                    marginLeft: "190px",
+                    marginLeft: "230px",
                     width: "100%",
                   },
                 }}

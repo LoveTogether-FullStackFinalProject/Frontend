@@ -23,6 +23,7 @@ export interface Donation {
   approvedByAdmin?: string;
   image: string;
   createdAt: string;
+  donorPhone?: string;
 }
 
 interface DonationProps {

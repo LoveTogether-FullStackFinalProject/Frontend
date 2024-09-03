@@ -249,6 +249,11 @@ const DonationModal: React.FC<DonationModalProps> = ({
                     <strong>כתובת לאיסוף:</strong> {editData.pickupAddress}
                   </p>
                 )}
+                {/* {editData.phoneNumber !== '0123456789' && (
+                  <p>
+                    <strong>מספר טלפון:</strong> {editData.phoneNumber}
+                  </p>
+                )} */}
               </>
             )}
           </div>

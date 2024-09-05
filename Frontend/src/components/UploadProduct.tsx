@@ -56,7 +56,7 @@ const schema = z.object({
       const selectedDate = new Date(dateString);
       const currentDate = new Date();
       const nextWeek = new Date();
-      nextWeek.setDate(currentDate.getDate() + 7);
+      nextWeek.setDate(currentDate.getDate() + 6);
       return selectedDate > currentDate && selectedDate > nextWeek;
     }, "תאריך התפוגה חייב להיות לפחות שבוע מהיום")
     .optional(),
@@ -67,6 +67,12 @@ const schema = z.object({
     .optional(),
   image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
   deliveryOption: z.string().min(1, "יש לבחור אפשרות מסירה"),
+  phoneNumber: z
+    .string()
+    .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+    .regex(/^\d+$/, "מספר הטלפון חייב להכיל רק ספרות")
+    .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0")
+    .optional(), 
 });
 
 type FormData = z.infer<typeof schema>;
@@ -109,6 +115,8 @@ export default function UploadProduct() {
         const { data } = await dataService.getUser(userId).req;
         console.log("data", data);
         setValue("pickupAddress", data.mainAddress);
+        setValue("phoneNumber", '0000000000');
+        //setValue("phoneNumber", data.phoneNumber);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -182,6 +190,7 @@ export default function UploadProduct() {
         approvedByAdmin: false,
         status: data.deliveryOption,
         category: data.category === "אחר" ? data.customCategory : data.category,
+        donorPhone: data.phoneNumber
       };
       try {
         if (isLoggedIn) {
@@ -490,6 +499,9 @@ export default function UploadProduct() {
                     },
                   },
                 }}
+                inputProps={{
+                  min: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0],
+                }}
               />
             )}
             <Controller
@@ -686,6 +698,51 @@ export default function UploadProduct() {
                 יש לבחור אפשרות מסירה
               </Alert>
             )}
+
+<TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="phoneNumber"
+                    label="מספר טלפון ליצירת קשר"
+                    {...register("phoneNumber")}
+                    error={!!errors.phoneNumber}
+                    helperText={errors.phoneNumber?.message}
+                    FormHelperTextProps={{
+                      sx: {
+                        marginLeft: "230px",
+                        width: "100%",
+                      },
+                    }}
+                    InputLabelProps={{
+                      sx: {
+                        right: 14,
+                        left: "auto",
+                        transformOrigin: "top right",
+                        "&.MuiInputLabel-shrink": {
+                          transform: "translate(0, -10px) scale(0.85)",
+                          transformOrigin: "top right",
+                        },
+                        "& .MuiFormLabel-asterisk": {
+                          display: "none",
+                        },
+                      },
+                    }}
+                    InputProps={{
+                      sx: {
+                        textAlign: "right",
+                        direction: "rtl",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          textAlign: "right",
+                        },
+                      },
+                    }}
+                    sx={{
+                      display: isLoggedIn ? "none" : "block",
+                    }}
+                  />
+
+
             <Button
               variant="contained"
               component="label"

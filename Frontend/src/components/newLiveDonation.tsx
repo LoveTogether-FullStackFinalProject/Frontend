@@ -43,7 +43,7 @@ const schema = z.object({
       const selectedDate = new Date(dateString);
       const currentDate = new Date();
       const nextWeek = new Date();
-      nextWeek.setDate(currentDate.getDate() + 7);
+      nextWeek.setDate(currentDate.getDate() + 6);
       return selectedDate > currentDate && selectedDate > nextWeek;
     }, "תאריך התפוגה חייב להיות לפחות שבוע מהיום")
     .optional(),
@@ -52,6 +52,7 @@ const schema = z.object({
   donorPhone: z
     .string()
     .length(10, "מספר הטלפון חייב להכיל 10 ספרות")
+    .regex(/^\d+$/, "מספר הטלפון חייב להכיל רק ספרות")
     .refine((phone) => phone.startsWith("0"), "'מספר הטלפון חייב להתחיל ב-'0"),
   image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
 });
@@ -426,6 +427,9 @@ export default function NewLiveDonation() {
                       },
                     },
                   }}
+                  inputProps={{
+                    min: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split("T")[0],
+                  }}
                 />
               )}
               <Controller
@@ -544,7 +548,7 @@ export default function NewLiveDonation() {
                 helperText={errors.donorPhone?.message}
                 FormHelperTextProps={{
                   sx: {
-                    marginLeft: "190px",
+                    marginLeft: "230px",
                     width: "100%",
                   },
                 }}

@@ -13,7 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import successGif from "../assets/success.gif";
 // import Link from '@mui/material/Link';
-//import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 //import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from "@mui/material/Typography";
@@ -34,6 +34,10 @@ import Alert from "@mui/material/Alert";
 // import { IconButton, Snackbar } from '@mui/material';
 // import CloseIcon from '@mui/icons-material/Close';
 import dataService from "../services/data-service";
+
+import BitIcon from "../assets/bit.jpg";
+import PayboxIcon from "../assets/paybox.jpg";
+import certificate from "../assets/certificate.png";
 
 const defaultTheme = createTheme();
 
@@ -61,7 +65,6 @@ const schema = z.object({
     .string()
     .min(1, "הכתובת חייבת להכיל לפחות תו אחד")
     .optional(),
-  //branch: z.string().optional(),
   image: z.any().refine((file) => file instanceof File, "יש להעלות תמונה"),
   deliveryOption: z.string().min(1, "יש לבחור אפשרות מסירה"),
   phoneNumber: z
@@ -77,28 +80,7 @@ type FormData = z.infer<typeof schema>;
 export default function UploadProduct() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
   const [imgPreview, setImgPreview] = React.useState<string | null>(null);
-  // const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  // const [dialogMessage, setDialogMessage] = React.useState<string>('');
-
-  // const handleClick = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = (_event?: React.SyntheticEvent | Event, reason?: string) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
-  //   setOpen(false);
-  //   if(isLoggedIn){
-  //     navigate('/profile');
-  //   }
-  //   else{
-  //     navigate('/mainPage');
-  //   }
-  // };
-  //const [pickUpAddress, setPickUpAddress] = React.useState<string>("");
-  //const [showError, setShowError] = React.useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -132,7 +114,6 @@ export default function UploadProduct() {
       try {
         const { data } = await dataService.getUser(userId).req;
         console.log("data", data);
-        //return data;
         setValue("pickupAddress", data.mainAddress);
         setValue("phoneNumber", '0000000000');
         //setValue("phoneNumber", data.phoneNumber);
@@ -156,7 +137,6 @@ export default function UploadProduct() {
       setValue("category", request.category);
       setValue("itemName", request.itemName);
       setValue("quantity", request.amount.toString());
-      //setValue('condition', request.itemCondition);
       setValue("description", request.description);
     }
   }, [request, setValue]);
@@ -192,7 +172,7 @@ export default function UploadProduct() {
   };
 
   const onSubmit = async (data: FormData) => {
-    if (selectedDeliveryOption != "ממתין לאיסוף") {
+    if (selectedDeliveryOption !== "ממתין לאיסוף") {
       fetchUserData();
     }
 
@@ -202,10 +182,6 @@ export default function UploadProduct() {
         imageUrl = await uploadPhoto(data.image);
       }
       const userId = localStorage.getItem("userID");
-      // if (!userId) {
-      //   alert('User not logged in');
-      //   return;
-      // }
       console.log("status:", data.deliveryOption);
       const productData = {
         ...data,
@@ -219,34 +195,26 @@ export default function UploadProduct() {
       try {
         if (isLoggedIn) {
           await uploadProduct(productData);
-          // navigate('/profile');
         } else {
           console.log("Uploading product anonymously...");
           const { req } = await uploadProductAnonymously(productData);
           console.log("Request successful:", req);
-          // navigate('/mainPage');
         }
       } catch (error) {
         console.error("Error occurred during upload:", error);
       }
 
-      // setDialogMessage('תודה על התרומה! התרומה שלך תעבור לאישור ותוצג בפרופיל שלך.');
       setDialogOpen(true);
     } catch (error) {
       console.error("Error uploading product:", error);
-      // setDialogMessage(`Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
       setDialogOpen(true);
     }
   };
+
   const handleDialogClose = () => {
     setDialogOpen(false);
     navigate(isLoggedIn ? "/profile" : "/mainPage");
   };
-
-  // if (!isLoggedIn) {
-  //   navigate('/login');
-  //   return null;
-  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -264,9 +232,8 @@ export default function UploadProduct() {
             variant="h3"
             sx={{
               mb: 2,
-              fontFamily: "'Assitant' ,sans-serif",
+              fontFamily: "'Assistant' ,sans-serif",
               borderBottom: "3px solid #f9db78",
-              //display: 'inline-block'
             }}
           >
             !אני רוצה לתרום
@@ -291,7 +258,6 @@ export default function UploadProduct() {
                 sx: {
                   marginLeft: "220px",
                   width: "100%",
-                  //minWidth: '100px',
                 },
               }}
               InputLabelProps={{
@@ -396,11 +362,11 @@ export default function UploadProduct() {
                         textAlign: "right",
                       },
                       "& .MuiSelect-icon": {
-                        left: 0, // Move the arrow to the left
+                        left: 0,
                         right: "auto",
                       },
                       "& .MuiInputBase-input": {
-                        paddingRight: 4, // Adjust padding to make space for the arrow
+                        paddingRight: 4,
                       },
                     },
                   }}
@@ -492,7 +458,6 @@ export default function UploadProduct() {
                 }}
               />
             )}
-
             {selectedCategory === "מזון ושתייה" && (
               <TextField
                 margin="normal"
@@ -539,7 +504,6 @@ export default function UploadProduct() {
                 }}
               />
             )}
-
             <Controller
               name="condition"
               control={control}
@@ -580,7 +544,7 @@ export default function UploadProduct() {
                         textAlign: "right",
                       },
                       "& .MuiSelect-icon": {
-                        left: 0, // Move the arrow to the left
+                        left: 0,
                         right: "auto",
                       },
                       "& .MuiInputBase-input": {
@@ -831,7 +795,7 @@ export default function UploadProduct() {
               variant="contained"
               sx={{
                 mt: 3,
-                mb: 2,
+                mb: 4, // Add some margin to separate from the donation section
                 backgroundColor: "#f9db78",
                 color: "#000",
                 borderRadius: "30px",
@@ -889,7 +853,7 @@ export default function UploadProduct() {
               >
                 {isLoggedIn
                   ? "התרומה תעבור לאישור מנהל ותוצג בעמוד החשבון שלך"
-                  : "התרומה תעבור לאישור מנהל"}{" "}
+                  : "התרומה תעבור לאישור מנהל"}
               </Typography>
             </DialogContent>
             <DialogActions sx={{ justifyContent: "center", color: "#f9db78" }}>
@@ -904,7 +868,154 @@ export default function UploadProduct() {
             </DialogActions>
           </Dialog>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+
+ {/* Donation Methods Section */}
+<Box sx={{ mt: 4, textAlign: "center" }}>
+  <Typography variant="h4" gutterBottom>
+    דרכים נוספות לתרום
+  </Typography>
+
+  <Grid container spacing={4} justifyContent="center">
+    {/* Bit Donation */}
+    <Grid item xs={12} sm={6} md={4}>
+      <Box
+        sx={{
+          textAlign: "center",
+          padding: "20px",
+          boxShadow: 3,
+          borderRadius: "10px",
+          transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.05)",
+            boxShadow: 6,
+          },
+          "@media (max-width: 600px)": {
+            padding: "30px",
+          },
+        }}
+      >
+        <img
+          src={BitIcon}
+          alt="Bit Icon"
+          style={{ width: "80px", height: "80px", marginBottom: "20px" }}
+        />
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "'Assistant', sans-serif",
+            fontSize: { xs: "1rem", sm: "1.5rem", md: "1rem" },
+          }}
+        >
+          bit תרומה באמצעות אפליקציית ביט
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontFamily: "'Assistant', sans-serif",
+            marginTop: "10px",
+          }}
+        >
+          למספר:
+          0506863121 
+        </Typography>
+      </Box>
+    </Grid>
+
+    {/* Paybox Donation */}
+    <Grid item xs={12} sm={6} md={4}>
+      <Box
+        sx={{
+          textAlign: "center",
+          padding: "20px",
+          boxShadow: 3,
+          borderRadius: "10px",
+          transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.05)",
+            boxShadow: 6,
+          },
+          "@media (max-width: 600px)": {
+            padding: "30px",
+          },
+        }}
+      >
+        <img
+          src={PayboxIcon}
+          alt="Paybox Icon"
+          style={{ width: "80px", height: "80px", marginBottom: "20px" }}
+        />
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "'Assistant', sans-serif",
+            fontSize: { xs: "1rem", sm: "1.5rem", md: "1rem" },
+          }}
+        >
+          Paybox תרומה באמצעות אפליקציית פייבוקס
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          href="https://payboxapp.page.link/RfBHMQfuZ4dt5fsQ8"
+          sx={{
+            marginTop: "10px",
+            backgroundColor: "#f9db78",
+            "&:hover": {
+              backgroundColor: "#f7d062",
+            },
+          }}
+        >
+          לתרומה
+        </Button>
+      </Box>
+    </Grid>
+
+    {/* Bank Transfer Donation */}
+    <Grid item xs={12} sm={6} md={4}>
+      <Box
+        sx={{
+          textAlign: "center",
+          padding: "20px",
+          boxShadow: 3,
+          borderRadius: "10px",
+          transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          "&:hover": {
+            transform: "scale(1.05)",
+            boxShadow: 6,
+          },
+          "@media (max-width: 600px)": {
+            padding: "30px",
+          },
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "'Assistant', sans-serif",
+            fontSize: { xs: "1rem", sm: "1rem", md: "1.5rem" },
+            marginBottom: "20px",
+          }}
+        >
+          העברה בנקאית
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{ fontFamily: "'Assistant', sans-serif" }}
+        >
+          בנק מרכנתיל (17)
+          <br />
+          סניף יהודה הנשיא (740)
+          <br />
+          חשבון 99004560
+          <br />
+          ע״ש ואהבתם ביחד
+        </Typography>
+      </Box>
+    </Grid>
+  </Grid>
+</Box>
+{/* End of Donation Methods Section */}
+
       </Container>
     </ThemeProvider>
   );

@@ -903,7 +903,7 @@ export default function UploadProduct() {
           variant="h6"
           sx={{
             fontFamily: "'Assistant', sans-serif",
-            fontSize: { xs: "1.5rem", sm: "2rem", md: "1.5rem" },
+            fontSize: { xs: "1rem", sm: "1.5rem", md: "1rem" },
           }}
         >
           bit תרומה באמצעות אפליקציית ביט
@@ -915,7 +915,8 @@ export default function UploadProduct() {
             marginTop: "10px",
           }}
         >
-          0506863121 למספר
+          למספר:
+          0506863121 
         </Typography>
       </Box>
     </Grid>
@@ -947,7 +948,7 @@ export default function UploadProduct() {
           variant="h6"
           sx={{
             fontFamily: "'Assistant', sans-serif",
-            fontSize: { xs: "1.5rem", sm: "2rem", md: "1.5rem" },
+            fontSize: { xs: "1rem", sm: "1.5rem", md: "1rem" },
           }}
         >
           Paybox תרומה באמצעות אפליקציית פייבוקס

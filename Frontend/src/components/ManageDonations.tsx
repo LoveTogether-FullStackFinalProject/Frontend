@@ -225,9 +225,10 @@ const ManageDonationPage: React.FC = () => {
               borderRadius: "10px",
             }}
           >
-            <Table>
+             <Table>
               <TableHead style={{ backgroundColor: "#f0e0ad" }}>
                 <TableRow>
+                  {/* Existing Columns */}
                   <TableCell style={{ width: "15%", textAlign: "center" }}>
                     <TableSortLabel
                       active={orderBy === "donor"}
@@ -275,6 +276,15 @@ const ManageDonationPage: React.FC = () => {
                   </TableCell>
                   <TableCell style={{ width: "10%", textAlign: "center" }}>
                     <TableSortLabel
+                      active={orderBy === "createdAt"}
+                      direction={orderBy === "createdAt" ? order : "asc"}
+                      onClick={() => handleRequestSort("createdAt")}
+                    >
+                      תאריך יצירה
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell style={{ width: "10%", textAlign: "center" }}>
+                    <TableSortLabel
                       active={orderBy === "approvedByAdmin"}
                       direction={orderBy === "approvedByAdmin" ? order : "asc"}
                       onClick={() => handleRequestSort("approvedByAdmin")}
@@ -293,10 +303,11 @@ const ManageDonationPage: React.FC = () => {
               <TableBody>
                 {sortedAndFilteredDonations.map((donation) => (
                   <TableRow key={donation._id}>
+                    {/* Existing Table Cells */}
                     <TableCell style={{ textAlign: "center" }}>
                       {donation.donor
                         ? `${donation.donor.firstName} ${donation.donor.lastName}`
-                        : 'נתרם ע"י אורח'}
+                        : "נתרם על ידי אורח"}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
                       {donation.itemName}
@@ -346,6 +357,9 @@ const ManageDonationPage: React.FC = () => {
                         </MenuItem>
                       </Select>
                     </TableCell>
+                    <TableCell style={{ textAlign: "center" }}>
+                      {new Date(donation.createdAt).toLocaleDateString("he-IL")}
+                    </TableCell>
                     <TableCell>
                       <Select
                         value={donation.approvedByAdmin}
@@ -384,8 +398,6 @@ const ManageDonationPage: React.FC = () => {
                         color="primary"
                         onClick={() => {
                           setCurrentDonation(donation);
-                          console.log("donation",donation)
-                          console.log("donation.donorPhone",donation.donorPhone)
                           setShowModal(true);
                         }}
                       >
